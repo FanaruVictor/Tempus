@@ -2,5 +2,14 @@
 
 public class BaseEntity
 {
-	public Guid Id { get; set; }
+    public BaseEntity()
+    {
+    }
+
+    public BaseEntity(Guid id)
+    {
+        Id = id;
+    }
+
+    public Guid Id { get; set; }
 }

@@ -3,7 +3,8 @@
     "Tempus.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
+      "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7077",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -11,3 +12,4 @@
     }
   }
 }
+

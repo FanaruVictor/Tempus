@@ -1,0 +1,10 @@
+e
+\D:\Tempus\Tempus.Tests\Registration\CommandHandlers\CreateRegistrationCommandHandlerTests.csutf-8)
+ D:\Tempus\Tempus.Tests\Usings.csutf-8…
+zC:\Users\victor.fanaru\.nuget\packages\microsoft.net.test.sdk\17.3.2\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.csutf-8Q
+FD:\Tempus\Tempus.Tests\obj\Debug\net7.0\Tempus.Tests.GlobalUsings.g.csutf-8a
+VD:\Tempus\Tempus.Tests\obj\Debug\net7.0\.NETCoreApp,Version=v7.0.AssemblyAttributes.csutf-8O
+DD:\Tempus\Tempus.Tests\obj\Debug\net7.0\Tempus.Tests.AssemblyInfo.csutf-8w
+lMicrosoft.Interop.JavaScript.JSImportGenerator\Microsoft.Interop.JavaScript.JSExportGenerator\JSExports.g.csutf-8w
+lMicrosoft.Interop.JavaScript.JSImportGenerator\Microsoft.Interop.JavaScript.JSImportGenerator\JSImports.g.csutf-8p
+eMicrosoft.Interop.LibraryImportGenerator\Microsoft.Interop.LibraryImportGenerator\LibraryImports.g.csutf-8

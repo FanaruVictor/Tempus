@@ -1,10 +1,7 @@
-﻿using System.Net.Sockets;
-using Tempus.Core.Entities;
+﻿using Tempus.Core.Entities;
 
 namespace Tempus.Core.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IBaseRepository<User>
 {
-    Task Add(User user);
-    List<User> GetAll();
 }
