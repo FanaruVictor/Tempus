@@ -1,0 +1,13 @@
+@import "~src/styles/variables";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  background-color: $background-color;
+
+  .logo{
+    align-self: center;
+  }
+}
+

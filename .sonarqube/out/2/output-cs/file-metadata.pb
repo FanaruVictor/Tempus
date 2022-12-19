@@ -1,0 +1,25 @@
+_
+VD:\Tempus\Tempus.Tests\Categories\CommandHandlers\CreateCategoryCommandHandlerTests.csutf-8_
+VD:\Tempus\Tempus.Tests\Categories\CommandHandlers\DeleteCategoryCommandHandlerTests.csutf-8_
+VD:\Tempus\Tempus.Tests\Categories\CommandHandlers\UpdateCategoryCommandHandlerTests.csutf-8]
+TD:\Tempus\Tempus.Tests\Categories\QueryHandlers\GetAllCategoriesQueryHandlerTests.csutf-8\
+SD:\Tempus\Tempus.Tests\Categories\QueryHandlers\GetCategoryByIdQueryHandlerTests.csutf-8f
+]D:\Tempus\Tempus.Tests\Registrations\CommandHandlers\CreateRegistrationCommandHandlerTests.csutf-8f
+]D:\Tempus\Tempus.Tests\Registrations\CommandHandlers\DeleteRegistrationCommandHandlerTests.csutf-8e
+\D:\Tempus\Tempus.Tests\Registrations\CommandHandlers\UpdateRegistrationComandHandlerTests.csutf-8b
+YD:\Tempus\Tempus.Tests\Registrations\QueryHandlers\GetAllRegistrationQueryHandlerTests.csutf-8j
+aD:\Tempus\Tempus.Tests\Registrations\QueryHandlers\GetLastRegistrationUpdatedQueryHandlerTests.csutf-8c
+ZD:\Tempus\Tempus.Tests\Registrations\QueryHandlers\GetRegistrationByIdQueryHandlerTests.csutf-8V
+MD:\Tempus\Tempus.Tests\Users\CommandHandlers\CreateUserCommandHandlerTests.csutf-8V
+MD:\Tempus\Tempus.Tests\Users\CommandHandlers\DeleteUserCommandHandlerTests.csutf-8V
+MD:\Tempus\Tempus.Tests\Users\CommandHandlers\UpdateUserCommandHandlerTests.csutf-8S
+JD:\Tempus\Tempus.Tests\Users\QueryHandlers\GetAllUsersQueryHandlerTests.csutf-8S
+JD:\Tempus\Tempus.Tests\Users\QueryHandlers\GetUserByIdQueryHandlerTests.csutf-8)
+ D:\Tempus\Tempus.Tests\Usings.csutf-8…
+zC:\Users\victor.fanaru\.nuget\packages\microsoft.net.test.sdk\17.3.2\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.csutf-8Q
+FD:\Tempus\Tempus.Tests\obj\Debug\net7.0\Tempus.Tests.GlobalUsings.g.csutf-8a
+VD:\Tempus\Tempus.Tests\obj\Debug\net7.0\.NETCoreApp,Version=v7.0.AssemblyAttributes.csutf-8O
+DD:\Tempus\Tempus.Tests\obj\Debug\net7.0\Tempus.Tests.AssemblyInfo.csutf-8w
+lMicrosoft.Interop.JavaScript.JSImportGenerator\Microsoft.Interop.JavaScript.JSExportGenerator\JSExports.g.csutf-8w
+lMicrosoft.Interop.JavaScript.JSImportGenerator\Microsoft.Interop.JavaScript.JSImportGenerator\JSImports.g.csutf-8p
+eMicrosoft.Interop.LibraryImportGenerator\Microsoft.Interop.LibraryImportGenerator\LibraryImports.g.csutf-8

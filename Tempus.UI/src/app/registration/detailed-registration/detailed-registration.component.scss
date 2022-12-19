@@ -1,0 +1,42 @@
+@import "~src/styles/variables";
+
+.registration-wrapper{
+  top: 50px;
+  left: 0;
+  display: flex;
+  height: calc(100% - 50px);
+  flex-direction: column;
+  align-items: center;
+
+  .title{
+    margin-top: 50px;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+
+    .edit-icon{
+      color: $primary-color;
+      margin-right: 10px;
+    }
+
+    .delete-icon{
+      color: $error-color;
+    }
+  }
+
+  .last-updated-at{
+    width: 50%;
+    text-align: left;
+    margin-bottom: 50px;
+    margin-top: 16px;
+  }
+
+  .content{
+    background-color: #d6efef;
+    height: 100%;
+    width: 50%;
+    border-radius: 5px;
+    padding: 20px;
+  }
+}

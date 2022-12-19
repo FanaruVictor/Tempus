@@ -35,10 +35,19 @@ namespace Tempus.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -47,6 +56,7 @@ namespace Tempus.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryId")
@@ -66,7 +76,7 @@ namespace Tempus.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -99,6 +109,17 @@ namespace Tempus.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
+                {
+                    b.HasOne("Tempus.Core.Entities.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Tempus.Core.Entities.Registration", b =>
                 {
                     b.HasOne("Tempus.Core.Entities.Category", "Category")
@@ -107,15 +128,11 @@ namespace Tempus.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tempus.Core.Entities.User", "User")
+                    b.HasOne("Tempus.Core.Entities.User", null)
                         .WithMany("Registrations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Category");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
@@ -125,6 +142,8 @@ namespace Tempus.Data.Migrations
 
             modelBuilder.Entity("Tempus.Core.Entities.User", b =>
                 {
+                    b.Navigation("Categories");
+
                     b.Navigation("Registrations");
                 });
 #pragma warning restore 612, 618

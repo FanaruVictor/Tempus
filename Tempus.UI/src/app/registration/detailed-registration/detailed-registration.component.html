@@ -1,0 +1,14 @@
+<div class="registration-wrapper">
+  <div class="title">
+    <h1>{{registration?.title}}</h1>
+    <div class="actions">
+      <mat-icon class="edit-icon">edit</mat-icon>
+      <mat-icon class="delete-icon" (click)="delete()">delete</mat-icon>
+    </div>
+  </div>
+  <div class="content">
+    {{registration?.content}}
+  </div>
+  <p class="last-updated-at">Last updated at: {{registration?.lastUpdatedAt | date}}</p>
+
+</div>

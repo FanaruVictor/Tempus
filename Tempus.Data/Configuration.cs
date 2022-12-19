@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tempus.Core.Repositories;
 using Tempus.Data.Context;
+using Tempus.Data.Repositories;
+using Tempus.Data.Repositories.UserRepositories;
 
 namespace Tempus.Data;
 
@@ -18,5 +20,9 @@ public static class Configuration
             sql.MigrationsAssembly(migrationsAssembly);
             sql.MigrationsHistoryTable("__EFMigrationHistory");
         }));
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }
