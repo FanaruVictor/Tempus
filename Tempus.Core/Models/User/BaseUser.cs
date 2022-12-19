@@ -4,12 +4,6 @@ namespace Tempus.Core.Models.User;
 
 public class BaseUser : BaseEntity
 {
-    public BaseUser(Guid id, string userName, string email) : base(id)
-    {
-        UserName = userName;
-        Email = email;
-    }
-
-    public string UserName { get; }
-    public string Email { get; }
+    public string UserName { get; set; }
+    public string Email { get; set; }
 }

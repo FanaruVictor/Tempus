@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registration;
+using Tempus.Core.Models.Registrations;
 using Tempus.Core.Repositories;
 
 namespace Tempus.Core.Queries.Registrations.GetAll;
 
-public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistrationsQuery, BaseResponse<List<RegistrationInfo>>>
+public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistrationsQuery, BaseResponse<List<DetailedRegistration>>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IRegistrationRepository _registrationRepository;
@@ -18,7 +18,7 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<BaseResponse<List<RegistrationInfo>>> Handle(GetAllRegistrationsQuery request,
+    public async Task<BaseResponse<List<DetailedRegistration>>> Handle(GetAllRegistrationsQuery request,
         CancellationToken cancellationToken)
     {
         try
@@ -31,17 +31,19 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
             else
                 registrations = await _registrationRepository.GetAll();
 
-            var response = BaseResponse<List<RegistrationInfo>>.Ok(registrations
+            var response = BaseResponse<List<DetailedRegistration>>.Ok(registrations
                 .Select(x =>
                 {
                     var categoryColor = _categoryRepository.GetCategoryColor(x.CategoryId);
 
-                    return new RegistrationInfo
+                    return new DetailedRegistration()
                     {
                         Id = x.Id,
                         Title = x.Title,
+                        Content = x.Content,
                         LastUpdatedAt = x.LastUpdatedAt,
-                        CategoryColor = categoryColor
+                        CategoryColor = categoryColor,
+                        CreatedAt = x.CreatedAt
                     };
                 })
                 .ToList());
@@ -49,7 +51,7 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
         }
         catch (Exception exception)
         {
-            var response = BaseResponse<List<RegistrationInfo>>.BadRequest(exception.Message);
+            var response = BaseResponse<List<DetailedRegistration>>.BadRequest(new List<string>{exception.Message});
             return response;
         }
     }

@@ -20,22 +20,25 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, BaseR
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            var entity = new User(Guid.NewGuid(), request.UserName, request.Email);
+            
+            var entity = new User
+            {
+                Id = Guid.NewGuid(),
+                UserName = request.UserName,
+                Email = request.Email 
+                
+            };
+            
             var user = await _userRepository.Add(entity);
 
-            var result = BaseResponse<BaseUser>.Ok(new BaseUser
-            (
-                user.Id,
-                user.UserName,
-                user.Email
-            ));
+            var baseUser = GenericMapper<User, BaseUser>.Map(user);
+            var result = BaseResponse<BaseUser>.Ok(baseUser);
 
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<BaseUser>.BadRequest(exception.Message);
+            var result = BaseResponse<BaseUser>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

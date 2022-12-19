@@ -1,24 +1,21 @@
 ﻿namespace Tempus.Core.Entities;
 
 public class User : BaseEntity
-{
-    public User()
+{ 
+    public string UserName { get; set; }
+    public string Email { get; set; }
+    public List<Registration>? Registrations { get; set; }
+    public List<Category>? Categories { get; set; }
+    
+    public User(Guid id, string userName, string email)
     {
-    }
-
-    public User(
-        Guid id,
-        string userName,
-        string email,
-        List<Registration>? registrations = null) : base(id)
-    {
+        Id = id;
         UserName = userName;
         Email = email;
-        Registrations = registrations;
     }
 
-    public string UserName { get; }
-    public string Email { get; }
-    public List<Registration>? Registrations { get; }
-    public List<Category>? Categories { get; }
+    public User()
+    {
+        
+    }
 }

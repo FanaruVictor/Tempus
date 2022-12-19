@@ -18,15 +18,23 @@ public class DeleteRegistrationCommandHandler : IRequestHandler<DeleteRegistrati
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            
             var deletedRegistrationId = await _registrationRepository.Delete(request.Id);
 
-            var result = BaseResponse<Guid>.Ok(deletedRegistrationId);
+            BaseResponse<Guid> result;
+            
+            if (deletedRegistrationId == Guid.Empty)
+            {
+                result = BaseResponse<Guid>.NotFound($"Registration with Id: {request.Id} not found");
+                return result;
+            }
+            
+            result = BaseResponse<Guid>.Ok(deletedRegistrationId);
             return result;
         }
         catch (Exception exception)
         {
-            return BaseResponse<Guid>.BadRequest(exception.Message);
+            return BaseResponse<Guid>.BadRequest(new List<string>{exception.Message});
         }
     }
 }

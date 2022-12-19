@@ -20,21 +20,27 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            
             var user = await _userRepository.GetById(request.Id);
 
-            if (user == null) return BaseResponse<BaseUser>.BadRequest($"User with id {request.Id} not found");
+            if (user == null) return BaseResponse<BaseUser>.NotFound($"User with id {request.Id} not .");
 
-            user = new User(user.Id, request.UserName, request.Email);
+            user = new User{
+                Id = user.Id, 
+                UserName = request.UserName, 
+                Email = request.Email
+            };
 
             await _userRepository.Update(user);
 
-            var result = BaseResponse<BaseUser>.Ok(new BaseUser(user.Id, user.UserName, user.Email));
+            var baseUser = GenericMapper<User, BaseUser>.Map(user);
+            var result = BaseResponse<BaseUser>.Ok(baseUser);
+            
             return result;
         }
         catch (Exception exception)
         {
-            return BaseResponse<BaseUser>.BadRequest(exception.Message);
+            return BaseResponse<BaseUser>.BadRequest(new List<string>{exception.Message});
         }
     }
 }

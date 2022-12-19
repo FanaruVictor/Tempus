@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using Tempus.Core.Commands.Categories.Create;
 using Tempus.Core.Commands.Categories.Update;
+using Tempus.Core.Commons;
 using Tempus.Core.Models.Category;
 using Tempus.IntegrationTests.Configuration;
 
@@ -29,20 +30,18 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
                 Name = "category1"
             }
         };
-
-        var content = SerializeContent(JsonSerializer.Serialize(request.Body));
+        var content = SerializeContent(JsonConvert.SerializeObject(request.Body));
 
         var response = await _client.PostAsync(request.Url, content);
-        var responseString = await response.Content.ReadAsStringAsync();    
-
-        var actual = JsonSerializer.Deserialize<BaseCategory>(responseString);
+        var responseString = await response.Content.ReadAsStringAsync();
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseCategory>>(responseString);
+        var actual = baseResponse?.Resource;
 
         response.EnsureSuccessStatusCode();
-
         Assert.NotNull(actual?.Id);
-        Assert.Equal(request.Body.UserId, actual?.UserId);
-        Assert.Equal(request.Body.Color, actual?.Color);
-        Assert.Equal(request.Body.Name, actual?.Name);
+        Assert.Equal(request.Body.UserId, actual.UserId);
+        Assert.Equal(request.Body.Color, actual.Color);
+        Assert.Equal(request.Body.Name, actual.Name);
     }
 
     [Fact]
@@ -58,19 +57,20 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
                 Name = "categoryUpdated"
             }
         };
-
-        var content = SerializeContent(JsonSerializer.Serialize(request.Body));
+        var content = SerializeContent(JsonConvert.SerializeObject(request.Body));
 
         var response = await _client.PutAsync(request.Url, content);
         var responseString = await response.Content.ReadAsStringAsync();
-        var actual = JsonSerializer.Deserialize< BaseCategory>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseCategory>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Equal(request.Body.Id, actual?.Id);
-        Assert.Equal(request.Body.Color, actual?.Color);
-        Assert.Equal(request.Body.Name, actual?.Name);
-        Assert.Equal(new Guid("68af0be2-624d-4fe6-9a19-a83e932038bf"), actual?.UserId);
+        Assert.Equal(request.Body.Id, actual.Id);
+        Assert.Equal(request.Body.Color, actual.Color);
+        Assert.Equal(request.Body.Name, actual.Name);
+        Assert.Equal(new Guid("68af0be2-624d-4fe6-9a19-a83e932038bf"), actual.UserId);
     }
 
     [Fact]
@@ -78,14 +78,14 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         var response = await _client.DeleteAsync("api/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonSerializer.Deserialize<Guid>(responseString ?? "");
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString ?? "");
+        var actual = baseResponse?.Resource;
+        
 		response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.Equal(new Guid("c4abd929-0cdd-4c04-afa4-3dbeb3f686d1"), actual);
     }
 
-    // [Fact (Skip = "specific reason")
     [Fact]
     public async Task When_CallCategoriesControllerActionGetAll_ItShould_ReturnAllCategories()
     {
@@ -93,14 +93,15 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonSerializer.Deserialize<List<BaseCategory>>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<List<BaseCategory>>>(responseString);
+        var actual = baseResponse?.Resource;
+ 
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Equal(5, actual?.Count);
+        Assert.Equal(5, actual.Count);
     }
-
+    
     [Fact]
     public async Task When_CallCategoriesControllerActionGetById_ItShould_ReturnCategoryWithSpecifiedId()
     {
@@ -108,15 +109,16 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonSerializer.Deserialize<BaseCategory>(responseString);
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseCategory>>(responseString);
+        var actual = baseResponse?.Resource;
 
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Equal(new Guid("d2bbbffc-d7d0-4477-be87-d2e68aeb0ffa"), actual?.Id);
-        Assert.Equal("category5", actual?.Name);
-        Assert.Equal("color5", actual?.Color);
-        Assert.Equal(new Guid("6a0cd002-0cc5-4565-9852-01e3a90f01e9"), actual?.UserId);
+        Assert.Equal(new Guid("d2bbbffc-d7d0-4477-be87-d2e68aeb0ffa"), actual.Id);
+        Assert.Equal("category5", actual.Name);
+        Assert.Equal("color5", actual.Color);
+        Assert.Equal(new Guid("6a0cd002-0cc5-4565-9852-01e3a90f01e9"), actual.UserId);
     }
 
     private static StringContent SerializeContent(string content)

@@ -21,12 +21,20 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 
             var deletedCategoryId = await _categoryRepository.Delete(request.Id);
 
-            var result = BaseResponse<Guid>.Ok(deletedCategoryId);
+            BaseResponse<Guid> result;
+            
+            if (deletedCategoryId == Guid.Empty)
+            {
+                result = BaseResponse<Guid>.NotFound($"Category with Id: {request.Id} not found");
+                return result;
+            }
+
+            result = BaseResponse<Guid>.Ok(deletedCategoryId);
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<Guid>.BadRequest(exception.Message);
+            var result = BaseResponse<Guid>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

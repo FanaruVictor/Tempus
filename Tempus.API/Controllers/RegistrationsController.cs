@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tempus.Core.Commands.Registrations.Create;
 using Tempus.Core.Commands.Registrations.Delete;
 using Tempus.Core.Commands.Registrations.Update;
-using Tempus.Core.Models.Registration;
+using Tempus.Core.Models.Registrations;
 using Tempus.Core.Queries.Registrations.GetAll;
 using Tempus.Core.Queries.Registrations.GetById;
 using Tempus.Core.Queries.Registrations.LastUpdated;
@@ -31,7 +31,7 @@ public class RegistrationsController : BaseController
     /// <param name="query"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<List<RegistrationInfo>>> GetAll([FromQuery] GetAllRegistrationsQuery query) => HandleResponse(await _mediator.Send(query));
+    public async Task<ActionResult<List<DetailedRegistration>>> GetAll([FromQuery] GetAllRegistrationsQuery query) => HandleResponse(await _mediator.Send(query));
 
     /// <summary>
     ///     For a specified Id a registration will be returned if it exists
@@ -39,7 +39,7 @@ public class RegistrationsController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<DetailedRegistration>> GetById([FromRoute] Guid id) => HandleResponse(await _mediator.Send(new GetRegistrationByIdQuery { Id = id }));
+    public async Task<ActionResult<BaseRegistration>> GetById([FromRoute] Guid id) => HandleResponse(await _mediator.Send(new GetRegistrationByIdQuery { Id = id }));
 
     /// <summary>
     ///     Create a registration and saves it into database
@@ -47,7 +47,7 @@ public class RegistrationsController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<DetailedRegistration>> Create([FromBody] CreateRegistrationCommand command) => HandleResponse(await _mediator.Send(command));
+    public async Task<ActionResult<BaseRegistration>> Create([FromBody] CreateRegistrationCommand command) => HandleResponse(await _mediator.Send(command));
 
     /// <summary>
     ///     Updates a registration proprieties
@@ -55,7 +55,7 @@ public class RegistrationsController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<DetailedRegistration>> Update([FromBody] UpdateRegistrationCommand command) => HandleResponse(await _mediator.Send(command));
+    public async Task<ActionResult<BaseRegistration>> Update([FromBody] UpdateRegistrationCommand command) => HandleResponse(await _mediator.Send(command));
 
     /// <summary>
     ///     For a specified Id a registration will be deleted from database if it exists
@@ -74,6 +74,6 @@ public class RegistrationsController : BaseController
     /// </summary>
     /// <returns></returns>
     [HttpGet("lastUpdated")]
-    public async Task<ActionResult<DetailedRegistration>> GetLastUpdated() =>
-        HandleResponse(await _mediator.Send(new LastUpdatedQuery()));
+    public async Task<ActionResult<BaseRegistration>> GetLastUpdated() =>
+        HandleResponse(await _mediator.Send(new GetLastUpdatedRegsitrationQuery()));
 }

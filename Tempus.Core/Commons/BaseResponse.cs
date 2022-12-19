@@ -10,7 +10,7 @@ public class BaseResponse<T>
 
     public List<string>? Errors { get; set; }
 
-    public static BaseResponse<T> Ok(T resource)
+    public static BaseResponse<T> Ok(T resource = default)
     {
         return new BaseResponse<T>
         {
@@ -31,15 +31,12 @@ public class BaseResponse<T>
         };
     }
 
-    public static BaseResponse<T> BadRequest(string message)
+    public static BaseResponse<T> BadRequest(List<string> message)
     {
         return new BaseResponse<T>
         {
             StatusCode = StatusCodes.BadRequest,
-            Errors = new List<string>
-            {
-                message
-            }
+            Errors = message
         };
     }
 }

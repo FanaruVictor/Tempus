@@ -5,8 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Tempus.Data.Context;
 using static Tempus.IntegrationTests.Configuration.DbSeed;
 
-namespace Tempus.IntegrationTests.Configuration;
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
+namespace Tempus.IntegrationTests.Configuration;
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)

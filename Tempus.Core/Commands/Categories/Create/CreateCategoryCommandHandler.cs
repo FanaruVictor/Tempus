@@ -11,8 +11,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     private readonly ICategoryRepository _categoryRepository;
     private readonly IUserRepository _userRepository;
 
-    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUserRepository userRepository)
-    {
+    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUserRepository userRepository){
         _categoryRepository = categoryRepository;
         _userRepository = userRepository;
     }
@@ -25,20 +24,29 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
             cancellationToken.ThrowIfCancellationRequested();
 
             var user = await _userRepository.GetById(request.UserId);
-            if (user == null) return BaseResponse<BaseCategory>.BadRequest($"User with Id: {request.UserId} not found");
+            if (user == null) return BaseResponse<BaseCategory>.BadRequest(new List<string>{$"User with Id: {request.UserId} not found"});
 
-            var entity = new Category(Guid.NewGuid(), request.Name, DateTime.UtcNow, DateTime.UtcNow, request.Color,
-                request.UserId);
+            var entity = new Category
+            {
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                CreatedAt = DateTime.UtcNow,
+                LastUpdatedAt = DateTime.UtcNow,
+                Color = request.Color,
+                UserId = request.UserId
+            };
+            
             var category = await _categoryRepository.Add(entity);
 
+            var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
             var result =
-                BaseResponse<BaseCategory>.Ok(new BaseCategory(category.Id, category.Name, category.CreatedAt,
-                    category.Color, category.UserId));
+                BaseResponse<BaseCategory>.Ok(baseCategory);
+            
             return result;
         }
         catch (Exception exception)
         {
-            return BaseResponse<BaseCategory>.BadRequest(exception.Message);
+            return BaseResponse<BaseCategory>.BadRequest(new List<string>{exception.Message});
         }
     }
 }

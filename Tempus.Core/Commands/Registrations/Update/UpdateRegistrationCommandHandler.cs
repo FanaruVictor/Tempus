@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registration;
+using Tempus.Core.Models.Registrations;
 using Tempus.Core.Repositories;
 
 namespace Tempus.Core.Commands.Registrations.Update;
 
-public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrationCommand, BaseResponse<DetailedRegistration>>
+public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrationCommand, BaseResponse<BaseRegistration>>
 {
     private readonly IRegistrationRepository _registrationRepository;
 
@@ -15,34 +15,37 @@ public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrati
         _registrationRepository = registrationRepository;
     }
 
-    public async Task<BaseResponse<DetailedRegistration>> Handle(UpdateRegistrationCommand request,
+    public async Task<BaseResponse<BaseRegistration>> Handle(UpdateRegistrationCommand request,
         CancellationToken cancellationToken)
     {
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            
             var entity = await _registrationRepository.GetById(request.Id);
 
             if (entity == null)
-                return BaseResponse<DetailedRegistration>.BadRequest($"Registration with Id: {request.Id} was not found");
+                return BaseResponse<BaseRegistration>.NotFound($"Registration with Id: {request.Id} was not found");
 
-            entity = new Registration(entity.Id, request.Title, request.Content, entity.CreatedAt, DateTime.UtcNow,
-                entity.CategoryId);
+            entity = new Registration
+            {
+                Id = entity.Id,
+                Title = request.Title,
+                Content = request.Content,
+                CreatedAt = entity.CreatedAt,
+                LastUpdatedAt = DateTime.UtcNow,
+                CategoryId = entity.CategoryId
+            };
 
             var registration = await _registrationRepository.Update(entity);
 
-            var result = BaseResponse<DetailedRegistration>.Ok(new DetailedRegistration
-            {
-                Id = registration.Id,
-                Title = registration.Title,
-                Content = registration.Content
-            });
+            var detailedRegistration = GenericMapper<Registration, BaseRegistration>.Map(registration);
+            var result = BaseResponse<BaseRegistration>.Ok(detailedRegistration);
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<DetailedRegistration>.BadRequest(exception.Message);
+            var result = BaseResponse<BaseRegistration>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

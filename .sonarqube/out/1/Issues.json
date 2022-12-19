@@ -18,27 +18,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Category/BaseCategory.cs",
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 18,
-                  "endLine": 23,
-                  "endColumn": 19
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Core/Commons/BaseResponse.cs",
                 "region": {
                   "startLine": 7,
@@ -60,11 +39,95 @@
           "locations": [
             {
               "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommand.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 18,
+                  "endLine": 9,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Update/UpdateCategoryCommand.cs",
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 18,
+                  "endLine": 11,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Create/CreateCategoryCommand.cs",
                 "region": {
                   "startLine": 11,
                   "startColumn": 18,
                   "endLine": 11,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Core/Models/Category/BaseCategory.cs",
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 18,
+                  "endLine": 9,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommand.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 18,
+                  "endLine": 10,
                   "endColumn": 19
                 }
               }
@@ -102,49 +165,7 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommand.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 18,
-                  "endLine": 9,
-                  "endColumn": 19
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommand.cs",
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 18,
-                  "endLine": 10,
-                  "endColumn": 19
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Registration/DetailedRegistration.cs",
+                "uri": "file:///D:/Tempus/Tempus.Core/Models/Registrations/DetailedRegistration.cs",
                 "region": {
                   "startLine": 5,
                   "startColumn": 18,
@@ -167,9 +188,9 @@
               "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Core/Entities/Registration.cs",
                 "region": {
-                  "startLine": 26,
+                  "startLine": 5,
                   "startColumn": 18,
-                  "endLine": 26,
+                  "endLine": 5,
                   "endColumn": 19
                 }
               }
@@ -188,9 +209,9 @@
               "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Core/Entities/Registration.cs",
                 "region": {
-                  "startLine": 27,
+                  "startLine": 6,
                   "startColumn": 18,
-                  "endLine": 27,
+                  "endLine": 6,
                   "endColumn": 19
                 }
               }
@@ -207,12 +228,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/Registration.cs",
+                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
                 "region": {
-                  "startLine": 11,
-                  "startColumn": 15,
-                  "endLine": 11,
-                  "endColumn": 16
+                  "startLine": 7,
+                  "startColumn": 30,
+                  "endLine": 7,
+                  "endColumn": 31
                 }
               }
             }
@@ -228,12 +249,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/Registration.cs",
+                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
                 "region": {
-                  "startLine": 12,
-                  "startColumn": 15,
-                  "endLine": 12,
-                  "endColumn": 16
+                  "startLine": 8,
+                  "startColumn": 26,
+                  "endLine": 8,
+                  "endColumn": 27
                 }
               }
             }
@@ -270,90 +291,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
-                "region": {
-                  "startLine": 22,
-                  "startColumn": 30,
-                  "endLine": 22,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 26,
-                  "endLine": 23,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 27,
-                  "endLine": 13,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Update/UpdateCategoryCommand.cs",
-                "region": {
-                  "startLine": 11,
-                  "startColumn": 18,
-                  "endLine": 11,
-                  "endColumn": 19
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8632",
-          "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Update/UpdateRegistrationCommand.cs",
                 "region": {
                   "startLine": 10,
@@ -388,1054 +325,9 @@
           "properties": {
             "warningLevel": 1
           }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseEntity' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/BaseEntity.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 24
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseCategory' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Category/BaseCategory.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateCategoryCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Create/CreateCategoryCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseResponse' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commons/BaseResponse.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseRegistration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Registration/BaseRegistration.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'Category' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/Category.cs",
-                "region": {
-                  "startLine": 4,
-                  "startColumn": 14,
-                  "endLine": 4,
-                  "endColumn": 22
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DetailedRegistration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Registration/DetailedRegistration.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateRegistrationCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'StatusCodes' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commons/StatusCodes.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 13,
-                  "endLine": 3,
-                  "endColumn": 24
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RegistrationInfo' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/Registration/RegistrationInfo.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseUser' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Models/User/BaseUser.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 14,
-                  "endLine": 5,
-                  "endColumn": 22
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateCategoryCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Create/CreateCategoryCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllCategoriesQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Categories/GetAll/GetAllCategoriesQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'Registration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/Registration.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteCategoryCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Delete/DeleteCategoryCommand.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IBaseRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Repositories/IBaseRepository.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 18,
-                  "endLine": 3,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateRegistrationCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Create/CreateRegistrationCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllCategoriesQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Categories/GetAll/GetAllCategoriesQueryHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'User' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Entities/User.cs",
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 18
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteCategoryCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Delete/DeleteCategoryCommandHandler.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteRegistrationCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Delete/DeleteRegistrationCommand.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteRegistrationCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Delete/DeleteRegistrationCommandHandler.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'ICategoryRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Repositories/ICategoryRepository.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 18,
-                  "endLine": 5,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetCategoryByIdQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Categories/GetById/GetCategoryByIdQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllRegistrationsQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/GetAll/GetAllRegistrationsQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IRegistrationRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Repositories/IRegistrationRepository.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 18,
-                  "endLine": 5,
-                  "endColumn": 41
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateCategoryCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Update/UpdateCategoryCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateRegistrationCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Update/UpdateRegistrationCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'IUserRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Repositories/IUserRepository.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 18,
-                  "endLine": 5,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateUserCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Create/CreateUserCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetCategoryByIdQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Categories/GetById/GetCategoryByIdQueryHandler.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 41
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllUsersQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Users/GetAll/GetAllUsersQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllRegistrationsQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/GetAll/GetAllRegistrationsQueryHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 45
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateRegistrationCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Registrations/Update/UpdateRegistrationCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateCategoryCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Categories/Update/UpdateCategoryCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'LastUpdatedQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/LastUpdated/LastUpdatedQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetRegistrationByIdQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/GetById/GetRegistrationByIdQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CreateUserCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Create/CreateUserCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetAllUsersQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Users/GetAll/GetAllUsersQueryHandler.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'LastUpdatedQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/LastUpdated/LastUpdatedQueryHandler.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteUserCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Delete/DeleteUserCommand.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetRegistrationByIdQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/GetById/GetRegistrationByIdQueryHandler.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 45
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetUserByIdQuery' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Users/GetById/GetUserByIdQuery.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 30
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateUserCommand' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Update/UpdateUserCommand.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UpdateUserCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Update/UpdateUserCommandHandler.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 14,
-                  "endLine": 9,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'GetUserByIdQueryHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Users/GetById/GetUserByIdQueryHandler.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'DeleteUserCommandHandler' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Commands/Users/Delete/DeleteUserCommandHandler.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
-          "message": "Member 'UserId' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Categories/GetAll/GetAllCategoriesQuery.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 18,
-                  "endLine": 9,
-                  "endColumn": 24
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
-          "message": "Member 'CategoryId' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Core/Queries/Registrations/GetAll/GetAllRegistrationsQuery.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 18,
-                  "endLine": 9,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
         }
       ],
       "rules": {
-        "CA1822": {
-          "id": "CA1822",
-          "shortDescription": "Mark members as static",
-          "fullDescription": "Members that do not access instance data or call instance methods can be marked as static. After you mark the methods as static, the compiler will emit nonvirtual call sites to these members. This can give you a measurable performance gain for performance-sensitive code.",
-          "defaultLevel": "note",
-          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
-          "properties": {
-            "category": "Performance",
-            "isEnabledByDefault": true,
-            "tags": [
-              "PortedFromFxCop",
-              "Telemetry",
-              "EnabledRuleInAggressiveMode"
-            ]
-          }
-        },
         "CS8632": {
           "id": "CS8632",
           "shortDescription": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
@@ -1447,23 +339,6 @@
             "tags": [
               "Compiler",
               "Telemetry"
-            ]
-          }
-        },
-        "S3903": {
-          "id": "S3903",
-          "shortDescription": "Types should be defined in named namespaces",
-          "fullDescription": "Types are declared in namespaces in order to prevent name collisions and as a way to organize them into the object hierarchy. Types that are defined outside any named namespace are in a global namespace that cannot be referenced in code.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3903",
-          "properties": {
-            "category": "Major Bug",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "SonarWay",
-              "MainSourceScope",
-              "TestSourceScope"
             ]
           }
         }

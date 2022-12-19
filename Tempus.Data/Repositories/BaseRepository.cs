@@ -55,8 +55,11 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     {
         var entity = await GetById(id);
 
-        if (entity == null) throw new Exception("There is no user with this Id");
-
+        if (entity == null)
+        {
+            return Guid.Empty;
+        }
+        
         _context
             .Set<TEntity>()
             .Remove(entity);

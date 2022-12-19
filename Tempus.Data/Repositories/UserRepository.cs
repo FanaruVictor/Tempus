@@ -6,8 +6,6 @@ namespace Tempus.Data.Repositories.UserRepositories;
 
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
-    private readonly TempusDbContext _context;
-
     public UserRepository(TempusDbContext context) : base(context)
     {
     }

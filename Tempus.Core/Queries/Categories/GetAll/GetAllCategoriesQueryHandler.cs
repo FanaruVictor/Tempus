@@ -31,12 +31,12 @@ public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuer
 
             var response =
                 BaseResponse<List<BaseCategory>>.Ok(categories
-                    .Select(x => new BaseCategory(x.Id, x.Name, x.LastUpdatedAt, x.Color, x.UserId)).ToList());
+                    .Select(GenericMapper<Category, BaseCategory>.Map).ToList());
             return response;
         }
         catch (Exception exception)
         {
-            var response = BaseResponse<List<BaseCategory>>.BadRequest(exception.Message);
+            var response = BaseResponse<List<BaseCategory>>.BadRequest(new List<string>{exception.Message});
             return response;
         }
     }

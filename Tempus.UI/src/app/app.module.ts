@@ -3,7 +3,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HeaderModule} from "./header/header.module";
+import {MatTabsModule} from "@angular/material/tabs";
+import {RegistrationModule} from "./registration/registration.module";
+import {CategoryModule} from "./category/category.module";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -13,7 +17,11 @@ import {HeaderModule} from "./header/header.module";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HeaderModule
+    MatTabsModule,
+    RegistrationModule,
+    CategoryModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

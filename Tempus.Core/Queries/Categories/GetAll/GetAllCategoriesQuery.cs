@@ -6,5 +6,5 @@ namespace Tempus.Core.Queries.Categories.GetAll;
 
 public class GetAllCategoriesQuery : IRequest<BaseResponse<List<BaseCategory>>>
 {
-    public Guid? UserId => null;
+    public Guid? UserId { get; init; }
 }

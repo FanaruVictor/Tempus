@@ -18,11 +18,32 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/BaseRepository.cs",
+                "uri": "file:///D:/Tempus/Tempus.Data/Context/TempusDbContext.cs",
                 "region": {
-                  "startLine": 27,
+                  "startLine": 14,
+                  "startColumn": 26,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Data/Context/TempusDbContext.cs",
+                "region": {
+                  "startLine": 15,
                   "startColumn": 30,
-                  "endLine": 27,
+                  "endLine": 15,
                   "endColumn": 31
                 }
               }
@@ -39,12 +60,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/RegistrationRepository.cs",
+                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/BaseRepository.cs",
                 "region": {
-                  "startLine": 14,
-                  "startColumn": 40,
-                  "endLine": 14,
-                  "endColumn": 41
+                  "startLine": 27,
+                  "startColumn": 30,
+                  "endLine": 27,
+                  "endColumn": 31
                 }
               }
             }
@@ -83,6 +104,27 @@
               "resultFile": {
                 "uri": "file:///D:/Tempus/Tempus.Data/Repositories/RegistrationRepository.cs",
                 "region": {
+                  "startLine": 14,
+                  "startColumn": 40,
+                  "endLine": 14,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/RegistrationRepository.cs",
+                "region": {
                   "startLine": 16,
                   "startColumn": 29,
                   "endLine": 16,
@@ -96,18 +138,18 @@
           }
         },
         {
-          "ruleId": "CS8632",
+          "ruleId": "S4581",
           "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "message": "Use 'Guid.NewGuid()' or 'Guid.Empty' or add arguments to this GUID instantiation.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/TempusDbContext.cs",
+                "uri": "file:///D:/Tempus/Tempus.Data/Migrations/20221121204102_UserCategoryAddedAndFieldsForCategoriesAndRegistrations.cs",
                 "region": {
-                  "startLine": 14,
-                  "startColumn": 26,
-                  "endLine": 14,
-                  "endColumn": 27
+                  "startLine": 85,
+                  "startColumn": 31,
+                  "endLine": 85,
+                  "endColumn": 79
                 }
               }
             }
@@ -117,291 +159,18 @@
           }
         },
         {
-          "ruleId": "CS8632",
+          "ruleId": "S4581",
           "level": "warning",
-          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "message": "Use 'Guid.NewGuid()' or 'Guid.Empty' or add arguments to this GUID instantiation.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/TempusDbContext.cs",
+                "uri": "file:///D:/Tempus/Tempus.Data/Migrations/20221121204102_UserCategoryAddedAndFieldsForCategoriesAndRegistrations.cs",
                 "region": {
-                  "startLine": 15,
-                  "startColumn": 30,
-                  "endLine": 15,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS0108",
-          "level": "warning",
-          "message": "'UserRepository._context' hides inherited member 'BaseRepository<User>._context'. Use the new keyword if hiding was intended.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/UserRepository.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 38,
-                  "endLine": 9,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 2
-          }
-        },
-        {
-          "ruleId": "CS0169",
-          "level": "warning",
-          "message": "The field 'UserRepository._context' is never used",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/UserRepository.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 38,
-                  "endLine": 9,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 3
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'Configuration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Configuration.cs",
-                "region": {
-                  "startLine": 12,
-                  "startColumn": 21,
-                  "endLine": 12,
-                  "endColumn": 34
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CategoryConfiguration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/Configurations/CategoryConfiguration.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UserConfiguration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/Configurations/UserConfiguration.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RegistrationConfiguration' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/Configurations/RegistrationConfiguration.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1144",
-          "level": "warning",
-          "message": "Remove the unused private field '_context'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/UserRepository.cs",
-                "region": {
-                  "startLine": 9,
-                  "startColumn": 5,
-                  "endLine": 9,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'UserRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/UserRepository.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'BaseRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/BaseRepository.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'CategoryRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/CategoryRepository.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'RegistrationRepository' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/RegistrationRepository.cs",
-                "region": {
-                  "startLine": 8,
-                  "startColumn": 14,
-                  "endLine": 8,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3903",
-          "level": "warning",
-          "message": "Move 'TempusDbContext' into a named namespace.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Context/TempusDbContext.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 14,
-                  "endLine": 7,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.Data/Repositories/BaseRepository.cs",
-                "region": {
-                  "startLine": 58,
-                  "startColumn": 35,
-                  "endLine": 58,
-                  "endColumn": 81
+                  "startLine": 39,
+                  "startColumn": 31,
+                  "endLine": 39,
+                  "endColumn": 79
                 }
               }
             }
@@ -412,35 +181,6 @@
         }
       ],
       "rules": {
-        "CS0108": {
-          "id": "CS0108",
-          "shortDescription": "Member hides inherited member; missing new keyword",
-          "fullDescription": "A variable was declared with the same name as a variable in a base type. However, the new keyword was not used. This warning informs you that you should use new; the variable is declared as if new had been used in the declaration.",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0108)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        },
-        "CS0169": {
-          "id": "CS0169",
-          "shortDescription": "Field is never used",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0169)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        },
         "CS8632": {
           "id": "CS8632",
           "shortDescription": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
@@ -455,54 +195,20 @@
             ]
           }
         },
-        "S112": {
-          "id": "S112",
-          "shortDescription": "General exceptions should never be thrown",
-          "fullDescription": "Throwing such general exceptions as Exception, SystemException, ApplicationException, IndexOutOfRangeException, NullReferenceException, OutOfMemoryException and ExecutionEngineException prevents calling methods from handling true, system-generated exceptions differently than application-generated errors. ",
+        "S4581": {
+          "id": "S4581",
+          "shortDescription": "\"new Guid()\" should not be used",
+          "fullDescription": "When the syntax new Guid() (i.e. parameterless instantiation) is used, it must be that one of three things is wanted:",
           "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-112",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4581",
           "properties": {
             "category": "Major Code Smell",
             "isEnabledByDefault": true,
             "tags": [
               "C#",
-              "SonarWay",
-              "MainSourceScope"
-            ]
-          }
-        },
-        "S1144": {
-          "id": "S1144",
-          "shortDescription": "Unused private types or members should be removed",
-          "fullDescription": "private or internal types or private members that are never executed or referenced are dead code: unnecessary, inoperative code that should be removed. Cleaning out dead code decreases the size of the maintained codebase, making it easier to understand the program and preventing bugs from being introduced.",
-          "defaultLevel": "note",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1144",
-          "properties": {
-            "category": "Major Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "SonarWay",
               "MainSourceScope",
               "TestSourceScope",
-              "Unnecessary"
-            ]
-          }
-        },
-        "S3903": {
-          "id": "S3903",
-          "shortDescription": "Types should be defined in named namespaces",
-          "fullDescription": "Types are declared in namespaces in order to prevent name collisions and as a way to organize them into the object hierarchy. Types that are defined outside any named namespace are in a global namespace that cannot be referenced in code.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3903",
-          "properties": {
-            "category": "Major Bug",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "SonarWay",
-              "MainSourceScope",
-              "TestSourceScope"
+              "SonarWay"
             ]
           }
         }

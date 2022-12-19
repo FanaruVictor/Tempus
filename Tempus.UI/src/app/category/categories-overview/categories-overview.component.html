@@ -1,0 +1,15 @@
+<div class="category-wrapper">
+  <div
+    *ngFor="let category of categories"
+    class="category">
+    <div class="info" [routerLink]="['/categories', category.id]">
+      <div class="title">{{category.name.toUpperCase()}}</div>
+      <div class="last-update">{{category.lastUpdatedAt | date }}</div>
+    </div>
+    <div class="actions">
+      <app-button [icon]="'edit'" class="edit" [routerLink]="['categories/edit', category.id]"></app-button>
+      <app-button [icon]="'delete'" class="delete" (click)="delete(category.id)"></app-button>
+    </div>
+  </div>
+  <button class="create-category" [routerLink]="['/categories/create']">New</button>
+</div>

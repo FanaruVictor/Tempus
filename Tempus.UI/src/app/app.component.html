@@ -1,9 +1,14 @@
-<app-header></app-header>
-<div class="wrapper">
-  <div class="right"></div>
-  <div class="center">
-    <router-outlet></router-outlet>
-  </div>
-  <div class="left"></div>
+    <div class="header">
+      <div class="logo">Tempus</div>
+      <nav mat-tab-nav-bar>
+        <a mat-tab-link
+           *ngFor="let tab of tabs"
+           [routerLink]="tab.link"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive"
+        >{{tab.label}}</a>
+      </nav>
+    </div>
 
-</div>
+<router-outlet></router-outlet>
+

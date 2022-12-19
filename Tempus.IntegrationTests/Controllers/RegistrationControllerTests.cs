@@ -2,7 +2,8 @@
 using Newtonsoft.Json;
 using Tempus.Core.Commands.Registrations.Create;
 using Tempus.Core.Commands.Registrations.Update;
-using Tempus.Core.Models.Registration;
+using Tempus.Core.Commons;
+using Tempus.Core.Models.Registrations;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;
@@ -26,23 +27,21 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
             {
                 CategoryId = new Guid("218e7d32-4ab0-47fb-aae5-b10b309163e3"),
                 Content = "content1",
-                Title = "title1"
+                Title = "title1",
             }
         };
-
         var content = SerializeContent(JsonConvert.SerializeObject(request.Body));
 
         var response = await _client.PostAsync(request.Url, content);
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonConvert.DeserializeObject<RegistrationInfo>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
-
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual?.Id);
-        Assert.NotNull(actual?.LastUpdatedAt);
-        Assert.Equal("color3", actual?.CategoryColor);
-        Assert.Equal(request.Body.Title, actual?.Title);
+        Assert.Equal("content1", actual.Content);
+        Assert.Equal(request.Body.Title, actual.Title);
     }
 
     [Fact]
@@ -58,33 +57,34 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
                 Title = "registrationUpdated"
             }
         };
-
         var content = SerializeContent(JsonConvert.SerializeObject(request.Body));
 
         var response = await _client.PutAsync(request.Url, content);
         var responseString = await response.Content.ReadAsStringAsync();
-        var actual = JsonConvert.DeserializeObject<RegistrationInfo>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Equal(request.Body.Id, actual?.Id);
-        Assert.Equal(request.Body.Title, actual?.Title);
-        Assert.Equal("color3", actual?.CategoryColor);
+        Assert.Equal(request.Body.Id, actual.Id);
+        Assert.Equal(request.Body.Title, actual.Title);
+        Assert.Equal(request.Body.Content, actual.Content);
     }
 
     [Fact]
-    public async Task When_CallRegistrationsControllerActionDelete_ItShould_ReturnRegistrationUserId()
+    public async Task When_CallRegistrationsControllerActionDelete_ItShould_ReturnRegistrationId()
     {
         var response = await _client.DeleteAsync("api/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonConvert.DeserializeObject<Guid>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.Equal(new Guid("c4abd929-0cdd-4c04-afa4-3dbeb3f686d1"), actual);
     }
 
-    // [Fact (Skip = "specific reason")]
     [Fact]
     public async Task When_CallRegistrationsControllerActionGetAll_ItShould_ReturnAllRegistrations()
     {
@@ -92,10 +92,11 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonConvert.DeserializeObject<List<DetailedRegistration>>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<List<DetailedRegistration>>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
         Assert.Contains(actual.Count, new List<int> { 4, 5, 6 });
     }
@@ -107,14 +108,15 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
-
-        var actual = JsonConvert.DeserializeObject<DetailedRegistration>(responseString);
-
+        var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
+        var actual = baseResponse?.Resource;
+        
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Equal(new Guid("1b409dea-6d37-45b4-8d74-1b6c43271660"), actual?.Id);
-        Assert.Equal("registration3", actual?.Title);
-        Assert.Equal("content3", actual?.Content);
+        Assert.Equal(new Guid("1b409dea-6d37-45b4-8d74-1b6c43271660"), actual.Id);
+        Assert.Equal("registration3", actual.Title);
+        Assert.Equal("content3", actual.Content);
     }
 
     private static StringContent SerializeContent(string content)

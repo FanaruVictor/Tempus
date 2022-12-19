@@ -2,31 +2,25 @@
 
 public class Registration : BaseEntity
 {
-    public Registration()
-    {
-    }
+    public string? Title { get; set; }
+    public string? Content { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime LastUpdatedAt { get; set; }
+    public Guid CategoryId { get; set; }
+    public Category Category { get; set; }
 
-    public Registration(
-        Guid id,
-        string? title,
-        string? content,
-        DateTime createdAt,
-        DateTime lastUpdatedAt,
-        Guid categoryId,
-        Category category = null) : base(id)
+    public Registration(Guid id, string title, string content, DateTime createdAt, DateTime lastUpdatedAt,
+        Guid categoryId)
     {
+        Id = id;
         Title = title;
         Content = content;
         CreatedAt = createdAt;
         LastUpdatedAt = lastUpdatedAt;
         CategoryId = categoryId;
-        Category = category;
     }
 
-    public string? Title { get; }
-    public string? Content { get; }
-    public DateTime CreatedAt { get; }
-    public DateTime LastUpdatedAt { get; }
-    public Guid CategoryId { get; }
-    public Category Category { get; }
+    public Registration()
+    {
+    }
 }

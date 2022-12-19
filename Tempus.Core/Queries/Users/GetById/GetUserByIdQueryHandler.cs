@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
+using Tempus.Core.Entities;
 using Tempus.Core.Models.User;
 using Tempus.Core.Repositories;
 
@@ -19,16 +20,18 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var response = await _userRepository.GetById(request.Id);
+            var user = await _userRepository.GetById(request.Id);
 
-            if (response == null) return BaseResponse<BaseUser>.BadRequest("User not found");
+            if (user == null) return BaseResponse<BaseUser>.NotFound("User not found.");
 
-            var result = BaseResponse<BaseUser>.Ok(new BaseUser(response.Id, response.UserName, response.Email));
+            var baseUser = GenericMapper<User, BaseUser>.Map(user);
+            var result = BaseResponse<BaseUser>.Ok(baseUser);
+            
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<BaseUser>.NotFound(exception.Message);
+            var result = BaseResponse<BaseUser>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

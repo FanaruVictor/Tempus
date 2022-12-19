@@ -3,35 +3,25 @@ namespace Tempus.Core.Entities;
 
 public class Category : BaseEntity
 {
-    public Category()
-    {
-    }
+    public string Name { get; set; } = "";
+    public DateTime CreatedAt { get; set; }
+    public DateTime LastUpdatedAt { get; set; }
+    public string? Color { get; set; }
+    public List<Registration>? Registrations { get; set; }
+    public User? User { get; set; }
+    public Guid UserId { get; set; }
 
-    public Category(
-        Guid id,
-        string name,
-        DateTime createdAt,
-        DateTime lastUpdatedAt,
-        string color,
-        Guid userId,
-        List<Registration>? registrations = null,
-        User? user = null
-    ) : base(id)
+    public Category(Guid id, string name, DateTime createdAt, DateTime lastUpdatedAt, string color, Guid userId)
     {
+        Id = id;
         Name = name;
         CreatedAt = createdAt;
         LastUpdatedAt = lastUpdatedAt;
         Color = color;
-        User = user;
         UserId = userId;
-        Registrations = registrations;
     }
 
-    public string Name { get; } = "";
-    public DateTime CreatedAt { get; }
-    public DateTime LastUpdatedAt { get; }
-    public string? Color { get; }
-    public List<Registration>? Registrations { get; }
-    public User? User { get; }
-    public Guid UserId { get; }
+    public Category()
+    {
+    }
 }

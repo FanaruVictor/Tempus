@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
+using Tempus.Core.Entities;
 using Tempus.Core.Models.User;
 using Tempus.Core.Repositories;
 
@@ -23,12 +24,12 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseRes
             var users = await _userRepository.GetAll();
 
             var result =
-                BaseResponse<List<BaseUser>>.Ok(users.Select(x => new BaseUser(x.Id, x.UserName, x.Email)).ToList());
+                BaseResponse<List<BaseUser>>.Ok(users.Select(GenericMapper<User,BaseUser>.Map).ToList());
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<List<BaseUser>>.BadRequest(exception.Message);
+            var result = BaseResponse<List<BaseUser>>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

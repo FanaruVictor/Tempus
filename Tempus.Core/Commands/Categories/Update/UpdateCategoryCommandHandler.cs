@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Tempus.Core.Commands.Categories.Delete;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Models.Category;
@@ -20,25 +21,33 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             var entity = await _categoryRepository.GetById(request.Id);
 
             if (entity == null)
                 return BaseResponse<BaseCategory>.NotFound(
                     $"Category with Id: {request.Id} not found.");
 
-            entity = new Category(entity.Id, request.Name, entity.CreatedAt, DateTime.UtcNow, request.Color,
-                entity.UserId);
-
+            entity = new Category
+            {
+                Id = entity.Id,
+                Name = request.Name,
+                CreatedAt = entity.CreatedAt,
+                LastUpdatedAt = DateTime.UtcNow,
+                Color = request.Color,
+                UserId = entity.UserId
+            };
+    
             var category = await _categoryRepository.Update(entity);
 
-            var result = BaseResponse<BaseCategory>.Ok(new BaseCategory(category.Id, category.Name,
-                category.LastUpdatedAt,
-                category.Color, category.UserId));
+            var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
+            var result = BaseResponse<BaseCategory>.Ok(baseCategory);
+            
             return result;
         }
         catch (Exception exception)
         {
-            var result = BaseResponse<BaseCategory>.BadRequest(exception.Message);
+            var result = BaseResponse<BaseCategory>.BadRequest(new List<string>{exception.Message});
             return result;
         }
     }

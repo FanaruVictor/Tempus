@@ -11,65 +11,7 @@
         "language": "en-US"
       },
       "results": [
-        {
-          "ruleId": "CS8602",
-          "level": "warning",
-          "message": "Dereference of a possibly null reference.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.IntegrationTests/Controllers/RegistrationControllerTests.cs",
-                "region": {
-                  "startLine": 100,
-                  "startColumn": 25,
-                  "endLine": 100,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8602",
-          "level": "warning",
-          "message": "Dereference of a possibly null reference.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/Tempus/Tempus.IntegrationTests/Controllers/UserControllerTests.cs",
-                "region": {
-                  "startLine": 101,
-                  "startColumn": 25,
-                  "endLine": 101,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        }
-      ],
-      "rules": {
-        "CS8602": {
-          "id": "CS8602",
-          "shortDescription": "Dereference of a possibly null reference.",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8602)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        }
-      }
+      ]
     }
   ]
 }

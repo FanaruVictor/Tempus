@@ -24,10 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Registration\QueryHandlers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Tempus.Core\Tempus.Core.csproj" />
     </ItemGroup>
 
