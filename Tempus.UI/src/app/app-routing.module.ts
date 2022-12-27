@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CategoryRoutingModule} from "./category/category-routing.module";
+import {NotFoundComponent} from "./commons/not-found/not-found.component";
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/registrations'},
@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'categories',
     loadChildren: () => import('./category/category-routing.module').then(m => m.CategoryRoutingModule)
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

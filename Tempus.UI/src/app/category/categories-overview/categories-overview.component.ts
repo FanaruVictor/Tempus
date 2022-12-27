@@ -14,7 +14,7 @@ export class CategoriesOverviewComponent {
   constructor(private httpClient: HttpClient, private router: Router) {
   }
   ngOnInit(): void {
-    this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/categories`)
+    this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/v1/categories`)
       .subscribe({
         next: response => {
           this.categories = response.resource;
@@ -23,12 +23,16 @@ export class CategoriesOverviewComponent {
   }
 
   delete(id: string){
-    this.httpClient.delete<GenericResponse<string>>(`https://localhost:7077/api/categories/${id}`)
+    this.httpClient.delete<GenericResponse<string>>(`https://localhost:7077/api/v1/categories/${id}`)
       .subscribe(response => {
         let id = response.resource;
         this.categories = this.categories?.filter(x => x.id !== id);
         let last = this.categories?.slice(-1)[0];
         this.router.navigate([`/categories`, last?.id || 'create'])
       });
+  }
+
+  addCategory(){
+
   }
 }

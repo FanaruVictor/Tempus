@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryComponent } from './category/category.component';
 import { CategoriesOverviewComponent } from './categories-overview/categories-overview.component';
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "../shared/shared.module";
 import {CategoryRoutingModule} from "./category-routing.module";
 import { ReactiveFormsModule} from "@angular/forms";
+import {DetailedCategoryComponent} from "./detailed-category/detailed-category.component";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
 @NgModule({
   declarations: [
-    CategoryComponent,
+    DetailedCategoryComponent,
     CategoriesOverviewComponent,
   ],
   imports: [
@@ -19,11 +20,8 @@ import { ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     RouterModule,
     SharedModule,
-    ReactiveFormsModule
-  ],
-    exports: [
-        CategoriesOverviewComponent,
-        CategoryComponent
-    ]
+    ReactiveFormsModule,
+    MatButtonModule
+  ]
 })
 export class CategoryModule { }

@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {GenericResponse} from "../../commons/models/genericResponse";
 import {BaseCategory} from "../../commons/models/categories/baseCategory";
 import {MatDialog} from "@angular/material/dialog";
 import {DetailedRegistration} from "../../commons/models/registrations/detailedRegistration";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
+import {RegistrationApiService} from "../../commons/services/registration.api.service";
+import {CategoryApiService} from "../../commons/services/category.api.service";
 
 @Component({
   selector: 'app-registrations-overview',
@@ -15,22 +16,35 @@ import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category
 export class RegistrationsOverviewComponent {
   registrations?: DetailedRegistration[];
   categories?: BaseCategory[];
+  defaultColor = '#d6efef';
 
-  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+    private registrationApiService: RegistrationApiService,
+    private categoryApiService: CategoryApiService
+  ) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<GenericResponse<DetailedRegistration[]>>(`https://localhost:7077/api/registrations`)
+    this.getAll();
+  }
+
+  getAll(){
+    this.registrationApiService.getAll()
       .subscribe({
         next: response => {
-          console.log(response)
           this.registrations = response.resource;
+          this.registrations = this.registrations.sort(
+            (objA, objB) => new Date(objB.lastUpdatedAt).getTime() - new Date(objA.lastUpdatedAt).getTime(),
+          );
         }
       });
   }
 
-  openDialog(): void {
-    this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/categories`)
+  addRegistration(): void {
+    this.categoryApiService.getAll()
       .subscribe({
         next: response => {
           this.categories = response.resource;
@@ -40,7 +54,7 @@ export class RegistrationsOverviewComponent {
           });
           dialogRef.afterClosed().subscribe(result => {
             if(result)
-              this.router.navigate(['/create', {categoryId: result.id}])
+              this.router.navigate(['/registrations/create', {categoryId: result.id}])
           });
         }
       });

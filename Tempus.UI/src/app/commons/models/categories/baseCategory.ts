@@ -1,7 +1,7 @@
 ﻿export interface BaseCategory{
   id: string;
   name: string;
-  lastUpdatedAt: Date;
+  lastUpdatedAt: string;
   color: string;
   userId: string;
 }

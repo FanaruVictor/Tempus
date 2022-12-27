@@ -6,14 +6,13 @@ import {GenericResponse} from "../../commons/models/genericResponse";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CreateCategory} from "../../commons/models/categories/CreateCategory";
 import {UpdateCategory} from "../../commons/models/categories/updateCategory";
-import {log} from "util";
 
 @Component({
   selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  templateUrl: './detailed-category.component.html',
+  styleUrls: ['./detailed-category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class DetailedCategoryComponent implements OnInit {
   isEditForm = false;
   isCreateForm = false;
   category?: BaseCategory;
@@ -50,7 +49,7 @@ export class CategoryComponent implements OnInit {
   }
 
   getCategory(id: string) {
-    this.httpClient.get<GenericResponse<BaseCategory>>(`https://localhost:7077/api/categories/${id}`)
+    this.httpClient.get<GenericResponse<BaseCategory>>(`https://localhost:7077/api/v1/categories/${id}`)
       .subscribe({
         next: response => {
           this.category = response.resource;
@@ -70,12 +69,12 @@ export class CategoryComponent implements OnInit {
   onSubmit() {
     if (this.category) {
       console.log(this.category);
-      var category: UpdateCategory = {
+      let category: UpdateCategory = {
         id: this.category.id,
         name: this.categoryForm.controls['name'].value,
         color: this.categoryForm.controls['color'].value
       }
-      this.httpClient.put<GenericResponse<BaseCategory>>('`https://localhost:7077/api/categories/', category)
+      this.httpClient.put<GenericResponse<BaseCategory>>('`https://localhost:7077/api/v1/categories/', category)
         .subscribe({
           next: response => {
             this.router.navigate([`/categories/${response.resource.id}`])
@@ -90,7 +89,7 @@ export class CategoryComponent implements OnInit {
         name: this.categoryForm.controls['name'].value,
         color: this.categoryForm.controls['color'].value
       };
-      this.httpClient.post<GenericResponse<BaseCategory>>('https://localhost:7077/api/categories/', category)
+      this.httpClient.post<GenericResponse<BaseCategory>>('https://localhost:7077/api/v1/categories/', category)
         .subscribe(response => {
           this.router.navigate([`/categories/${response.resource.id}`]);
         });
@@ -102,6 +101,6 @@ export class CategoryComponent implements OnInit {
     if (this.isEditForm)
       this.router.navigate([`/categories/${this.category?.id}`])
     else
-      this.router.navigate(['/registrations']);
+      this.router.navigate(['/categories/overview']);
   }
 }

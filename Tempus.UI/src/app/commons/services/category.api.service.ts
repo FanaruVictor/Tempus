@@ -11,6 +11,6 @@ export class CategoryApiService {
   constructor(private httpClient: HttpClient) { }
 
   getAll(){
-    return this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/categories`);
+    return this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/v1/categories`);
   }
 }

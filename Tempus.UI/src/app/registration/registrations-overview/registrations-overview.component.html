@@ -3,28 +3,30 @@
 
   </div>
   <div class="center">
-
-    <div
-      *ngFor="let registration of registrations"
-      class="registration"
-    >
-      <div class="date">
-        <div class="last-update">{{registration?.createdAt | date }}</div>
-      </div>
-      <div class="arrow-left"></div>
+    <div class="elements">
       <div
-        class="info"
-        [routerLink]="['/registrations', registration.id]"
-        [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
+        *ngFor="let registration of registrations"
+        class="registration"
       >
-        <div class="title">{{registration.title.toUpperCase()}}</div>
-        <div class="content">{{registration.content}}</div>
+        <div class="date">
+          <div class="last-update">{{registration?.createdAt | date }}</div>
+        </div>
+        <div class="item">
+          <div class="arrow-left"></div>
+          <div
+            class="info"
+            [routerLink]="['/registrations/', registration.id]"
+            [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
+          >
+            <div class="title">{{registration.title.toUpperCase()}}</div>
+            <div class="content">{{registration.content}}</div>
+          </div>
+        </div>
       </div>
-
-  </div>
     </div>
+  </div>
   <div class="left">
-    <button  mat-raised-button aria-label="Create registration button" (click)="openDialog()">
+    <button mat-raised-button aria-label="Create registration button" (click)="addRegistration()">
       Add
     </button>
   </div>

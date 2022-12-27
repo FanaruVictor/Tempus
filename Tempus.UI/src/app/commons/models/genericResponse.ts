@@ -1,4 +1,4 @@
 ﻿export interface GenericResponse<T> {
-  resource: T,
+    resource: T,
   errors: string[]
 }

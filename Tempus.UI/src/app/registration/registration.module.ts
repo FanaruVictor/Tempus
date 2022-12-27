@@ -13,6 +13,8 @@ import {MatSelectModule} from "@angular/material/select";
 import { DetailedRegistrationComponent } from './detailed-registration/detailed-registration.component';
 import { CreateOrEditRegistrationComponent } from './create-or-edit-registration/create-or-edit-registration.component';
 import {PickCategoryDialogComponent} from "./pick-category-dialog/pick-category-dialog.component";
+import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import {PickCategoryDialogComponent} from "./pick-category-dialog/pick-category-
     RegistrationsOverviewComponent,
     PickCategoryDialogComponent,
     DetailedRegistrationComponent,
-    CreateOrEditRegistrationComponent
+    CreateOrEditRegistrationComponent,
   ],
   imports: [
     RegistrationRoutingModule,
@@ -32,10 +34,14 @@ import {PickCategoryDialogComponent} from "./pick-category-dialog/pick-category-
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
   ],
     exports: [
-    ]
+    ],
+  providers: [
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+  ]
 })
 export class RegistrationModule {
 }

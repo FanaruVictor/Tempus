@@ -1,4 +1,4 @@
-﻿export interface CreateRegistration {
+﻿export interface CreateRegistrationCommandData {
   title: string,
   content: string,
   categoryId: string

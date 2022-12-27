@@ -1,42 +1,66 @@
 @import "~src/styles/variables";
 
+::-webkit-scrollbar-track {
+  background: #d6efef;
+  border-radius: 2px;
+}
+
 .registration-wrapper{
   top: 50px;
   left: 0;
   display: flex;
   height: calc(100% - 50px);
-  flex-direction: column;
-  align-items: center;
 
-  .title{
-    margin-top: 50px;
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    text-transform: uppercase;
-
-    .edit-icon{
+  .back{
+    width: 25%;
+    color: black;
+    :hover{
       color: $primary-color;
-      margin-right: 10px;
-    }
-
-    .delete-icon{
-      color: $error-color;
     }
   }
-
-  .last-updated-at{
+  .registration{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 50%;
-    text-align: left;
-    margin-bottom: 50px;
-    margin-top: 16px;
-  }
 
-  .content{
-    background-color: #d6efef;
-    height: 100%;
-    width: 50%;
-    border-radius: 5px;
-    padding: 20px;
+    .title{
+      margin-top: 50px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      text-transform: uppercase;
+
+      .actions{
+        display: flex;
+        .edit-icon{
+          color: $primary-color;
+          margin-right: 10px;
+        }
+
+        .delete-icon{
+          color: $error-color;
+        }
+      }
+    }
+
+    .content{
+      background-color: #d6efef;
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      padding: 20px;
+      resize: none;
+      outline: none;
+      border: none;
+      cursor: default;
+    }
+
+    .last-updated-at{
+      width: 100%;
+      text-align: left;
+      margin-bottom: 50px;
+      margin-top: 16px;
+    }
   }
 }

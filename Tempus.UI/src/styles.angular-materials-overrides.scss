@@ -1,4 +1,5 @@
-﻿
+﻿@import "src/styles/variables";
+
 .mat-fab .mat-button-wrapper{
   padding: 0 !important;
 }
@@ -7,7 +8,40 @@
   color: black;
   font-weight: bold;
 }
-mat-form-field{
-  width: 100% !important;
+
+.mat-form-field{
+  margin-bottom: 20px;
+  overflow-y: scroll;
+  resize: none !important;
+
+}
+
+.mat-form-field-wrapper {
+  resize: none !important;
+
+  .mat-form-field-infix {
+    background-color: white;
+    padding: 10px;
+    font-size: 20px;
+    resize: none !important;
+
+    label {
+      padding-left: 15px;
+    }
+  }
+}
+
+.mat-error{
+  font-size: 15px;
+}
+
+.mat-form-field-flex {      resize: none !important;
+
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-icon{
+  cursor: pointer;
 }
 
