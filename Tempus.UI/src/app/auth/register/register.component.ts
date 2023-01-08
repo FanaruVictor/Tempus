@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../_services/auth/auth.service";
 import {User} from "../../_commons/models/user/User";
 import {Router} from "@angular/router";
@@ -10,10 +10,10 @@ import {Router} from "@angular/router";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  registerForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required])
+  registerForm = new UntypedFormGroup({
+    username: new UntypedFormControl('', [Validators.required]),
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
+    password: new UntypedFormControl('', [Validators.required])
   });
   submitted = false;
   constructor(private router: Router, private authService: AuthService) {

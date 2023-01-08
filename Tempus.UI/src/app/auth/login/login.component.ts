@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {F} from "@angular/cdk/keycodes";
 import {AuthService} from "../../_services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,9 +11,9 @@ import {first} from "rxjs";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+  loginForm = new UntypedFormGroup({
+    username: new UntypedFormControl('', [Validators.required]),
+    password: new UntypedFormControl('', [Validators.required])
   });
   returnUrl!: string;
   submitted = false;

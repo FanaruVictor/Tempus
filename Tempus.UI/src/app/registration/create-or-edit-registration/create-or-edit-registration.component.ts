@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
@@ -19,9 +19,9 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   categories?: BaseCategory[];
   id: string = '';
   isCreateMode: boolean = true;
-  createOrEditForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    content: new FormControl('', [Validators.required])
+  createOrEditForm = new UntypedFormGroup({
+    title: new UntypedFormControl('', [Validators.required]),
+    content: new UntypedFormControl('', [Validators.required])
   })
 
   constructor(

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Color} from "@angular-material-components/color-picker";
 import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 
@@ -11,9 +11,9 @@ import {BaseCategory} from "../../_commons/models/categories/baseCategory";
   styleUrls: ['./create-or-edit-category-dialog.component.scss']
 })
 export class CreateOrEditCategoryDialogComponent implements OnInit{
-  createOrEditForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    color: new FormControl('', [Validators.required])
+  createOrEditForm = new UntypedFormGroup({
+    name: new UntypedFormControl('', [Validators.required]),
+    color: new UntypedFormControl('', [Validators.required])
   });
   isCreateMode: boolean = true;
   result: BaseCategory = {
