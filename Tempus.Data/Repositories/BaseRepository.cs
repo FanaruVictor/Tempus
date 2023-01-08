@@ -13,6 +13,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     protected BaseRepository(TempusDbContext context)
     {
         _context = context;
+        _context.ChangeTracker.Clear();
     }
 
 

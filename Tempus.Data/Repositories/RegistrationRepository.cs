@@ -11,11 +11,11 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
     {
     }
 
-    public async Task<List<Registration?>> GetAll(Guid categoryId) => await _context.Registrations.Where(x => x.CategoryId == categoryId).ToListAsync();
+    public async Task<List<Registration?>> GetAll(Guid categoryId) => await _context.Registrations.AsNoTracking().Where(x => x.CategoryId == categoryId).ToListAsync();
 
     public Task<Registration?> GetLastUpdated()
     {
-        return _context.Registrations.OrderByDescending(x => x.LastUpdatedAt).FirstOrDefaultAsync();
+        return _context.Registrations.AsNoTracking().OrderByDescending(x => x.LastUpdatedAt).FirstOrDefaultAsync();
     }
     
 }

@@ -1,10 +1,7 @@
-﻿using Castle.Core.Logging;
-using Moq;
-using Tempus.Core.Commands.Registrations.Delete;
-using Tempus.Core.Commands.Registrations.Update;
+﻿using Moq;
 using Tempus.Core.Commons;
-using Tempus.Core.Entities;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commands.Registrations.Delete;
 
 namespace Tempus.Tests.Registrations.CommandHandlers;
 

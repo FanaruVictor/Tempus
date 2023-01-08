@@ -5,15 +5,22 @@ import {RouterModule} from "@angular/router";
 import {SharedModule} from "../shared/shared.module";
 import {CategoryRoutingModule} from "./category-routing.module";
 import { ReactiveFormsModule} from "@angular/forms";
-import {DetailedCategoryComponent} from "./detailed-category/detailed-category.component";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import { CreateOrEditCategoryDialogComponent } from './create-or-edit-category-dialog/create-or-edit-category-dialog.component';
+import {MatInputModule} from "@angular/material/input";
+import {
+  MAT_COLOR_FORMATS,
+  NGX_MAT_COLOR_FORMATS,
+  NgxMatColorPickerModule
+} from "@angular-material-components/color-picker";
 
 
 
 @NgModule({
   declarations: [
-    DetailedCategoryComponent,
     CategoriesOverviewComponent,
+    CreateOrEditCategoryDialogComponent,
   ],
   imports: [
     CategoryRoutingModule,
@@ -21,7 +28,13 @@ import {MatButtonModule} from "@angular/material/button";
     RouterModule,
     SharedModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    NgxMatColorPickerModule
+  ],
+  providers: [
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
   ]
 })
 export class CategoryModule { }

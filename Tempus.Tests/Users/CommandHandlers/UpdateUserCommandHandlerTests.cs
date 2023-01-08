@@ -1,10 +1,10 @@
 ﻿using Moq;
-using Tempus.Core.Commands.Users.Create;
-using Tempus.Core.Commands.Users.Update;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Models.User;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commands.Users.Update;
+using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Tests.Users.CommandHandlers;
 
@@ -62,7 +62,7 @@ public class UpdateUserCommandHandlerTests
         var actual = await _sut.Handle(new UpdateUserCommand
         {
             Id = updatedUser.Id,
-            UserName = updatedUser.UserName,
+            UserName = updatedUser.Username,
             Email = updatedUser.Email
         }, new CancellationToken());
 

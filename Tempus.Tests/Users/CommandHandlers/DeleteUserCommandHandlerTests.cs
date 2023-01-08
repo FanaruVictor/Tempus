@@ -1,11 +1,9 @@
 ﻿using Moq;
-using Tempus.Core.Commands.Categories.Delete;
-using Tempus.Core.Commands.Users.Delete;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
 using Tempus.Core.Models.User;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commands.Users.Delete;
 
 namespace Tempus.Tests.Users.CommandHandlers;
 

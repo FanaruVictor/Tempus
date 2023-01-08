@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using Tempus.Core.Commands.Users.Create;
-using Tempus.Core.Commands.Users.Update;
 using Tempus.Core.Commons;
 using Tempus.Core.Models.User;
+using Tempus.Infrastructure.Commands.Auth.Register;
+using Tempus.Infrastructure.Commands.Users.Update;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;
@@ -23,7 +23,7 @@ public class UserControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
         var request = new
         {
             Url = "api/users",
-            Body = new CreateUserCommand
+            Body = new RegisterUserCommand
             {
                 UserName = "victor",
                 Email = "victor.fanaru@gmail.com"

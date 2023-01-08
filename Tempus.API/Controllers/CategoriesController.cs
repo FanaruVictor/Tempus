@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Commands.Categories.Create;
-using Tempus.Core.Commands.Categories.Delete;
-using Tempus.Core.Commands.Categories.Update;
 using Tempus.Core.Models.Category;
-using Tempus.Core.Queries.Categories.GetAll;
-using Tempus.Core.Queries.Categories.GetById;
+using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Infrastructure.Commands.Categories.Delete;
+using Tempus.Infrastructure.Commands.Categories.Update;
+using Tempus.Infrastructure.Queries.Categories.GetAll;
+using Tempus.Infrastructure.Queries.Categories.GetById;
 
 namespace Tempus.API.Controllers;
 

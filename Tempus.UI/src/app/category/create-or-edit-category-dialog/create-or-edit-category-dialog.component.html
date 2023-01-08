@@ -1,0 +1,27 @@
+<div class="category-picker">
+  <div>
+    <h1 mat-dialog-title *ngIf="isCreateMode">Create category</h1>
+    <h1 mat-dialog-title *ngIf="!isCreateMode">Edit category</h1>
+    <form [formGroup]="createOrEditForm" (ngSubmit)="submit()" class="category-form">
+      <div class="name-control">
+        <label>Name</label>
+        <input formControlName="name" placeholder="Name">
+        <mat-error *ngIf="createOrEditForm.controls['name'].invalid && createOrEditForm.controls['name'].touched">Title is required</mat-error>
+      </div>
+      <div class="color-control">
+        <label>Color</label>
+        <input readonly formControlName="color" placeholder="#ffff" [ngxMatColorPicker]="picker">
+        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+        <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+        <mat-error *ngIf="createOrEditForm.controls['color'].invalid && createOrEditForm.controls['color'].touched">Title is required</mat-error>
+
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button [disabled]="!createOrEditForm.valid" mat-button [mat-dialog-close]="result" cdkFocusInitial type="submit">Ok</button>
+      </div>
+    </form>
+  </div>
+
+
+</div>

@@ -1,11 +1,9 @@
 ﻿using Moq;
-using Tempus.Core.Commands.Categories.Create;
-using Tempus.Core.Commands.Categories.Delete;
-using Tempus.Core.Commands.Categories.Update;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Models.Category;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commands.Categories.Delete;
 
 namespace Tempus.Tests.Categories.CommandHandlers;
 

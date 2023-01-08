@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {BaseCategory} from "../../commons/models/categories/baseCategory";
 import {MatDialog} from "@angular/material/dialog";
-import {DetailedRegistration} from "../../commons/models/registrations/detailedRegistration";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
-import {RegistrationApiService} from "../../commons/services/registration.api.service";
-import {CategoryApiService} from "../../commons/services/category.api.service";
+import {RegistrationApiService} from "../../_services/registration.api.service";
+import {CategoryApiService} from "../../_services/category.api.service";
+import {DetailedRegistration} from "../../_commons/models/registrations/detailedRegistration";
+import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 
 @Component({
   selector: 'app-registrations-overview',
@@ -36,8 +36,8 @@ export class RegistrationsOverviewComponent {
       .subscribe({
         next: response => {
           this.registrations = response.resource;
-          this.registrations = this.registrations.sort(
-            (objA, objB) => new Date(objB.lastUpdatedAt).getTime() - new Date(objA.lastUpdatedAt).getTime(),
+          this.registrations = this.registrations?.sort(
+            (objA, objB) => new Date(objB.createdAt).getTime() - new Date(objA.createdAt).getTime(),
           );
         }
       });

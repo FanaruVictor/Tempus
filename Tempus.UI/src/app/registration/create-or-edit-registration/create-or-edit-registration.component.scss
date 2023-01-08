@@ -17,7 +17,7 @@
 
 
   .registration-form {
-    background-color: #d6efef;
+    background-color: $content-color;
     height: 100%;
     width: 50%;
     border-radius: 5px;
@@ -33,15 +33,18 @@
       flex-direction: column;
       margin-bottom: 20px;
 
-      .registration-title {
-        padding: 5px;
-        font-size: 18px;
+      input{
         border: 2px solid $background-color;
         outline: none;
 
         &:focus {
           border: 2px solid $primary-color;
         }
+      }
+
+      .registration-title {
+        padding: 5px;
+        font-size: 18px;
       }
 
       .ng-invalid.ng-touched{
@@ -57,13 +60,7 @@
       .registration-content {
         height: 100%;
         padding: 15px;
-        border: 2px solid $background-color;
-        outline: none;
         resize: none;
-
-        &:focus {
-          border: 2px solid $primary-color;
-        }
       }
 
       .ng-invalid.ng-touched{

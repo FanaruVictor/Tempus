@@ -8,7 +8,10 @@ import {RegistrationModule} from "./registration/registration.module";
 import {CategoryModule} from "./category/category.module";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import { NotFoundComponent } from './commons/not-found/not-found.component';
+import {NotFoundComponent} from "./_commons/not-found/not-found.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "./_commons/interceptors/JwtInterceptor";
+import {AuthModule} from "./auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -23,9 +26,14 @@ import { NotFoundComponent } from './commons/not-found/not-found.component';
     RegistrationModule,
     CategoryModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

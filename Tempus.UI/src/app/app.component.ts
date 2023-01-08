@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "./_services/auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,9 @@ import {Router} from "@angular/router";
 export class AppComponent implements OnInit {
   tabs: {link: string, label: string, index: number}[];
   activeLinkIndex = 0;
+  authorizationToken?: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.tabs = [
       {
         label: 'Registrations',
@@ -27,7 +29,9 @@ export class AppComponent implements OnInit {
         link: '/account',
         index: 2
       }
-    ]
+    ];
+
+    this.authService.authorizationToken.subscribe(x => this.authorizationToken = x);
   }
 
   ngOnInit(): void {

@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using Tempus.Core.Commands.Categories.Create;
-using Tempus.Core.Commands.Categories.Update;
 using Tempus.Core.Commons;
 using Tempus.Core.Models.Category;
+using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Infrastructure.Commands.Categories.Update;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;

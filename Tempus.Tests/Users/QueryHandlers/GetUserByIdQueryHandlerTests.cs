@@ -3,9 +3,9 @@ using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Models.Category;
 using Tempus.Core.Models.User;
-using Tempus.Core.Queries.Categories.GetById;
-using Tempus.Core.Queries.Users.GetById;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Queries.Users.GetById;
 
 namespace Tempus.Tests.Users.QueryHandlers;
 

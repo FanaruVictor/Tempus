@@ -1,0 +1,31 @@
+<div class="account-wrapper">
+  <div class="right"></div>
+  <div class="center">
+    <div class="title">
+      <h1>User profile</h1>
+      <div class="actions">
+        <app-button [icon]="'edit'" class="edit-icon" (click)="edit()">edit</app-button>
+        <app-button [icon]="'delete'" class="delete-icon" (click)="delete()">delete</app-button>
+      </div>
+    </div>
+    <div class="content">
+        <div class="container">
+          <h2>Username</h2>
+          username
+        </div>
+        <div class="container">
+          <h2>Email</h2>
+          email
+        </div>
+        <div class="container">
+          <h2>Phone number</h2>
+          1234567890
+        </div>
+      <div class="container">
+        <h2>User Mode</h2>
+        <mat-slide-toggle [(ngModel)]="isChecked">{{isChecked ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+  <div class="left"></div>
+</div>

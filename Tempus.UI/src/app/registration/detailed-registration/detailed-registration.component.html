@@ -6,15 +6,15 @@
     <div class="title">
       <h1>{{registration?.title}}</h1>
       <div class="actions">
-        <app-button [icon]="'edit'" class="edit-icon" (click)="edit()">edit</app-button>
-        <app-button [icon]="'delete'" class="delete-icon" (click)="delete()">delete</app-button>
+        <app-button [icon]="'edit'" class="edit-icon" (click)="edit()"></app-button>
+        <app-button [icon]="'delete'" class="delete-icon" (click)="delete()"></app-button>
         <app-button [icon]="'download'" class="download" (click)="download()"></app-button>
       </div>
     </div>
-    <textarea class="content">
+    <textarea readonly class="content">
       {{registration?.content}}
     </textarea>
     <p class="last-updated-at">Last updated at: {{registration?.lastUpdatedAt | date}}</p>
   </div>
-
+  <div class="left"></div>
 </div>

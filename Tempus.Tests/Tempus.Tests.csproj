@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Tempus.Core\Tempus.Core.csproj" />
+      <ProjectReference Include="..\Tempus.Infrastructure\Tempus.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

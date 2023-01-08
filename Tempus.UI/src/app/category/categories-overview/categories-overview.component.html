@@ -14,7 +14,7 @@
               <div class="color">{{category.color}}</div>
             </div>
             <div class="actions">
-              <app-button [icon]="'edit'" class="edit" [routerLink]="['/categories/edit', category.id]"></app-button>
+              <app-button [icon]="'edit'" class="edit" (click)="updateCategory(category)"></app-button>
               <app-button [icon]="'delete'" class="delete" (click)="delete(category.id)"></app-button>
             </div>
           </div>

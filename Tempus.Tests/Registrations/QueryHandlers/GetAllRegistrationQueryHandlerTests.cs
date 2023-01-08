@@ -1,10 +1,10 @@
-﻿using System.Data.Common;
-using Moq;
+﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Models.Registrations;
-using Tempus.Core.Queries.Registrations.GetAll;
 using Tempus.Core.Repositories;
+using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Queries.Registrations.GetAll;
 
 namespace Tempus.Tests.Registrations.QueryHandlers;
 

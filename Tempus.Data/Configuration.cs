@@ -24,5 +24,6 @@ public static class Configuration
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IRegistrationRepository, RegistrationRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
     }
 }

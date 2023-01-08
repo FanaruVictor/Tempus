@@ -1,7 +1,7 @@
 @import "~src/styles/variables";
 
 ::-webkit-scrollbar-track {
-  background: #d6efef;
+  background: $content-color;
   border-radius: 2px;
 }
 
@@ -45,9 +45,9 @@
     }
 
     .content{
-      background-color: #d6efef;
+      background-color: $content-color;
       height: 100%;
-      width: 100%;
+      width: calc(100% - 40px);
       border-radius: 5px;
       padding: 20px;
       resize: none;
@@ -62,5 +62,9 @@
       margin-bottom: 50px;
       margin-top: 16px;
     }
+  }
+
+  .left{
+    width: 25%;
   }
 }

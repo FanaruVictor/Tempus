@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Commands.Users.Create;
-using Tempus.Core.Commands.Users.Delete;
-using Tempus.Core.Commands.Users.Update;
 using Tempus.Core.Models.User;
-using Tempus.Core.Queries.Users.GetAll;
-using Tempus.Core.Queries.Users.GetById;
+using Tempus.Infrastructure.Commands.Users.Delete;
+using Tempus.Infrastructure.Commands.Users.Update;
+using Tempus.Infrastructure.Queries.Users.GetAll;
+using Tempus.Infrastructure.Queries.Users.GetById;
 
 namespace Tempus.API.Controllers;
 
@@ -36,15 +35,6 @@ public class UsersController : BaseController
     /// <returns></returns>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<BaseUser>> GetById([FromRoute] Guid id) => HandleResponse(await _mediator.Send(new GetUserByIdQuery { Id = id }));
-
-
-    /// <summary>
-    ///     Create a user and save it into database
-    /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPost]
-    public async Task<ActionResult<BaseUser>> Create([FromBody] CreateUserCommand command) => HandleResponse(await _mediator.Send(command));
 
     /// <summary>
     ///     Update an user proprieties

@@ -39,4 +39,16 @@ public class BaseResponse<T>
             Errors = message
         };
     }
+    
+    public static BaseResponse<T> Unauthorized()
+    {
+        return new BaseResponse<T>
+        {
+            StatusCode = StatusCodes.BadRequest,
+            Errors = new List<string>
+            {
+                "Unauthorized"
+            }
+        };
+    }
 }

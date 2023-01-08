@@ -35,13 +35,33 @@
   font-size: 15px;
 }
 
-.mat-form-field-flex {      resize: none !important;
-
+.mat-form-field-flex {
+  resize: none !important;
   border-radius: 0 !important;
   padding: 0 !important;
 }
 
 .mat-icon{
   cursor: pointer;
+}
+
+.ngx-mat-colorpicker-content  {
+  .mat-form-field{
+    overflow: hidden;
+    width: 60px;
+  }
+}
+
+.ngx-mat-color-canvas .color-canvas-row:nth-of-type(2) .mat-form-field:last-of-type{
+  width: 80px !important;
+}
+.mat-slide-toggle.mat-checked {
+  .mat-slide-toggle-thumb {
+    background-color: black;
+  }
+
+  .mat-slide-toggle-bar{
+    background-color: #25252560;
+  }
 }
 

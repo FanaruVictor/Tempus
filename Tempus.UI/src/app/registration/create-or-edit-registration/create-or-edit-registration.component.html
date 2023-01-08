@@ -1,6 +1,6 @@
 <div class="registration-wrapper">
   <h1 class="title" *ngIf="isCreateMode">Create Registration</h1>
-  <h1 class="title" *ngIf="!isCreateMode">Create Registration</h1>
+  <h1 class="title" *ngIf="!isCreateMode">Edit Registration</h1>
   <form [formGroup]="createOrEditForm" class="registration-form" (ngSubmit)="submit()">
    <div class="title-control">
      <input class="registration-title" formControlName="title" placeholder="Title">

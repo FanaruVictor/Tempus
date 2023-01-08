@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {FormControl, Validators} from "@angular/forms";
-import {BaseCategory} from "../../commons/models/categories/baseCategory";
+import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 
 @Component({
   selector: 'app-pick-category-dialog',
@@ -19,6 +19,6 @@ export class PickCategoryDialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/registrations']);
+    this.router.navigate(['/registrations/overview']);
   }
 }

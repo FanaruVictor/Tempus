@@ -1,8 +1,16 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {GenericResponse} from "../../commons/models/genericResponse";
-import {BaseCategory} from "../../commons/models/categories/baseCategory";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  CreateOrEditCategoryDialogComponent
+} from "../create-or-edit-category-dialog/create-or-edit-category-dialog.component";
+import {filter} from "rxjs";
+import {CategoryApiService} from "../../_services/category.api.service";
+import { GenericResponse } from 'src/app/_commons/models/genericResponse';
+import {BaseCategory} from "../../_commons/models/categories/baseCategory";
+import {CreateCategoryCommandData} from "../../_commons/models/categories/createCategoryCommandData";
+import {UpdateCategoryCommandData} from "../../_commons/models/categories/updateCategoryCommandData";
 
 @Component({
   selector: 'app-categories-overview',
@@ -10,29 +18,92 @@ import {BaseCategory} from "../../commons/models/categories/baseCategory";
   styleUrls: ['./categories-overview.component.scss']
 })
 export class CategoriesOverviewComponent {
-  categories?: BaseCategory[] ;
-  constructor(private httpClient: HttpClient, private router: Router) {
+  categories?: BaseCategory[];
+
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+    private categoryApiService: CategoryApiService
+  ) {
   }
+
   ngOnInit(): void {
     this.httpClient.get<GenericResponse<BaseCategory[]>>(`https://localhost:7077/api/v1/categories`)
       .subscribe({
         next: response => {
           this.categories = response.resource;
+          this.categories = this.categories.sort(
+            (objA, objB) => new Date(objB.lastUpdatedAt).getTime() - new Date(objA.lastUpdatedAt).getTime(),
+          );
         }
       });
   }
 
-  delete(id: string){
+  delete(id: string) {
     this.httpClient.delete<GenericResponse<string>>(`https://localhost:7077/api/v1/categories/${id}`)
       .subscribe(response => {
         let id = response.resource;
         this.categories = this.categories?.filter(x => x.id !== id);
         let last = this.categories?.slice(-1)[0];
-        this.router.navigate([`/categories`, last?.id || 'create'])
+        this.router.navigate([`/categories/overview`])
       });
   }
 
-  addCategory(){
+  addCategory() {
+    this.openDialog()
+      .subscribe(result => {
+        let createCategoryCommandData: CreateCategoryCommandData = {
+          userId: 'FA2C9EFA-E576-44A9-A6E5-08DACD729E8D',
+          name: result.name,
+          color: result.color
+        }
+        this.create(createCategoryCommandData)
+      });
 
+  }
+
+  updateCategory(category: BaseCategory){
+    this.openDialog(category)
+      .pipe(filter(x => !!x))
+      .subscribe(result => {
+        let updateCategoryCommandData: UpdateCategoryCommandData = {
+          id: category.id,
+          name: result.name,
+          color: result.color
+        }
+        this.update(updateCategoryCommandData);
+      })
+  }
+
+  openDialog(data?: {name: string, color: string}){
+    const dialogRef = this.dialog.open(CreateOrEditCategoryDialogComponent, {
+      data: data,
+    });
+    return dialogRef.afterClosed();
+  }
+
+  update(category: UpdateCategoryCommandData){
+    this.categoryApiService.update(category)
+      .subscribe(result => {
+        this.categories = this.categories?.filter(x => {
+          return x.id !== result.resource.id;
+        });
+        this.addToCategories(result.resource);
+      })
+  }
+
+  create(category: CreateCategoryCommandData){
+    this.categoryApiService.create(category)
+      .subscribe(result => {
+        this.addToCategories(result.resource);
+      })
+  }
+
+  addToCategories(category: BaseCategory){
+    this.categories?.push(category);
+    this.categories = this.categories?.sort(
+      (objA, objB) => new Date(objB.lastUpdatedAt).getTime() - new Date(objA.lastUpdatedAt).getTime(),
+    );
   }
 }

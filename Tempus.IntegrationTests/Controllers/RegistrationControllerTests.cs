@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using Tempus.Core.Commands.Registrations.Create;
-using Tempus.Core.Commands.Registrations.Update;
 using Tempus.Core.Commons;
 using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Commands.Registrations.Create;
+using Tempus.Infrastructure.Commands.Registrations.Update;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;

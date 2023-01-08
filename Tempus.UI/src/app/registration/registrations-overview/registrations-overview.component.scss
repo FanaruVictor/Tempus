@@ -41,14 +41,14 @@
           height: 100px;
           align-items: center;
           justify-content: end;
-          background-color: #d6efef;
+          background-color: $content-color;
 
           .arrow-left {
             width: 0;
             height: 0;
             border-top: 15px solid transparent;
             border-bottom: 15px solid transparent;
-            border-right: 15px solid #d6efef;
+            border-right: 15px solid $content-color;
             z-index: 2;
           }
 
@@ -68,7 +68,7 @@
               text-overflow: ellipsis;
               font-size: 18px;
               padding-bottom: 10px;
-
+              min-height: 18px;
             }
             .content{
               overflow: hidden;
