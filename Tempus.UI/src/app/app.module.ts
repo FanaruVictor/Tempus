@@ -12,11 +12,17 @@ import {NotFoundComponent} from "./_commons/not-found/not-found.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./_commons/interceptors/JwtInterceptor";
 import {AuthModule} from "./auth/auth.module";
+import {ToastrModule} from "ngx-toastr";
+import {ErrorInterceptor} from "./_commons/interceptors/errorInterceptor";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {LoaderInterceptor} from "./_services/loader/loader-interceptor";
+import { HeaderComponent } from './_commons/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,11 +33,24 @@ import {AuthModule} from "./auth/auth.module";
     CategoryModule,
     MatIconModule,
     MatButtonModule,
-    AuthModule
+    AuthModule,
+    MatProgressBarModule,
+    ToastrModule.forRoot({
+      progressBar: true,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      countDuplicates: true
+    })
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true
     }
   ],
   bootstrap: [AppComponent]

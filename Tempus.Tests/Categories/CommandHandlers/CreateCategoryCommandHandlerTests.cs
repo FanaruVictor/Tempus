@@ -1,10 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Categories.Create;
 using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Tests.Categories.CommandHandlers;
 

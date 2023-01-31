@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commands.Registrations.Create;
 using Tempus.Infrastructure.Commands.Registrations.Update;
+using Tempus.Infrastructure.Models.Registrations;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;
@@ -22,7 +22,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
     {
         var request = new
         {
-            Url = "api/registrations",
+            Url = "api/v1/registrations",
             Body = new CreateRegistrationCommand
             {
                 CategoryId = new Guid("218e7d32-4ab0-47fb-aae5-b10b309163e3"),
@@ -49,7 +49,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
     {
         var request = new
         {
-            Url = "api/registrations",
+            Url = "api/v1/registrations",
             Body = new UpdateRegistrationCommand
             {
                 Id = new Guid("1b5bdce1-68e2-4d4e-b0fa-88c23cf0bbfe"),
@@ -75,7 +75,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task When_CallRegistrationsControllerActionDelete_ItShould_ReturnRegistrationId()
     {
-        var response = await _client.DeleteAsync("api/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
+        var response = await _client.DeleteAsync("api/v1/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString);
         var actual = baseResponse?.Resource;
@@ -88,7 +88,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task When_CallRegistrationsControllerActionGetAll_ItShould_ReturnAllRegistrations()
     {
-        const string request = "api/registrations";
+        const string request = "api/v1/registrations";
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task When_CallRegistrationsControllerActionGetById_ItShould_ReturnRegistrationWithSpecifiedId()
     {
-        const string request = "api/registrations/1b409dea-6d37-45b4-8d74-1b6c43271660";
+        const string request = "api/v1/registrations/1b409dea-6d37-45b4-8d74-1b6c43271660";
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();

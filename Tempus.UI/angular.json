@@ -38,7 +38,11 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
-              "src/styles.angular-materials-overrides.scss"
+              "src/styles.angular-materials-overrides.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/quill/dist/quill.bubble.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "src/styles.quill-overrides.scss"
             ],
             "scripts": []
           },

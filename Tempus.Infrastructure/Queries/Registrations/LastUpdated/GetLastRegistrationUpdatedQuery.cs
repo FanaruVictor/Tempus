@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.LastUpdated;
 
-public class GetLastUpdatedRegsitrationQuery : IRequest<BaseResponse<BaseRegistration>>
+public class GetLastUpdatedRegsitrationQuery : BaseRequest<BaseResponse<BaseRegistration>>
 {
 }

@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
-public class GetAllRegistrationsQuery : IRequest<BaseResponse<List<DetailedRegistration>>>
+public class GetAllRegistrationsQuery : BaseRequest<BaseResponse<List<DetailedRegistration>>>
 {
     public Guid? CategoryId { get; init; }
 }

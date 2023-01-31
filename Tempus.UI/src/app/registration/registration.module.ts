@@ -16,6 +16,8 @@ import {PickCategoryDialogComponent} from "./pick-category-dialog/pick-category-
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {JwtInterceptor} from "../_commons/interceptors/JwtInterceptor";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {QuillModule} from "ngx-quill";
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import {JwtInterceptor} from "../_commons/interceptors/JwtInterceptor";
     MatDialogModule,
     MatSelectModule,
     MatInputModule,
+    MatTooltipModule,
+    QuillModule.forRoot(),
   ],
     exports: [
     ],

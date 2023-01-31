@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./_services/auth/auth.service";
+import {LoaderService} from "./_services/loader/loader.service";
+import {UserApiService} from "./_services/user.api.service";
 
 @Component({
   selector: 'app-root',
@@ -8,40 +10,18 @@ import {AuthService} from "./_services/auth/auth.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  tabs: {link: string, label: string, index: number}[];
-  activeLinkIndex = 0;
-  authorizationToken?: string;
+    constructor(private userService: UserApiService) {
+    }
 
-  constructor(private router: Router, private authService: AuthService) {
-    this.tabs = [
-      {
-        label: 'Registrations',
-        link: '/registrations' ,
-        index: 0
-      },
-      {
-        label: 'Categories',
-        link: '/categories',
-        index: 1
-      },
-      {
-        label: 'Account',
-        link: '/account',
-        index: 2
+    ngOnInit(){
+      if(localStorage.getItem("authorizationToken")){
+        this.userService.getTheme()
+          .subscribe(response => {
+            if(response.resource){
+              document.body.classList.toggle('dark-theme');
+            }
+          })
       }
-    ];
-
-    this.authService.authorizationToken.subscribe(x => this.authorizationToken = x);
-  }
-
-  ngOnInit(): void {
-    this.router.events.subscribe((res) => {
-      let element = this.tabs.find(tab => tab.link === this.router.url);
-      if(element)
-        this.activeLinkIndex = this.tabs.indexOf(element);
-      else
-        this.activeLinkIndex = 0;
-    });
-  }
+    }
 }
 

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
-using Tempus.Core.Repositories;
-
+using Tempus.Core.IRepositories;
 namespace Tempus.Infrastructure.Commands.Categories.Delete;
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, BaseResponse<Guid>>

@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.User;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Commands.Auth.Register;
 
@@ -40,7 +39,8 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, B
             {
                 Id = Guid.NewGuid(),
                 Username = request.UserName,
-                Email = request.Email
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber
             };
              
             var user = await _authRepository.Register(entity, request.Password);

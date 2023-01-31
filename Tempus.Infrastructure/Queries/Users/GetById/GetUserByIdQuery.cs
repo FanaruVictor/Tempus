@@ -1,10 +1,9 @@
-﻿using MediatR;
-using Tempus.Core.Commons;
-using Tempus.Core.Models.User;
+﻿using Tempus.Core.Commons;
+using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Queries.Users.GetById;
 
-public class GetUserByIdQuery : IRequest<BaseResponse<BaseUser>>
+public class GetUserByIdQuery : BaseRequest<BaseResponse<UserDetails>>
 {
-    public Guid Id { get; init; }
 }

@@ -1,10 +1,9 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Category;
+using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Queries.Categories.GetAll;
 
-public class GetAllCategoriesQuery : IRequest<BaseResponse<List<BaseCategory>>>
+public class GetAllCategoriesQuery : BaseRequest<BaseResponse<List<BaseCategory>>>
 {
-    public Guid? UserId { get; init; }
 }

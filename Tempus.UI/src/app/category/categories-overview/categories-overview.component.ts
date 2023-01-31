@@ -11,6 +11,7 @@ import { GenericResponse } from 'src/app/_commons/models/genericResponse';
 import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 import {CreateCategoryCommandData} from "../../_commons/models/categories/createCategoryCommandData";
 import {UpdateCategoryCommandData} from "../../_commons/models/categories/updateCategoryCommandData";
+import {NotificationService} from "../../_services/notification.service";
 
 @Component({
   selector: 'app-categories-overview',
@@ -24,7 +25,8 @@ export class CategoriesOverviewComponent {
     private httpClient: HttpClient,
     private router: Router,
     private dialog: MatDialog,
-    private categoryApiService: CategoryApiService
+    private categoryApiService: CategoryApiService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -42,23 +44,32 @@ export class CategoriesOverviewComponent {
 
   delete(id: string) {
     this.httpClient.delete<GenericResponse<string>>(`https://localhost:7077/api/v1/categories/${id}`)
-      .subscribe(response => {
-        let id = response.resource;
-        this.categories = this.categories?.filter(x => x.id !== id);
-        let last = this.categories?.slice(-1)[0];
-        this.router.navigate([`/categories/overview`])
+      .pipe(filter(x => !!x))
+      .subscribe({
+        next: response => {
+          let id = response.resource;
+          this.categories = this.categories?.filter(x => x.id !== id);
+          let last = this.categories?.slice(-1)[0];
+          this.router.navigate([`/categories/overview`]);
+          this.notificationService.succes('Category deleted successfully', 'Request completed');
+        }
       });
   }
 
   addCategory() {
     this.openDialog()
-      .subscribe(result => {
-        let createCategoryCommandData: CreateCategoryCommandData = {
-          userId: 'FA2C9EFA-E576-44A9-A6E5-08DACD729E8D',
-          name: result.name,
-          color: result.color
+      .pipe(filter(x => !!x))
+      .subscribe({
+        next: result => {
+          let createCategoryCommandData: CreateCategoryCommandData = {
+            userId: 'FA2C9EFA-E576-44A9-A6E5-08DACD729E8D',
+            name: result.name,
+            color: result.color
+          }
+          this.create(createCategoryCommandData);
+          this.notificationService.succes('Category added successfully', 'Request completed');
+
         }
-        this.create(createCategoryCommandData)
       });
 
   }
@@ -66,13 +77,16 @@ export class CategoriesOverviewComponent {
   updateCategory(category: BaseCategory){
     this.openDialog(category)
       .pipe(filter(x => !!x))
-      .subscribe(result => {
-        let updateCategoryCommandData: UpdateCategoryCommandData = {
-          id: category.id,
-          name: result.name,
-          color: result.color
+      .subscribe({
+        next: result => {
+          let updateCategoryCommandData: UpdateCategoryCommandData = {
+            id: category.id,
+            name: result.name,
+            color: result.color
+          }
+          this.update(updateCategoryCommandData);
+          this.notificationService.succes('Category added successfully', 'Request completed');
         }
-        this.update(updateCategoryCommandData);
       })
   }
 
@@ -85,6 +99,7 @@ export class CategoriesOverviewComponent {
 
   update(category: UpdateCategoryCommandData){
     this.categoryApiService.update(category)
+      .pipe(filter(x => !!x))
       .subscribe(result => {
         this.categories = this.categories?.filter(x => {
           return x.id !== result.resource.id;
@@ -95,6 +110,7 @@ export class CategoriesOverviewComponent {
 
   create(category: CreateCategoryCommandData){
     this.categoryApiService.create(category)
+      .pipe(filter(x => !!x))
       .subscribe(result => {
         this.addToCategories(result.resource);
       })

@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commands.Auth.Login;
 using Tempus.Infrastructure.Commands.Auth.Register;
+using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.API.Controllers;
 
@@ -19,7 +19,6 @@ public class AuthController : BaseController
     public async Task<ActionResult<BaseUser>> Register(RegisterUserCommand registerUserCommand) =>
         HandleResponse(await _mediator.Send(registerUserCommand));
 
-    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(LoginComand loginComand) =>
         HandleResponse(await _mediator.Send(loginComand));

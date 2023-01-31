@@ -1,15 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import "styles/variables";
+
 ::-webkit-scrollbar {
   width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: white;
+  background: var(--background-color);
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--text-color);
   border-radius: 2px;
 }
 
@@ -17,9 +19,51 @@
   background: #555;
 }
 
+body{
+  --text-color: #222;
+  --background-color: #fff;
+  --button-text-color: #fff;
+  --button-background-color: #00a8dc;
+  --header-color: #e3e3e3;
+  --content-color: #d6efef;
+  --tooltip-background-color: #2a2a2a;
+  --tooltip-text-color: #eee;
+}
+
+body.dark-theme{
+  --text-color: #eee;
+  --background-color: #2a2a2a;
+  --btn-text-color: #2E2B2B;
+  --button-background-color: #14D3C3;
+  --header-color: #1f1f1f;
+  --content-color: #446969;
+  --tooltip-background-color: #fff;
+  --tooltip-text-color: #222;
+}
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--background-color);
+}
+
+h1, p{
+  color: var(--text-color);
+}
+
+.cancel-button {
+  background-color: #fff !important;
+  color: black !important;
+
+  &:disabled {
+    background-color: gray;
+  }
+}
+
+.remove-button {
+  background-color: $error-color !important;
 }
 
 html, body { height: 100%; }
+
+

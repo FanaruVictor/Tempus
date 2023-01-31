@@ -1,12 +1,11 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Category;
+using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Commands.Categories.Create;
 
-public class CreateCategoryCommand : IRequest<BaseResponse<BaseCategory>>
+public class CreateCategoryCommand : BaseRequest<BaseResponse<BaseCategory>>
 {
-    public Guid UserId { get; init; }
     public string Name { get; init; }
     public string? Color { get; init; }
 }

@@ -6,8 +6,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using MediatR;
 using Tempus.Core.Commons;
-using Tempus.Core.Repositories;
-
+using Tempus.Core.IRepositories;
 namespace Tempus.Infrastructure.Queries.Registrations.Download;
 
 public class DownloadQueryHandler : IRequestHandler<DownloadQuery, BaseResponse<byte[]>>

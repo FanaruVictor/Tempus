@@ -5,28 +5,32 @@
 }
 
 .mat-tab-label, .mat-tab-link {
-  color: black;
+  color: var(--text-color);
   font-weight: bold;
 }
 
 .mat-form-field{
-  margin-bottom: 20px;
-  overflow-y: scroll;
+  display: block !important;
   resize: none !important;
+}
 
+.mat-form-field-infix{
 }
 
 .mat-form-field-wrapper {
   resize: none !important;
 
   .mat-form-field-infix {
-    background-color: white;
+    background-color: var(--background-color) !important;
+    color: var(--text-color) !important;
+
     padding: 10px;
     font-size: 20px;
     resize: none !important;
 
     label {
       padding-left: 15px;
+      color: var(--text-color);
     }
   }
 }
@@ -65,3 +69,50 @@
   }
 }
 
+.mat-raised-button{
+  background-color: var(--button-background-color);
+  color: white;
+}
+
+.mat-dialog-container{
+  background-color: var(--content-color);
+}
+.mat-dialog-content{
+  overflow: unset !important;
+}
+
+.mat-select{
+  .mat-select-value{
+    color: var(--text-color);
+  }
+}
+
+.mat-tooltip {
+  background: var(--tooltip-background-color);
+  color: var(--tooltip-text-color) !important;
+  font-size: 14px;
+
+  overflow-y: scroll !important;
+  white-space: pre-line;
+
+  max-width: 500px !important;
+  max-height: 500px !important;
+
+  &::-webkit-scrollbar-track {
+    background: var(--tooltip-background-color);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--tooltip-text-color);
+    border-radius: 2px;
+  }
+}
+
+.mat-card-header-text{
+  margin: 0 !important;
+}
+
+mat-card-actions{
+  padding: 10px !important;
+}

@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.User;
+using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Commands.Users.Update;
 
-public class UpdateUserCommand : IRequest<BaseResponse<BaseUser>>
+public class UpdateUserCommand : BaseRequest<BaseResponse<BaseUser>>
 {
     public Guid Id { get; init; }
     public string UserName { get; init; }

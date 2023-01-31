@@ -11,19 +11,23 @@
     <div class="content">
         <div class="container">
           <h2>Username</h2>
-          username
+          {{user?.userName ?? ''}}
         </div>
         <div class="container">
           <h2>Email</h2>
-          email
+          {{user?.email ?? ''}}
         </div>
         <div class="container">
           <h2>Phone number</h2>
-          1234567890
+          {{user?.phoneNumber ?? ''}}
         </div>
       <div class="container">
         <h2>User Mode</h2>
-        <mat-slide-toggle [(ngModel)]="isChecked">{{isChecked ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked" (click)="toggleDarkTheme()">{{user?.isDarkTheme ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
+      </div>
+      <div class="container">
+        <h2>User Photo</h2>
+        <button *ngIf="user?.photoDetails == undefined" mat-raised-button aria-label="Add user photo" (click)="addPhoto()">Add Photo</button>
       </div>
     </div>
   </div>

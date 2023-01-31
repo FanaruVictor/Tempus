@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Repositories;
 using Tempus.Infrastructure.Queries.Registrations.Download;
 
 namespace Tempus.API.Controllers;
@@ -8,11 +7,8 @@ namespace Tempus.API.Controllers;
 [ApiVersion("1.0")]
 public class FilesController : BaseController
 {
-    private readonly IRegistrationRepository _registrationRepository;
-
-    public FilesController(IMediator mediator, IRegistrationRepository registrationRepository) : base(mediator)
+    public FilesController(IMediator mediator) : base(mediator)
     {
-        _registrationRepository = registrationRepository;
     }
     
     [HttpGet("download/{id}")] 

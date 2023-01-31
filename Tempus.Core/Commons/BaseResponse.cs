@@ -18,6 +18,15 @@ public class BaseResponse<T>
             StatusCode = StatusCodes.Ok
         };
     }
+    
+    public static BaseResponse<T> Created(T resource = default)
+    {
+        return new BaseResponse<T>
+        {
+            Resource = resource,
+            StatusCode = StatusCodes.Created
+        };
+    }
 
     public static BaseResponse<T> NotFound(string resource)
     {
@@ -44,7 +53,7 @@ public class BaseResponse<T>
     {
         return new BaseResponse<T>
         {
-            StatusCode = StatusCodes.BadRequest,
+            StatusCode = StatusCodes.Unauthorized,
             Errors = new List<string>
             {
                 "Unauthorized"

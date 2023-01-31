@@ -6,17 +6,21 @@
     <div class="title">Register</div>
     <div class="container">
       <label>Username</label>
-      <input class="username" formControlName="username" placeholder="Ex: JohnDoe">
+      <input formControlName="username" placeholder="Ex: JohnDoe">
     </div>
     <div class="container">
       <label>Email</label>
-      <input class="email" formControlName="email" placeholder="Ex: John.Doe@gmail.com">
+      <input formControlName="email" placeholder="Ex: John.Doe@gmail.com">
+    </div>
+    <div class="container">
+      <label>PhoneNumber</label>
+      <input formControlName="phoneNumber" placeholder="0747272209">
     </div>
     <div class="container">
       <label>Password</label>
-      <input class="password" formControlName="password" type="password" placeholder="password">
+      <input formControlName="password" type="password" placeholder="password">
     </div>
-    <button mat-raised-button [disabled]="submitted" type="submit">Login</button>
+    <button mat-raised-button [disabled]="submitted" type="submit">Create</button>
   </form>
 
 </div>

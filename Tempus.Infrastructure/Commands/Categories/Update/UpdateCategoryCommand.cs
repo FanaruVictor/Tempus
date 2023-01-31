@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Category;
+using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Commands.Categories.Update;
 
-public class UpdateCategoryCommand : IRequest<BaseResponse<BaseCategory>>
+public class UpdateCategoryCommand : BaseRequest<BaseResponse<BaseCategory>>
 {
     public Guid Id { get; init; }
     public string Name { get; init; }

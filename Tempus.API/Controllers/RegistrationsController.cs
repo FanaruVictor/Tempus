@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commands.Registrations.Create;
 using Tempus.Infrastructure.Commands.Registrations.Delete;
 using Tempus.Infrastructure.Commands.Registrations.Update;
+using Tempus.Infrastructure.Models.Registrations;
 using Tempus.Infrastructure.Queries.Registrations.GetAll;
 using Tempus.Infrastructure.Queries.Registrations.GetById;
 using Tempus.Infrastructure.Queries.Registrations.LastUpdated;
@@ -13,6 +13,7 @@ namespace Tempus.API.Controllers;
 /// <summary>
 /// RegistrationsConstructor is responsible with requests designed for registrations
 /// </summary>
+[ApiVersion("1.0")]
 public class RegistrationsController : BaseController
 {
     /// <summary>

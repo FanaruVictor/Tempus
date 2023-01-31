@@ -5,31 +5,32 @@ import {DetailedRegistration} from "../_commons/models/registrations/detailedReg
 import {BaseRegistration} from "../_commons/models/registrations/baseRegistration";
 import {UpdateRegistrationCommandData} from "../_commons/models/registrations/updateRegistrationCommandData";
 import {CreateRegistrationCommandData} from "../_commons/models/registrations/createRegistrationCommandData";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationApiService {
-
+  apiUrl = `${environment.apiUrl}/v1/registrations`
   constructor(private httpClient: HttpClient) { }
 
   getAll(){
-    return this.httpClient.get<GenericResponse<DetailedRegistration[]>>(`https://localhost:7077/api/v1/registrations`);
+    return this.httpClient.get<GenericResponse<DetailedRegistration[]>>(this.apiUrl);
   }
 
   getById(id: string){
-    return this.httpClient.get<GenericResponse<BaseRegistration>>(`https://localhost:7077/api/v1/registrations/${id}`);
+    return this.httpClient.get<GenericResponse<BaseRegistration>>(`${this.apiUrl}/${id}`);
   }
 
   update(data: UpdateRegistrationCommandData){
-    return this.httpClient.put<GenericResponse<BaseRegistration>>(`https://localhost:7077/api/v1/registrations`, data);
+    return this.httpClient.put<GenericResponse<BaseRegistration>>(this.apiUrl, data);
   }
 
   create(registration: CreateRegistrationCommandData){
-    return this.httpClient.post<GenericResponse<BaseRegistration>>('https://localhost:7077/api/v1/registrations', registration);
+    return this.httpClient.post<GenericResponse<BaseRegistration>>(this.apiUrl, registration);
   }
 
   delete(id: string){
-    return this.httpClient.delete<GenericResponse<string>>(`https://localhost:7077/api/v1/registrations/${id}`);
+    return this.httpClient.delete<GenericResponse<string>>(`${this.apiUrl}/${id}`);
   }
 }

@@ -6,8 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commands.Auth.Login;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Auth.Login;
 
 namespace Tempus.Infrastructure.Commands.Auth.Login;
 
@@ -30,7 +29,7 @@ public class LoginCommandHandler : IRequestHandler<LoginComand, BaseResponse<str
 
             BaseResponse<string> response;
 
-            var user = await _authRepository.Login(request.Username, request.Password);
+            var user = await _authRepository.Login(request.UserName, request.Password);
 
             if (user == null)
             {

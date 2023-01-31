@@ -1,4 +1,4 @@
-@import '~src/styles/variables';
+@import 'src/styles/variables';
 
 .login-wrapper{
   width: 100%;
@@ -26,7 +26,7 @@
     .container{
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
       justify-content: space-around;
       label{
         font-weight: bold;

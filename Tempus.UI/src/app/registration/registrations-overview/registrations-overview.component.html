@@ -8,9 +8,7 @@
         *ngFor="let registration of registrations"
         class="registration"
       >
-        <div class="date">
-          <div class="last-update">{{registration?.createdAt | date }}</div>
-        </div>
+            <div class="last-update">{{registration?.createdAt | date }}</div>
         <div class="item">
           <div class="arrow-left"></div>
           <div
@@ -18,8 +16,9 @@
             [routerLink]="['/registrations/', registration.id]"
             [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
           >
-            <div class="title">{{registration.title.toUpperCase()}}</div>
-            <div class="content">{{registration.content}}</div>
+            <div class="title" >{{registration.title.toUpperCase()}}</div>
+            <div class="content" [matTooltip]="registration.content" #content
+                 [matTooltipDisabled]="!isOverflow(content)">{{registration.content}}</div>
           </div>
         </div>
       </div>

@@ -5,5 +5,6 @@ public enum StatusCodes
     Ok,
     BadRequest,
     NotFound,
-    Unauthorized
+    Unauthorized,
+    Created
 }

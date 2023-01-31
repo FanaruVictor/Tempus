@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Update;
 
-public class UpdateRegistrationCommand : IRequest<BaseResponse<BaseRegistration>>
+public class UpdateRegistrationCommand : BaseRequest<BaseResponse<BaseRegistration>>
 {
     public Guid Id { get; init; }
     public string? Title { get; init; }

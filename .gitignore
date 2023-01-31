@@ -133,6 +133,7 @@ _ReSharper*/
 
 # JetBrains Rider
 .idea/
+.sonarqube/
 *.sln.iml
 
 # TeamCity is a build add-in

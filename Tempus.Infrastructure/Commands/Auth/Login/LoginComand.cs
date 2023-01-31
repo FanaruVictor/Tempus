@@ -1,10 +1,10 @@
-﻿using MediatR;
-using Tempus.Core.Commons;
+﻿using Tempus.Core.Commons;
+using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure.Commands.Auth.Login;
 
-public class LoginComand : IRequest<BaseResponse<string>>
+public class LoginComand : BaseRequest<BaseResponse<string>>
 {
-    public string Username { get; set; }
+    public string UserName { get; set; }
     public string Password { get; set; }
 }

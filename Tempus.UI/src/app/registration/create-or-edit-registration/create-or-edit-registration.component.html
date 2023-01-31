@@ -7,13 +7,18 @@
      <mat-error *ngIf="createOrEditForm.controls['title'].invalid && createOrEditForm.controls['title'].touched">Title is required</mat-error>
    </div>
     <div class="content-control">
-      <textarea class="registration-content" formControlName="content"></textarea>
-      <mat-error *ngIf="createOrEditForm.controls['content'].invalid && createOrEditForm.controls['content'].touched">Content is required</mat-error>
-
-    </div>
-    <div class="actions">
-      <button class="cancel-registration" mat-raised-button (click)="cancel()">Cancel</button>
-      <button [disabled]="!createOrEditForm.valid" class="create-registration" mat-raised-button type="submit">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
+      <quill-editor
+        #editor
+        formControlName="content"
+        placeholder=""
+        [modules]="quillConfig"
+        format="html"
+      >
+      </quill-editor>
+      <div class="actions">
+        <button class="cancel-button" mat-raised-button (click)="cancel()">Cancel</button>
+        <button [disabled]="!createOrEditForm.valid" class="create-registration" mat-raised-button type="submit">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
+      </div>
     </div>
   </form>
 

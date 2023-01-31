@@ -13,6 +13,7 @@ public class TempusDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Registration> Registrations => Set<Registration>();
+    public DbSet<ProfilePhoto> ProfilePhotos => Set<ProfilePhoto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

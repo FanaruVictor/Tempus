@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 
 namespace Tempus.Data.Repositories;

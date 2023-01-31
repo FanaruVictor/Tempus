@@ -21,18 +21,18 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      color: var(--text-color);
 
       .registration {
-        height: 100%;
         width: 100%;
         display: flex;
-        align-items: center;
         justify-content: space-around;
         margin: 2rem 0 2rem 0;
 
         .last-update {
           font-size: 12px;
-          width: 25%;
+          display: flex;
+          align-items: center;
         }
 
         .item{
@@ -41,14 +41,14 @@
           height: 100px;
           align-items: center;
           justify-content: end;
-          background-color: $content-color;
+          background-color: var(--content-color);
 
           .arrow-left {
             width: 0;
             height: 0;
             border-top: 15px solid transparent;
             border-bottom: 15px solid transparent;
-            border-right: 15px solid $content-color;
+            border-right: 15px solid var(--content-color);
             z-index: 2;
           }
 
@@ -61,18 +61,21 @@
             justify-content: space-between;
             padding: 10px;
             z-index: 1;
+            cursor: pointer;
 
 
             .title {
               overflow: hidden;
               text-overflow: ellipsis;
-              font-size: 18px;
+              white-space: nowrap;
+              font-size: 20px;
               padding-bottom: 10px;
               min-height: 18px;
             }
             .content{
               overflow: hidden;
               text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }
@@ -81,13 +84,9 @@
   }
 
   .left{
-    padding-top: 100px;
+    padding-top: calc(100px + 2rem);
     text-align: center;
 
     width: 25%;
-    button{
-      background-color: $primary-color;
-      color: white;
-    }
   }
 }

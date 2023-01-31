@@ -1,10 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Models.User;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Category;
+using Tempus.Infrastructure.Models.User;
 using Tempus.Infrastructure.Queries.Users.GetById;
 
 namespace Tempus.Tests.Users.QueryHandlers;
@@ -12,13 +11,15 @@ namespace Tempus.Tests.Users.QueryHandlers;
 public class GetUserByIdQueryHandlerTests
 {
     private readonly Mock<IUserRepository> _mockUserRepository;
+    private readonly Mock<IProfilePhotoRepository> _mockProfilePhotoRepository;
     private readonly GetUserByIdQueryHandler _sut;
 
     public GetUserByIdQueryHandlerTests()
     {
         _mockUserRepository = new Mock<IUserRepository>();
-
-        _sut = new GetUserByIdQueryHandler(_mockUserRepository.Object);
+        _mockProfilePhotoRepository = new Mock<IProfilePhotoRepository>();
+        
+        _sut = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mockProfilePhotoRepository.Object);
     }
     
     [Fact]
@@ -50,9 +51,7 @@ public class GetUserByIdQueryHandlerTests
         var expected = BaseResponse<BaseUser>.Ok(baseUser);
 
         var actual = await _sut.Handle(new GetUserByIdQuery()
-            {
-                Id = user.Id
-            },
+            ,
             new CancellationToken());
         
         Assert.Null(actual.Errors);

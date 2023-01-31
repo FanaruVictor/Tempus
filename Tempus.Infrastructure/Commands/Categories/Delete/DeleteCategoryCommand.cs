@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
 
 namespace Tempus.Infrastructure.Commands.Categories.Delete;
 
-public class DeleteCategoryCommand : IRequest<BaseResponse<Guid>>
+public class DeleteCategoryCommand : BaseRequest<BaseResponse<Guid>>
 {
     public Guid Id { get; init; }
 }

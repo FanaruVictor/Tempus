@@ -4,7 +4,8 @@
   </a>
   <div class="registration">
     <div class="title">
-      <h1>{{registration?.title}}</h1>
+      <h1 [matTooltip]="registration?.title || ''" #title
+      [matTooltipDisabled]="!isOverflow(title)">{{registration?.title}}</h1>
       <div class="actions">
         <app-button [icon]="'edit'" class="edit-icon" (click)="edit()"></app-button>
         <app-button [icon]="'delete'" class="delete-icon" (click)="delete()"></app-button>

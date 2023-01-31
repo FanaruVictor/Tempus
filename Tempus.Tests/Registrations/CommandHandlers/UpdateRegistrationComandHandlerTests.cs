@@ -1,10 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commands.Registrations.Update;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Registrations.Update;
 using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Tests.Registrations.CommandHandlers;
 

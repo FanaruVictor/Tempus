@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit{
     this.authService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value)
       .pipe(first())
       .subscribe( response => {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate([this.returnUrl]).then(() => location.reload());
         }
       );
   }

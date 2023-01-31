@@ -14,6 +14,7 @@ import {
   NGX_MAT_COLOR_FORMATS,
   NgxMatColorPickerModule
 } from "@angular-material-components/color-picker";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -31,7 +32,8 @@ import {
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    NgxMatColorPickerModule
+    NgxMatColorPickerModule,
+    MatCardModule
   ],
   providers: [
     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }

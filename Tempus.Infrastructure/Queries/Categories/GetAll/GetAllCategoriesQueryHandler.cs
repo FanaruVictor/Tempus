@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Queries.Categories.GetAll;
 
@@ -25,10 +24,7 @@ public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuer
 
             List<Category> categories;
 
-            if (request.UserId.HasValue)
-                categories = await _categoryRepository.GetAll(request.UserId.Value);
-            else
-                categories = await _categoryRepository.GetAll();
+            categories = await _categoryRepository.GetAll(request.UserId);
 
             var response =
                 BaseResponse<List<BaseCategory>>.Ok(categories

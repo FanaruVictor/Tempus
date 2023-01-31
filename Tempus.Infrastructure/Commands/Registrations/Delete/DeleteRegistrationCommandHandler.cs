@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
-using Tempus.Core.Repositories;
-
+using Tempus.Core.IRepositories;
 namespace Tempus.Infrastructure.Commands.Registrations.Delete;
 
 public class DeleteRegistrationCommandHandler : IRequestHandler<DeleteRegistrationCommand, BaseResponse<Guid>>

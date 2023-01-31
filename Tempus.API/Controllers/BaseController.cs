@@ -39,9 +39,10 @@ public class BaseController : ControllerBase
         return response.StatusCode switch
         {
             CustomStatusCodes.Ok => Ok(response),
+            CustomStatusCodes.Created => Created(new Uri(""), response),
             CustomStatusCodes.NotFound => NotFound(),
             CustomStatusCodes.BadRequest => BadRequest(response),
-            _ => BadRequest(response)
+            CustomStatusCodes.Unauthorized => Unauthorized(response)
         };
     }
 }

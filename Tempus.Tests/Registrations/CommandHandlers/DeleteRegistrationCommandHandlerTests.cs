@@ -1,7 +1,6 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commands.Registrations.Delete;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Registrations.Delete;
 
 namespace Tempus.Tests.Registrations.CommandHandlers;
 

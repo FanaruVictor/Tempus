@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
-using Tempus.Core.Repositories;
-
+using Tempus.Core.IRepositories;
 namespace Tempus.Infrastructure.Commands.Users.Delete;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, BaseResponse<Guid>>

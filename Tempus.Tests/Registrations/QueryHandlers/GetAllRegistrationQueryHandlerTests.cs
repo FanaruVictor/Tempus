@@ -1,9 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Repositories;
-using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Registrations;
 using Tempus.Infrastructure.Queries.Registrations.GetAll;
 
 namespace Tempus.Tests.Registrations.QueryHandlers;
@@ -77,7 +76,7 @@ public class GetAllRegistrationQueryHandlerTests
         };
 
         _mockRegistrationRepository
-            .Setup(x => x.GetAll(categoryId))
+            .Setup(x => x.GetAll(categoryId, It.IsAny<Guid>()))
             .ReturnsAsync(registrations.Where(x => x.CategoryId == categoryId).ToList());
 
         var expected = BaseResponse<List<DetailedRegistration>>.Ok(

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
@@ -27,7 +27,7 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
 
             List<Registration> registrations;
             if (request.CategoryId.HasValue)
-                registrations = await _registrationRepository.GetAll(request.CategoryId.Value);
+                registrations = await _registrationRepository.GetAll(request.CategoryId.Value, request.UserId);
             else
                 registrations = await _registrationRepository.GetAll();
 

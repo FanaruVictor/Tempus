@@ -59,4 +59,17 @@ export class RegistrationsOverviewComponent {
         }
       });
   }
+
+  isOverflow(element: HTMLElement): boolean {
+    let currentOverflow = element.style.overflow;
+
+    if(!currentOverflow || currentOverflow == "visible"){
+      element.style.overflow = "hidden";
+    }
+
+    const isOverflowing = element.clientWidth < element.scrollWidth || element.clientHeight < element.scrollHeight;
+
+    element.style.overflow = currentOverflow;
+    return isOverflowing;
+  }
 }

@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Tempus.Infrastructure.Commons;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
-public class CreateRegistrationCommand : IRequest<BaseResponse<BaseRegistration>>
+public class CreateRegistrationCommand : BaseRequest<BaseResponse<BaseRegistration>>
 {
     public string? Title { get; init; }
     public string? Content { get; init; }
