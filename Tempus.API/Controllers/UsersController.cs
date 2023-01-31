@@ -1,17 +1,20 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Commands.Users.Create;
-using Tempus.Core.Commands.Users.Delete;
-using Tempus.Core.Commands.Users.Update;
-using Tempus.Core.Models.User;
-using Tempus.Core.Queries.Users.GetAll;
-using Tempus.Core.Queries.Users.GetById;
+using Tempus.Infrastructure.Commands.Users.ChangeTheme;
+using Tempus.Infrastructure.Commands.Users.Delete;
+using Tempus.Infrastructure.Commands.Users.Update;
+using Tempus.Infrastructure.Models.User;
+using Tempus.Infrastructure.Queries.Users.GetAll;
+using Tempus.Infrastructure.Queries.Users.GetById;
+using Tempus.Infrastructure.Queries.Users.GetDetails;
+using Tempus.Infrastructure.Queries.Users.GetTheme;
 
 namespace Tempus.API.Controllers;
 
 /// <summary>
 /// UsersController is responsible for requests designed for users
 /// </summary>
+[ApiVersion("1.0")]
 public class UsersController : BaseController
 {
     /// <summary>
@@ -30,21 +33,20 @@ public class UsersController : BaseController
     public async Task<ActionResult<List<BaseUser>>> GetAll() => HandleResponse(await _mediator.Send(new GetAllUsersQuery()));
 
     /// <summary>
+    /// Get current user details
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("details")]
+    public async Task<ActionResult<UserDetails>> GetDetails() =>
+        HandleResponse(await _mediator.Send(new GetUserDetailsQuery()));
+
+    /// <summary>
     ///     For a specified Id a user will be returned if it exists
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<BaseUser>> GetById([FromRoute] Guid id) => HandleResponse(await _mediator.Send(new GetUserByIdQuery { Id = id }));
-
-
-    /// <summary>
-    ///     Create a user and save it into database
-    /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    [HttpPost]
-    public async Task<ActionResult<BaseUser>> Create([FromBody] CreateUserCommand command) => HandleResponse(await _mediator.Send(command));
+    public async Task<ActionResult<UserDetails>> GetById([FromRoute] Guid id) => HandleResponse(await _mediator.Send(new GetUserByIdQuery ()));
 
     /// <summary>
     ///     Update an user proprieties
@@ -59,10 +61,18 @@ public class UsersController : BaseController
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> Delete([FromRoute] Guid id) =>
         HandleResponse(await _mediator.Send(new DeleteUserCommand
         {
             Id = id
         }));
+
+    [HttpPut("changeTheme")]
+    public async Task<ActionResult<UserDetails>> ChangeTheme([FromBody] ChangeThemeCommand command) =>
+        HandleResponse(await _mediator.Send(command));
+
+    [HttpGet("theme")]
+    public async Task<ActionResult<bool>> GetTheme() => HandleResponse(await _mediator.Send(new GetThemeQuery()));
+
 }

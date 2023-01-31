@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 
 namespace Tempus.Data.Repositories;
@@ -13,6 +13,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     protected BaseRepository(TempusDbContext context)
     {
         _context = context;
+        _context.ChangeTracker.Clear();
     }
 
 

@@ -1,10 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Queries.Registrations.GetById;
-using Tempus.Core.Queries.Registrations.LastUpdated;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Registrations;
+using Tempus.Infrastructure.Queries.Registrations.LastUpdated;
 
 namespace Tempus.Tests.Registrations.QueryHandlers;
 

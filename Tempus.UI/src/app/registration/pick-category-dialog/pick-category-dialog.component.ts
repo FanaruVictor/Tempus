@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {FormControl, Validators} from "@angular/forms";
-import {BaseCategory} from "../../commons/models/categories/baseCategory";
+import {Validators} from "@angular/forms";
+import {BaseCategory} from "../../_commons/models/categories/baseCategory";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-pick-category-dialog',
@@ -10,7 +11,7 @@ import {BaseCategory} from "../../commons/models/categories/baseCategory";
   styleUrls: ['./pick-category-dialog.component.scss']
 })
 export class PickCategoryDialogComponent {
-  categoryControl = new FormControl(null, Validators.required);
+  categoryControl = new FormControl<BaseCategory | null>(null, Validators.required);
   constructor(
     public dialogRef: MatDialogRef<PickCategoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public categories:BaseCategory[],
@@ -19,6 +20,6 @@ export class PickCategoryDialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/registrations']);
+    this.router.navigate(['/registrations/overview']);
   }
 }

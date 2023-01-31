@@ -1,11 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Queries.Categories.GetAll;
-using Tempus.Core.Queries.Registrations.GetAll;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Category;
+using Tempus.Infrastructure.Queries.Categories.GetAll;
 
 namespace Tempus.Tests.Categories.QueryHandlers;
 

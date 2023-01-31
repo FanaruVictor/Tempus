@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tempus.Core.Commons;
 using CustomStatusCodes = Tempus.Core.Commons.StatusCodes;
@@ -8,9 +9,11 @@ namespace Tempus.API.Controllers;
 /// <summary>
 /// Base controller, every controller will inherited this one
 /// </summary>
+[Authorize]
 [ApiController]
-[Route("api/[controller]")]
-public class BaseController : Controller
+[Route("api/v{version:apiVersion}/[controller]")]
+
+public class BaseController : ControllerBase
 {
     /// <summary>
     /// </summary>
@@ -36,9 +39,10 @@ public class BaseController : Controller
         return response.StatusCode switch
         {
             CustomStatusCodes.Ok => Ok(response),
+            CustomStatusCodes.Created => Created(new Uri(""), response),
             CustomStatusCodes.NotFound => NotFound(),
             CustomStatusCodes.BadRequest => BadRequest(response),
-            _ => BadRequest(response)
+            CustomStatusCodes.Unauthorized => Unauthorized(response)
         };
     }
 }

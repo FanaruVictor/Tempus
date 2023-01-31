@@ -1,12 +1,10 @@
 ﻿import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CategoryComponent} from "./category/category.component";
+import {CategoriesOverviewComponent} from "./categories-overview/categories-overview.component";
 
 const routes: Routes = [
-  {path: '', pathMatch:'full', redirectTo: 'create'},
-  {path: 'create', component: CategoryComponent},
-  {path: ':id', component: CategoryComponent},
-  {path: 'edit/:id', component: CategoryComponent},
+  {path: '', pathMatch: 'prefix', redirectTo: 'overview'},
+  {path: 'overview', component: CategoriesOverviewComponent},
 ];
 
 @NgModule({

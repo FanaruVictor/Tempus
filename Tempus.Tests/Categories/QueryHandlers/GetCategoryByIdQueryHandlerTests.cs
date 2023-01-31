@@ -1,9 +1,9 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Queries.Categories.GetById;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Category;
+using Tempus.Infrastructure.Queries.Categories.GetById;
 
 namespace Tempus.Tests.Categories.QueryHandlers;
 

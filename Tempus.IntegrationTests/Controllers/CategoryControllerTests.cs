@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using Tempus.Core.Commands.Categories.Create;
-using Tempus.Core.Commands.Categories.Update;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Category;
+using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Infrastructure.Commands.Categories.Update;
+using Tempus.Infrastructure.Models.Category;
 using Tempus.IntegrationTests.Configuration;
 
 namespace Tempus.IntegrationTests.Controllers;
@@ -22,7 +22,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         var request = new
         {
-            Url = "api/categories",
+            Url = "api/v1/categories",
             Body = new CreateCategoryCommand
             {
                 UserId = new Guid("68af0be2-624d-4fe6-9a19-a83e932038bf"),
@@ -49,7 +49,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         var request = new
         {
-            Url = "api/categories",
+            Url = "api/v1/categories",
             Body = new UpdateCategoryCommand
             {
                 Id = new Guid("c8591507-e077-4ad3-a673-4d7fcb944215"),
@@ -76,7 +76,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     [Fact]
     public async Task When_CallCategoriesControllerActionDelete_ItShould_ReturnDeletedCategoryId()
     {
-        var response = await _client.DeleteAsync("api/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
+        var response = await _client.DeleteAsync("api/v1/categories/c4abd929-0cdd-4c04-afa4-3dbeb3f686d1");
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString ?? "");
         var actual = baseResponse?.Resource;
@@ -89,7 +89,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     [Fact]
     public async Task When_CallCategoriesControllerActionGetAll_ItShould_ReturnAllCategories()
     {
-        const string request = "api/categories";
+        const string request = "api/v1/categories";
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();
@@ -105,7 +105,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
     [Fact]
     public async Task When_CallCategoriesControllerActionGetById_ItShould_ReturnCategoryWithSpecifiedId()
     {
-        const string request = "api/categories/d2bbbffc-d7d0-4477-be87-d2e68aeb0ffa";
+        const string request = "api/v1/categories/d2bbbffc-d7d0-4477-be87-d2e68aeb0ffa";
 
         var response = await _client.GetAsync(request);
         var responseString = await response.Content.ReadAsStringAsync();

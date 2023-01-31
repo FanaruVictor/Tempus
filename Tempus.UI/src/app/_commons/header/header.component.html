@@ -1,0 +1,14 @@
+<div class="header" *ngIf="authorizationToken">
+  <div class="content">
+    <div class="logo">Tempus</div>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         *ngFor="let tab of tabs"
+         [routerLink]="tab.link"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive"
+      >{{tab.label}}</a>
+    </nav>
+  </div>
+  <mat-progress-bar *ngIf="loaderService.isLoading | async" mode="indeterminate" class="loader-container" ></mat-progress-bar>
+</div>

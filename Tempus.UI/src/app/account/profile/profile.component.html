@@ -1,0 +1,35 @@
+<div class="account-wrapper">
+  <div class="right"></div>
+  <div class="center">
+    <div class="title">
+      <h1>User profile</h1>
+      <div class="actions">
+        <app-button [icon]="'edit'" class="edit-icon" (click)="edit()">edit</app-button>
+        <app-button [icon]="'delete'" class="delete-icon" (click)="delete()">delete</app-button>
+      </div>
+    </div>
+    <div class="content">
+        <div class="container">
+          <h2>Username</h2>
+          {{user?.userName ?? ''}}
+        </div>
+        <div class="container">
+          <h2>Email</h2>
+          {{user?.email ?? ''}}
+        </div>
+        <div class="container">
+          <h2>Phone number</h2>
+          {{user?.phoneNumber ?? ''}}
+        </div>
+      <div class="container">
+        <h2>User Mode</h2>
+        <mat-slide-toggle [(ngModel)]="isChecked" (click)="toggleDarkTheme()">{{user?.isDarkTheme ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
+      </div>
+      <div class="container">
+        <h2>User Photo</h2>
+        <button *ngIf="user?.photoDetails == undefined" mat-raised-button aria-label="Add user photo" (click)="addPhoto()">Add Photo</button>
+      </div>
+    </div>
+  </div>
+  <div class="left"></div>
+</div>

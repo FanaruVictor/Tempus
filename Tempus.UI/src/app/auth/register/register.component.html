@@ -1,0 +1,26 @@
+<div class="register-wrapper">
+  <a class="back">
+    <mat-icon [routerLink]="['/auth/login']">arrow_back</mat-icon>
+  </a>
+  <form class="register-form" [formGroup]="registerForm" (ngSubmit)="submit()">
+    <div class="title">Register</div>
+    <div class="container">
+      <label>Username</label>
+      <input formControlName="username" placeholder="Ex: JohnDoe">
+    </div>
+    <div class="container">
+      <label>Email</label>
+      <input formControlName="email" placeholder="Ex: John.Doe@gmail.com">
+    </div>
+    <div class="container">
+      <label>PhoneNumber</label>
+      <input formControlName="phoneNumber" placeholder="0747272209">
+    </div>
+    <div class="container">
+      <label>Password</label>
+      <input formControlName="password" type="password" placeholder="password">
+    </div>
+    <button mat-raised-button [disabled]="submitted" type="submit">Create</button>
+  </form>
+
+</div>

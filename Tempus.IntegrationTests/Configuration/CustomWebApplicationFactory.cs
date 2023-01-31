@@ -10,6 +10,7 @@ using static Tempus.IntegrationTests.Configuration.DbSeed;
 namespace Tempus.IntegrationTests.Configuration;
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
+    public string DefaultUserId { get; set; } = "6627df4f-6ac6-4ff6-bf8e-6d358fd88025";
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -19,6 +20,11 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                      typeof(DbContextOptions<TempusDbContext>));
 
             if (descriptor != null) services.Remove(descriptor);
+            
+            services.Configure<TestAuthHandlerOptions>(options => options.DefaultUserId = DefaultUserId);
+
+            services.AddAuthentication(TestAuthHandler.AuthenticationScheme)
+                .AddScheme<TestAuthHandlerOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { });
 
             services.AddDbContext<TempusDbContext>(options => { options.UseInMemoryDatabase("InMemoryDbForTesting"); });
 

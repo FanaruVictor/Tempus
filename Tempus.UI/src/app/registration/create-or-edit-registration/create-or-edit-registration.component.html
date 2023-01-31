@@ -1,11 +1,24 @@
 <div class="registration-wrapper">
-  <h1 class="title">Create Registration</h1>
-  <form [formGroup]="createOrEditForm" class="registration-form" (ngSubmit)="create()">
-    <input class="registration-title" formControlName="title" placeholder="Title">
-    <textarea class="registration-content" formControlName="content"></textarea>
-    <div class="actions">
-      <button class="cancel-registration" mat-raised-button type="submit">Cancel</button>
-      <button [disabled]="!createOrEditForm.valid" class="create-registration" mat-raised-button type="submit">Create</button>
+  <h1 class="title" *ngIf="isCreateMode">Create Registration</h1>
+  <h1 class="title" *ngIf="!isCreateMode">Edit Registration</h1>
+  <form [formGroup]="createOrEditForm" class="registration-form" (ngSubmit)="submit()">
+   <div class="title-control">
+     <input class="registration-title" formControlName="title" placeholder="Title">
+     <mat-error *ngIf="createOrEditForm.controls['title'].invalid && createOrEditForm.controls['title'].touched">Title is required</mat-error>
+   </div>
+    <div class="content-control">
+      <quill-editor
+        #editor
+        formControlName="content"
+        placeholder=""
+        [modules]="quillConfig"
+        format="html"
+      >
+      </quill-editor>
+      <div class="actions">
+        <button class="cancel-button" mat-raised-button (click)="cancel()">Cancel</button>
+        <button [disabled]="!createOrEditForm.valid" class="create-registration" mat-raised-button type="submit">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
+      </div>
     </div>
   </form>
 

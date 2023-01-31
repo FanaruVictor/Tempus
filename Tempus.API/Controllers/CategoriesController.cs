@@ -1,17 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Commands.Categories.Create;
-using Tempus.Core.Commands.Categories.Delete;
-using Tempus.Core.Commands.Categories.Update;
-using Tempus.Core.Models.Category;
-using Tempus.Core.Queries.Categories.GetAll;
-using Tempus.Core.Queries.Categories.GetById;
+using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Infrastructure.Commands.Categories.Delete;
+using Tempus.Infrastructure.Commands.Categories.Update;
+using Tempus.Infrastructure.Models.Category;
+using Tempus.Infrastructure.Queries.Categories.GetAll;
+using Tempus.Infrastructure.Queries.Categories.GetById;
 
 namespace Tempus.API.Controllers;
 
 /// <summary>
 /// CategoryController is responsible with requests designed for categories
 /// </summary>
+[ApiVersion("1.0")]
 public class CategoriesController : BaseController
 {
     /// <summary>
@@ -29,8 +30,8 @@ public class CategoriesController : BaseController
     /// <param name="query"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<List<BaseCategory>>> GetAll([FromQuery] GetAllCategoriesQuery query)
-        => HandleResponse(await _mediator.Send(query));
+    public async Task<ActionResult<List<BaseCategory>>> GetAll()
+        => HandleResponse(await _mediator.Send(new GetAllCategoriesQuery()));
 
     /// <summary>
     /// For a specified Id a category will be returned if it exists

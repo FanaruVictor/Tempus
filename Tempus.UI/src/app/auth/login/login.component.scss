@@ -1,0 +1,61 @@
+@import 'src/styles/variables';
+
+.login-wrapper{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  .login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: $background-color;
+    height: 250px;
+    width: 250px;
+    .title{
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .container{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+      label{
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      input{
+        outline: none;
+        padding: 5px;
+        font-size: 18px;
+        &:focus {
+          border: 2px solid $primary-color;
+        }
+      }
+    }
+
+    button{
+      color: white;
+      background-color: $primary-color;
+    }
+  }
+
+  .actions{
+    display: flex;
+    width: 250px;
+    justify-content: space-between;
+
+    a{
+      text-decoration: none;
+      color: black;
+    }
+  }
+}

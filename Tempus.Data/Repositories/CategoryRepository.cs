@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 
 namespace Tempus.Data.Repositories;
@@ -15,11 +15,11 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
 
     public async Task<List<Category?>> GetAll(Guid userId)
     {
-        return await _context.Categories.Where(x => x.UserId == userId).ToListAsync();
+        return await _context.Categories.AsNoTracking().Where(x => x.UserId == userId).ToListAsync();
     }
 
     public string GetCategoryColor(Guid id)
     {
-        return _context.Categories.Where(x => x.Id == id).Select(x => x.Color).FirstOrDefault() ?? DefaultColor;
+        return _context.Categories.AsNoTracking().Where(x => x.Id == id).Select(x => x.Color).FirstOrDefault() ?? DefaultColor;
     }
 }

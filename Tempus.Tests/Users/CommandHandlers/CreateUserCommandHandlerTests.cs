@@ -1,40 +1,38 @@
 ﻿using Moq;
-using Tempus.Core.Commands.Registrations.Create;
-using Tempus.Core.Commands.Users.Create;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.Models.Registrations;
-using Tempus.Core.Models.User;
-using Tempus.Core.Repositories;
+using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Auth.Register;
+using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Tests.Users.CommandHandlers;
 
 public class CreateUserCommandHandlerTests
 {
-    private readonly Mock<IUserRepository> _mockUserRepository;
-    private readonly CreateUserCommandHandler _sut;
+    private readonly Mock<IAuthRepository> _mockAuthRepository;
+    private readonly RegisterUserCommandHandler _sut;
 
     public CreateUserCommandHandlerTests()
     {
-        _mockUserRepository = new Mock<IUserRepository>();
+        _mockAuthRepository = new Mock<IAuthRepository>();
 
-        _sut = new CreateUserCommandHandler(_mockUserRepository.Object);
+        _sut = new RegisterUserCommandHandler(_mockAuthRepository.Object);
     }
     
     [Fact]
     public async Task Given_CommandWithUserData_When_HandleCreateUserCommand_ItShould_ReturnOk()
     {
         var user = new User(Guid.NewGuid(), "username", "email");
-        _mockUserRepository
-            .Setup(x => x.Add(It.IsAny<User>()))
+        _mockAuthRepository
+            .Setup(x => x.Register(It.IsAny<User>(), It.IsAny<string>()))
             .ReturnsAsync(user);
 
         var baseUser = GenericMapper<User, BaseUser>.Map(user);
         var expected = BaseResponse<BaseUser>.Ok(baseUser);
 
-        var actual = await _sut.Handle(new CreateUserCommand
+        var actual = await _sut.Handle(new RegisterUserCommand
             {
-                UserName = user.UserName,
+                UserName = user.Username,
                 Email = user.Email
             },
             new CancellationToken());
@@ -56,7 +54,7 @@ public class CreateUserCommandHandlerTests
 
         cts.Cancel();
 
-        var actual = await _sut.Handle(new CreateUserCommand(), cancellationToken);
+        var actual = await _sut.Handle(new RegisterUserCommand(), cancellationToken);
 
         Assert.NotNull(actual);
         Assert.Equal(1, actual.Errors?.Count);
