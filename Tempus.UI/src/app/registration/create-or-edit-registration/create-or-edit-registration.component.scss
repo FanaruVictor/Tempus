@@ -7,22 +7,25 @@
   height: calc(100% - 50px);
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   .title {
-    margin-top: 50px;
     text-align: left;
+    padding-top: 30px;
     width: 50%;
     text-transform: uppercase;
+    height: 10%;
   }
 
 
   .registration-form {
     background-color: var(--content-color);
-    height: 100%;
-    width: calc(50% - 40px);
+    min-height: calc(90% - 30px);
+    max-height: calc(90% - 30px);
+    width: 50%;
     border-radius: 5px;
-    padding: 30px 20px;
-    margin-bottom: 50px;
+    padding: 15px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -31,7 +34,7 @@
     .title-control{
       display: flex;
       flex-direction: column;
-      margin-bottom: 20px;
+      height: 10%;
 
       .registration-title {
         padding: 5px;
@@ -43,8 +46,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
+      min-height: 90%;
+      max-height: 90%;
     }
+
     input{
       color: var(--text-color);
       background-color: var(--background-color);
@@ -56,12 +61,9 @@
       }
     }
 
-    .ng-invalid.ng-touched{
-      border: 2px solid $error-color;
-    }
-
     .actions {
       display: flex;
+      height: 36px;
       justify-content: space-between;
     }
   }

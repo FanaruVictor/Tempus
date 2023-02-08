@@ -34,7 +34,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     [{ 'font': [] }],
     [{ size: [ 'small', false, 'large', 'huge' ]}],
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
+    ['code-block'],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }, {'list': 'check'}],
     [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
     [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
@@ -104,11 +104,16 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   submit() {
+    this.validateForm();
     if (!this.isCreateMode) {
       this.update();
       return
     }
     this.create();
+  }
+
+  validateForm(){
+
   }
 
   update() {
