@@ -19,7 +19,7 @@
   background: #555;
 }
 
-body{
+body {
   --text-color: #222;
   --background-color: #fff;
   --button-text-color: #fff;
@@ -30,7 +30,7 @@ body{
   --tooltip-text-color: #eee;
 }
 
-body.dark-theme{
+body.dark-theme {
   --text-color: #eee;
   --background-color: #2a2a2a;
   --btn-text-color: #2E2B2B;
@@ -47,7 +47,7 @@ body {
   background-color: var(--background-color);
 }
 
-h1, p{
+h1, p {
   color: var(--text-color);
 }
 
@@ -64,7 +64,9 @@ h1, p{
   background-color: $error-color !important;
 }
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+}
 
 * {
   box-sizing: border-box;

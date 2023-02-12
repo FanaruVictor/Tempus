@@ -1,5 +1,5 @@
-﻿using Tempus.Infrastructure.Commons;
-using Tempus.Core.Commons;
+﻿using Tempus.Core.Commons;
+using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure.Commands.Categories.Delete;
 

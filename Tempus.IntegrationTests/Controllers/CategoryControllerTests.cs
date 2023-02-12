@@ -63,7 +63,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseCategory>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
@@ -80,8 +80,8 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString ?? "");
         var actual = baseResponse?.Resource;
-        
-		response.EnsureSuccessStatusCode();
+
+        response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.Equal(new Guid("c4abd929-0cdd-4c04-afa4-3dbeb3f686d1"), actual);
     }
@@ -95,13 +95,13 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<List<BaseCategory>>>(responseString);
         var actual = baseResponse?.Resource;
- 
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
         Assert.Equal(5, actual.Count);
     }
-    
+
     [Fact]
     public async Task When_CallCategoriesControllerActionGetById_ItShould_ReturnCategoryWithSpecifiedId()
     {

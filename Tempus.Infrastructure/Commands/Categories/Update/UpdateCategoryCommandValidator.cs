@@ -10,6 +10,5 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
         RuleFor(x => x.Id).NotEqual(Guid.Empty);
         RuleFor(x => x.Color).NotEmpty();
         RuleFor(x => x.Name).NotEmpty();
-        
     }
 }

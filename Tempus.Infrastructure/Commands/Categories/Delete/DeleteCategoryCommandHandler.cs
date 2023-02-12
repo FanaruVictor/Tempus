@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
+
 namespace Tempus.Infrastructure.Commands.Categories.Delete;
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, BaseResponse<Guid>>
@@ -18,11 +19,14 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var deletedCategoryId = await _categoryRepository.Delete(request.Id);
+            var deletedCategoryId = request.Id;
+
+            await _categoryRepository.Delete(deletedCategoryId);
+            await _categoryRepository.SaveChanges();
 
             BaseResponse<Guid> result;
-            
-            if (deletedCategoryId == Guid.Empty)
+
+            if(deletedCategoryId == Guid.Empty)
             {
                 result = BaseResponse<Guid>.NotFound($"Category with Id: {request.Id} not found");
                 return result;
@@ -31,9 +35,9 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
             result = BaseResponse<Guid>.Ok(deletedCategoryId);
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var result = BaseResponse<Guid>.BadRequest(new List<string>{exception.Message});
+            var result = BaseResponse<Guid>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

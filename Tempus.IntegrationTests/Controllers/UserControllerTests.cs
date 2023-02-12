@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
 using Tempus.Core.Commons;
-using Tempus.Infrastructure.Commands.Auth.Register;
 using Tempus.Infrastructure.Commands.Users.Update;
 using Tempus.Infrastructure.Models.User;
 using Tempus.IntegrationTests.Configuration;
@@ -53,7 +52,7 @@ public class UserControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.Equal(new Guid("6627df4f-6ac6-4ff6-bf8e-6d358fd88025"), actual);
@@ -68,11 +67,11 @@ public class UserControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<List<BaseUser>>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Contains(actual.Count, new List<int> { 4, 5, 6 });
+        Assert.Contains(actual.Count, new List<int> {4, 5, 6});
     }
 
     [Fact]
@@ -84,7 +83,7 @@ public class UserControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseUser>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);

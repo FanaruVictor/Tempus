@@ -6,16 +6,16 @@
       <div
         *ngFor="let category of categories"
         class="category">
-        <div class="item" >
+        <div class="item">
           <div class="arrow-left"></div>
-          <mat-card class="info" [ngStyle]="{'box-shadow': '0 0 5px 1px ' + category?.color}">
+          <mat-card [ngStyle]="{'box-shadow': '0 0 5px 1px ' + category?.color}" class="info">
             <div class="category-data">
               <mat-card-header class="name">{{category.name.toUpperCase()}}</mat-card-header>
               <mat-card-content class="color">{{category.color}}</mat-card-content>
             </div>
             <mat-card-actions class="actions">
-              <app-button [icon]="'edit'" class="edit" (click)="updateCategory(category)"></app-button>
-              <app-button [icon]="'delete'" class="delete" (click)="delete(category.id)"></app-button>
+              <app-button (click)="updateCategory(category)" [icon]="'edit'" class="edit"></app-button>
+              <app-button (click)="delete(category.id)" [icon]="'delete'" class="delete"></app-button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="left">
-    <button  mat-raised-button aria-label="Create registration button" (click)="addCategory()">
+    <button (click)="addCategory()" aria-label="Create registration button" mat-raised-button>
       Add
     </button>
   </div>

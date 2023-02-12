@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Commands.Categories.Create;
@@ -11,7 +12,8 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     private readonly ICategoryRepository _categoryRepository;
     private readonly IUserRepository _userRepository;
 
-    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUserRepository userRepository){
+    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUserRepository userRepository)
+    {
         _categoryRepository = categoryRepository;
         _userRepository = userRepository;
     }
@@ -24,7 +26,11 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
             cancellationToken.ThrowIfCancellationRequested();
 
             var user = await _userRepository.GetById(request.UserId);
-            if (user == null) return BaseResponse<BaseCategory>.BadRequest(new List<string>{$"User with Id: {request.UserId} not found"});
+            if(user == null)
+            {
+                return BaseResponse<BaseCategory>.BadRequest(new List<string>
+                    {$"User with Id: {request.UserId} not found"});
+            }
 
             var entity = new Category
             {
@@ -35,18 +41,19 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
                 Color = request.Color,
                 UserId = request.UserId
             };
-            
-            var category = await _categoryRepository.Add(entity);
 
-            var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
+            await _categoryRepository.Add(entity);
+            await _categoryRepository.SaveChanges();
+
+            var baseCategory = GenericMapper<Category, BaseCategory>.Map(entity);
             var result =
                 BaseResponse<BaseCategory>.Ok(baseCategory);
-            
+
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            return BaseResponse<BaseCategory>.BadRequest(new List<string>{exception.Message});
+            return BaseResponse<BaseCategory>.BadRequest(new List<string> {exception.Message});
         }
     }
 }

@@ -18,7 +18,7 @@ public class BaseResponse<T>
             StatusCode = StatusCodes.Ok
         };
     }
-    
+
     public static BaseResponse<T> Created(T resource = default)
     {
         return new BaseResponse<T>
@@ -48,7 +48,7 @@ public class BaseResponse<T>
             Errors = message
         };
     }
-    
+
     public static BaseResponse<T> Unauthorized()
     {
         return new BaseResponse<T>
@@ -57,6 +57,18 @@ public class BaseResponse<T>
             Errors = new List<string>
             {
                 "Unauthorized"
+            }
+        };
+    }
+
+    public static BaseResponse<T> Forbbiden()
+    {
+        return new BaseResponse<T>()
+        {
+            StatusCode = StatusCodes.Forbidden,
+            Errors = new List<string>
+            {
+                "Forbidden"
             }
         };
     }

@@ -1,4 +1,4 @@
-﻿export interface BaseCategory{
+﻿export interface BaseCategory {
   id: string;
   name: string;
   lastUpdatedAt: string;

@@ -1,7 +1,5 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Tempus.Infrastructure.Queries.Users.GetAll;
 
 namespace Tempus.API;
 
@@ -9,7 +7,6 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddAPIServices(this IServiceCollection services)
     {
-        
         services.AddApiVersioning(o =>
         {
             o.DefaultApiVersion = new ApiVersion(1, 0);
@@ -26,7 +23,7 @@ public static class ConfigureServices
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
-        
+
         return services;
     }
 }

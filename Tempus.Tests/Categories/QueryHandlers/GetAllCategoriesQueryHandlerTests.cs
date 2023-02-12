@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 using Tempus.Infrastructure.Queries.Categories.GetAll;
 
@@ -33,7 +34,7 @@ public class GetAllCategoriesQueryHandlerTests
 
         _mockCategoryRepository
             .Setup(x => x.GetAll())
-            .ReturnsAsync(new List<Category> { category });
+            .ReturnsAsync(new List<Category> {category});
 
         var expected = BaseResponse<List<BaseCategory>>.Ok(
             new List<BaseCategory>
@@ -78,14 +79,14 @@ public class GetAllCategoriesQueryHandlerTests
                 .Where(x => x.UserId == userId)
                 .Select(GenericMapper<Category, BaseCategory>.Map)
                 .ToList()
-            );
+        );
 
         var actual = await _sut.Handle(new GetAllCategoriesQuery
             {
                 UserId = userId
             },
             new CancellationToken());
-        
+
         Assert.Equal(expected.Resource?.Count, actual.Resource?.Count);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
     }

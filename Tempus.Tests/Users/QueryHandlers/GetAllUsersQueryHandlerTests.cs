@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.User;
 using Tempus.Infrastructure.Queries.Users.GetAll;
 
@@ -9,7 +10,7 @@ namespace Tempus.Tests.Users.QueryHandlers;
 
 public class GetAllUsersQueryHandlerTests
 {
-     private readonly Mock<IUserRepository> _mockUserRepository;
+    private readonly Mock<IUserRepository> _mockUserRepository;
     private readonly GetAllUsersQueryHandler _sut;
 
     public GetAllUsersQueryHandlerTests()
@@ -26,7 +27,7 @@ public class GetAllUsersQueryHandlerTests
 
         _mockUserRepository
             .Setup(x => x.GetAll())
-            .ReturnsAsync(new List<User> { user });
+            .ReturnsAsync(new List<User> {user});
 
         var expected = BaseResponse<List<BaseUser>>.Ok(
             new List<BaseUser>
@@ -40,7 +41,7 @@ public class GetAllUsersQueryHandlerTests
         Assert.Equal(expected.Resource?.Count, actual.Resource?.Count);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
     }
-    
+
     [Fact]
     public async Task When_CancelHandleGetAllCategoriesQuery_ItShouldReturnBadRequest()
     {

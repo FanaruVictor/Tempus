@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {ButtonComponent} from "./button/button.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -13,4 +13,5 @@ import {MatTooltipModule} from "@angular/material/tooltip";
   ],
   exports: [ButtonComponent]
 })
-export class SharedModule { }
+export class SharedModule {
+}

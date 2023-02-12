@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 using Tempus.Infrastructure.Queries.Registrations.LastUpdated;
 
@@ -38,8 +39,8 @@ public class GetLastRegistrationUpdatedQueryHandlerTests
         var expected = BaseResponse<BaseRegistration>.Ok(baseRegistration);
 
         var actual = await _sut.Handle(new GetLastUpdatedRegsitrationQuery(), new CancellationToken());
-        
-        
+
+
         Assert.NotNull(actual);
         Assert.Null(actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
@@ -49,7 +50,8 @@ public class GetLastRegistrationUpdatedQueryHandlerTests
     }
 
     [Fact]
-    public async Task When_ThereIsNoRegistrationInDatabaseAndHandleGetLastRegistrationUpdatedQuery_ItShould_ReturnNotFound()
+    public async Task
+        When_ThereIsNoRegistrationInDatabaseAndHandleGetLastRegistrationUpdatedQuery_ItShould_ReturnNotFound()
     {
         _mockRegistrationRepository
             .Setup(x => x.GetLastUpdated())
@@ -64,12 +66,12 @@ public class GetLastRegistrationUpdatedQueryHandlerTests
         Assert.Equal(expected.Errors?[0], actual.Errors?[0]);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
     }
-    
+
     [Fact]
     public async Task When_CancelHandleGetLastRegistarationUpdatedQuery_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

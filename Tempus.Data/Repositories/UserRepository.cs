@@ -7,9 +7,7 @@ namespace Tempus.Data.Repositories.UserRepositories;
 
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
-    public UserRepository(TempusDbContext context) : base(context)
-    {
-    }
+    public UserRepository(TempusDbContext context) : base(context) { }
 
     public async Task<bool?> GetTheme(Guid id)
     {

@@ -10,7 +10,7 @@ import {BaseCategory} from "../../_commons/models/categories/baseCategory";
   templateUrl: './create-or-edit-category-dialog.component.html',
   styleUrls: ['./create-or-edit-category-dialog.component.scss']
 })
-export class CreateOrEditCategoryDialogComponent implements OnInit{
+export class CreateOrEditCategoryDialogComponent implements OnInit {
   createOrEditForm = new UntypedFormGroup({
     name: new UntypedFormControl('', [Validators.required]),
     color: new UntypedFormControl('', [Validators.required])
@@ -28,7 +28,8 @@ export class CreateOrEditCategoryDialogComponent implements OnInit{
     public dialogRef: MatDialogRef<CreateOrEditCategoryDialogComponent>,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public category: BaseCategory,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.isCreateMode = !this.category;
@@ -36,7 +37,7 @@ export class CreateOrEditCategoryDialogComponent implements OnInit{
     if (!this.isCreateMode) {
       this.createOrEditForm.controls['name'].setValue(this.category.name);
       let color = this.hexToRgb(this.category.color);
-      if(color)
+      if (color)
         this.createOrEditForm.controls['color'].setValue(new Color(color.r, color.g, color.b));
     }
   }
@@ -46,8 +47,8 @@ export class CreateOrEditCategoryDialogComponent implements OnInit{
     this.router.navigate(['/categories/overview']);
   }
 
-  submit(){
-    if(this.category){
+  submit() {
+    if (this.category) {
       this.result.id = this.category.id;
     }
 

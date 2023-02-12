@@ -16,7 +16,7 @@ import {ToastrModule} from "ngx-toastr";
 import {ErrorInterceptor} from "./_commons/interceptors/errorInterceptor";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {LoaderInterceptor} from "./_services/loader/loader-interceptor";
-import { HeaderComponent } from './_commons/header/header.component';
+import {HeaderComponent} from './_commons/header/header.component';
 
 @NgModule({
   declarations: [

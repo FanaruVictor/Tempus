@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Auth.Register;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Auth.Register;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.User;
 
@@ -18,7 +19,7 @@ public class CreateUserCommandHandlerTests
 
         _sut = new RegisterUserCommandHandler(_mockAuthRepository.Object);
     }
-    
+
     [Fact]
     public async Task Given_CommandWithUserData_When_HandleCreateUserCommand_ItShould_ReturnOk()
     {
@@ -36,7 +37,7 @@ public class CreateUserCommandHandlerTests
                 Email = user.Email
             },
             new CancellationToken());
-        
+
         Assert.NotNull(actual);
         Assert.Null(actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);

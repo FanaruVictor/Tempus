@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Commands.Categories.Update;
@@ -15,7 +16,8 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<BaseResponse<BaseCategory>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<BaseCategory>> Handle(UpdateCategoryCommand request,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -23,9 +25,11 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
             var entity = await _categoryRepository.GetById(request.Id);
 
-            if (entity == null)
+            if(entity == null)
+            {
                 return BaseResponse<BaseCategory>.NotFound(
                     $"Category with Id: {request.Id} not found.");
+            }
 
             entity = new Category
             {
@@ -36,17 +40,18 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
                 Color = request.Color,
                 UserId = entity.UserId
             };
-    
-            var category = await _categoryRepository.Update(entity);
 
-            var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
+            await _categoryRepository.Update(entity);
+            await _categoryRepository.SaveChanges();
+
+            var baseCategory = GenericMapper<Category, BaseCategory>.Map(entity);
             var result = BaseResponse<BaseCategory>.Ok(baseCategory);
-            
+
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var result = BaseResponse<BaseCategory>.BadRequest(new List<string>{exception.Message});
+            var result = BaseResponse<BaseCategory>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

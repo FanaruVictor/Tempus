@@ -1,12 +1,15 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.LastUpdated;
 
-public class GetLastRegistrationUpdatedQueryHandler : IRequestHandler<GetLastUpdatedRegsitrationQuery, BaseResponse<BaseRegistration>>
+public class
+    GetLastRegistrationUpdatedQueryHandler : IRequestHandler<GetLastUpdatedRegsitrationQuery,
+        BaseResponse<BaseRegistration>>
 {
     private readonly IRegistrationRepository _registrationRepository;
 
@@ -14,7 +17,9 @@ public class GetLastRegistrationUpdatedQueryHandler : IRequestHandler<GetLastUpd
     {
         _registrationRepository = registrationRepository;
     }
-    public async Task<BaseResponse<BaseRegistration>> Handle(GetLastUpdatedRegsitrationQuery request, CancellationToken cancellationToken)
+
+    public async Task<BaseResponse<BaseRegistration>> Handle(GetLastUpdatedRegsitrationQuery request,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -22,15 +27,18 @@ public class GetLastRegistrationUpdatedQueryHandler : IRequestHandler<GetLastUpd
 
             var registration = await _registrationRepository.GetLastUpdated();
 
-            if (registration == null) return BaseResponse<BaseRegistration>.NotFound("Registration not found!");
-            
-            var response = BaseResponse<BaseRegistration>.Ok(GenericMapper<Registration, BaseRegistration>.Map(registration));
-            return response;
+            if(registration == null)
+            {
+                return BaseResponse<BaseRegistration>.NotFound("Registration not found!");
+            }
 
+            var response =
+                BaseResponse<BaseRegistration>.Ok(GenericMapper<Registration, BaseRegistration>.Map(registration));
+            return response;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var response = BaseResponse<BaseRegistration>.BadRequest(new List<string>{exception.Message});
+            var response = BaseResponse<BaseRegistration>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }

@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Queries.Users.GetAll;
@@ -15,7 +16,8 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseRes
         _userRepository = userRepository;
     }
 
-    public async Task<BaseResponse<List<BaseUser>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<List<BaseUser>>> Handle(GetAllUsersQuery request,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -24,12 +26,12 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseRes
             var users = await _userRepository.GetAll();
 
             var result =
-                BaseResponse<List<BaseUser>>.Ok(users.Select(GenericMapper<User,BaseUser>.Map).ToList());
+                BaseResponse<List<BaseUser>>.Ok(users.Select(GenericMapper<User, BaseUser>.Map).ToList());
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var result = BaseResponse<List<BaseUser>>.BadRequest(new List<string>{exception.Message});
+            var result = BaseResponse<List<BaseUser>>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

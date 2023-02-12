@@ -1,6 +1,6 @@
 @import 'src/styles/variables';
 
-.login-wrapper{
+.login-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
@@ -8,52 +8,57 @@
   align-items: center;
   flex-direction: column;
   overflow: hidden;
-  .login-form{
+  background-color: var(--background-color);
+
+  .login-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
     align-items: center;
     padding: 2rem;
-    background-color: $background-color;
-    height: 250px;
-    width: 250px;
-    .title{
+    background-color: var(--content-color);
+    height: 300px;
+
+    .title {
       font-size: 25px;
       font-weight: bold;
     }
 
-    .container{
+    .container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-around;
-      label{
+
+      label {
         font-weight: bold;
         text-transform: uppercase;
       }
-      input{
+
+      input {
         outline: none;
         padding: 5px;
         font-size: 18px;
+
         &:focus {
           border: 2px solid $primary-color;
         }
       }
     }
 
-    button{
+    button {
       color: white;
       background-color: $primary-color;
     }
   }
 
-  .actions{
+  .actions {
     display: flex;
     width: 250px;
     justify-content: space-between;
 
-    a{
+    a {
       text-decoration: none;
       color: black;
     }

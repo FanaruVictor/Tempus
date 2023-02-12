@@ -12,8 +12,9 @@ public class ProfilePhotoGetByIdQueryHandler : IRequestHandler<ProfilePhotoGetBy
     {
         _profilePhotoRepository = profilePhotoRepository;
     }
-    
-    public async Task<BaseResponse<string>> Handle(ProfilePhotoGetByIdQuery request, CancellationToken cancellationToken)
+
+    public async Task<BaseResponse<string>> Handle(ProfilePhotoGetByIdQuery request,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -21,22 +22,22 @@ public class ProfilePhotoGetByIdQueryHandler : IRequestHandler<ProfilePhotoGetBy
 
             var profilePhoto = await _profilePhotoRepository.GetById(request.Id);
 
-            if (profilePhoto == null)
+            if(profilePhoto == null)
             {
                 return BaseResponse<string>.NotFound("Profile photo not found");
             }
 
-            if (request.UserId != profilePhoto.UserId)
+            if(request.UserId != profilePhoto.UserId)
             {
                 return BaseResponse<string>.BadRequest(new List<string>
                 {
                     "This profile photo is not allocated to the user who requested it."
                 });
             }
-            
+
             return BaseResponse<string>.Ok(profilePhoto.Url);
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
             return BaseResponse<string>.BadRequest(new List<string>
             {

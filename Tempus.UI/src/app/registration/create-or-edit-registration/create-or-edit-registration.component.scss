@@ -31,10 +31,10 @@
     text-align: left;
 
 
-    .title-control{
+    .title-control {
       display: flex;
       flex-direction: column;
-      height: 10%;
+      height: 5%;
 
       .registration-title {
         padding: 5px;
@@ -42,15 +42,20 @@
       }
     }
 
-    .content-control{
+    .content-control {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 90%;
-      max-height: 90%;
+      padding-top: 15px;
+      min-height: 95%;
+      max-height: 95%;
+
+      quill-editor {
+        border: 1px solid var(--background-color) !important;
+      }
     }
 
-    input{
+    input {
       color: var(--text-color);
       background-color: var(--background-color);
       border: 2px solid var(--background-color);

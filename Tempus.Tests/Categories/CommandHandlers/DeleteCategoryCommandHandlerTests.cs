@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Categories.Delete;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Categories.Delete;
 using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Tests.Categories.CommandHandlers;
@@ -26,15 +27,15 @@ public class DeleteCategoryCommandHandlerTests
         _mockCategoryRepository
             .Setup(x => x.GetById(categoryId))
             .ReturnsAsync((Category?)null);
-    
+
         var expected = BaseResponse<BaseCategory>.NotFound($"Category with Id: {categoryId} not found");
-    
+
         var actual = await _sut.Handle(new DeleteCategoryCommand
             {
                 Id = categoryId
             },
             new CancellationToken());
-    
+
         Assert.NotNull(actual);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Equal(expected.Errors?.Count, actual.Errors?.Count);
@@ -52,11 +53,11 @@ public class DeleteCategoryCommandHandlerTests
         var expected = BaseResponse<Guid>.Ok(deletedCategoryId);
 
         var actual = await _sut.Handle(new DeleteCategoryCommand
-        {
-            Id = deletedCategoryId
-        },
+            {
+                Id = deletedCategoryId
+            },
             new CancellationToken());
-        
+
         Assert.Equal(expected.Resource, actual.Resource);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Null(actual.Errors);
@@ -66,7 +67,7 @@ public class DeleteCategoryCommandHandlerTests
     public async Task When_CancelHandleDeleteCategoryCommand_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

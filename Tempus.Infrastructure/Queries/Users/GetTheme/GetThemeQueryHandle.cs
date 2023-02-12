@@ -12,7 +12,7 @@ public class GetThemeQueryHandle : IRequestHandler<GetThemeQuery, BaseResponse<b
     {
         _userRepository = userRepository;
     }
-    
+
     public async Task<BaseResponse<bool>> Handle(GetThemeQuery request, CancellationToken cancellationToken)
     {
         try
@@ -23,7 +23,7 @@ public class GetThemeQueryHandle : IRequestHandler<GetThemeQuery, BaseResponse<b
 
             BaseResponse<bool> result;
 
-            if (!theme.HasValue)
+            if(!theme.HasValue)
             {
                 result = BaseResponse<bool>.NotFound("Theme for this user not found");
                 return result;
@@ -33,9 +33,9 @@ public class GetThemeQueryHandle : IRequestHandler<GetThemeQuery, BaseResponse<b
 
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            return BaseResponse<bool>.BadRequest(new List<string> { exception.Message });
+            return BaseResponse<bool>.BadRequest(new List<string> {exception.Message});
         }
     }
 }

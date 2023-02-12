@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 using Tempus.Infrastructure.Queries.Registrations.GetById;
 
@@ -58,7 +59,7 @@ public class GetRegistrationByIdQueryHandlerTests
                 Id = registration.Id
             },
             new CancellationToken());
-        
+
         Assert.Null(actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Equal(expected.Resource?.Id, actual.Resource?.Id);
@@ -70,7 +71,7 @@ public class GetRegistrationByIdQueryHandlerTests
     public async Task When_CancelHandleGetRegistrationByIdQuery_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

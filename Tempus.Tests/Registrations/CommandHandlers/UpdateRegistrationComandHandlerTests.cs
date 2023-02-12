@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Registrations.Update;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Registrations.Update;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 
@@ -26,7 +27,7 @@ public class UpdateRegistrationCommandHandlerTests
         _mockRegistrationRepository
             .Setup(x => x.GetById(registrationId))
             .ReturnsAsync((Registration?)null);
-        
+
         var expected = BaseResponse<BaseRegistration>.NotFound($"Category with Id: {registrationId} not found.");
 
 
@@ -61,17 +62,17 @@ public class UpdateRegistrationCommandHandlerTests
             registration.Id,
             "new title",
             "new content",
-            DateTime.Now, 
-            DateTime.Now, 
+            DateTime.Now,
+            DateTime.Now,
             registration.CategoryId);
-        
+
         _mockRegistrationRepository
             .Setup(x => x.Update(It.IsAny<Registration>()))
             .ReturnsAsync(updatedRegistration);
 
         var baseRegistration = GenericMapper<Registration, BaseRegistration>.Map(updatedRegistration);
         var expected = BaseResponse<BaseRegistration>.Ok(baseRegistration);
-        
+
         var actual = await _sut.Handle(new UpdateRegistrationCommand
             {
                 Id = registration.Id,
@@ -92,7 +93,7 @@ public class UpdateRegistrationCommandHandlerTests
     public async Task When_CancelHandleUpdateRegistrationCommand_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

@@ -7,12 +7,9 @@ using CustomStatusCodes = Tempus.Core.Commons.StatusCodes;
 namespace Tempus.API.Controllers;
 
 /// <summary>
-/// Base controller, every controller will inherited this one
+///     Base controller, every controller will inherited this one
 /// </summary>
-[Authorize]
-[ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
-
+[Authorize, ApiController, Route("api/v{version:apiVersion}/[controller]")]
 public class BaseController : ControllerBase
 {
     /// <summary>
@@ -20,7 +17,7 @@ public class BaseController : ControllerBase
     protected readonly IMediator _mediator;
 
     /// <summary>
-    /// constructor
+    ///     constructor
     /// </summary>
     /// <param name="mediator"></param>
     public BaseController(IMediator mediator)
@@ -29,7 +26,7 @@ public class BaseController : ControllerBase
     }
 
     /// <summary>
-    /// Handles the response from the mediatr
+    ///     Handles the response from the mediatr
     /// </summary>
     /// <param name="response"></param>
     /// <typeparam name="T"></typeparam>

@@ -6,7 +6,9 @@ using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
-public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistrationsQuery, BaseResponse<List<DetailedRegistration>>>
+public class
+    GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistrationsQuery,
+        BaseResponse<List<DetailedRegistration>>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IRegistrationRepository _registrationRepository;
@@ -26,17 +28,21 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
             cancellationToken.ThrowIfCancellationRequested();
 
             List<Registration> registrations;
-            if (request.CategoryId.HasValue)
+            if(request.CategoryId.HasValue)
+            {
                 registrations = await _registrationRepository.GetAll(request.CategoryId.Value, request.UserId);
+            }
             else
+            {
                 registrations = await _registrationRepository.GetAll();
+            }
 
             var response = BaseResponse<List<DetailedRegistration>>.Ok(registrations
                 .Select(x =>
                 {
                     var categoryColor = _categoryRepository.GetCategoryColor(x.CategoryId);
 
-                    return new DetailedRegistration()
+                    return new DetailedRegistration
                     {
                         Id = x.Id,
                         Title = x.Title,
@@ -49,9 +55,9 @@ public class GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistratio
                 .ToList());
             return response;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var response = BaseResponse<List<DetailedRegistration>>.BadRequest(new List<string>{exception.Message});
+            var response = BaseResponse<List<DetailedRegistration>>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }

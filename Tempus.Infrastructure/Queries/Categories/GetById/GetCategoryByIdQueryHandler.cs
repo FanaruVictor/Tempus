@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Queries.Categories.GetById;
@@ -24,17 +25,19 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
 
             var category = await _categoryRepository.GetById(request.Id);
 
-            if (category == null)
+            if(category == null)
+            {
                 return BaseResponse<BaseCategory>.NotFound("Category not found.");
+            }
 
             var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
             var response = BaseResponse<BaseCategory>.Ok(baseCategory);
-            
+
             return response;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            return BaseResponse<BaseCategory>.BadRequest(new List<string> { exception.Message });
+            return BaseResponse<BaseCategory>.BadRequest(new List<string> {exception.Message});
         }
     }
 }

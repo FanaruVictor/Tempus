@@ -39,7 +39,7 @@ describe('Component: DetailedRegistration', () => {
   it('should call ngOnInit', () => {
     const fixture = TestBed.createComponent(DetailedRegistrationComponent);
     const component = fixture.componentInstance;
-    let spy_getRegistration = spyOn(component,"getRegistration").and.returnValue(undefined);
+    let spy_getRegistration = spyOn(component, "getRegistration").and.returnValue(undefined);
     component.ngOnInit();
     expect(component.id).toEqual('1');
   })
@@ -48,7 +48,7 @@ describe('Component: DetailedRegistration', () => {
     const fixture = TestBed.createComponent(DetailedRegistrationComponent);
     const component = fixture.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
-    let response : GenericResponse<BaseRegistration> = {
+    let response: GenericResponse<BaseRegistration> = {
       resource: {
         id: 'id',
         title: 'title',
@@ -57,7 +57,7 @@ describe('Component: DetailedRegistration', () => {
       },
       errors: []
     }
-    spyOn(service,"getById").and.callFake(() => {
+    spyOn(service, "getById").and.callFake(() => {
       return Rx.of(response).pipe(delay(100));
     });
 

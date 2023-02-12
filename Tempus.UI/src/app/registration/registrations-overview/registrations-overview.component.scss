@@ -1,22 +1,21 @@
 @import 'src/styles/variables';
 
 .registration-wrapper {
-  top: 50px;
   left: 0;
   display: flex;
   height: calc(100% - 50px);
 
-  .right{
+  .right {
     width: 25%;
     padding-top: 100px;
 
   }
 
-  .center{
-    padding-top: 100px;
-    width: 50%;
+  .center {
+    min-width: 50%;
+    max-width: 50%;
 
-    .elements{
+    .elements {
       overflow-y: scroll;
       height: 100%;
       display: flex;
@@ -27,7 +26,7 @@
         width: 100%;
         display: flex;
         justify-content: space-around;
-        margin: 2rem 0 2rem 0;
+        margin: 50px 0 2rem 0;
 
         .last-update {
           font-size: 12px;
@@ -35,7 +34,7 @@
           align-items: center;
         }
 
-        .item{
+        .item {
           display: flex;
           width: 75%;
           height: 100px;
@@ -65,14 +64,12 @@
 
 
             .title {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              font-size: 20px;
               padding-bottom: 10px;
               min-height: 18px;
+              max-height: 18px;
             }
-            .content{
+
+            .content {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
@@ -83,7 +80,7 @@
     }
   }
 
-  .left{
+  .left {
     padding-top: calc(100px + 2rem);
     text-align: center;
 

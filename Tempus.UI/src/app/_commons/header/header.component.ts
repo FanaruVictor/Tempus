@@ -9,7 +9,7 @@ import {LoaderService} from "../../_services/loader/loader.service";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  tabs: {link: string, label: string, index: number}[];
+  tabs: { link: string, label: string, index: number }[];
   activeLinkIndex = 0;
   authorizationToken?: string;
   contentIsLoading = this.loaderService.isLoading;
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     this.tabs = [
       {
         label: 'Registrations',
-        link: '/registrations' ,
+        link: '/registrations',
         index: 0
       },
       {
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((res) => {
       let element = this.tabs.find(tab => tab.link === this.router.url);
-      if(element)
+      if (element)
         this.activeLinkIndex = this.tabs.indexOf(element);
       else
         this.activeLinkIndex = 0;
