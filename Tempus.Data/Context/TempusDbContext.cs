@@ -6,9 +6,7 @@ namespace Tempus.Data.Context;
 
 public class TempusDbContext : DbContext
 {
-    public TempusDbContext(DbContextOptions options) : base(options)
-    {
-    }
+    public TempusDbContext(DbContextOptions options) : base(options) { }
 
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();

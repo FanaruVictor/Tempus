@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Update;
 
-public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrationCommand, BaseResponse<BaseRegistration>>
+public class
+    UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrationCommand, BaseResponse<BaseRegistration>>
 {
     private readonly IRegistrationRepository _registrationRepository;
 
@@ -21,11 +23,13 @@ public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrati
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-            
+
             var entity = await _registrationRepository.GetById(request.Id);
 
-            if (entity == null)
+            if(entity == null)
+            {
                 return BaseResponse<BaseRegistration>.NotFound($"Registration with Id: {request.Id} was not found");
+            }
 
             entity = new Registration
             {
@@ -37,15 +41,16 @@ public class UpdateRegistrationCommandHandler : IRequestHandler<UpdateRegistrati
                 CategoryId = entity.CategoryId
             };
 
-            var registration = await _registrationRepository.Update(entity);
+            await _registrationRepository.Update(entity);
+            await _registrationRepository.SaveChanges();
 
-            var detailedRegistration = GenericMapper<Registration, BaseRegistration>.Map(registration);
+            var detailedRegistration = GenericMapper<Registration, BaseRegistration>.Map(entity);
             var result = BaseResponse<BaseRegistration>.Ok(detailedRegistration);
             return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var result = BaseResponse<BaseRegistration>.BadRequest(new List<string>{exception.Message});
+            var result = BaseResponse<BaseRegistration>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

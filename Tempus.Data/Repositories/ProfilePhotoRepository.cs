@@ -7,9 +7,7 @@ namespace Tempus.Data.Repositories;
 
 public class ProfilePhotoRepository : BaseRepository<ProfilePhoto>, IProfilePhotoRepository
 {
-    public ProfilePhotoRepository(TempusDbContext context) : base(context)
-    {
-    }
+    public ProfilePhotoRepository(TempusDbContext context) : base(context) { }
 
     public async Task<ProfilePhoto> GetByUserId(Guid id)
     {

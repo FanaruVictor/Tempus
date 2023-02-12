@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 
 @Injectable({
@@ -6,13 +6,14 @@ import {ToastrService} from "ngx-toastr";
 })
 export class NotificationService {
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService) {
+  }
 
-  succes(message: string, title: string){
+  succes(message: string, title: string) {
     this.toastr.success(message, title);
   }
 
-  error(messages: string[], title: string){
+  error(messages: string[], title: string) {
     let totalMessage = '';
     messages.forEach(x => totalMessage += x + '\n\n');
 

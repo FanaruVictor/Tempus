@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using MediatR;
+﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
@@ -16,7 +15,7 @@ public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, Bas
     {
         _userRepository = userRepository;
     }
-    
+
     public async Task<BaseResponse<UserDetails>> Handle(ChangeThemeCommand request, CancellationToken cancellationToken)
     {
         try
@@ -26,26 +25,26 @@ public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, Bas
             var user = await _userRepository.GetById(request.UserId);
 
             BaseResponse<UserDetails> result;
-            
-            if (user == null)
+
+            if(user == null)
             {
                 result = BaseResponse<UserDetails>.NotFound("User not found");
 
                 return result;
             }
 
-            user.IsDarkTheme = request.Theme;
+            user.IsDarkTheme = request.IsDarkTheme;
 
-            var userUpdated = await _userRepository.Update(user);
-            
-            var userDetails = GenericMapper<User, UserDetails>.Map(userUpdated);
-            
+            await _userRepository.Update(user);
+            await _userRepository.SaveChanges();
+
+            var userDetails = GenericMapper<User, UserDetails>.Map(user);
+
             result = BaseResponse<UserDetails>.Ok(userDetails);
-            
-            return result;
 
+            return result;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
             return BaseResponse<UserDetails>.BadRequest(new List<string>
             {

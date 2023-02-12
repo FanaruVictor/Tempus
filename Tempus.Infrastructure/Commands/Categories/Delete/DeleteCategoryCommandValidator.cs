@@ -8,6 +8,5 @@ public class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategoryCo
     {
         RuleFor(x => x.Id).NotNull();
         RuleFor(x => x.Id).NotEqual(Guid.Empty);
-        
     }
 }

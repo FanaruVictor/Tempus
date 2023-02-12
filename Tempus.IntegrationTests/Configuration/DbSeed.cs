@@ -9,11 +9,11 @@ internal static class DbSeed
     {
         var users = new List<User>
         {
-            new (
+            new(
                 new Guid("6627df4f-6ac6-4ff6-bf8e-6d358fd88025"),
                 "victor",
                 "victor@fanaru"
-                ),
+            ),
             new(
                 new Guid("68af0be2-624d-4fe6-9a19-a83e932038bf"),
                 "daniel",

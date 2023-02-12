@@ -16,7 +16,7 @@ describe('Component: RegistrationsOverview', () => {
     TestBed.configureTestingModule({
       declarations: [RegistrationsOverviewComponent],
       providers: [
-         RegistrationApiService,
+        RegistrationApiService,
         CategoryApiService
       ],
       imports: [
@@ -37,12 +37,11 @@ describe('Component: RegistrationsOverview', () => {
     const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
-    let response : GenericResponse<DetailedRegistration[]> = {
-      resource: [
-      ],
+    let response: GenericResponse<DetailedRegistration[]> = {
+      resource: [],
       errors: []
     }
-    spyOn(service,"getAll").and.callFake(() => {
+    spyOn(service, "getAll").and.callFake(() => {
       return Rx.of(response).pipe(delay(100));
     });
 
@@ -55,7 +54,7 @@ describe('Component: RegistrationsOverview', () => {
     const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
-    let response : GenericResponse<DetailedRegistration[]> = {
+    let response: GenericResponse<DetailedRegistration[]> = {
       resource: [
         {
           id: 'id',
@@ -68,7 +67,7 @@ describe('Component: RegistrationsOverview', () => {
       ],
       errors: []
     }
-    spyOn(service,"getAll").and.callFake(() => {
+    spyOn(service, "getAll").and.callFake(() => {
       return Rx.of(response).pipe(delay(1000));
     });
 

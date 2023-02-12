@@ -5,7 +5,7 @@ import {DetailedRegistrationComponent} from "./detailed-registration/detailed-re
 import {CreateOrEditRegistrationComponent} from "./create-or-edit-registration/create-or-edit-registration.component";
 
 const routes: Routes = [
-  {path: '', pathMatch: 'prefix', redirectTo: 'overview'},
+  {path: '', pathMatch: 'full', redirectTo: 'overview'},
   {path: 'create', component: CreateOrEditRegistrationComponent},
   {path: 'edit/:id', component: CreateOrEditRegistrationComponent},
   {path: 'overview', component: RegistrationsOverviewComponent},

@@ -1,12 +1,12 @@
 using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.API;
 using Tempus.Data;
-using Tempus.Data.Context;
 using Tempus.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +16,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDb(builder.Configuration);
 builder.Services.AddAPIServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -56,12 +61,12 @@ var app = builder.Build();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-if (app.Environment.IsDevelopment())
+if(app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
+        foreach(var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                 description.GroupName.ToUpperInvariant());
@@ -70,6 +75,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+var uploadsDir = "D:/PHOTOS";
+app.UseStaticFiles(new StaticFileOptions
+{
+    RequestPath = "/images",
+    FileProvider = new PhysicalFileProvider(uploadsDir)
+});
+
 
 app.UseCors();
 
@@ -79,11 +92,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-    app.Run();
+app.Run();
 
 public partial class Program
 {
-    protected Program()
-    {
-    }
+    protected Program() { }
 }

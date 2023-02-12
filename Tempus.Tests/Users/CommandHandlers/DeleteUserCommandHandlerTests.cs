@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Users.Delete;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Users.Delete;
 using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Tests.Users.CommandHandlers;
@@ -26,7 +27,7 @@ public class DeleteUserCommandHandlerTests
         _mockUserRepository
             .Setup(x => x.GetById(userId))
             .ReturnsAsync((User?)null);
-    
+
         var expected = BaseResponse<BaseUser>.NotFound($"User with Id: {userId} not found");
 
         var actual = await _sut.Handle(new DeleteUserCommand
@@ -34,7 +35,7 @@ public class DeleteUserCommandHandlerTests
                 Id = userId
             },
             new CancellationToken());
-    
+
         Assert.NotNull(actual);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Equal(expected.Errors?.Count, actual.Errors?.Count);
@@ -51,12 +52,12 @@ public class DeleteUserCommandHandlerTests
 
         var expected = BaseResponse<Guid>.Ok(deletedUserId);
 
-        var actual = await _sut.Handle(new DeleteUserCommand()
-        {
-            Id = deletedUserId
-        },
+        var actual = await _sut.Handle(new DeleteUserCommand
+            {
+                Id = deletedUserId
+            },
             new CancellationToken());
-        
+
         Assert.Equal(expected.Resource, actual.Resource);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Null(actual.Errors);
@@ -66,7 +67,7 @@ public class DeleteUserCommandHandlerTests
     public async Task When_CancelHandleDelteUserCommand_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

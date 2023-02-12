@@ -1,24 +1,30 @@
 <div class="category-picker">
   <div>
-    <h1 mat-dialog-title *ngIf="isCreateMode">Create category</h1>
-    <h1 mat-dialog-title *ngIf="!isCreateMode">Edit category</h1>
-    <form [formGroup]="createOrEditForm" (ngSubmit)="submit()" class="category-form">
+    <h1 *ngIf="isCreateMode" mat-dialog-title>Create category</h1>
+    <h1 *ngIf="!isCreateMode" mat-dialog-title>Edit category</h1>
+    <form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="category-form">
       <div class="container">
         <label>Name</label>
         <input formControlName="name" placeholder="Name">
-        <mat-error *ngIf="createOrEditForm.controls['name'].invalid && createOrEditForm.controls['name'].touched">Title is required</mat-error>
+        <mat-error *ngIf="createOrEditForm.controls['name'].invalid && createOrEditForm.controls['name'].touched">Title
+          is required
+        </mat-error>
       </div>
       <div class="container">
         <label>Color</label>
-        <input readonly formControlName="color" placeholder="#ffff" [ngxMatColorPicker]="picker">
-        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+        <input [ngxMatColorPicker]="picker" formControlName="color" placeholder="#ffff" readonly>
+        <ngx-mat-color-toggle [for]="picker" matSuffix></ngx-mat-color-toggle>
         <ngx-mat-color-picker #picker></ngx-mat-color-picker>
-        <mat-error *ngIf="createOrEditForm.controls['color'].invalid && createOrEditForm.controls['color'].touched">Title is required</mat-error>
+        <mat-error *ngIf="createOrEditForm.controls['color'].invalid && createOrEditForm.controls['color'].touched">
+          Title is required
+        </mat-error>
 
       </div>
       <div mat-dialog-actions>
-        <button class="cancel-button" mat-raised-button (click)="onNoClick()">Cancel</button>
-        <button [disabled]="!createOrEditForm.valid" mat-raised-button [mat-dialog-close]="result" cdkFocusInitial type="submit">Ok</button>
+        <button (click)="onNoClick()" class="cancel-button" mat-raised-button>Cancel</button>
+        <button [disabled]="!createOrEditForm.valid" [mat-dialog-close]="result" cdkFocusInitial mat-raised-button
+                type="submit">Ok
+        </button>
       </div>
     </form>
   </div>

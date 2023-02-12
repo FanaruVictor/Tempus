@@ -27,7 +27,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
             {
                 CategoryId = new Guid("218e7d32-4ab0-47fb-aae5-b10b309163e3"),
                 Content = "content1",
-                Title = "title1",
+                Title = "title1"
             }
         };
         var content = SerializeContent(JsonConvert.SerializeObject(request.Body));
@@ -36,7 +36,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual?.Id);
@@ -63,7 +63,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
@@ -79,7 +79,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<Guid>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.Equal(new Guid("c4abd929-0cdd-4c04-afa4-3dbeb3f686d1"), actual);
@@ -94,11 +94,11 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<List<DetailedRegistration>>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);
-        Assert.Contains(actual.Count, new List<int> { 4, 5, 6 });
+        Assert.Contains(actual.Count, new List<int> {4, 5, 6});
     }
 
     [Fact]
@@ -110,7 +110,7 @@ public class RegistrationControllerTests : IClassFixture<CustomWebApplicationFac
         var responseString = await response.Content.ReadAsStringAsync();
         var baseResponse = JsonConvert.DeserializeObject<BaseResponse<BaseRegistration>>(responseString);
         var actual = baseResponse?.Resource;
-        
+
         response.EnsureSuccessStatusCode();
         Assert.NotNull(baseResponse);
         Assert.NotNull(actual);

@@ -10,6 +10,5 @@ public class CreateRegistrationCommandValidator : AbstractValidator<CreateRegist
         RuleFor(x => x.CategoryId).NotEqual(Guid.Empty);
         RuleFor(x => x.Content).NotEmpty();
         RuleFor(x => x.Title).NotEmpty();
-        
     }
 }

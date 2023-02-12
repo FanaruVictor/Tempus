@@ -7,7 +7,7 @@ import {
 } from "../create-or-edit-category-dialog/create-or-edit-category-dialog.component";
 import {filter} from "rxjs";
 import {CategoryApiService} from "../../_services/category.api.service";
-import { GenericResponse } from 'src/app/_commons/models/genericResponse';
+import {GenericResponse} from 'src/app/_commons/models/genericResponse';
 import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 import {CreateCategoryCommandData} from "../../_commons/models/categories/createCategoryCommandData";
 import {UpdateCategoryCommandData} from "../../_commons/models/categories/updateCategoryCommandData";
@@ -74,7 +74,7 @@ export class CategoriesOverviewComponent {
 
   }
 
-  updateCategory(category: BaseCategory){
+  updateCategory(category: BaseCategory) {
     this.openDialog(category)
       .pipe(filter(x => !!x))
       .subscribe({
@@ -90,14 +90,14 @@ export class CategoriesOverviewComponent {
       })
   }
 
-  openDialog(data?: {name: string, color: string}){
+  openDialog(data?: { name: string, color: string }) {
     const dialogRef = this.dialog.open(CreateOrEditCategoryDialogComponent, {
       data: data,
     });
     return dialogRef.afterClosed();
   }
 
-  update(category: UpdateCategoryCommandData){
+  update(category: UpdateCategoryCommandData) {
     this.categoryApiService.update(category)
       .pipe(filter(x => !!x))
       .subscribe(result => {
@@ -108,7 +108,7 @@ export class CategoriesOverviewComponent {
       })
   }
 
-  create(category: CreateCategoryCommandData){
+  create(category: CreateCategoryCommandData) {
     this.categoryApiService.create(category)
       .pipe(filter(x => !!x))
       .subscribe(result => {
@@ -116,7 +116,7 @@ export class CategoriesOverviewComponent {
       })
   }
 
-  addToCategories(category: BaseCategory){
+  addToCategories(category: BaseCategory) {
     this.categories?.push(category);
     this.categories = this.categories?.sort(
       (objA, objB) => new Date(objB.lastUpdatedAt).getTime() - new Date(objA.lastUpdatedAt).getTime(),

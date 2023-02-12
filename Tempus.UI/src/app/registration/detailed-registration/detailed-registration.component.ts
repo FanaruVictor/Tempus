@@ -4,31 +4,33 @@ import {RegistrationApiService} from "../../_services/registration.api.service";
 import {BaseRegistration} from "../../_commons/models/registrations/baseRegistration";
 import {FileService} from "../../_services/file.service";
 import {NotificationService} from "../../_services/notification.service";
+
 @Component({
   selector: 'app-detailed-registration',
   templateUrl: './detailed-registration.component.html',
   styleUrls: ['./detailed-registration.component.scss']
 })
-export class DetailedRegistrationComponent implements OnInit{
+export class DetailedRegistrationComponent implements OnInit {
   registration?: BaseRegistration;
   id: string = '';
   message: string = '';
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private registrationApiService: RegistrationApiService,
     private fileService: FileService,
     private notificationService: NotificationService
-    ) {
+  ) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.getRegistration();
   }
 
-  getRegistration(){
-      this.registrationApiService.getById(this.id)
+  getRegistration() {
+    this.registrationApiService.getById(this.id)
       .subscribe({
         next: response => {
           this.registration = response.resource
@@ -36,11 +38,11 @@ export class DetailedRegistrationComponent implements OnInit{
       });
   }
 
-  edit(){
+  edit() {
     this.router.navigate(['/registrations/edit', this.id]);
   }
 
-  delete(){
+  delete() {
     this.registrationApiService.delete(this.id).subscribe({
       next: () => {
         this.router.navigate(['/registrations/overview']);
@@ -50,7 +52,7 @@ export class DetailedRegistrationComponent implements OnInit{
   }
 
   download(): void {
-    if(!!this.registration)
+    if (!!this.registration)
       this.fileService.download(this.registration.id).subscribe({
         next: data => {
           let FileSaver = require('file-saver');

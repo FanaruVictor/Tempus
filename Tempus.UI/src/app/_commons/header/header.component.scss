@@ -8,14 +8,14 @@
     color: var(--text-color);
     background-color: var(--header-color);
 
-    .logo{
+    .logo {
       align-self: center;
       font-weight: bold;
       font-size: 20px;
     }
   }
 
-  .loader-container{
+  .loader-container {
     position: fixed;
     width: 100%;
     z-index: 99;

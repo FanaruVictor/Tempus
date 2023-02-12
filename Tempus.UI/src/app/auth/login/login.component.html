@@ -1,5 +1,5 @@
 <div class="login-wrapper">
-  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+  <form (ngSubmit)="submit()" [formGroup]="loginForm" class="login-form">
     <div class="title">Login</div>
     <div class="container">
       <label>Username</label>
@@ -7,9 +7,9 @@
     </div>
     <div class="container">
       <label>Password</label>
-      <input class="password" formControlName="password" type="password" placeholder="password">
+      <input class="password" formControlName="password" placeholder="password" type="password">
     </div>
-    <button mat-raised-button [disabled]="submitted" type="submit">Login</button>
+    <button [disabled]="submitted" mat-raised-button type="submit">Login</button>
   </form>
   <div class="actions">
     <a>forgot-password</a>

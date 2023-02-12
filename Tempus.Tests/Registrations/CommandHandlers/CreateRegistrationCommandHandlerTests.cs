@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Registrations.Create;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Registrations.Create;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 
@@ -29,7 +30,8 @@ public class CreateRegistrationCommandHandlerTests
             .ReturnsAsync((Category?)null);
 
         var categoryId = Guid.NewGuid();
-        var expected = BaseResponse<BaseRegistration>.BadRequest(new List<string>{$"Category with Id: {categoryId} not found"});
+        var expected =
+            BaseResponse<BaseRegistration>.BadRequest(new List<string> {$"Category with Id: {categoryId} not found"});
 
         var actual = await _sut.Handle(
             new CreateRegistrationCommand
@@ -64,7 +66,7 @@ public class CreateRegistrationCommandHandlerTests
 
         var baseRegistration = GenericMapper<Registration, BaseRegistration>.Map(registration);
         var expected = BaseResponse<BaseRegistration>.Ok(baseRegistration);
-        
+
         _mockRegistrationRepository
             .Setup(x => x.Add(It.IsAny<Registration>()))
             .ReturnsAsync(registration);
@@ -75,9 +77,9 @@ public class CreateRegistrationCommandHandlerTests
                 CategoryId = categoryId,
                 Content = registration.Content,
                 Title = registration.Title
-            }, 
+            },
             new CancellationToken());
-        
+
         Assert.NotNull(actual);
         Assert.Equal(expected.Errors, actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);

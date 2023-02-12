@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FluentValidation;
+using Tempus.Infrastructure.Models.Auth;
 
-namespace Tempus.Infrastructure.Commands.Auth.Register;
+namespace Tempus.Infrastructure.Services.AuthService;
 
-public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+public class RegisterUserValidation : AbstractValidator<RegistrationData>
 {
-    public RegisterUserCommandValidator()
+    public RegisterUserValidation()
     {
         RuleFor(x => x.UserName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty().Must(ValidEmail);
+        RuleFor(x => x.Password).NotEmpty();
+        RuleFor(x => x.PhoneNumber).NotEmpty();
     }
 
     private bool ValidEmail(string email)

@@ -2,6 +2,7 @@
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
+using Z.EntityFramework.Extensions;
 
 namespace Tempus.Data.Repositories;
 
@@ -33,39 +34,36 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<TEntity> Add(TEntity entity)
+    public async Task Add(TEntity entity)
     {
         await _context
             .Set<TEntity>()
             .AddAsync(entity);
-        await _context.SaveChangesAsync();
-        return entity;
     }
 
-    public async Task<TEntity> Update(TEntity entity)
+    public async Task Update(TEntity entity)
     {
         _context
             .Set<TEntity>()
             .Update(entity);
-        await _context.SaveChangesAsync();
-
-        return entity;
     }
 
-    public async Task<Guid> Delete(Guid id)
+    public async Task Delete(Guid id)
     {
         var entity = await GetById(id);
 
-        if (entity == null)
+        if(entity == null)
         {
-            return Guid.Empty;
+            throw new Exception("No entity found with specified id");
         }
-        
+
         _context
             .Set<TEntity>()
             .Remove(entity);
-        await _context.SaveChangesAsync();
-
-        return id;
+    }
+    
+    public async Task<int> SaveChanges()
+    {
+        return await _context.SaveChangesAsync();
     }
 }

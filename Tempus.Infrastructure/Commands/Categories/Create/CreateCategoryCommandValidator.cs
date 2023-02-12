@@ -2,7 +2,7 @@
 
 namespace Tempus.Infrastructure.Commands.Categories.Create;
 
-public class CreateCategoryCommandValidator :  AbstractValidator<CreateCategoryCommand> 
+public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
     public CreateCategoryCommandValidator()
     {

@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Users.Update;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Users.Update;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.User;
 

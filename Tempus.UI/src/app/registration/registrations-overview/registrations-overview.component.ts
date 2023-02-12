@@ -31,7 +31,7 @@ export class RegistrationsOverviewComponent {
     this.getAll();
   }
 
-  getAll(){
+  getAll() {
     this.registrationApiService.getAll()
       .subscribe({
         next: response => {
@@ -39,6 +39,9 @@ export class RegistrationsOverviewComponent {
           this.registrations = this.registrations?.sort(
             (objA, objB) => new Date(objB.createdAt).getTime() - new Date(objA.createdAt).getTime(),
           );
+          this.registrations = [...this.registrations, ...this.registrations, ...this.registrations];
+          this.registrations = [...this.registrations, ...this.registrations, ...this.registrations];
+          this.registrations = [...this.registrations, ...this.registrations, ...this.registrations];
         }
       });
   }
@@ -53,7 +56,7 @@ export class RegistrationsOverviewComponent {
             data: this.categories,
           });
           dialogRef.afterClosed().subscribe(result => {
-            if(result)
+            if (result)
               this.router.navigate(['/registrations/create', {categoryId: result.id}])
           });
         }
@@ -63,7 +66,7 @@ export class RegistrationsOverviewComponent {
   isOverflow(element: HTMLElement): boolean {
     let currentOverflow = element.style.overflow;
 
-    if(!currentOverflow || currentOverflow == "visible"){
+    if (!currentOverflow || currentOverflow == "visible") {
       element.style.overflow = "hidden";
     }
 

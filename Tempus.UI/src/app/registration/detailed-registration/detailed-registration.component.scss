@@ -4,58 +4,68 @@
   background: var(--content-color);
 }
 
-.registration-wrapper{
+.registration-wrapper {
   top: 50px;
   left: 0;
   display: flex;
   height: calc(100% - 50px);
 
-  .back{
+  .back {
     width: 25%;
     color: var(--text-color);
-    :hover{
+
+    :hover {
       color: $primary-color;
     }
   }
-  .registration{
+
+  .registration {
     display: flex;
+    height: 100%;
     align-items: center;
     flex-direction: column;
     width: 50%;
 
-    .title{
+    .title {
       margin-top: 50px;
+      height: 10%;
       width: 100%;
       display: flex;
       justify-content: space-between;
       text-transform: uppercase;
-      h1{
+
+      h1 {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
 
       }
-      .actions{
+
+      .actions {
         display: flex;
         text-align: right;
-        .edit-icon{
+
+        .edit-icon {
           color: $primary-color;
         }
 
-        .delete-icon{
+        .delete-icon {
           color: $error-color;
         }
 
-        .download{
+        .download {
           color: var(--text-color);
         }
       }
     }
 
-    .content{
+    .content {
       background-color: var(--content-color);
-      height: 100%;
-      width: calc(100% - 40px);
+      color: var(--text-color) !important;
+      max-height: 80%;
+      min-height: 80%;
+      width: 100%;
+      max-width: 100%;
       font-size: 18px;
       border-radius: 5px;
       padding: 20px;
@@ -63,17 +73,22 @@
       outline: none;
       border: none;
       cursor: default;
+
+      .ql-container{
+        min-height: 100% !important;
+        max-height: 100% !important;
+      }
     }
 
-    .last-updated-at{
+    .last-updated-at {
       width: 100%;
+      height: 10%;
       text-align: left;
-      margin-bottom: 50px;
-      margin-top: 16px;
+      margin-top: 15px;
     }
   }
 
-  .left{
+  .left {
     width: 25%;
   }
 }

@@ -11,7 +11,6 @@ import {UpdateRegistrationCommandData} from "../../_commons/models/registrations
 import {CreateRegistrationCommandData} from "../../_commons/models/registrations/createRegistrationCommandData";
 import {NotificationService} from "../../_services/notification.service";
 import {QuillEditorComponent} from "ngx-quill";
-import Quill from "quill";
 
 @Component({
   selector: 'app-create-or-edit-registration',
@@ -31,15 +30,15 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   });
 
   toolbarOptions = [
-    [{ 'font': [] }],
-    [{ size: [ 'small', false, 'large', 'huge' ]}],
+    [{'font': []}],
+    [{size: ['small', false, 'large', 'huge']}],
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }, {'list': 'check'}],
-    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-    [{ 'align': [] }],
+    ['code-block'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
+    [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+    [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+    [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+    [{'align': []}],
     ['image']
   ];
 
@@ -81,14 +80,13 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     }
   }
 
-  formatChange(){
+  formatChange() {
     this.format = this.format === 'html' ? 'text' : 'html';
 
-    if(this.format === 'text' && this.editor){
+    if (this.format === 'text' && this.editor) {
       const htmlText = this.createOrEditForm.controls['content'].value;
       this.editor.quillEditor.setText(htmlText);
-    }
-    else if(this.format === 'html' && this.editor){
+    } else if (this.format === 'html' && this.editor) {
       const htmlText = this.createOrEditForm.controls['content'].value;
       this.editor.quillEditor.setText('');
       this.editor.quillEditor.pasteHTML(0, htmlText);
@@ -104,11 +102,16 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   submit() {
+    this.validateForm();
     if (!this.isCreateMode) {
       this.update();
       return
     }
     this.create();
+  }
+
+  validateForm() {
+
   }
 
   update() {

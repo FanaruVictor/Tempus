@@ -5,7 +5,7 @@ import {catchError, Observable, throwError} from "rxjs";
 import {NotificationService} from "../../_services/notification.service";
 
 @Injectable()
-export class ErrorInterceptor implements HttpInterceptor{
+export class ErrorInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private notificationService: NotificationService) {
   }
 
@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor{
     return next
       .handle(req)
       .pipe(catchError(err => {
-        if(err.status === 401){
+        if (err.status === 401) {
           this.authService.logout();
           location.reload();
         }

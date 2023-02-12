@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 
 namespace Tempus.Infrastructure.Queries.Categories.GetAll;
@@ -31,9 +32,9 @@ public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuer
                     .Select(GenericMapper<Category, BaseCategory>.Map).ToList());
             return response;
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var response = BaseResponse<List<BaseCategory>>.BadRequest(new List<string>{exception.Message});
+            var response = BaseResponse<List<BaseCategory>>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }

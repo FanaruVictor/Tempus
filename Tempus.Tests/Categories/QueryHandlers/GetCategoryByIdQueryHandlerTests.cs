@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 using Tempus.Infrastructure.Queries.Categories.GetById;
 
@@ -18,7 +19,7 @@ public class GetCategoryByIdQueryHandlerTests
 
         _sut = new GetCategoryByIdQueryHandler(_mockCategoryRepository.Object);
     }
-    
+
     [Fact]
     public async Task Given_InexistentCategoryIdInDb_When_HandleGetCategoryByIdQuery_ItShould_ReturnNotFound()
     {
@@ -53,12 +54,12 @@ public class GetCategoryByIdQueryHandlerTests
         var baseCategory = GenericMapper<Category, BaseCategory>.Map(category);
         var expected = BaseResponse<BaseCategory>.Ok(baseCategory);
 
-        var actual = await _sut.Handle(new GetCategoryByIdQuery()
+        var actual = await _sut.Handle(new GetCategoryByIdQuery
             {
                 Id = category.Id
             },
             new CancellationToken());
-        
+
         Assert.Null(actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Equal(expected.Resource?.Id, actual.Resource?.Id);
@@ -67,7 +68,7 @@ public class GetCategoryByIdQueryHandlerTests
         Assert.Equal(expected.Resource?.LastUpdatedAt, actual.Resource?.LastUpdatedAt);
         Assert.Equal(expected.Resource?.UserId, actual.Resource?.UserId);
     }
-    
+
     [Fact]
     public async Task When_CancelHandleGetAllCategoriesQuery_ItShouldReturnBadRequest()
     {
@@ -81,5 +82,4 @@ public class GetCategoryByIdQueryHandlerTests
         Assert.NotNull(actual);
         Assert.Equal(1, actual.Errors?.Count);
     }
-    
 }

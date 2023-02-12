@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure;
@@ -18,22 +17,25 @@ public class MediatrRequestContextBehaviour<TRequest, TResponse> : IPipelineBeha
     }
 
     [DebuggerStepThrough]
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
-        if (_contextAccessor.HttpContext.User.Identity.IsAuthenticated)
+        var userIdClaim =
+            _contextAccessor.HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+
+        if (userIdClaim == null)
         {
-            var userIdClaim = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-
-            if (userIdClaim == null)
-            {
-                throw new UnauthorizedAccessException("User doesn't have the necessary claims");
-            }
-        
-            request.UserId = Guid.Parse(userIdClaim.Value);
-
-            var response = await next();
-            return response;
+            throw new UnauthorizedAccessException("User doesn't have the necessary claims");
         }
+
+        if(Guid.TryParse(userIdClaim?.Value, out var userId))
+        {
+            request.UserId = userId;
+        }
+
+        var response = await next();
+        return response;
+
 
         return await next();
     }

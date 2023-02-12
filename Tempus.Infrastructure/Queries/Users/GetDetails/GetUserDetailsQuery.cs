@@ -4,7 +4,4 @@ using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Queries.Users.GetDetails;
 
-public class GetUserDetailsQuery : BaseRequest<BaseResponse<UserDetails>>
-{
-    
-}
+public class GetUserDetailsQuery : BaseRequest<BaseResponse<UserDetails>> { }

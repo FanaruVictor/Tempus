@@ -6,7 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Tempus.API;
 
 /// <summary>
-/// Swagger configuration
+///     Swagger configuration
 /// </summary>
 public class ConfigureSwaggerOptions
     : IConfigureNamedOptions<SwaggerGenOptions>
@@ -14,7 +14,7 @@ public class ConfigureSwaggerOptions
     private readonly IApiVersionDescriptionProvider _provider;
 
     /// <summary>
-    /// swagger constructor
+    ///     swagger constructor
     /// </summary>
     /// <param name="provider"></param>
     public ConfigureSwaggerOptions(
@@ -24,13 +24,13 @@ public class ConfigureSwaggerOptions
     }
 
     /// <summary>
-    /// Configure each API discovered for Swagger Documentation
+    ///     Configure each API discovered for Swagger Documentation
     /// </summary>
     /// <param name="options"></param>
     public void Configure(SwaggerGenOptions options)
     {
         // add swagger document for every API version discovered
-        foreach (var description in _provider.ApiVersionDescriptions)
+        foreach(var description in _provider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(
                 description.GroupName,
@@ -39,7 +39,7 @@ public class ConfigureSwaggerOptions
     }
 
     /// <summary>
-    /// Configure Swagger Options. Inherited from the Interface
+    ///     Configure Swagger Options. Inherited from the Interface
     /// </summary>
     /// <param name="name"></param>
     /// <param name="options"></param>
@@ -49,22 +49,23 @@ public class ConfigureSwaggerOptions
     }
 
     /// <summary>
-    /// Create information about the version of the API
+    ///     Create information about the version of the API
     /// </summary>
     /// <param name="description"></param>
     /// <returns>Information about the API</returns>
     private OpenApiInfo CreateVersionInfo(
         ApiVersionDescription desc)
     {
-        var info = new OpenApiInfo()
+        var info = new OpenApiInfo
         {
             Title = ".NET Core (.NET 6) Web API",
             Version = desc.ApiVersion.ToString()
         };
 
-        if (desc.IsDeprecated)
+        if(desc.IsDeprecated)
         {
-            info.Description += " This API version has been deprecated. Please use one of the new APIs available from the explorer.";
+            info.Description +=
+                " This API version has been deprecated. Please use one of the new APIs available from the explorer.";
         }
 
         return info;

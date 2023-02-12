@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 using Tempus.Infrastructure.Queries.Registrations.GetAll;
 
@@ -9,8 +10,8 @@ namespace Tempus.Tests.Registrations.QueryHandlers;
 
 public class GetAllRegistrationQueryHandlerTests
 {
-    private readonly Mock<IRegistrationRepository> _mockRegistrationRepository;
     private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+    private readonly Mock<IRegistrationRepository> _mockRegistrationRepository;
     private readonly GetAllRegistrationsQueryHandler _sut;
 
     public GetAllRegistrationQueryHandlerTests()
@@ -35,7 +36,7 @@ public class GetAllRegistrationQueryHandlerTests
 
         _mockRegistrationRepository
             .Setup(x => x.GetAll())
-            .ReturnsAsync(new List<Registration> { registration });
+            .ReturnsAsync(new List<Registration> {registration});
 
         _mockCategoryRepository
             .Setup(x => x.GetCategoryColor(It.IsAny<Guid>()))
@@ -83,15 +84,15 @@ public class GetAllRegistrationQueryHandlerTests
             registrations
                 .Where(x => x.CategoryId == categoryId)
                 .Select(GenericMapper<Registration, DetailedRegistration>.Map)
-                .ToList()   
-            );
+                .ToList()
+        );
 
         var actual = await _sut.Handle(new GetAllRegistrationsQuery
             {
                 CategoryId = categoryId
             },
             new CancellationToken());
-        
+
         Assert.Equal(expected.Resource?.Count, actual.Resource?.Count);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
     }

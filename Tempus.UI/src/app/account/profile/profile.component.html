@@ -4,31 +4,44 @@
     <div class="title">
       <h1>User profile</h1>
       <div class="actions">
-        <app-button [icon]="'edit'" class="edit-icon" (click)="edit()">edit</app-button>
-        <app-button [icon]="'delete'" class="delete-icon" (click)="delete()">delete</app-button>
+        <app-button (click)="edit()" [icon]="'edit'" class="edit-icon">edit</app-button>
+        <app-button (click)="delete()" [icon]="'delete'" class="delete-icon">delete</app-button>
       </div>
     </div>
-    <div class="content">
-        <div class="container">
-          <h2>Username</h2>
-          {{user?.userName ?? ''}}
-        </div>
-        <div class="container">
-          <h2>Email</h2>
-          {{user?.email ?? ''}}
-        </div>
-        <div class="container">
-          <h2>Phone number</h2>
-          {{user?.phoneNumber ?? ''}}
-        </div>
+    <div *ngIf="user" class="content">
+      <div class="container">
+        <mat-icon *ngIf="!user.photo; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
+                  class="user-icon">
+          account_circle
+        </mat-icon>
+        <ng-template #showPhoto>
+          <img [src]="user.photo.url" alt="asdfasdf">
+        </ng-template>
+        <input #imageInput (change)="imageInputChange($event)" accept="image/png" hidden="true"
+               onclick="this.value=null"
+               type="file"/>
+        <button (click)="imageInput.click()" color="primary"
+                mat-raised-button>{{user.photo ? 'Change profile photo' : 'Add profile photo'}}</button>
+      </div>
+      <div class="container">
+        <h2>Username</h2>
+        <p>{{user.userName}}</p>
+      </div>
+      <div class="container">
+        <h2>Email</h2>
+        <p>{{user.email}}</p>
+      </div>
+      <div class="container">
+        <h2>Phone number</h2>
+        <p>{{user.phoneNumber}}</p>
+
+      </div>
       <div class="container">
         <h2>User Mode</h2>
-        <mat-slide-toggle [(ngModel)]="isChecked" (click)="toggleDarkTheme()">{{user?.isDarkTheme ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
+        <mat-slide-toggle (click)="toggleDarkTheme()"
+                          [checked]="user.isDarkTheme">{{user.isDarkTheme ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
       </div>
-      <div class="container">
-        <h2>User Photo</h2>
-        <button *ngIf="user?.photoDetails == undefined" mat-raised-button aria-label="Add user photo" (click)="addPhoto()">Add Photo</button>
-      </div>
+
     </div>
   </div>
   <div class="left"></div>

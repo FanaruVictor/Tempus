@@ -1,7 +1,8 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commons;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Category;
 using Tempus.Infrastructure.Models.User;
 using Tempus.Infrastructure.Queries.Users.GetById;
@@ -10,18 +11,18 @@ namespace Tempus.Tests.Users.QueryHandlers;
 
 public class GetUserByIdQueryHandlerTests
 {
-    private readonly Mock<IUserRepository> _mockUserRepository;
     private readonly Mock<IProfilePhotoRepository> _mockProfilePhotoRepository;
+    private readonly Mock<IUserRepository> _mockUserRepository;
     private readonly GetUserByIdQueryHandler _sut;
 
     public GetUserByIdQueryHandlerTests()
     {
         _mockUserRepository = new Mock<IUserRepository>();
         _mockProfilePhotoRepository = new Mock<IProfilePhotoRepository>();
-        
+
         _sut = new GetUserByIdQueryHandler(_mockUserRepository.Object, _mockProfilePhotoRepository.Object);
     }
-    
+
     [Fact]
     public async Task Given_InexistentUserIdInDb_When_HandleGetUserByIdQuery_ItShould_ReturnNotFound()
     {
@@ -53,15 +54,14 @@ public class GetUserByIdQueryHandlerTests
         var actual = await _sut.Handle(new GetUserByIdQuery()
             ,
             new CancellationToken());
-        
+
         Assert.Null(actual.Errors);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Equal(expected.Resource?.Id, actual.Resource?.Id);
         Assert.Equal(expected.Resource?.UserName, actual.Resource?.UserName);
         Assert.Equal(expected.Resource?.Email, actual.Resource?.Email);
-      
     }
-    
+
     [Fact]
     public async Task When_CancelHandleGetAllCategoriesQuery_ItShouldReturnBadRequest()
     {

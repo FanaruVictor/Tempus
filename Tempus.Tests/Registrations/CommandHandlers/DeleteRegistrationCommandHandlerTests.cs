@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Tempus.Core.Commons;
-using Tempus.Core.IRepositories;using Tempus.Infrastructure.Commands.Registrations.Delete;
+using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commands.Registrations.Delete;
 
 namespace Tempus.Tests.Registrations.CommandHandlers;
 
@@ -51,7 +52,7 @@ public class DeleteRegistrationCommandHandlerTests
         {
             Id = deletedRegistrationId
         }, new CancellationToken());
-        
+
         Assert.Equal(expected.Resource, actual.Resource);
         Assert.Equal(expected.StatusCode, actual.StatusCode);
         Assert.Null(actual.Errors);
@@ -61,7 +62,7 @@ public class DeleteRegistrationCommandHandlerTests
     public async Task When_CancelHandleDeleteRegistrationCommand_ItShouldReturnBadRequest()
     {
         CancellationTokenSource cts = new();
-        CancellationToken cancellationToken = cts.Token;
+        var cancellationToken = cts.Token;
 
         cts.Cancel();
 

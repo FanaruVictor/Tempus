@@ -6,5 +6,5 @@ namespace Tempus.Infrastructure.Commands.Users.ChangeTheme;
 
 public class ChangeThemeCommand : BaseRequest<BaseResponse<UserDetails>>
 {
-    public bool Theme { get; set; }
+    public bool IsDarkTheme { get; set; }
 }

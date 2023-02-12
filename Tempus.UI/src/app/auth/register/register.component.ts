@@ -17,6 +17,7 @@ export class RegisterComponent {
     password: new UntypedFormControl('', [Validators.required])
   });
   submitted = false;
+
   constructor(private router: Router, private authService: AuthService) {
 
   }
