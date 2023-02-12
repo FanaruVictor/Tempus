@@ -41,9 +41,11 @@ export class ProfileComponent implements OnInit {
 
   async toggleDarkTheme() {
     document.body.classList.toggle('dark-theme');
-    localStorage.setItem("isDarkMode", (this.user.isDarkTheme).toString());
 
-    this.userService.changeTheme(!this.user.isDarkTheme).subscribe();
+    this.userService.changeTheme(!this.user.isDarkTheme).subscribe(response => {
+      this.user = response.resource;
+      localStorage.setItem("isDarkMode", (this.user.isDarkTheme).toString());
+    });
   }
 
   imageInputChange(fileInputEvent: any) {

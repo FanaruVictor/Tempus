@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
     if (localStorage.getItem("authorizationToken")) {
       let isDarkMode = localStorage.getItem("isDarkMode");
 
-
       this.userService.getTheme()
         .subscribe(response => {
           localStorage.setItem('isDarkMode', response.resource.toString());
