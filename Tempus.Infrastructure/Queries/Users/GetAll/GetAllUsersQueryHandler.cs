@@ -7,7 +7,7 @@ using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Queries.Users.GetAll;
 
-public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseResponse<List<BaseUser>>>
+public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseResponse<List<UserDetails>>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -16,7 +16,7 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseRes
         _userRepository = userRepository;
     }
 
-    public async Task<BaseResponse<List<BaseUser>>> Handle(GetAllUsersQuery request,
+    public async Task<BaseResponse<List<UserDetails>>> Handle(GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
         try
@@ -26,12 +26,12 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, BaseRes
             var users = await _userRepository.GetAll();
 
             var result =
-                BaseResponse<List<BaseUser>>.Ok(users.Select(GenericMapper<User, BaseUser>.Map).ToList());
+                BaseResponse<List<UserDetails>>.Ok(users.Select(GenericMapper<User, UserDetails>.Map).ToList());
             return result;
         }
         catch(Exception exception)
         {
-            var result = BaseResponse<List<BaseUser>>.BadRequest(new List<string> {exception.Message});
+            var result = BaseResponse<List<UserDetails>>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

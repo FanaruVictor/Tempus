@@ -30,7 +30,7 @@ public class RegistrationsController : BaseController
     /// <param name="query"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<List<DetailedRegistration>>> GetAll([FromQuery] GetAllRegistrationsQuery query)
+    public async Task<ActionResult<List<RegistrationOverview>>> GetAll([FromQuery] GetAllRegistrationsQuery query)
     {
         return HandleResponse(await _mediator.Send(query));
     }
@@ -41,7 +41,7 @@ public class RegistrationsController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<BaseRegistration>> GetById([FromRoute] Guid id)
+    public async Task<ActionResult<RegistrationDetails>> GetById([FromRoute] Guid id)
     {
         return HandleResponse(await _mediator.Send(new GetRegistrationByIdQuery {Id = id}));
     }
@@ -52,7 +52,7 @@ public class RegistrationsController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<BaseRegistration>> Create([FromBody] CreateRegistrationCommand command)
+    public async Task<ActionResult<RegistrationDetails>> Create([FromBody] CreateRegistrationCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }
@@ -63,7 +63,7 @@ public class RegistrationsController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<BaseRegistration>> Update([FromBody] UpdateRegistrationCommand command)
+    public async Task<ActionResult<RegistrationDetails>> Update([FromBody] UpdateRegistrationCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }

@@ -6,6 +6,6 @@ namespace Tempus.Infrastructure.Services.AuthService;
 
 public interface IAuthService
 {
-    Task<BaseResponse<string>> Login(LoginCredentials credentials, CancellationToken cancellationToken);
-    Task<BaseResponse<BaseUser>> Register(RegistrationData userInfo, CancellationToken cancellationToken);
+    Task<BaseResponse<LoginResult>> Login(LoginCredentials credentials, CancellationToken cancellationToken);
+    Task<BaseResponse<UserDetails>> Register(RegistrationData userInfo, CancellationToken cancellationToken);
 }

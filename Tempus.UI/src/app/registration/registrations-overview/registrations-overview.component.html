@@ -7,31 +7,27 @@
       <div
         *ngFor="let registration of registrations"
         class="registration"
+        [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
       >
 
-        <div class="last-update">{{registration?.createdAt | date }}</div>
         <div class="item">
-          <div class="arrow-left"></div>
           <div
-            [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
             [routerLink]="['/registrations/', registration.id]"
             class="info"
           >
             <div class="title">{{registration.title.toUpperCase()}}</div>
-            <!--            <div #content [matTooltipDisabled]="!isOverflow(content)" [matTooltip]="registration.content"-->
-            <!--                 class="content">{{registration.content}}</div>-->
-            <!--          </div>-->
-                        <quill-view class="content" [content]="registration.content" theme="bubble"></quill-view>
-
-
+            <div class="content">
+              <div class="description">{{registration.description}}</div>
+              <div class="created-date">{{registration?.createdAt | date }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-    <div class="left">
-      <button (click)="addRegistration()" aria-label="Create registration button" mat-raised-button>
-        Add
-      </button>
-    </div>
   </div>
+  <div class="left">
+    <button (click)="addRegistration()" aria-label="Create registration button" mat-raised-button>
+      Add
+    </button>
+  </div>
+</div>

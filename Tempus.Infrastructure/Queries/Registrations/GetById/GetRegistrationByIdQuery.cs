@@ -4,7 +4,7 @@ using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetById;
 
-public class GetRegistrationByIdQuery : BaseRequest<BaseResponse<BaseRegistration>>
+public class GetRegistrationByIdQuery : BaseRequest<BaseResponse<RegistrationDetails>>
 {
     public Guid Id { get; init; }
 }

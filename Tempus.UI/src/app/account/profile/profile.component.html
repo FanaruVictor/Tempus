@@ -15,7 +15,7 @@
           account_circle
         </mat-icon>
         <ng-template #showPhoto>
-          <img [src]="user.photo.url" alt="asdfasdf">
+          <img [src]="user.photo?.url" alt="asdfasdf">
         </ng-template>
         <input #imageInput (change)="imageInputChange($event)" accept="image/png" hidden="true"
                onclick="this.value=null"
@@ -34,14 +34,7 @@
       <div class="container">
         <h2>Phone number</h2>
         <p>{{user.phoneNumber}}</p>
-
       </div>
-      <div class="container">
-        <h2>User Mode</h2>
-        <mat-slide-toggle (click)="toggleDarkTheme()"
-                          [checked]="user.isDarkTheme">{{user.isDarkTheme ? 'Dark mode' : 'Light mode' }}</mat-slide-toggle>
-      </div>
-
     </div>
   </div>
   <div class="left"></div>

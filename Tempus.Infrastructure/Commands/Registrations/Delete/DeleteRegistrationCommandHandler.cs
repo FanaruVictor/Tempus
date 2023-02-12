@@ -21,6 +21,18 @@ public class DeleteRegistrationCommandHandler : IRequestHandler<DeleteRegistrati
 
             var deletedRegistrationId = request.Id;
 
+            var registration = await _registrationRepository.GetById(deletedRegistrationId);
+
+            if(registration == null)
+            {
+                return BaseResponse<Guid>.NotFound("Registration not found");
+            }
+            
+            if(registration.UserId != request.UserId)
+            {
+                return BaseResponse<Guid>.Forbbiden();
+            }
+
             await _registrationRepository.Delete(deletedRegistrationId);
             await _registrationRepository.SaveChanges();
 

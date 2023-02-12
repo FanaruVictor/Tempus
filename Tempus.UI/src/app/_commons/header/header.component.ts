@@ -1,7 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../_services/auth/auth.service";
 import {LoaderService} from "../../_services/loader/loader.service";
+import {UserApiService} from "../../_services/user.api.service";
+import {UserDetails} from "../models/user/userDetails";
 
 @Component({
   selector: 'app-header',
@@ -12,9 +14,9 @@ export class HeaderComponent implements OnInit {
   tabs: { link: string, label: string, index: number }[];
   activeLinkIndex = 0;
   authorizationToken?: string;
-  contentIsLoading = this.loaderService.isLoading;
+  user?: UserDetails;
 
-  constructor(private router: Router, private authService: AuthService, public loaderService: LoaderService, private ref: ChangeDetectorRef) {
+  constructor(private router: Router, public authService: AuthService, public loaderService: LoaderService, private userService: UserApiService) {
     this.tabs = [
       {
         label: 'Registrations',
@@ -36,13 +38,29 @@ export class HeaderComponent implements OnInit {
     this.authService.authorizationToken.subscribe(x => this.authorizationToken = x);
   }
 
-  ngOnInit(): void {
+   ngOnInit(){
     this.router.events.subscribe((res) => {
       let element = this.tabs.find(tab => tab.link === this.router.url);
       if (element)
         this.activeLinkIndex = this.tabs.indexOf(element);
       else
         this.activeLinkIndex = 0;
+    });
+
+    if(localStorage.getItem("authorizationToken")){
+      this.authService.user.subscribe( user => {
+        this.user = user;
+      })
+    }
+  }
+
+  async toggleDarkTheme() {
+    document.body.classList.toggle('dark-theme');
+
+    this.userService.changeTheme(!this.user?.isDarkTheme).subscribe(response => {
+      this.user = response.resource;
+      localStorage.setItem("isDarkTheme", (this.user.isDarkTheme).toString());
+      this.authService.setUser(this.user);
     });
   }
 }

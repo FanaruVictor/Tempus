@@ -7,7 +7,7 @@ using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetById;
 
-public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationByIdQuery, BaseResponse<BaseRegistration>>
+public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationByIdQuery, BaseResponse<RegistrationDetails>>
 {
     private readonly IRegistrationRepository _registrationRepository;
 
@@ -16,7 +16,7 @@ public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationBy
         _registrationRepository = registrationRepository;
     }
 
-    public async Task<BaseResponse<BaseRegistration>> Handle(GetRegistrationByIdQuery request,
+    public async Task<BaseResponse<RegistrationDetails>> Handle(GetRegistrationByIdQuery request,
         CancellationToken cancellationToken)
     {
         try
@@ -27,16 +27,20 @@ public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationBy
 
             if(registration == null)
             {
-                return BaseResponse<BaseRegistration>.NotFound("Registration not found!");
+                return BaseResponse<RegistrationDetails>.NotFound("Registration not found!");
+            }
+            if(registration.UserId != request.UserId)
+            {
+                return BaseResponse<RegistrationDetails>.Forbbiden();
             }
 
             var response =
-                BaseResponse<BaseRegistration>.Ok(GenericMapper<Registration, BaseRegistration>.Map(registration));
+                BaseResponse<RegistrationDetails>.Ok(GenericMapper<Registration, RegistrationDetails>.Map(registration));
             return response;
         }
         catch(Exception exception)
         {
-            var response = BaseResponse<BaseRegistration>.BadRequest(new List<string> {exception.Message});
+            var response = BaseResponse<RegistrationDetails>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }

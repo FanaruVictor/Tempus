@@ -8,6 +8,7 @@ using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Auth;
+using Tempus.Infrastructure.Models.Photo;
 using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Services.AuthService;
@@ -16,21 +17,21 @@ public class AuthService : IAuthService
 {
     private readonly IAuthRepository _authRepository;
     private readonly IConfiguration _configuration;
+    private readonly IProfilePhotoRepository _profilePhotoRepository;
 
-    public AuthService(IAuthRepository authRepository, IConfiguration configuration)
+    public AuthService(IAuthRepository authRepository, IConfiguration configuration, IProfilePhotoRepository profilePhotoRepository)
     {
         _authRepository = authRepository;
         _configuration = configuration;
+        _profilePhotoRepository = profilePhotoRepository;
     }
     
-    public async Task<BaseResponse<string>> Login(LoginCredentials credentials, CancellationToken cancellationToken)
+    public async Task<BaseResponse<LoginResult>> Login(LoginCredentials credentials, CancellationToken cancellationToken)
     {
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            BaseResponse<string> response;
-            
             if(!await _authRepository.UserExists(credentials.UserName))
             {
                 throw new Exception("User not found");
@@ -39,29 +40,42 @@ public class AuthService : IAuthService
             var user = await _authRepository.Login(credentials.UserName, credentials.Password);
             
             CreateToken(user, out var tokenHandler, out var token);
+            
+            var result = new LoginResult
+            {
+                User = GenericMapper<User, UserDetails>.Map(user),
+                AuthorizationToken = tokenHandler.WriteToken(token)
+            };
 
-            response = BaseResponse<string>.Ok(tokenHandler.WriteToken(token));
+            var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);
+
+            if(profilePhoto != null)
+            {
+                result.User.Photo = GenericMapper<ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+            }
+
+            var response = BaseResponse<LoginResult>.Ok(result);
 
             return response;
         }
         catch(TaskCanceledException canceledException)
         {
-            return BaseResponse<string>.BadRequest(new List<string> {canceledException.Message});
+            return BaseResponse<LoginResult>.BadRequest(new List<string> {canceledException.Message});
         }
         catch(Exception exception)
         {
-            var response = BaseResponse<string>.BadRequest(new List<string> {exception.Message});
+            var response = BaseResponse<LoginResult>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }
 
-    public async Task<BaseResponse<BaseUser>> Register(RegistrationData userInfo, CancellationToken cancellationToken)
+    public async Task<BaseResponse<UserDetails>> Register(RegistrationData userInfo, CancellationToken cancellationToken)
     {
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            BaseResponse<BaseUser> result;
+            BaseResponse<UserDetails> result;
 
             var username = userInfo.UserName.ToLower();
 
@@ -72,18 +86,18 @@ public class AuthService : IAuthService
 
             var entity = await RegisterUser(userInfo);
 
-            var baseUser = GenericMapper<User, BaseUser>.Map(entity);
-            result = BaseResponse<BaseUser>.Ok(baseUser);
+            var baseUser = GenericMapper<User, UserDetails>.Map(entity);
+            result = BaseResponse<UserDetails>.Ok(baseUser);
 
             return result;
         }
         catch(TaskCanceledException canceledException)
         {
-            return BaseResponse<BaseUser>.BadRequest(new List<string> {canceledException.Message});
+            return BaseResponse<UserDetails>.BadRequest(new List<string> {canceledException.Message});
         }
         catch(Exception exception)
         {
-            return BaseResponse<BaseUser>.BadRequest(new List<string> {exception.Message});
+            return BaseResponse<UserDetails>.BadRequest(new List<string> {exception.Message});
             
         }
     }

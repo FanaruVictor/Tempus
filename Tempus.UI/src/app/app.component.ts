@@ -12,14 +12,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem("authorizationToken")) {
-      let isDarkMode = localStorage.getItem("isDarkMode");
+      let isDarkTheme = localStorage.getItem("isDarkTheme");
 
-      this.userService.getTheme()
+      this.userService.getDetails()
         .subscribe(response => {
-          localStorage.setItem('isDarkMode', response.resource.toString());
-          if (!isDarkMode && response.resource) {
+          let user = response.resource;
+          localStorage.setItem('isDarkTheme', user.isDarkTheme.toString());
+          if (!isDarkTheme && user.isDarkTheme) {
             document.body.classList.toggle('dark-theme');
+            localStorage.setItem("isDarkTheme", user.isDarkTheme.toString());
           }
+          this.userService.setUser(user);
         });
     }
   }

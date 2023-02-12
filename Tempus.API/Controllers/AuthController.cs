@@ -17,13 +17,13 @@ public class AuthController : BaseController
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<BaseUser>> Register([FromBody] RegistrationData userInfo)
+    public async Task<ActionResult<UserDetails>> Register([FromBody] RegistrationData userInfo)
     {
         return HandleResponse(await _authService.Register(userInfo, new CancellationToken()));
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login([FromBody] LoginCredentials credentials)
+    public async Task<ActionResult<LoginResult>> Login([FromBody] LoginCredentials credentials)
     {
         return HandleResponse(await _authService.Login(credentials, new CancellationToken()));
     }
