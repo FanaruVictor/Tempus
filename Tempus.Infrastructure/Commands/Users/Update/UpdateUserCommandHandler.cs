@@ -3,20 +3,23 @@ using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Photo;
 using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Commands.Users.Update;
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseResponse<BaseUser>>
+public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseResponse<UserDetails>>
 {
     private readonly IUserRepository _userRepository;
+    private IProfilePhotoRepository _profilePhotoRepository;
 
-    public UpdateUserCommandHandler(IUserRepository userRepository)
+    public UpdateUserCommandHandler(IUserRepository userRepository, IProfilePhotoRepository profilePhotoRepository)
     {
         _userRepository = userRepository;
+        _profilePhotoRepository = profilePhotoRepository;
     }
 
-    public async Task<BaseResponse<BaseUser>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResponse<UserDetails>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,19 +29,26 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
 
             if(user == null)
             {
-                return BaseResponse<BaseUser>.NotFound($"User with id {request.Id} not .");
+                return BaseResponse<UserDetails>.NotFound($"User with id {request.Id} not .");
             }
 
             await UpdateUser(request, user);
 
-            var baseUser = GenericMapper<User, BaseUser>.Map(user);
-            var result = BaseResponse<BaseUser>.Ok(baseUser);
+            var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);
+            
+            var userDetails = GenericMapper<User, UserDetails>.Map(user);
+
+            if(profilePhoto != null)
+            {
+                userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+            }
+            var result = BaseResponse<UserDetails>.Ok(userDetails);
 
             return result;
         }
         catch(Exception exception)
         {
-            return BaseResponse<BaseUser>.BadRequest(new List<string> {exception.Message});
+            return BaseResponse<UserDetails>.BadRequest(new List<string> {exception.Message});
         }
     }
 

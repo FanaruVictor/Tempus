@@ -20,6 +20,16 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
         return result;
     }
 
+    public async Task<List<Registration>> GetAll(Guid userId)
+    {
+        var result = await _context.Registrations
+            .AsNoTracking()
+            .Where(x => x.UserId == userId)
+            .ToListAsync();
+        
+        return result;
+    }
+
     public Task<Registration?> GetLastUpdated()
     {
         return _context.Registrations.AsNoTracking().OrderByDescending(x => x.LastUpdatedAt).FirstOrDefaultAsync();

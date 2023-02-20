@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GenericResponse} from "../_commons/models/genericResponse";
-import {DetailedRegistration} from "../_commons/models/registrations/detailedRegistration";
+import {RegistrationOverview} from "../_commons/models/registrations/registrationOverview";
 import {BaseRegistration} from "../_commons/models/registrations/baseRegistration";
 import {UpdateRegistrationCommandData} from "../_commons/models/registrations/updateRegistrationCommandData";
 import {CreateRegistrationCommandData} from "../_commons/models/registrations/createRegistrationCommandData";
 import {environment} from "../../environments/environment";
+import {RegistrationDetails} from "../_commons/models/registrations/RegistrationDetails";
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +18,19 @@ export class RegistrationApiService {
   }
 
   getAll() {
-    return this.httpClient.get<GenericResponse<DetailedRegistration[]>>(this.apiUrl);
+    return this.httpClient.get<GenericResponse<RegistrationOverview[]>>(this.apiUrl);
   }
 
   getById(id: string) {
-    return this.httpClient.get<GenericResponse<BaseRegistration>>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<GenericResponse<RegistrationDetails>>(`${this.apiUrl}/${id}`);
   }
 
   update(data: UpdateRegistrationCommandData) {
-    return this.httpClient.put<GenericResponse<BaseRegistration>>(this.apiUrl, data);
+    return this.httpClient.put<GenericResponse<RegistrationDetails>>(this.apiUrl, data);
   }
 
   create(registration: CreateRegistrationCommandData) {
-    return this.httpClient.post<GenericResponse<BaseRegistration>>(this.apiUrl, registration);
+    return this.httpClient.post<GenericResponse<RegistrationDetails>>(this.apiUrl, registration);
   }
 
   delete(id: string) {

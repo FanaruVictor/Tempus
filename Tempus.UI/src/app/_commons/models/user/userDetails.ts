@@ -2,6 +2,6 @@
 import {Photo} from "../photo/photo";
 
 export interface UserDetails extends BaseUser {
-  photo: Photo;
+  photo?: Photo;
   isDarkTheme: boolean;
 }

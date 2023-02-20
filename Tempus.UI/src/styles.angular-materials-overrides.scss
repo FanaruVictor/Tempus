@@ -60,16 +60,6 @@
   width: 80px !important;
 }
 
-.mat-slide-toggle.mat-checked {
-  .mat-slide-toggle-thumb {
-    background-color: black;
-  }
-
-  .mat-slide-toggle-bar {
-    background-color: #25252560;
-  }
-}
-
 .mat-raised-button {
   background-color: var(--button-background-color);
   color: white;
@@ -121,4 +111,30 @@ mat-card-actions {
 
 .mat-raised-button {
   height: 35px;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #4B4B4B60;
+}
+
+.mat-slide-toggle-thumb {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('~src/assets/images/sun.svg');
+  background-size: 15px 15px;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-image: url('~src/assets/images/moon.svg');
+  background-size: 12px 12px;
+}
+
+.mat-slide-toggle.mat-checked {
+  .mat-slide-toggle-thumb {
+    background-color: #171717;
+  }
+
+  .mat-slide-toggle-bar {
+    background-color: #25252560;
+  }
 }

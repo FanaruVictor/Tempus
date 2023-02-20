@@ -22,6 +22,7 @@ quill-editor {
   background-color: var(--content-color);
   min-height: 90%;
   max-height: 90%;
+  color: var(--text-color);
 
   .ql-editor {
     .ql-align-justify {
@@ -44,20 +45,20 @@ quill-editor {
 
 .ql-toolbar .ql-stroke {
   fill: none;
-  stroke: #fff;
+  stroke: var(--text-color);
 }
 
 .ql-toolbar .ql-fill {
-  fill: #fff;
+  fill: var(--text-color);
   stroke: none;
 }
 
 .ql-toolbar .ql-picker {
-  color: #fff;
+  color: var(--text-color);
   border: none;
 
   :hover {
-    color: #fff;
+    color: var(--text-color);
   }
 
   .ql-picker-options {

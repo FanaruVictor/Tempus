@@ -31,7 +31,7 @@ public class UsersController : BaseController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<List<BaseUser>>> GetAll()
+    public async Task<ActionResult<List<UserDetails>>> GetAll()
     {
         return HandleResponse(await _mediator.Send(new GetAllUsersQuery()));
     }
@@ -63,7 +63,7 @@ public class UsersController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<BaseUser>> Update([FromBody] UpdateUserCommand command)
+    public async Task<ActionResult<UserDetails>> Update([FromBody] UpdateUserCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }

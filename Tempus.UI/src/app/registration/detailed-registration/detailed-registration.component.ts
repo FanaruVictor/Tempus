@@ -4,6 +4,7 @@ import {RegistrationApiService} from "../../_services/registration.api.service";
 import {BaseRegistration} from "../../_commons/models/registrations/baseRegistration";
 import {FileService} from "../../_services/file.service";
 import {NotificationService} from "../../_services/notification.service";
+import {RegistrationDetails} from "../../_commons/models/registrations/RegistrationDetails";
 
 @Component({
   selector: 'app-detailed-registration',
@@ -11,7 +12,7 @@ import {NotificationService} from "../../_services/notification.service";
   styleUrls: ['./detailed-registration.component.scss']
 })
 export class DetailedRegistrationComponent implements OnInit {
-  registration?: BaseRegistration;
+  registration?: RegistrationDetails;
   id: string = '';
   message: string = '';
 

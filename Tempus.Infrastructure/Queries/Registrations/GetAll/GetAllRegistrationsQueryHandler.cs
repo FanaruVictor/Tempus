@@ -2,13 +2,14 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
 public class
     GetAllRegistrationsQueryHandler : IRequestHandler<GetAllRegistrationsQuery,
-        BaseResponse<List<DetailedRegistration>>>
+        BaseResponse<List<RegistrationOverview>>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IRegistrationRepository _registrationRepository;
@@ -20,7 +21,7 @@ public class
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<BaseResponse<List<DetailedRegistration>>> Handle(GetAllRegistrationsQuery request,
+    public async Task<BaseResponse<List<RegistrationOverview>>> Handle(GetAllRegistrationsQuery request,
         CancellationToken cancellationToken)
     {
         try
@@ -37,27 +38,24 @@ public class
                 registrations = await _registrationRepository.GetAll();
             }
 
-            var response = BaseResponse<List<DetailedRegistration>>.Ok(registrations
+            var registrationsOverview = registrations
                 .Select(x =>
                 {
                     var categoryColor = _categoryRepository.GetCategoryColor(x.CategoryId);
 
-                    return new DetailedRegistration
-                    {
-                        Id = x.Id,
-                        Title = x.Title,
-                        Content = x.Content,
-                        LastUpdatedAt = x.LastUpdatedAt,
-                        CategoryColor = categoryColor,
-                        CreatedAt = x.CreatedAt
-                    };
+                    var currentRegistration = GenericMapper<Registration, RegistrationOverview>.Map(x);
+                    currentRegistration.CategoryColor = categoryColor;
+                    
+                    return currentRegistration;
                 })
-                .ToList());
+                .ToList();
+            
+            var response = BaseResponse<List<RegistrationOverview>>.Ok(registrationsOverview);
             return response;
         }
         catch(Exception exception)
         {
-            var response = BaseResponse<List<DetailedRegistration>>.BadRequest(new List<string> {exception.Message});
+            var response = BaseResponse<List<RegistrationOverview>>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }

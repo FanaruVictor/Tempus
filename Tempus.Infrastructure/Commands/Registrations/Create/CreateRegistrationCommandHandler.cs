@@ -8,7 +8,7 @@ using Tempus.Infrastructure.Models.Registrations;
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
 public class
-    CreateRegistrationCommandHandler : IRequestHandler<CreateRegistrationCommand, BaseResponse<BaseRegistration>>
+    CreateRegistrationCommandHandler : IRequestHandler<CreateRegistrationCommand, BaseResponse<RegistrationDetails>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IRegistrationRepository _registrationRepository;
@@ -20,7 +20,7 @@ public class
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<BaseResponse<BaseRegistration>> Handle(CreateRegistrationCommand request,
+    public async Task<BaseResponse<RegistrationDetails>> Handle(CreateRegistrationCommand request,
         CancellationToken cancellationToken)
     {
         try
@@ -30,7 +30,7 @@ public class
             var category = await _categoryRepository.GetById(request.CategoryId);
             if(category == null)
             {
-                return BaseResponse<BaseRegistration>.BadRequest(new List<string>
+                return BaseResponse<RegistrationDetails>.BadRequest(new List<string>
                     {$"Category with Id: {request.CategoryId} not found"});
             }
 
@@ -41,20 +41,21 @@ public class
                 Content = request.Content,
                 CreatedAt = DateTime.UtcNow,
                 LastUpdatedAt = DateTime.UtcNow,
-                CategoryId = category.Id
+                CategoryId = request.CategoryId,
+                UserId = request.UserId,
             };
 
             await _registrationRepository.Add(entity);
             await _registrationRepository.SaveChanges();
 
-            var detailedRegistration = GenericMapper<Registration, BaseRegistration>.Map(entity);
-            var result = BaseResponse<BaseRegistration>.Ok(detailedRegistration);
+            var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);
+            var result = BaseResponse<RegistrationDetails>.Ok(detailedRegistration);
 
             return result;
         }
         catch(Exception exception)
         {
-            var result = BaseResponse<BaseRegistration>.BadRequest(new List<string> {exception.Message});
+            var result = BaseResponse<RegistrationDetails>.BadRequest(new List<string> {exception.Message});
             return result;
         }
     }

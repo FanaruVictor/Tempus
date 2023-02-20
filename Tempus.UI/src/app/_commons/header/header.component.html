@@ -1,15 +1,25 @@
-<div *ngIf="authorizationToken" class="header">
-  <div class="content">
-    <div class="logo">Tempus</div>
-    <nav mat-tab-nav-bar>
-      <a #rla="routerLinkActive"
-         *ngFor="let tab of tabs"
-         [active]="rla.isActive"
-         [routerLink]="tab.link" mat-tab-link
-         routerLinkActive
-      >{{tab.label}}</a>
-    </nav>
-  </div>
+<div *ngIf="authorizationToken && user !== authService.defaultUser" class="header">
   <mat-progress-bar *ngIf="loaderService.isLoading | async" class="loader-container"
                     mode="indeterminate"></mat-progress-bar>
+  <div class="content">
+    <div class="logo">Tempus</div>
+    <div class="actions">
+      <nav mat-tab-nav-bar>
+        <a #rla="routerLinkActive"
+           *ngFor="let tab of tabs"
+           [active]="rla.isActive"
+           [routerLink]="tab.link" mat-tab-link
+           routerLinkActive
+        ><div class="label">{{tab.label}}</div>
+          <div class="profile-photo" *ngIf="tab.label == 'Account'">
+            <img *ngIf="user?.photo?.url" [src]="user?.photo?.url" >
+          </div>
+        </a>
+      </nav>
+      <div class="dark-theme">
+        <mat-slide-toggle (click)="toggleDarkTheme()"
+                          [checked]="user?.isDarkTheme"></mat-slide-toggle>
+      </div>
+    </div>
+  </div>
 </div>

@@ -15,9 +15,8 @@
 <app-root></app-root>
 </body>
 <script>
-  let isDarkMode = localStorage.getItem("isDarkMode");
-
-  if (isDarkMode) {
+  let isDarkTheme = localStorage.getItem("isDarkTheme");
+  if (isDarkTheme === 'true') {
     document.body.classList.toggle('dark-theme');
   }
 </script>

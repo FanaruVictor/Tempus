@@ -3,12 +3,12 @@ import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialogModule} from "@angular/material/dialog";
-import {RegistrationApiService} from "../../commons/services/registration.api.service";
 import * as Rx from 'rxjs';
-import {CategoryApiService} from "../../commons/services/category.api.service";
 import {delay} from "rxjs/operators";
-import {GenericResponse} from "../../commons/models/genericResponse";
-import {DetailedRegistration} from "../../commons/models/registrations/detailedRegistration";
+import {RegistrationApiService} from "../../_services/registration.api.service";
+import {CategoryApiService} from "../../_services/category.api.service";
+import {GenericResponse} from "../../_commons/models/genericResponse";
+import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
 
 describe('Component: RegistrationsOverview', () => {
 
@@ -37,7 +37,7 @@ describe('Component: RegistrationsOverview', () => {
     const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
-    let response: GenericResponse<DetailedRegistration[]> = {
+    let response: GenericResponse<RegistrationOverview[]> = {
       resource: [],
       errors: []
     }
@@ -54,13 +54,11 @@ describe('Component: RegistrationsOverview', () => {
     const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
-    let response: GenericResponse<DetailedRegistration[]> = {
+    let response: GenericResponse<RegistrationOverview[]> = {
       resource: [
         {
           id: 'id',
           title: 'title',
-          content: 'content',
-          lastUpdatedAt: '22.12.2022',
           createdAt: '22.12.2022',
           categoryColor: 'color'
         }
@@ -77,8 +75,6 @@ describe('Component: RegistrationsOverview', () => {
       {
         id: 'id',
         title: 'title',
-        content: 'content',
-        lastUpdatedAt: '22.12.2022',
         createdAt: '22.12.2022',
         categoryColor: 'color'
       }

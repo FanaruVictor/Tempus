@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RegistrationRoutingModule} from "./registration-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {RegistrationsOverviewComponent} from './registrations-overview/registrations-overview.component';
 import {SharedModule} from "../shared/shared.module";
@@ -18,14 +18,15 @@ import {MatInputModule} from "@angular/material/input";
 import {JwtInterceptor} from "../_commons/interceptors/JwtInterceptor";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {QuillModule} from "ngx-quill";
-
-
+import {FilterPipe} from "../_commons/pipes/filter.pipe";
 @NgModule({
   declarations: [
+
     RegistrationsOverviewComponent,
     PickCategoryDialogComponent,
     DetailedRegistrationComponent,
     CreateOrEditRegistrationComponent,
+    FilterPipe
   ],
   imports: [
     RegistrationRoutingModule,
@@ -41,6 +42,7 @@ import {QuillModule} from "ngx-quill";
     MatInputModule,
     MatTooltipModule,
     QuillModule.forRoot(),
+    FormsModule,
   ],
   exports: [],
   providers: [

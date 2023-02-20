@@ -17,6 +17,7 @@ import {ErrorInterceptor} from "./_commons/interceptors/errorInterceptor";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {LoaderInterceptor} from "./_services/loader/loader-interceptor";
 import {HeaderComponent} from './_commons/header/header.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {HeaderComponent} from './_commons/header/header.component';
     CategoryModule,
     MatIconModule,
     MatButtonModule,
+    MatSlideToggleModule,
     AuthModule,
     MatProgressBarModule,
     ToastrModule.forRoot({

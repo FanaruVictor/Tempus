@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
-    if (this.authService.authorizationTokenValue) {
+    if (localStorage.getItem("authorizationToken")) {
       this.router.navigate(['/']);
     }
   }
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.authService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value)
       .pipe(first())
-      .subscribe(response => {
+      .subscribe(() => {
           this.router.navigate([this.returnUrl]).then(() => location.reload());
         }
       );

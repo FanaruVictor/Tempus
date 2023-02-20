@@ -3,6 +3,7 @@ using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Models.Photo;
 using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Commands.Users.ChangeTheme;
@@ -10,10 +11,12 @@ namespace Tempus.Infrastructure.Commands.Users.ChangeTheme;
 public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, BaseResponse<UserDetails>>
 {
     private readonly IUserRepository _userRepository;
+    private IProfilePhotoRepository _profilePhotoRepository;
 
-    public ChangeThemeCommandHandler(IUserRepository userRepository)
+    public ChangeThemeCommandHandler(IUserRepository userRepository, IProfilePhotoRepository profilePhotoRepository)
     {
         _userRepository = userRepository;
+        _profilePhotoRepository = profilePhotoRepository;
     }
 
     public async Task<BaseResponse<UserDetails>> Handle(ChangeThemeCommand request, CancellationToken cancellationToken)
@@ -38,7 +41,15 @@ public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, Bas
             await _userRepository.Update(user);
             await _userRepository.SaveChanges();
 
+            var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);
+            
             var userDetails = GenericMapper<User, UserDetails>.Map(user);
+
+            if(profilePhoto != null)
+            {
+                userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+            }
+
 
             result = BaseResponse<UserDetails>.Ok(userDetails);
 

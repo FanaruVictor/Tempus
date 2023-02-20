@@ -5,7 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
 import {RegistrationApiService} from "../../_services/registration.api.service";
 import {CategoryApiService} from "../../_services/category.api.service";
-import {DetailedRegistration} from "../../_commons/models/registrations/detailedRegistration";
+import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
 import {BaseCategory} from "../../_commons/models/categories/baseCategory";
 
 @Component({
@@ -14,10 +14,10 @@ import {BaseCategory} from "../../_commons/models/categories/baseCategory";
   styleUrls: ['./registrations-overview.component.scss']
 })
 export class RegistrationsOverviewComponent {
-  registrations?: DetailedRegistration[];
+  registrations!: RegistrationOverview[];
   categories?: BaseCategory[];
   defaultColor = '#d6efef';
-
+  searchText = '';
   constructor(
     private httpClient: HttpClient,
     private router: Router,

@@ -13,6 +13,27 @@
       font-weight: bold;
       font-size: 20px;
     }
+    .actions{
+      display: flex;
+      a{
+        display: flex;
+        justify-content: space-between;
+        .profile-photo{
+          display: flex;
+          align-items: center;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .dark-theme{
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 
   .loader-container {

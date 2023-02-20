@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {BaseUser} from "../../_commons/models/user/baseUser";
 import {map} from "rxjs/operators";
 import {GenericResponse} from "../../_commons/models/genericResponse";
+import {UserDetails} from "../../_commons/models/user/userDetails";
+import {LoginResult} from "../../_commons/models/auth/loginResult";
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +13,44 @@ import {GenericResponse} from "../../_commons/models/genericResponse";
 export class AuthService {
   authorizationToken: Observable<string>;
   private authorizationTokenSubject: BehaviorSubject<string>;
+  userSubject : BehaviorSubject<UserDetails>;
+  user: Observable<UserDetails>;
+  defaultUser = {
+    userName: '',
+    photo: undefined,
+    password: '',
+    isDarkTheme: false,
+    email: '',
+    phoneNumber: ''
+  };
 
   constructor(private httpClient: HttpClient) {
     this.authorizationTokenSubject = new BehaviorSubject<string>(JSON.parse(localStorage.getItem('authorizationToken')!));
+    let user = localStorage.getItem('currentUser');
+    if(user){
+      this.userSubject = new BehaviorSubject<UserDetails>(JSON.parse(user));
+    }
+    else{
+      this.userSubject = new BehaviorSubject<UserDetails>(this.defaultUser);
+    }
     this.authorizationToken = this.authorizationTokenSubject.asObservable();
-  }
+    this.user = this.userSubject.asObservable();
 
-  get authorizationTokenValue(): string {
-    return this.authorizationTokenSubject.value;
   }
-
+  setUser(user: UserDetails){
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
   login(username: string, password: string) {
-    return this.httpClient.post<GenericResponse<string>>('https://localhost:7077/api/v1.0/auth/login', {
+    return this.httpClient.post<GenericResponse<LoginResult>>('https://localhost:7077/api/v1.0/auth/login', {
       username,
       password
     })
       .pipe(map(result => {
-        localStorage.setItem('authorizationToken', JSON.stringify(result.resource));
-        this.authorizationTokenSubject.next(result.resource);
+        debugger
+        localStorage.setItem('authorizationToken', JSON.stringify(result.resource.authorizationToken));
+        localStorage.setItem('currentUser', JSON.stringify(result.resource.user));
+        this.authorizationTokenSubject.next(result.resource.authorizationToken);
         return result.resource;
       }));
   }

@@ -9,8 +9,11 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const currentUser = this.authService.authorizationTokenValue;
-    if (currentUser) {
+    let authorizationToken = '';
+    this.authService.authorizationToken.subscribe(x => authorizationToken = x);
+    let currentUser;
+    this.authService.user.subscribe(x => currentUser = x);
+    if (authorizationToken && currentUser !== this.authService.defaultUser) {
       return true;
     }
 
