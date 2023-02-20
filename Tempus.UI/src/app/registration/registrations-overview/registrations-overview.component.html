@@ -3,9 +3,10 @@
 
   </div>
   <div class="center">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for a hero by id or name or country">
     <div class="elements">
       <div
-        *ngFor="let registration of registrations"
+        *ngFor="let registration of registrations | filter:searchText"
         class="registration"
         [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration?.categoryColor}"
       >

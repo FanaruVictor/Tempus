@@ -14,10 +14,10 @@ import {BaseCategory} from "../../_commons/models/categories/baseCategory";
   styleUrls: ['./registrations-overview.component.scss']
 })
 export class RegistrationsOverviewComponent {
-  registrations?: RegistrationOverview[];
+  registrations!: RegistrationOverview[];
   categories?: BaseCategory[];
   defaultColor = '#d6efef';
-
+  searchText = '';
   constructor(
     private httpClient: HttpClient,
     private router: Router,
