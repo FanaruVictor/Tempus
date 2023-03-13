@@ -2,8 +2,8 @@
   <form (ngSubmit)="submit()" [formGroup]="loginForm" class="login-form">
     <div class="title">Login</div>
     <div class="container">
-      <label>Username</label>
-      <input class="username" formControlName="username" placeholder="Ex: JohnDoe">
+      <label>Email</label>
+      <input class="username" formControlName="email" placeholder="Ex: JohnDoe">
     </div>
     <div class="container">
       <label>Password</label>
@@ -15,4 +15,9 @@
     <a>forgot-password</a>
     <a [routerLink]="['/auth/register']">register</a>
   </div>
+
+  <mat-card>
+    <h2>Login below with google</h2>
+    <div id="buttonDiv"></div>
+  </mat-card>
 </div>

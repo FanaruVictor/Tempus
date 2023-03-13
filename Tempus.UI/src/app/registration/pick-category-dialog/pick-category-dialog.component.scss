@@ -3,9 +3,17 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 200px;
 
-  .mat-dialog-actions {
-    display: flex;
-    justify-content: space-between;
+  .mat-dialog-content{
+    .selector{
+      width: 200px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
   }
 }
+
+

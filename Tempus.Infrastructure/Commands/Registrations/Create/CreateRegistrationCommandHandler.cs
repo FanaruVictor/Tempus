@@ -2,8 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
@@ -39,10 +39,9 @@ public class
                 Id = Guid.NewGuid(),
                 Title = request.Title,
                 Content = request.Content,
-                CreatedAt = DateTime.UtcNow,
-                LastUpdatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow.Date,
+                LastUpdatedAt = DateTime.UtcNow.Date,
                 CategoryId = request.CategoryId,
-                UserId = request.UserId,
             };
 
             await _registrationRepository.Add(entity);

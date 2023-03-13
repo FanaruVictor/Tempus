@@ -76,13 +76,6 @@ if(app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-var uploadsDir = "D:/PHOTOS";
-app.UseStaticFiles(new StaticFileOptions
-{
-    RequestPath = "/images",
-    FileProvider = new PhysicalFileProvider(uploadsDir)
-});
-
 
 app.UseCors();
 

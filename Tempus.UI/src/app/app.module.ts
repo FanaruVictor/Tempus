@@ -8,7 +8,6 @@ import {RegistrationModule} from "./registration/registration.module";
 import {CategoryModule} from "./category/category.module";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {NotFoundComponent} from "./_commons/not-found/not-found.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./_commons/interceptors/JwtInterceptor";
 import {AuthModule} from "./auth/auth.module";
@@ -18,6 +17,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {LoaderInterceptor} from "./_services/loader/loader-interceptor";
 import {HeaderComponent} from './_commons/header/header.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {NotFoundComponent} from "./_commons/components/not-found/not-found.component";
 
 @NgModule({
   declarations: [

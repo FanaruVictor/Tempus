@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Infrastructure.Models.Photo;
+using Tempus.Core.Models.Photo;
 using Tempus.Infrastructure.Queries.ProfilePhoto.ProfilePhotoGetById;
 
 namespace Tempus.API.Controllers;

@@ -7,12 +7,14 @@ import {UpdateRegistrationCommandData} from "../_commons/models/registrations/up
 import {CreateRegistrationCommandData} from "../_commons/models/registrations/createRegistrationCommandData";
 import {environment} from "../../environments/environment";
 import {RegistrationDetails} from "../_commons/models/registrations/RegistrationDetails";
+import {BehaviorSubject, Observable} from "rxjs";
+import {UserDetails} from "../_commons/models/user/userDetails";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationApiService {
-  apiUrl = `${environment.apiUrl}/v1/registrations`
+  apiUrl = `${environment.apiUrl}/v1/registrations`;
 
   constructor(private httpClient: HttpClient) {
   }

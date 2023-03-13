@@ -20,7 +20,8 @@ export class UserApiService {
       password: '',
       isDarkTheme: false,
       email: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      externalId: ''
     });
     this.user = this.userSubject.asObservable();
   }
@@ -37,10 +38,6 @@ export class UserApiService {
     return this.httpClient.put<GenericResponse<UserDetails>>(`${this.apiUrl}/changeTheme`, {isDarkTheme: isDarkTheme});
   }
 
-  getTheme() {
-    return this.httpClient.get<GenericResponse<boolean>>(`${this.apiUrl}/theme`);
-  }
-
   addPhoto(file: File) {
     let formData = new FormData();
     formData.append('image', file);
@@ -54,5 +51,9 @@ export class UserApiService {
     formData.append('image', file);
 
     return this.httpClient.put<any>(`${this.apiUrl}/profilePhoto`, formData);
+  }
+
+  delete(){
+    return this.httpClient.delete<GenericResponse<any>>(`${this.apiUrl}`);
   }
 }

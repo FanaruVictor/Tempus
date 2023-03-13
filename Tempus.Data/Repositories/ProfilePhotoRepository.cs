@@ -11,6 +11,8 @@ public class ProfilePhotoRepository : BaseRepository<ProfilePhoto>, IProfilePhot
 
     public async Task<ProfilePhoto> GetByUserId(Guid id)
     {
-        return await _context.ProfilePhotos.FirstOrDefaultAsync(x => x.UserId == id);
+        return await _context.ProfilePhotos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.UserId == id);
     }
 }

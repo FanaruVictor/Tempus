@@ -2,20 +2,20 @@
 using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Photo;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Photo;
 using Tempus.Infrastructure.Services.Cloudynary;
 
 namespace Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 
 public class UpdateProfilePhotoCommandHandler : IRequestHandler<UpdateProfilePhotoCommand, BaseResponse<PhotoDetails>>
 {
-    private readonly IProfilePhotoRepository _photoRepository;
+    private readonly IProfilePhotoRepository _profilePhotoRepository;
     private readonly ICloudinaryService _cloudinaryService;
 
-    public UpdateProfilePhotoCommandHandler(IProfilePhotoRepository photoRepository, ICloudinaryService cloudinaryService)
+    public UpdateProfilePhotoCommandHandler(IProfilePhotoRepository profilePhotoRepository, ICloudinaryService cloudinaryService)
     {
-        _photoRepository = photoRepository;
+        _profilePhotoRepository = profilePhotoRepository;
         _cloudinaryService = cloudinaryService;
     }
     
@@ -34,7 +34,7 @@ public class UpdateProfilePhotoCommandHandler : IRequestHandler<UpdateProfilePho
 
             var profilePhoto = await UpdateProfilePhoto(request);
 
-            await _photoRepository.SaveChanges();
+            await _profilePhotoRepository.SaveChanges();
             
             var photoDetails = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(profilePhoto);
     
@@ -53,8 +53,10 @@ public class UpdateProfilePhotoCommandHandler : IRequestHandler<UpdateProfilePho
 
     private async Task<Core.Entities.ProfilePhoto> UpdateProfilePhoto(UpdateProfilePhotoCommand request)
     {
-        await _cloudinaryService.Destroy(request.Id, request.Image);
-        
+        await _cloudinaryService.DestroyUsingUserId(request.UserId);
+
+        await _profilePhotoRepository.Delete(request.Id);
+
         var uploadResult = await _cloudinaryService.Upload(request.Image);
 
         var photo = await UpdatePhoto(request.UserId, uploadResult);
@@ -64,7 +66,7 @@ public class UpdateProfilePhotoCommandHandler : IRequestHandler<UpdateProfilePho
 
     private async Task<BaseResponse<PhotoDetails>> VerifyAuthenticity(UpdateProfilePhotoCommand request)
     {
-        var photo = await _photoRepository.GetById(request.Id);
+        var photo = await _profilePhotoRepository.GetByUserId(request.UserId);
 
         BaseResponse<PhotoDetails> result;
 
@@ -92,7 +94,7 @@ public class UpdateProfilePhotoCommandHandler : IRequestHandler<UpdateProfilePho
             UserId = userId
         };
 
-        await _photoRepository.Add(profilePhoto);
+        await _profilePhotoRepository.Add(profilePhoto);
         return profilePhoto;
     }
 }

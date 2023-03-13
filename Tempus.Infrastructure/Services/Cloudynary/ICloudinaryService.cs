@@ -6,5 +6,5 @@ namespace Tempus.Infrastructure.Services.Cloudynary;
 public interface ICloudinaryService
 {
     Task<ImageUploadResult> Upload(IFormFile image);
-    Task Destroy(Guid imageId, IFormFile image);
+    Task DestroyUsingUserId(Guid userId);
 }

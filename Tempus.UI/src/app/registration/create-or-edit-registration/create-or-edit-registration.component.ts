@@ -94,10 +94,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    if (!this.isCreateMode) {
-      this.router.navigate(['/registrations', this.id]);
-      return
-    }
     this.router.navigate(['/registrations/overview']);
   }
 
@@ -126,7 +122,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .pipe(filter(x => !!x))
       .subscribe({
         next: result => {
-          this.router.navigate(['/registrations', result.resource.id]);
           this.notificationService.succes('Registration updated successfully', 'Request completed')
         }
       })
@@ -156,7 +151,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .pipe(filter(x => !!x))
       .subscribe({
           next: result => {
-            this.router.navigate(['/registrations', result.resource.id])
+            this.router.navigate(['/registrations/edit', result.resource.id])
             this.notificationService.succes('Registration created succesfully', 'Request completed')
           }
         }

@@ -5,5 +5,4 @@ namespace Tempus.Infrastructure.Commands.Users.Delete;
 
 public class DeleteUserCommand : BaseRequest<BaseResponse<Guid>>
 {
-    public Guid Id { get; init; }
 }

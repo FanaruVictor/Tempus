@@ -1,9 +1,8 @@
 <div class="registration-wrapper">
-  <h1 *ngIf="isCreateMode" class="title">Create Registration</h1>
-  <h1 *ngIf="!isCreateMode" class="title">Edit Registration</h1>
   <form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
     <div class="title-control">
-      <input class="registration-title" formControlName="title" placeholder="Title">
+      <p>short description</p>
+      <input class="registration-title" formControlName="title" placeholder="What is this note about...">
     </div>
     <div class="content-control">
       <quill-editor

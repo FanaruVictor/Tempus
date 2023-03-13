@@ -11,10 +11,12 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDialogModule} from "@angular/material/dialog";
 import {FileUploadModule} from "ng2-file-upload";
 import {MatIconModule} from "@angular/material/icon";
+import {DeleteDialogComponent} from "../_commons/components/delete-user-dialog/delete-dialog.component";
 
 @NgModule({
   declarations: [
     ProfileComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     CommonModule,

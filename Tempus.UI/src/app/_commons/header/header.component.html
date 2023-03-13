@@ -11,8 +11,14 @@
            [routerLink]="tab.link" mat-tab-link
            routerLinkActive
         ><div class="label">{{tab.label}}</div>
-          <div class="profile-photo" *ngIf="tab.label == 'Account'">
-            <img *ngIf="user?.photo?.url" [src]="user?.photo?.url" >
+          <div class="profile-photo" *ngIf="tab.label == user?.userName">
+            <mat-icon *ngIf="!user?.photo; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
+                      class="user-icon">
+              account_circle
+            </mat-icon>
+            <ng-template #showPhoto>
+              <img class="user-photo" [src]="user?.photo?.url">
+            </ng-template>
           </div>
         </a>
       </nav>

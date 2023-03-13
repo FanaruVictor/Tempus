@@ -3,6 +3,7 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../_services/auth/auth.service";
 import {BaseUser} from "../../_commons/models/user/baseUser";
 import {Router} from "@angular/router";
+import {UserRegistration} from "../../_commons/models/user/userRegistration";
 
 @Component({
   selector: 'app-register',
@@ -23,11 +24,13 @@ export class RegisterComponent {
   }
 
   submit() {
-    let user: BaseUser = {
+    let user: UserRegistration = {
       userName: this.registerForm.controls['username'].value,
       email: this.registerForm.controls['email'].value,
       phoneNumber: this.registerForm.controls['phoneNumber'].value,
       password: this.registerForm.controls['password'].value,
+      isExternal: false
+
     };
 
     this.authService.register(user)

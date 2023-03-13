@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Tempus.Core.Commons;
+using Tempus.Core.Models.Photo;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Photo;
 
 namespace Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 

@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 using Tempus.Data.Repositories;
-using Tempus.Data.Repositories.UserRepositories;
 
 namespace Tempus.Data;
 

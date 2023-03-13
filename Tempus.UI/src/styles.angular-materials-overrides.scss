@@ -135,6 +135,44 @@ mat-card-actions {
   }
 
   .mat-slide-toggle-bar {
-    background-color: #25252560;
+    background-color: var(--background-color);
   }
+}
+
+.mat-date-range-input {
+  color: var(--text-color);
+}
+
+.mat-date-range-input-container {
+  justify-content: space-around;
+  font-size: 16px;
+
+  input::placeholder {
+    font-size: 14px;
+  }
+}
+
+.mat-date-range-input-start-wrapper {
+  width: 45%;
+  text-align: end;
+}
+
+.mat-date-range-input-end-wrapper {
+  width: 45%;
+}
+
+.mat-date-range-input-separator {
+  color: var(--text-color);
+}
+
+.mat-pseudo-checkbox-checked {
+  background-color: var(--button-background-color);
+}
+
+.mat-select-value{
+  font-weight: normal !important;
+}
+
+.mat-tab-link{
+  opacity: 1 !important;
 }

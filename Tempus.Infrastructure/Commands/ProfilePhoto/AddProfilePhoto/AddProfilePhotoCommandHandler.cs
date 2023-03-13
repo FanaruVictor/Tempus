@@ -4,8 +4,8 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Photo;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Photo;
 using Tempus.Infrastructure.Services.Cloudynary;
 
 namespace Tempus.Infrastructure.Commands.ProfilePhoto.AddProfilePhoto;

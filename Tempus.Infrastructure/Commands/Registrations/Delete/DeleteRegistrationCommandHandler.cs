@@ -28,7 +28,7 @@ public class DeleteRegistrationCommandHandler : IRequestHandler<DeleteRegistrati
                 return BaseResponse<Guid>.NotFound("Registration not found");
             }
             
-            if(registration.UserId != request.UserId)
+            if(registration.Category.UserId != request.UserId)
             {
                 return BaseResponse<Guid>.Forbbiden();
             }

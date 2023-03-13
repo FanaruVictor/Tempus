@@ -1,7 +1,0 @@
-﻿namespace Tempus.Infrastructure.Models.Registrations;
-
-public class RegistrationOverview : BaseRegistration
-{
-    public DateTime CreatedAt { get; set; }
-    public string CategoryColor { get; set; }
-}

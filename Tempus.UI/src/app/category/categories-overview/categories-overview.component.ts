@@ -79,6 +79,9 @@ export class CategoriesOverviewComponent {
       .pipe(filter(x => !!x))
       .subscribe({
         next: result => {
+          if(result.name === category.name && result.color === category.color)
+            return;
+
           let updateCategoryCommandData: UpdateCategoryCommandData = {
             id: category.id,
             name: result.name,

@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     this.tabs = [
       {
         label: 'Registrations',
-        link: '/registrations',
+        link: '/registrations/overview',
         index: 0
       },
       {
@@ -48,8 +48,9 @@ export class HeaderComponent implements OnInit {
     });
 
     if(localStorage.getItem("authorizationToken")){
-      this.authService.user.subscribe( user => {
+      this.userService.user.subscribe( user => {
         this.user = user;
+        this.tabs[2].label = this.user?.userName || "Account";
       })
     }
   }
@@ -60,7 +61,7 @@ export class HeaderComponent implements OnInit {
     this.userService.changeTheme(!this.user?.isDarkTheme).subscribe(response => {
       this.user = response.resource;
       localStorage.setItem("isDarkTheme", (this.user.isDarkTheme).toString());
-      this.authService.setUser(this.user);
+      this.userService.setUser(this.user);
     });
   }
 }

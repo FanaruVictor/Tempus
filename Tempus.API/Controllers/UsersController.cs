@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Tempus.Core.Models.Photo;
+using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commands.ProfilePhoto.AddProfilePhoto;
 using Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 using Tempus.Infrastructure.Commands.Users.ChangeTheme;
 using Tempus.Infrastructure.Commands.Users.Delete;
 using Tempus.Infrastructure.Commands.Users.Update;
-using Tempus.Infrastructure.Models.Photo;
-using Tempus.Infrastructure.Models.User;
 using Tempus.Infrastructure.Queries.Users.GetAll;
 using Tempus.Infrastructure.Queries.Users.GetById;
 using Tempus.Infrastructure.Queries.Users.GetDetails;
@@ -73,13 +73,10 @@ public class UsersController : BaseController
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id:guid}")]
-    public async Task<ActionResult<Guid>> Delete([FromRoute] Guid id)
+    [HttpDelete]
+    public async Task<ActionResult<Guid>> Delete()
     {
-        return HandleResponse(await _mediator.Send(new DeleteUserCommand
-        {
-            Id = id
-        }));
+        return HandleResponse(await _mediator.Send(new DeleteUserCommand()));
     }
 
     [HttpPut("changeTheme")]

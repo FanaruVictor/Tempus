@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
@@ -18,19 +19,23 @@ public class AuthRepository : IAuthRepository
 
     public async Task Register(User user, string password)
     {
-        CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
+        if (string.IsNullOrEmpty(user.ExternalId))
+        {
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
-        user.Password = passwordHash;
-        user.PasswordSalt = passwordSalt;
+            user.Password = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
+        }
+        
         await _context.Users.AddAsync(user);
     }
 
 
-    public async Task<User> Login(string username, string password)
+    public async Task<User> Login(string email, string password)
     {
-        username = username.ToLower();
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+        email = email.ToLower();
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email);
         
         if(!VerifyPasswordHash(password, user.Password, user.PasswordSalt))
         {
@@ -40,11 +45,16 @@ public class AuthRepository : IAuthRepository
         return user;
     }
 
-    public async Task<bool> UserExists(string username)
+    public async Task<bool> IsEmailAlreadyRegistered(string email)
     {
-        return await _context.Users.AnyAsync(x => x.Username == username);
+        return await _context.Users.AnyAsync(x => x.Email.ToLower() == email && string.IsNullOrEmpty(x.ExternalId));
     }
-
+    
+    public async Task<bool> IsUsernameAlreadyRegistered(string username)
+    {
+        return await _context.Users.AnyAsync(x => x.Username.ToLower() == username && string.IsNullOrEmpty(x.ExternalId));
+    }
+    
     public async Task<int> SaveChanges()
     {
         return await _context.SaveChangesAsync();

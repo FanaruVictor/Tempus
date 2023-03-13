@@ -11,7 +11,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Id).HasMaxLength(36).IsRequired();
         builder.Property(x => x.Username).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Email).IsRequired();
-        builder.Property(x => x.PhoneNumber).IsRequired();
         builder.Property(x => x.IsDarkTheme).IsRequired().HasDefaultValue(false);
+        builder.Property(x => x.ExternalId).IsRequired(false);
+        builder.Property(x => x.PhoneNumber).IsRequired(false);
     }
 }

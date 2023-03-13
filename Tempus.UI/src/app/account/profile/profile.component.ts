@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {UserDetails} from "../../_commons/models/user/userDetails";
 import {UserApiService} from "../../_services/user.api.service";
 import {AuthService} from "../../_services/auth/auth.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../../_commons/components/delete-user-dialog/delete-dialog.component";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -11,17 +14,16 @@ import {AuthService} from "../../_services/auth/auth.service";
 export class ProfileComponent implements OnInit {
   user!: UserDetails;
 
-  constructor(private userService: UserApiService, private authService: AuthService) {
+  constructor(private userService: UserApiService, private authService: AuthService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.authService.user
+    this.userService.user
       .subscribe(user => {
         if (!user) {
           return;
         }
         this.user = user;
-        console.log(this.user);
         if (this.user.isDarkTheme) {
           if (!document.body.classList.contains('dark-theme')) {
             document.body.classList.toggle('dark-theme');
@@ -30,6 +32,7 @@ export class ProfileComponent implements OnInit {
           document.body.classList.remove('dark-theme');
         }
       });
+    console.log(this.user.photo);
   }
 
   edit() {
@@ -37,7 +40,21 @@ export class ProfileComponent implements OnInit {
   }
 
   delete() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {data: 'account'});
 
+    dialogRef.afterClosed()
+      .pipe(filter(x => !!x))
+      .subscribe(result => {
+        this.userService.delete()
+          .subscribe(reult => {
+            if(!!result){
+              localStorage.removeItem('authorizationToken');
+              localStorage.removeItem('currentUser');
+              localStorage.removeItem('isDarkTheme');
+              window.location.reload();
+            }
+          })
+    });
   }
 
   imageInputChange(fileInputEvent: any) {
@@ -45,14 +62,14 @@ export class ProfileComponent implements OnInit {
     if (this.user.photo) {
       this.userService.updatePhoto(this.user.photo.id, file).subscribe(response => {
         this.user.photo = response.resource;
-        this.authService.setUser(this.user);
+        this.userService.setUser(this.user);
       });
       return;
     }
 
     this.userService.addPhoto(file).subscribe(response => {
       this.user.photo = response.resource;
-      this.authService.setUser(this.user);
+      this.userService.setUser(this.user);
     });
   }
 

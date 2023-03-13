@@ -2,8 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.LastUpdated;
 

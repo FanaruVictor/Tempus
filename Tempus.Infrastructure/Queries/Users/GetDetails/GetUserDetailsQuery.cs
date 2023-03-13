@@ -1,6 +1,6 @@
 ﻿using Tempus.Core.Commons;
+using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.User;
 
 namespace Tempus.Infrastructure.Queries.Users.GetDetails;
 

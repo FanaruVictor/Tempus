@@ -2,8 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Update;
 
@@ -31,7 +31,7 @@ public class
                 return BaseResponse<RegistrationDetails>.NotFound($"Registration with Id: {request.Id} was not found");
             }
 
-            if(entity.UserId != request.UserId)
+            if(entity.Category.UserId != request.UserId)
             {
                 return BaseResponse<RegistrationDetails>.Forbbiden();
             }
@@ -42,7 +42,7 @@ public class
                 Title = request.Title,
                 Content = request.Content,
                 CreatedAt = entity.CreatedAt,
-                LastUpdatedAt = DateTime.UtcNow,
+                LastUpdatedAt = DateTime.UtcNow.Date,
                 CategoryId = entity.CategoryId
             };
 

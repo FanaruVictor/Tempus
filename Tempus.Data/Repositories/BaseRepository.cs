@@ -26,7 +26,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
             .ToListAsync();
     }
 
-    public async Task<TEntity?> GetById(Guid id)
+    public virtual async Task<TEntity?> GetById(Guid id)
     {
         return await _context
             .Set<TEntity>()
@@ -48,8 +48,9 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
             .Update(entity);
     }
 
-    public async Task Delete(Guid id)
+    public virtual async Task Delete(Guid id)
     {
+        
         var entity = await GetById(id);
 
         if(entity == null)

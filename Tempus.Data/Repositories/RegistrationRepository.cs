@@ -24,7 +24,8 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
     {
         var result = await _context.Registrations
             .AsNoTracking()
-            .Where(x => x.UserId == userId)
+            .Include(x => x.Category)
+            .Where(x => x.Category.UserId == userId)
             .ToListAsync();
         
         return result;
@@ -33,5 +34,13 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
     public Task<Registration?> GetLastUpdated()
     {
         return _context.Registrations.AsNoTracking().OrderByDescending(x => x.LastUpdatedAt).FirstOrDefaultAsync();
+    }
+
+    public override async Task<Registration> GetById(Guid id)
+    {
+        return await _context.Registrations
+            .AsNoTracking()
+            .Include(x => x.Category)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

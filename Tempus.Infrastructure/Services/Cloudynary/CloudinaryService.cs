@@ -44,17 +44,15 @@ public class CloudinaryService : ICloudinaryService
         return uploadResult;
     }
 
-    public async Task Destroy(Guid imageId, IFormFile image)
+    public async Task DestroyUsingUserId(Guid userId)
     {
-        var photo = await _profilePhotoRepository.GetById(imageId);
+        var photo = await _profilePhotoRepository.GetByUserId(userId);
 
         if(photo == null)
         {
             throw new Exception("Photo not found");
         }
-
-        await _profilePhotoRepository.Delete(imageId);
-
+        
         var destroyParams = new DeletionParams(photo.PublicId)
         {
             ResourceType = ResourceType.Image,

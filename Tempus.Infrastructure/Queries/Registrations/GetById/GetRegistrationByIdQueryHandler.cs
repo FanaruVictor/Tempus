@@ -2,8 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetById;
 
@@ -29,7 +29,7 @@ public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationBy
             {
                 return BaseResponse<RegistrationDetails>.NotFound("Registration not found!");
             }
-            if(registration.UserId != request.UserId)
+            if(registration.Category.UserId != request.UserId)
             {
                 return BaseResponse<RegistrationDetails>.Forbbiden();
             }

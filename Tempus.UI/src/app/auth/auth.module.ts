@@ -7,21 +7,25 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import { LogoutComponent } from './logout/logout.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogoutComponent
   ],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule
-  ]
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        MatCardModule
+    ]
 })
 export class AuthModule {
 }

@@ -10,23 +10,24 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
-import {DetailedRegistrationComponent} from './detailed-registration/detailed-registration.component';
 import {CreateOrEditRegistrationComponent} from './create-or-edit-registration/create-or-edit-registration.component';
 import {PickCategoryDialogComponent} from "./pick-category-dialog/pick-category-dialog.component";
-import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {JwtInterceptor} from "../_commons/interceptors/JwtInterceptor";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {QuillModule} from "ngx-quill";
-import {FilterPipe} from "../_commons/pipes/filter.pipe";
+import {SearchPipe} from "../_commons/pipes/search.pipe";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {DateRangePipe} from "../_commons/pipes/dateRange.pipe";
+
 @NgModule({
   declarations: [
-
     RegistrationsOverviewComponent,
     PickCategoryDialogComponent,
-    DetailedRegistrationComponent,
     CreateOrEditRegistrationComponent,
-    FilterPipe
+    SearchPipe,
+    DateRangePipe
   ],
   imports: [
     RegistrationRoutingModule,
@@ -43,6 +44,8 @@ import {FilterPipe} from "../_commons/pipes/filter.pipe";
     MatTooltipModule,
     QuillModule.forRoot(),
     FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [],
   providers: [

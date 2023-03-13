@@ -13,11 +13,12 @@ public class User : BaseEntity
 
     public string Username { get; set; }
     public string Email { get; set; }
-    public string PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } 
     public byte[] Password { get; set; }
     public byte[] PasswordSalt { get; set; }
     public bool IsDarkTheme { get; set; }
+    public string ExternalId { get; set; }
 
-    public List<Registration>? Registrations { get; set; }
+    public ProfilePhoto ProfilePhoto { get; set; }
     public List<Category>? Categories { get; set; }
 }

@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {GenericResponse} from "../../_commons/models/genericResponse";
 import {UserDetails} from "../../_commons/models/user/userDetails";
 import {LoginResult} from "../../_commons/models/auth/loginResult";
+import {UserRegistration} from "../../_commons/models/user/userRegistration";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthService {
     password: '',
     isDarkTheme: false,
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    externalId: ''
   };
 
   constructor(private httpClient: HttpClient) {
@@ -41,13 +43,12 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.userSubject.next(user);
   }
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     return this.httpClient.post<GenericResponse<LoginResult>>('https://localhost:7077/api/v1.0/auth/login', {
-      username,
+      email,
       password
     })
       .pipe(map(result => {
-        debugger
         localStorage.setItem('authorizationToken', JSON.stringify(result.resource.authorizationToken));
         localStorage.setItem('currentUser', JSON.stringify(result.resource.user));
         this.authorizationTokenSubject.next(result.resource.authorizationToken);
@@ -55,7 +56,19 @@ export class AuthService {
       }));
   }
 
-  register(user: BaseUser) {
+  loginWithGoogle(googleToken: string){
+    return this.httpClient.post<GenericResponse<LoginResult>>('https://localhost:7077/api/v1.0/auth/loginWithGoogle', {
+      googleToken,
+    })
+      .pipe(map(result => {
+      localStorage.setItem('authorizationToken', JSON.stringify(result.resource.authorizationToken));
+      localStorage.setItem('currentUser', JSON.stringify(result.resource.user));
+      this.authorizationTokenSubject.next(result.resource.authorizationToken);
+      return result.resource;
+    }));
+  }
+
+  register(user: UserRegistration) {
     return this.httpClient.post<GenericResponse<BaseUser>>('https://localhost:7077/api/v1.0/auth/register', user)
   }
 

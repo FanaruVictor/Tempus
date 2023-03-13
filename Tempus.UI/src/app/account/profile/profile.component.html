@@ -15,13 +15,15 @@
           account_circle
         </mat-icon>
         <ng-template #showPhoto>
-          <img [src]="user.photo?.url" alt="asdfasdf">
+          <img [src]="user.photo?.url">
         </ng-template>
-        <input #imageInput (change)="imageInputChange($event)" accept="image/png" hidden="true"
-               onclick="this.value=null"
-               type="file"/>
-        <button (click)="imageInput.click()" color="primary"
-                mat-raised-button>{{user.photo ? 'Change profile photo' : 'Add profile photo'}}</button>
+        <div *ngIf="!user.externalId">
+          <input #imageInput (change)="imageInputChange($event)" accept="image/png, image/gif, image/jpeg" hidden="true"
+                 onclick="this.value=null"
+                 type="file"/>
+          <button (click)="imageInput.click()" color="primary"
+                  mat-raised-button>{{user.photo ? 'Change profile photo' : 'Add profile photo'}}</button>
+        </div>
       </div>
       <div class="container">
         <h2>Username</h2>
@@ -33,7 +35,7 @@
       </div>
       <div class="container">
         <h2>Phone number</h2>
-        <p>{{user.phoneNumber}}</p>
+        <p>{{user.phoneNumber || '-'}}</p>
       </div>
     </div>
   </div>

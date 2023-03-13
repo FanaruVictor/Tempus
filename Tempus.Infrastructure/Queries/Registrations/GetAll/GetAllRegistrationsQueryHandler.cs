@@ -2,8 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
-using Tempus.Infrastructure.Models.Registrations;
 
 namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
@@ -35,7 +35,7 @@ public class
             }
             else
             {
-                registrations = await _registrationRepository.GetAll();
+                registrations = await _registrationRepository.GetAll(request.UserId);
             }
 
             var registrationsOverview = registrations
