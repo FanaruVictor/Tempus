@@ -98,7 +98,7 @@ export class RegistrationsOverviewComponent {
           }
           const byteArray = new Uint8Array(byteNumbers);
           const blob = new Blob([byteArray], {type: "application/pdf"});
-          FileSaver.saveAs(blob, `${registration.title}.pdf`);
+          FileSaver.saveAs(blob, `${registration.description}.pdf`);
           this.notificationService.succes('Registration downloaded successfully', 'Request completed');
         }
       });

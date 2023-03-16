@@ -2,11 +2,11 @@
 
 public class Registration : BaseEntity
 {
-    public Registration(Guid id, string title, string content, DateTime createdAt, DateTime lastUpdatedAt,
+    public Registration(Guid id, string description, string content, DateTime createdAt, DateTime lastUpdatedAt,
         Guid categoryId)
     {
         Id = id;
-        Title = title;
+        Description = description;
         Content = content;
         CreatedAt = createdAt;
         LastUpdatedAt = lastUpdatedAt;
@@ -15,9 +15,8 @@ public class Registration : BaseEntity
 
     public Registration() { }
 
-    public string Title { get; set; }
-    public string Content { get; set; }
     public string Description { get; set; }
+    public string Content { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime LastUpdatedAt { get; set; }
     public Guid CategoryId { get; set; }

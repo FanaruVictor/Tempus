@@ -9,6 +9,6 @@ public class UpdateRegistrationCommandValidator : AbstractValidator<UpdateRegist
         RuleFor(x => x.Id).NotNull();
         RuleFor(x => x.Id).NotEqual(Guid.Empty);
         RuleFor(x => x.Content).NotEmpty();
-        RuleFor(x => x.Title).NotEmpty();
+        RuleFor(x => x.Description).NotEmpty();
     }
 }

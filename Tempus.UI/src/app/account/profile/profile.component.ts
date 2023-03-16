@@ -3,8 +3,8 @@ import {UserDetails} from "../../_commons/models/user/userDetails";
 import {UserApiService} from "../../_services/user.api.service";
 import {AuthService} from "../../_services/auth/auth.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteDialogComponent} from "../../_commons/components/delete-user-dialog/delete-dialog.component";
 import {filter} from "rxjs";
+import {DeleteDialogComponent} from "../../shared/delete-user-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-profile',

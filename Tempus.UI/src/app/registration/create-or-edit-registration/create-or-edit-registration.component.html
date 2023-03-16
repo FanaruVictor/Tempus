@@ -1,8 +1,11 @@
 <div class="registration-wrapper">
   <form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
     <div class="title-control">
-      <p>short description</p>
-      <input class="registration-title" formControlName="title" placeholder="What is this note about...">
+      <div>
+        <p>short description</p>
+        <div *ngIf="!!lastUpdatedAt">{{lastUpdatedAt | date}}</div>
+      </div>
+      <input class="registration-title" formControlName="description" placeholder="What is this note about...">
     </div>
     <div class="content-control">
       <quill-editor

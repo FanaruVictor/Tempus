@@ -58,7 +58,7 @@ describe('Component: RegistrationsOverview', () => {
       resource: [
         {
           id: 'id',
-          title: 'title',
+          description: 'title',
           createdAt: '22.12.2022',
           categoryColor: 'color'
         }
@@ -74,7 +74,7 @@ describe('Component: RegistrationsOverview', () => {
     expect(component.registrations).toEqual([
       {
         id: 'id',
-        title: 'title',
+        description: 'title',
         createdAt: '22.12.2022',
         categoryColor: 'color'
       }

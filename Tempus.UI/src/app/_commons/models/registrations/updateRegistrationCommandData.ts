@@ -1,5 +1,5 @@
 ﻿export interface UpdateRegistrationCommandData {
   id: string;
-  title: string;
+  description: string;
   content: string;
 }

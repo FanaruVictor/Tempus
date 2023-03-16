@@ -37,7 +37,7 @@ public class
             var entity = new Registration
             {
                 Id = Guid.NewGuid(),
-                Title = request.Title,
+                Description = request.Description,
                 Content = request.Content,
                 CreatedAt = DateTime.UtcNow.Date,
                 LastUpdatedAt = DateTime.UtcNow.Date,

@@ -39,7 +39,7 @@ public class
             entity = new Registration
             {
                 Id = entity.Id,
-                Title = request.Title,
+                Description = request.Description,
                 Content = request.Content,
                 CreatedAt = entity.CreatedAt,
                 LastUpdatedAt = DateTime.UtcNow.Date,

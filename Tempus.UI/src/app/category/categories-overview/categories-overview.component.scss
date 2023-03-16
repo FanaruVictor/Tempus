@@ -44,21 +44,12 @@
           align-items: center;
           justify-content: flex-end;
 
-          .arrow-left {
-            width: 0;
-            height: 0;
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            border-right: 15px solid var(--content-color);
-            left: -15px;
-            z-index: 2;
-          }
 
           .info {
             background-color: var(--content-color);
             border-radius: 5px;
             height: 80px;
-            width: 100%;
+            width: 80%;
             display: flex;
             justify-content: space-between;
             padding: 10px;
@@ -66,26 +57,24 @@
 
 
             .category-data {
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-              padding: 10px;
-
+              width: 80%;
               .name {
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-size: 18px;
+                font-size: 22px;
                 padding-bottom: 10px;
 
               }
 
               .color {
                 overflow: hidden;
+                height: 18px;
                 text-overflow: ellipsis;
               }
             }
 
             .actions {
+              width: 20%;
               display: flex;
               align-content: center !important;
 
@@ -104,8 +93,8 @@
   }
 
   .left {
-    padding-top: calc(100px + 2rem);
-    text-align: center;
+    padding: 15px 15px 0 0;
+    text-align: end;
 
     width: 25%;
 

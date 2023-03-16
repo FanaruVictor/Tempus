@@ -9,36 +9,40 @@ quill-editor {
 
 .ql-toolbar.ql-snow {
   border: none;
-  min-height: 10%;
-  max-height: 10%;
   color: var(--text-color);
+  background-color: var(--content-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &::after {
+    display: none;
+  }
 }
 
-.ql-snow{
+.ql-snow {
   border: none !important;
 }
 
 .ql-container {
-  background-color: var(--content-color);
   min-height: 90%;
   max-height: 90%;
   color: var(--text-color);
 
   .ql-editor {
+    padding: 15px 0 0;
+
     .ql-align-justify {
-      padding: 15px;
+      padding-top: 15px;
     }
 
     li {
-      color: var(--text-color);
 
       &:before {
         font-size: 20px;
       }
     }
 
-    span{
-      color: var(--text-color) !important;
+    span {
     }
   }
 }
@@ -72,7 +76,20 @@ quill-editor {
   color: var(--text-color);
 }
 
-.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label{
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
   border: none;
 }
 
+.ql-toolbar.ql-snow .ql-formats {
+  margin: 0;
+  display: flex;
+}
+
+.ql-editor ol li:not(.ql-direction-rtl), .ql-editor ul li:not(.ql-direction-rtl) {
+  display: flex;
+  align-items: center;
+}
+
+.ql-snow .ql-picker.ql-expanded .ql-picker-options{
+  position: absolute !important;
+}

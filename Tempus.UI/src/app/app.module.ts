@@ -17,12 +17,11 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {LoaderInterceptor} from "./_services/loader/loader-interceptor";
 import {HeaderComponent} from './_commons/header/header.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {NotFoundComponent} from "./_commons/components/not-found/not-found.component";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
     HeaderComponent,
   ],
   imports: [
@@ -33,6 +32,7 @@ import {NotFoundComponent} from "./_commons/components/not-found/not-found.compo
     RegistrationModule,
     CategoryModule,
     MatIconModule,
+    SharedModule,
     MatButtonModule,
     MatSlideToggleModule,
     AuthModule,

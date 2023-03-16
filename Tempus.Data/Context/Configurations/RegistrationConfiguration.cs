@@ -12,7 +12,7 @@ public class RegistrationConfiguration : IEntityTypeConfiguration<Registration>
         builder.Property(x => x.CreatedAt).IsRequired();
         builder.Property(x => x.LastUpdatedAt).IsRequired();
         builder.Property(x => x.Content).IsRequired();
-        builder.Property(x => x.Title).IsRequired();
+        builder.Property(x => x.Description).IsRequired();
         builder.Property(x => x.CategoryId).IsRequired();
 
         builder

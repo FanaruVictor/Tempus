@@ -6,7 +6,7 @@ namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
 public class CreateRegistrationCommand : BaseRequest<BaseResponse<RegistrationDetails>>
 {
-    public string? Title { get; init; }
+    public string? Description { get; init; }
     public string? Content { get; init; }
     public Guid CategoryId { get; init; }
 }

@@ -25,9 +25,10 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   content = '';
   format = 'html';
   createOrEditForm = new UntypedFormGroup({
-    title: new UntypedFormControl('', [Validators.required]),
+    description: new UntypedFormControl('', [Validators.required]),
     content: new UntypedFormControl('', [Validators.required])
   });
+  lastUpdatedAt?: Date;
 
   toolbarOptions = [
     [{'font': []}],
@@ -75,6 +76,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
         .subscribe({
           next: response => {
             this.createOrEditForm.patchValue(response.resource);
+            this.lastUpdatedAt = new Date(response.resource.lastUpdatedAt);
           }
         });
     }
@@ -113,7 +115,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   update() {
     let updateRegistrationCommandData: UpdateRegistrationCommandData = {
       id: this.id,
-      title: this.createOrEditForm.controls['title'].value,
+      description: this.createOrEditForm.controls['description'].value,
       content: this.createOrEditForm.controls['content'].value
     };
 
@@ -122,6 +124,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .pipe(filter(x => !!x))
       .subscribe({
         next: result => {
+          this.lastUpdatedAt = new Date(result.resource.lastUpdatedAt);
           this.notificationService.succes('Registration updated successfully', 'Request completed')
         }
       })
@@ -131,7 +134,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     let catId = this.activatedRoute.snapshot.paramMap.get('categoryId') ?? '';
     if (catId !== '') {
       let registration: CreateRegistrationCommandData = {
-        title: this.createOrEditForm.controls['title'].value,
+        description: this.createOrEditForm.controls['description'].value,
         content: this.createOrEditForm.controls['content'].value,
         categoryId: catId
       }
@@ -171,7 +174,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               let registration: CreateRegistrationCommandData = {
-                title: this.createOrEditForm.controls['title'].value,
+                description: this.createOrEditForm.controls['description'].value,
                 content: this.createOrEditForm.controls['content'].value,
                 categoryId: result.id
               };

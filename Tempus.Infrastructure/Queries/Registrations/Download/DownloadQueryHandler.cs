@@ -33,7 +33,7 @@ public class DownloadQueryHandler : IRequestHandler<DownloadQuery, BaseResponse<
         var pdf = new PdfDocument(writer);
         writer.SetCloseStream(false);
         var document = new Document(pdf);
-        var title = new Paragraph(registration?.Title)
+        var title = new Paragraph(registration?.Description)
             .SetTextAlignment(TextAlignment.CENTER)
             .SetFontSize(20);
         var content = new Paragraph(registration?.Content)
