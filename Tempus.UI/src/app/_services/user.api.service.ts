@@ -4,20 +4,21 @@ import {UserDetails} from "../_commons/models/user/userDetails";
 import {GenericResponse} from "../_commons/models/genericResponse";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
+import {Photo} from "../_commons/models/photo/photo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserApiService {
   apiUrl = `${environment.apiUrl}/v1/users`;
-  userSubject : BehaviorSubject<UserDetails>;
+  userSubject: BehaviorSubject<UserDetails>;
   user: Observable<UserDetails>;
 
   constructor(private httpClient: HttpClient) {
     this.userSubject = new BehaviorSubject<UserDetails>({
+      id: '',
       userName: '',
       photo: undefined,
-      password: '',
       isDarkTheme: false,
       email: '',
       phoneNumber: '',
@@ -26,7 +27,7 @@ export class UserApiService {
     this.user = this.userSubject.asObservable();
   }
 
-  setUser(user: UserDetails){
+  setUser(user: UserDetails) {
     this.userSubject.next(user);
   }
 
@@ -38,22 +39,7 @@ export class UserApiService {
     return this.httpClient.put<GenericResponse<UserDetails>>(`${this.apiUrl}/changeTheme`, {isDarkTheme: isDarkTheme});
   }
 
-  addPhoto(file: File) {
-    let formData = new FormData();
-    formData.append('image', file);
-
-    return this.httpClient.post<any>(`${this.apiUrl}/profilePhoto`, formData);
-  }
-
-  updatePhoto(currentPhotoId: string, file: File) {
-    let formData = new FormData();
-    formData.append('id', currentPhotoId);
-    formData.append('image', file);
-
-    return this.httpClient.put<any>(`${this.apiUrl}/profilePhoto`, formData);
-  }
-
-  delete(){
+  delete() {
     return this.httpClient.delete<GenericResponse<any>>(`${this.apiUrl}`);
   }
 }

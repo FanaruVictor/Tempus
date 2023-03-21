@@ -1,0 +1,45 @@
+.edit-profile-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .right {
+    width: 25%;
+  }
+
+  .center {
+    width: 50%;
+    height: 100%;
+    box-shadow: 12px 0 15px -8px var(--content-color), -12px 0 8px -8px var(--content-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .profile-picture{
+      .user-icon, img {
+        font-size: 200px;
+        width: 200px;
+        height: 200px;
+      }
+      img{
+        border-radius: 50%;
+        border-style: dashed;
+        margin-bottom: 10px;
+      }
+      .actions{
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+
+  .left {
+    width: 25%;
+  }
+}
+
+.imagePreview{
+  max-width: 50px;
+  max-height: 50px;
+}
+

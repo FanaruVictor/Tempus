@@ -35,10 +35,23 @@
               <div class="title">{{registration.description}}</div>
             </div>
             <div class="actions">
-              <div class="buttons">
-                <app-button (click)="delete(registration.id)" [icon]="'delete'" class="delete"></app-button>
-                <app-button (click)="download(registration)" [icon]="'download'" class="download"></app-button>
-              </div>
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="action for registration menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="delete(registration.id)">
+                  <mat-icon class="delete">delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+                <button mat-menu-item (click)="download(registration)">
+                  <mat-icon class="download">download</mat-icon>
+                  <span>Download</span>
+                </button>
+                <button mat-menu-item (click)="print(registration)">
+                  <mat-icon class="print">print</mat-icon>
+                  <span>Print</span>
+                </button>
+              </mat-menu>
               <div class="created-date">{{registration.createdAt | date }}</div>
             </div>
           </div>

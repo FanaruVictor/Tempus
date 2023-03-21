@@ -17,76 +17,73 @@
   }
 
   .center {
-    width: 50%;
-    padding-top: 100px;
+    min-width: 50%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 
     .elements {
       overflow-y: scroll;
+      min-width: 100%;
+      max-width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
+      align-items: center;
       color: var(--text-color);
 
       .category {
-        height: 100px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+        width: 80%;
+        margin: 15px 0;
+        background-color: var(--content-color);
+        border-radius: 5px;
 
-        margin: 2rem 0 2rem 0;
-        cursor: pointer;
 
-        .item {
+        .info {
+          background-color: var(--content-color);
+          border-radius: 5px;
           display: flex;
-          width: 75%;
-          height: 100px;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: end;
+          height: 100px;
 
 
-          .info {
-            background-color: var(--content-color);
-            border-radius: 5px;
-            height: 80px;
-            width: 80%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            z-index: 1;
+          .category-data {
+            width: 70%;
 
+            .name {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-size: 22px;
+              padding-bottom: 10px;
+              color: var(--text-color);
 
-            .category-data {
-              width: 80%;
-              .name {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-size: 22px;
-                padding-bottom: 10px;
-
-              }
-
-              .color {
-                overflow: hidden;
-                height: 18px;
-                text-overflow: ellipsis;
-              }
             }
 
-            .actions {
-              width: 20%;
-              display: flex;
-              align-content: center !important;
-
-              .edit {
-                color: var(--button-background-color);
-              }
-
-              .delete {
-                color: $error-color;
-              }
+            .color {
+              overflow: hidden;
+              height: 18px;
+              text-overflow: ellipsis;
             }
           }
+
+          .actions {
+            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+
+            .edit {
+              color: var(--button-background-color);
+            }
+
+            .delete {
+              color: $error-color;
+            }
+          }
+
         }
       }
     }

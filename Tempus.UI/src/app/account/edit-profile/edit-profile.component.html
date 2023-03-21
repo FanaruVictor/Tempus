@@ -1,0 +1,29 @@
+<div class="edit-profile-wrapper" *ngIf="user">
+  <div class="right"></div>
+  <div class="center">
+    <div class="profile-picture">
+      <mat-icon *ngIf="!user.photo; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
+                class="user-icon">
+        account_circle
+      </mat-icon>
+      <ng-template #showPhoto>
+        <img [src]="user.photo?.url">
+      </ng-template>
+      <div *ngIf="!user.externalId">
+        <input #imageInput (change)="imageInputChange($event)" accept="image/png, image/gif, image/jpeg" hidden="true"
+               onclick="this.value=null"
+               type="file"/>
+        <div class="actions">
+          <button (click)="imageInput.click()" color="primary"
+                  mat-raised-button>{{user.photo ? 'Change' : 'Add'}}</button>
+          <button (click)="deletePicture()" color="warn"
+                  mat-raised-button *ngIf="user.photo">Delete</button>
+        </div>
+
+      </div>
+    </div>
+    <form  (ngSubmit)="submit()" [formGroup]="editForm">
+    </form>
+  </div>
+  <div class="left"></div>
+</div>

@@ -20,7 +20,7 @@ export class CategoryApiService {
   }
 
   getById(id: string) {
-    return this.httpClient.get<GenericResponse<BaseCategory[]>>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<GenericResponse<BaseCategory>>(`${this.apiUrl}/${id}`);
   }
 
   create(category: CreateCategoryCommandData) {

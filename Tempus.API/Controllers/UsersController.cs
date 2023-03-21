@@ -90,16 +90,4 @@ public class UsersController : BaseController
     {
         return HandleResponse(await _mediator.Send(new GetThemeQuery()));
     }
-
-    [HttpPost("profilePhoto")]
-    public async Task<ActionResult<PhotoDetails>> AddProfiePhoto([FromForm] AddProfilePhotoCommand command)
-    {
-        return HandleResponse(await _mediator.Send(command));
-    }
-    
-    [HttpPut("profilePhoto")]
-    public async Task<ActionResult<PhotoDetails>> UpdateProfilePhoto([FromForm] UpdateProfilePhotoCommand command)
-    {
-        return HandleResponse(await _mediator.Send(command));
-    }
 }

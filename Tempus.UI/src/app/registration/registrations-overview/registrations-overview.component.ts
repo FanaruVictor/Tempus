@@ -11,6 +11,12 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {filter} from "rxjs";
 import {FileService} from "../../_services/file.service";
 import {NotificationService} from "../../_services/notification.service";
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import {TDocumentDefinitions} from "pdfmake/interfaces";
+import {C} from "@angular/cdk/keycodes";
+const htmlToPdfmake = require("html-to-pdfmake");
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-registrations-overview',
@@ -55,10 +61,11 @@ export class RegistrationsOverviewComponent {
 
   }
 
-  getAll() {
+  private getAll() {
     this.registrationApiService.getAll()
       .subscribe({
         next: response => {
+          console.log(response.resource)
           this.registrations = response.resource;
           this.registrations = this.registrations?.sort(
             (objA, objB) => new Date(objB.createdAt).getTime() - new Date(objA.createdAt).getTime(),
@@ -81,26 +88,52 @@ export class RegistrationsOverviewComponent {
 
   delete(id: string) {
     this.registrationApiService.delete(id).subscribe(result => {
-        this.registrations = this.registrations?.filter(x => x.id !== result.resource)
-        this.notificationService.succes('Registration deleted successfully', 'Request completed');
+      this.registrations = this.registrations?.filter(x => x.id !== result.resource)
+      this.notificationService.succes('Registration deleted successfully', 'Request completed');
     });
   }
 
   download(registration: RegistrationOverview): void {
-    if (!!registration)
-      this.fileService.download(registration.id).subscribe({
-        next: data => {
-          let FileSaver = require('file-saver');
-          const byteCharacters = atob(data.resource);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], {type: "application/pdf"});
-          FileSaver.saveAs(blob, `${registration.description}.pdf`);
-          this.notificationService.succes('Registration downloaded successfully', 'Request completed');
-        }
-      });
+    const documentDefinition = this.prepareDocument(registration);
+    if(documentDefinition == undefined){
+      return;
+    }
+
+    pdfMake.createPdf(documentDefinition).download();
+  }
+
+  print(registration: RegistrationOverview){
+    const documentDefinition = this.prepareDocument(registration);
+    if(documentDefinition == undefined){
+      return;
+    }
+
+    pdfMake.createPdf(documentDefinition).print();
+  }
+
+  private prepareDocument(registration: RegistrationOverview) :TDocumentDefinitions | undefined {
+    if (!registration)
+      return undefined;
+
+    const html = htmlToPdfmake(registration.content);
+    const documentDefinition: TDocumentDefinitions = {
+      content: [
+        {text: `Short description: ${registration.description}`, style: 'header'},
+        html
+      ],
+      styles: {
+        header: {
+          fontSize: 17,
+          marginBottom: 10,
+          bold: true,
+          alignment: 'left'
+        },
+      },
+      defaultStyle:{
+        bold: false
+      }
+    };
+
+    return documentDefinition;
   }
 }

@@ -17,9 +17,9 @@ export class AuthService {
   userSubject : BehaviorSubject<UserDetails>;
   user: Observable<UserDetails>;
   defaultUser = {
+    id: '',
     userName: '',
     photo: undefined,
-    password: '',
     isDarkTheme: false,
     email: '',
     phoneNumber: '',
@@ -69,7 +69,7 @@ export class AuthService {
   }
 
   register(user: UserRegistration) {
-    return this.httpClient.post<GenericResponse<BaseUser>>('https://localhost:7077/api/v1.0/auth/register', user)
+    return this.httpClient.post<GenericResponse<BaseUser>>('https://localhost:7077/api/v1.0/auth/register', user);
   }
 
   logout() {

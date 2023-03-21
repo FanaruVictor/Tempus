@@ -1,8 +1,9 @@
-﻿using Tempus.Core.Models.Photo;
+﻿using Tempus.Core.Entities;
+using Tempus.Core.Models.Photo;
 
 namespace Tempus.Core.Models.User;
 
-public class UserDetails
+public class UserDetails : BaseEntity
 {
     public string UserName { get; set; }
     public string Email { get; set; }

@@ -20,6 +20,7 @@ import {QuillModule} from "ngx-quill";
 import {SearchPipe} from "../_commons/pipes/search.pipe";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateRangePipe} from "../_commons/pipes/dateRange.pipe";
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {DateRangePipe} from "../_commons/pipes/dateRange.pipe";
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMenuModule
   ],
   exports: [],
   providers: [

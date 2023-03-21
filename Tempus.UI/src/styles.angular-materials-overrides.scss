@@ -176,3 +176,25 @@ mat-card-actions {
 .mat-tab-link{
   opacity: 1 !important;
 }
+
+.mat-menu-content{
+  background-color: var(--header-color);
+  padding: 0 !important;
+}
+
+.mat-menu-item{
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.mat-icon.delete {
+  color: $error-color;
+}
+
+.mat-icon.download {
+  color: var(--text-color);
+}
+
+.mat-icon.print {
+  color: $primary-color;
+}

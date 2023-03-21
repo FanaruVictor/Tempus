@@ -25,7 +25,8 @@ public class DeleteProfilePhotoCommandHandler: IRequestHandler<DeleteProfilePhot
             await _cloudinaryService.DestroyUsingUserId(request.UserId);
 
             await _profilePhotoRepository.Delete(request.Id);
-            
+            await _profilePhotoRepository.SaveChanges();
+
             return BaseResponse<bool>.Ok(true);
 
         }

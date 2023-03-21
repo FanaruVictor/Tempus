@@ -1,5 +1,6 @@
 <div class="registration-wrapper">
-  <form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
+  <form *ngIf="categoryColor" (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form"
+  [ngStyle]="{ 'box-shadow': '9px 3px 10px -10px ' + categoryColor + ', -9px 3px 10px -10px ' +  categoryColor}">
     <div class="title-control">
       <div>
         <p>short description</p>

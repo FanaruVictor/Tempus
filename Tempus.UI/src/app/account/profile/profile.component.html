@@ -4,7 +4,7 @@
     <div class="title">
       <h1>User profile</h1>
       <div class="actions">
-        <app-button (click)="edit()" [icon]="'edit'" class="edit-icon">edit</app-button>
+        <app-button [routerLink]="['/account/edit']" [icon]="'edit'" class="edit-icon">edit</app-button>
         <app-button (click)="delete()" [icon]="'delete'" class="delete-icon">delete</app-button>
       </div>
     </div>
@@ -17,13 +17,6 @@
         <ng-template #showPhoto>
           <img [src]="user.photo?.url">
         </ng-template>
-        <div *ngIf="!user.externalId">
-          <input #imageInput (change)="imageInputChange($event)" accept="image/png, image/gif, image/jpeg" hidden="true"
-                 onclick="this.value=null"
-                 type="file"/>
-          <button (click)="imageInput.click()" color="primary"
-                  mat-raised-button>{{user.photo ? 'Change profile photo' : 'Add profile photo'}}</button>
-        </div>
       </div>
       <div class="container">
         <h2>Username</h2>

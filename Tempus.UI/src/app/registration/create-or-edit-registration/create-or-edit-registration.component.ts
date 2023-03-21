@@ -29,6 +29,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     content: new UntypedFormControl('', [Validators.required])
   });
   lastUpdatedAt?: Date;
+  categoryColor!: string;
 
   toolbarOptions = [
     [{'font': []}],
@@ -39,8 +40,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
     [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
     [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-    [{'align': []}],
-    ['image']
+    [{'align': []}]
   ];
 
   quillConfig = {
@@ -77,8 +77,23 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           next: response => {
             this.createOrEditForm.patchValue(response.resource);
             this.lastUpdatedAt = new Date(response.resource.lastUpdatedAt);
+            this.categoryColor = response.resource.categoryColor;
           }
         });
+    }
+    else{
+      const categoryId = this.activatedRoute.snapshot.paramMap.get('categoryId');
+      if(categoryId === null){
+        this.notificationService.error(["There is no category selected for creating a registration"], "Select category color to create registration");
+        this.router.navigate(["/registrations/overview"]);
+        return;
+      }
+
+
+      this.categoryApiService.getById(categoryId)
+        .subscribe(response => {
+          this.categoryColor = response.resource.color;
+        })
     }
   }
 

@@ -1,10 +1,11 @@
 ﻿import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfileComponent} from "./profile/profile.component";
+import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 
 const routes: Routes = [
-  {path: '', pathMatch: 'prefix', redirectTo: 'profile'},
-  {path: 'profile', component: ProfileComponent},
+  {path: '', pathMatch: 'prefix', component: ProfileComponent},
+  {path: 'edit', component: EditProfileComponent},
 ];
 
 @NgModule({

@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
           return;
         }
         this.user = user;
+        console.log(this.user);
         if (this.user.isDarkTheme) {
           if (!document.body.classList.contains('dark-theme')) {
             document.body.classList.toggle('dark-theme');
@@ -35,10 +36,6 @@ export class ProfileComponent implements OnInit {
     console.log(this.user.photo);
   }
 
-  edit() {
-
-  }
-
   delete() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {data: 'account'});
 
@@ -46,32 +43,13 @@ export class ProfileComponent implements OnInit {
       .pipe(filter(x => !!x))
       .subscribe(result => {
         this.userService.delete()
+          .pipe(filter(x => !!x))
           .subscribe(reult => {
-            if(!!result){
-              localStorage.removeItem('authorizationToken');
-              localStorage.removeItem('currentUser');
-              localStorage.removeItem('isDarkTheme');
-              window.location.reload();
-            }
+            localStorage.removeItem('authorizationToken');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('isDarkTheme');
+            window.location.reload();
           })
-    });
-  }
-
-  imageInputChange(fileInputEvent: any) {
-    let file = <File>fileInputEvent.target.files[0];
-    if (this.user.photo) {
-      this.userService.updatePhoto(this.user.photo.id, file).subscribe(response => {
-        this.user.photo = response.resource;
-        this.userService.setUser(this.user);
       });
-      return;
-    }
-
-    this.userService.addPhoto(file).subscribe(response => {
-      this.user.photo = response.resource;
-      this.userService.setUser(this.user);
-    });
   }
-
-
 }
