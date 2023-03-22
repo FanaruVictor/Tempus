@@ -5,6 +5,7 @@ import {GenericResponse} from "../_commons/models/genericResponse";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Photo} from "../_commons/models/photo/photo";
+import {UpdateUserData} from "../_commons/models/user/updateUserData";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,18 @@ export class UserApiService {
   }
 
   delete() {
-    return this.httpClient.delete<GenericResponse<any>>(`${this.apiUrl}`);
+    return this.httpClient.delete<GenericResponse<boolean>>(this.apiUrl);
+  }
+
+  update(data: UpdateUserData){
+    let formData = new FormData();
+    formData.append('userName', data.userName);
+    if (!!data.newPhoto)
+      formData.append('newPhoto', data.newPhoto);
+    formData.append('isPhotoChanged', data.isCurrentPhotoChanged? 'true' : 'false');
+    formData.append('phoneNumber', data.phoneNumber);
+    formData.append('email', data.email)
+
+    return this.httpClient.put<GenericResponse<any>>(this.apiUrl, formData);
   }
 }

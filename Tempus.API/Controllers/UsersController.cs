@@ -63,7 +63,7 @@ public class UsersController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<UserDetails>> Update([FromBody] UpdateUserCommand command)
+    public async Task<ActionResult<UserDetails>> Update([FromForm] UpdateUserCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }

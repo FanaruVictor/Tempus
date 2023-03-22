@@ -26,6 +26,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     public override async Task<User> GetById(Guid id)
     {
         return await _context.Users
+            .AsNoTracking()
             .Include(x => x.ProfilePhoto)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
