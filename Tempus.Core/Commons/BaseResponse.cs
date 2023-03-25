@@ -8,7 +8,7 @@ public class BaseResponse<T>
 
     [JsonIgnore] public StatusCodes StatusCode { get; set; }
 
-    public List<string>? Errors { get; set; }
+    public List<string> Errors { get; set; }
 
     public static BaseResponse<T> Ok(T resource = default)
     {

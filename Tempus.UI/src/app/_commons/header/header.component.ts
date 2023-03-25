@@ -64,4 +64,9 @@ export class HeaderComponent implements OnInit {
       this.userService.setUser(this.user);
     });
   }
+
+  logout(){
+    localStorage.clear();
+    window.location.reload();
+  }
 }

@@ -21,14 +21,13 @@
       display: flex;
       justify-content: space-between;
       text-transform: uppercase;
-      flex-direction: row;
+
 
       .actions {
         display: flex;
 
         .edit-icon {
           color: $primary-color;
-          margin-right: 10px;
         }
 
         .delete-icon {
@@ -39,7 +38,7 @@
 
     .content {
       background-color: var(--content-color);
-      border-radius: 5px;
+      border: 5px;
       font-size: 18px;
       height: 100%;
       width: 100%;
@@ -47,14 +46,12 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
 
       .container {
         text-align: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        width: 50%;
+        align-items: start;
 
         .user-icon, img {
           font-size: 200px;
@@ -64,7 +61,6 @@
 
         img {
           border-radius: 50%;
-          border-style: dashed;
           margin-bottom: 10px;
         }
 
@@ -74,6 +70,10 @@
         }
 
         margin-bottom: 20px;
+      }
+
+      .profile-photo{
+        align-items: center;
       }
     }
   }

@@ -53,6 +53,6 @@ export class UserApiService {
     formData.append('phoneNumber', data.phoneNumber);
     formData.append('email', data.email)
 
-    return this.httpClient.put<GenericResponse<any>>(this.apiUrl, formData);
+    return this.httpClient.put<GenericResponse<UserDetails>>(this.apiUrl, formData);
   }
 }

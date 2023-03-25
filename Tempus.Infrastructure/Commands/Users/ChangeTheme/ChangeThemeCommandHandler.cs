@@ -38,7 +38,7 @@ public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, Bas
 
             user.IsDarkTheme = request.IsDarkTheme;
 
-            await _userRepository.Update(user);
+            _userRepository.Update(user);
             await _userRepository.SaveChanges();
 
             var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);

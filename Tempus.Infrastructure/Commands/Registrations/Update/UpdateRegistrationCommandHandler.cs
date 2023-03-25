@@ -46,7 +46,7 @@ public class
                 CategoryId = entity.CategoryId
             };
 
-            await _registrationRepository.Update(entity);
+            _registrationRepository.Update(entity);
             await _registrationRepository.SaveChanges();
 
             var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);

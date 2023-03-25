@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges, SimpleChanges} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,7 +14,6 @@ import {NotificationService} from "../../_services/notification.service";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import {TDocumentDefinitions} from "pdfmake/interfaces";
-import {C} from "@angular/cdk/keycodes";
 const htmlToPdfmake = require("html-to-pdfmake");
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -30,13 +29,14 @@ export class RegistrationsOverviewComponent {
   searchText = '';
   maxDate: Date;
   minDate: Date;
+  registrationsColor: string[] = [];
 
   dateRange = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
 
-  colors = new FormControl('');
+  colors = new FormControl([]);
 
   constructor(
     private httpClient: HttpClient,
@@ -65,12 +65,16 @@ export class RegistrationsOverviewComponent {
     this.registrationApiService.getAll()
       .subscribe({
         next: response => {
-          console.log(response.resource)
           this.registrations = response.resource;
           this.registrations = this.registrations?.sort(
             (objA, objB) => new Date(objB.createdAt).getTime() - new Date(objA.createdAt).getTime(),
           );
-          console.log(!!this.registrations)
+
+          this.registrations?.forEach(x => {
+            if(!this.registrationsColor.includes(x.categoryColor)){
+              this.registrationsColor.push(x.categoryColor);
+            }
+          });
         }
       });
   }
@@ -136,4 +140,17 @@ export class RegistrationsOverviewComponent {
 
     return documentDefinition;
   }
+
+  modifyContent(values: string[]){
+    let element = document.getElementsByClassName('mat-select-value')[0];
+    element.innerHTML = '';
+    values.forEach(x =>
+      element.innerHTML = element.innerHTML.concat(`<div style="
+        background-color: ${x};
+        height: 15px;
+        width: 15px;
+        margin-right: 5px;"></div>`)
+    );
+  }
+
 }

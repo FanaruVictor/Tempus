@@ -53,11 +53,11 @@ export class EditProfileComponent implements OnInit {
       isCurrentPhotoChanged: this.isCurrentPhotoChanged,
       newPhoto: this.editForm.get('photo')?.value
     }
-    console.log(userData)
 
     this.userApiService.update(userData)
       .subscribe(response => {
-        console.log(response);
+        this.userApiService.setUser(response.resource);
+        this.router.navigate(['/account']);
       })
   }
 

@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using CloudinaryDotNet.Actions;
+using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
@@ -10,6 +12,7 @@ using Tempus.Infrastructure.Commands.ProfilePhoto.DeleteProfilePhoto;
 using Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Services.Cloudynary;
+using StatusCodes = Tempus.Core.Commons.StatusCodes;
 
 namespace Tempus.Infrastructure.Commands.Users.Update;
 
@@ -20,7 +23,8 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
     private readonly ICloudinaryService _cloudinaryService;
     private readonly IProfilePhotoRepository _profilePhotoRepository;
 
-    public UpdateUserCommandHandler(IUserRepository userRepository, IMediator mediator, ICloudinaryService cloudinaryService, IProfilePhotoRepository profilePhotoRepository)
+    public UpdateUserCommandHandler(IUserRepository userRepository, IMediator mediator,
+        ICloudinaryService cloudinaryService, IProfilePhotoRepository profilePhotoRepository)
     {
         _userRepository = userRepository;
         _mediator = mediator;
@@ -36,32 +40,41 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
 
             var user = await _userRepository.GetById(request.UserId);
 
-            if(user == null)
+            if (user == null)
             {
                 return BaseResponse<UserDetails>.NotFound($"User with id {request.UserId} not .");
             }
-            
-            await UpdateUser(request, user);
-            
-            var userDetails = GenericMapper<User, UserDetails>.Map(user);
-            
-            var result = BaseResponse<UserDetails>.Ok(userDetails);
+
+            var updateResult = await UpdateUser(request, user);
+
+            BaseResponse<UserDetails> result;
+            if (updateResult.StatusCode != StatusCodes.Ok)
+            {
+                result = new BaseResponse<UserDetails>
+                {
+                    Errors = updateResult.Errors,
+                    StatusCode = updateResult.StatusCode
+                };
+                return result;
+            }
+
+            await _userRepository.SaveChanges();
+
+            var userDetails = GenericMapper<User, UserDetails>.Map(updateResult.Resource);
+            userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(updateResult.Resource.ProfilePhoto);
+
+            result = BaseResponse<UserDetails>.Ok(userDetails);
 
             return result;
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
-            return BaseResponse<UserDetails>.BadRequest(new List<string> {exception.Message});
+            return BaseResponse<UserDetails>.BadRequest(new List<string> { exception.Message });
         }
     }
 
-    private async Task UpdateUser(UpdateUserCommand request, User user)
+    private async Task<BaseResponse<User>> UpdateUser(UpdateUserCommand request, User user)
     {
-        if (request.IsPhotoChanged)
-        {
-            UpdatePhoto(request.NewPhoto, user);
-        }
-        
         user = new User
         {
             Id = user.Id,
@@ -71,30 +84,73 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
             Password = user.Password,
             PasswordSalt = user.PasswordSalt,
             IsDarkTheme = user.IsDarkTheme,
-            ExternalId = user.ExternalId
+            ExternalId = user.ExternalId,
+            ProfilePhoto = user.ProfilePhoto
         };
-
-        await _userRepository.Update(user);
-        await _userRepository.SaveChanges();
-    }
-
-    private async Task UpdatePhoto(IFormFile photo, User user)
-    {
-        if (user.ProfilePhoto != null)
+        
+        if (request.IsPhotoChanged)
         {
-            await _mediator.Send(new UpdateProfilePhotoCommand
+            var updatePhotoResult = await UpdatePhoto(request.NewPhoto, user);
+
+            if (updatePhotoResult.StatusCode != StatusCodes.Ok)
             {
-                Image = photo,
-                UserId = user.Id,
-                Id = user.ProfilePhoto.Id 
-            });
-            return;
+                return new BaseResponse<User>
+                {
+                    Errors = updatePhotoResult.Errors,
+                    StatusCode = updatePhotoResult.StatusCode,
+                };
+            }
+
+            user.ProfilePhoto = updatePhotoResult.Resource ?? null;
         }
 
-        await _mediator.Send(new AddProfilePhotoCommand
+        _userRepository.Update(user);
+        return BaseResponse<User>.Ok(user);
+    }
+
+    private async Task<BaseResponse<Core.Entities.ProfilePhoto>> UpdatePhoto(IFormFile? photo, User user)
+    {
+        if (photo == null)
         {
-            Image = photo,
-            UserId = user.Id
-        });
+            if (user.ProfilePhoto != null)
+            {
+                await _cloudinaryService.DestroyUsingUserId(user.Id);
+                await _profilePhotoRepository.Delete(user.ProfilePhoto.Id);
+            }
+
+            return BaseResponse<Core.Entities.ProfilePhoto>.Ok();
+        }
+
+        ImageUploadResult uploadResult;
+        Core.Entities.ProfilePhoto userPhoto;
+        if (user.ProfilePhoto != null)
+        {
+            await _cloudinaryService.DestroyUsingUserId(user.Id);
+            uploadResult = await _cloudinaryService.Upload(photo);
+            userPhoto = new Core.Entities.ProfilePhoto
+            {
+                Id = user.ProfilePhoto.Id,
+                PublicId = uploadResult.PublicId,
+                Url = uploadResult.Url.ToString(),
+                UserId = user.Id
+            };
+            _profilePhotoRepository.Update(userPhoto);
+        }
+        else
+        {
+            uploadResult = await _cloudinaryService.Upload(photo);
+            userPhoto = new Core.Entities.ProfilePhoto
+            {
+                Id = Guid.NewGuid(),
+                PublicId = uploadResult.PublicId,
+                Url = uploadResult.Url.ToString(),
+                UserId = user.Id
+            };
+            await _profilePhotoRepository.Add(userPhoto);
+        }
+
+        await _profilePhotoRepository.SaveChanges();
+
+        return BaseResponse<Core.Entities.ProfilePhoto>.Ok(userPhoto);
     }
 }

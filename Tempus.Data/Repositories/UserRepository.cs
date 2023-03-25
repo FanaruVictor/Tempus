@@ -18,7 +18,9 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<User?> GetByExternalId(string externalId)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.ExternalId == externalId);
+        var user = await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.ExternalId == externalId);
 
         return user;
     }

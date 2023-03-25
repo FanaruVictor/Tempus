@@ -83,22 +83,6 @@
   background: var(--tooltip-background-color);
   color: var(--tooltip-text-color) !important;
   font-size: 14px;
-
-  overflow-y: scroll !important;
-  white-space: pre-line;
-
-  max-width: 500px !important;
-  max-height: 500px !important;
-
-  &::-webkit-scrollbar-track {
-    background: var(--tooltip-background-color);
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--tooltip-text-color);
-    border-radius: 2px;
-  }
 }
 
 .mat-card-header-text {
@@ -170,7 +154,7 @@ mat-card-actions {
 }
 
 .mat-select-value{
-  font-weight: normal !important;
+  display: flex;
 }
 
 .mat-tab-link{
@@ -198,3 +182,12 @@ mat-card-actions {
 .mat-icon.print {
   color: $primary-color;
 }
+
+.mat-datepicker-toggle-default-icon, .mat-select-arrow, .mat-pseudo-checkbox{
+  color: var(--text-color);
+}
+
+.mat-form-field-underline{
+  background-color: var(--text-color) !important;
+}
+

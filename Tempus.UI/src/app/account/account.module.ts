@@ -12,27 +12,29 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {FileUploadModule} from "ng2-file-upload";
 import {MatIconModule} from "@angular/material/icon";
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
     ProfileComponent,
     EditProfileComponent,
   ],
-  imports: [
-    CommonModule,
-    AccountRoutingModule,
-    SharedModule,
-    MatSlideToggleModule,
-    FormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatDialogModule,
-    FileUploadModule,
-    MatIconModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        AccountRoutingModule,
+        SharedModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatDialogModule,
+        FileUploadModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatTooltipModule,
 
-  ]
+    ]
 })
 export class AccountModule {
 }

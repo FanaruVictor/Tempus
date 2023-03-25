@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
           return;
         }
         this.user = user;
-        console.log(this.user);
         if (this.user.isDarkTheme) {
           if (!document.body.classList.contains('dark-theme')) {
             document.body.classList.toggle('dark-theme');

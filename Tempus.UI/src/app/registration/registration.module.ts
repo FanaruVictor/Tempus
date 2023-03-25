@@ -21,6 +21,7 @@ import {SearchPipe} from "../_commons/pipes/search.pipe";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateRangePipe} from "../_commons/pipes/dateRange.pipe";
 import {MatMenuModule} from '@angular/material/menu';
+import {ColorPipe} from "../_commons/pipes/color.pipe";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatMenuModule} from '@angular/material/menu';
     PickCategoryDialogComponent,
     CreateOrEditRegistrationComponent,
     SearchPipe,
-    DateRangePipe
+    DateRangePipe,
+    ColorPipe
   ],
   imports: [
     RegistrationRoutingModule,

@@ -41,7 +41,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
                 UserId = entity.UserId
             };
 
-            await _categoryRepository.Update(entity);
+            _categoryRepository.Update(entity);
             await _categoryRepository.SaveChanges();
 
             var baseCategory = GenericMapper<Category, BaseCategory>.Map(entity);

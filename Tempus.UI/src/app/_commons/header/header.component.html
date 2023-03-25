@@ -22,10 +22,11 @@
           </div>
         </a>
       </nav>
-      <div class="dark-theme">
+      <div class="buttons">
         <mat-slide-toggle (click)="toggleDarkTheme()"
                           [checked]="user?.isDarkTheme"></mat-slide-toggle>
       </div>
+      <app-button (click)="logout()" [icon]="'logout'"></app-button>
     </div>
   </div>
 </div>

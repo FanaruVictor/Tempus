@@ -13,16 +13,19 @@
     </div>
     <div class="by-color filter">
       <mat-label>Category color</mat-label>
-      <mat-select [formControl]="colors" multiple panelClass="mat-select-content" disableOptionCentering>
-        <mat-option *ngFor="let registration of registrations"
-                    [value]="registration.categoryColor"><div class="option" [ngStyle]="{'background-color': registration.categoryColor}">{{registration.categoryColor}}</div></mat-option>
+      <mat-select [formControl]="colors" multiple panelClass="mat-select-content" disableOptionCentering (valueChange)="modifyContent($event)">
+        <mat-option *ngFor="let color of registrationsColor"
+        [value]="color"><div class="option" [ngStyle]="{'background-color': color}">{{color}}</div></mat-option>
       </mat-select>
     </div>
   </div>
   <div class="center">
     <div class="elements" *ngIf="registrations.length != 0; else showNoRegistrations">
       <div
-        *ngFor="let registration of registrations | search: searchText | dateRange : {start: dateRange.controls['start'].value, end: dateRange.controls['end'].value} "
+        *ngFor="let registration of registrations
+        | search: searchText
+        | dateRange : {start: dateRange.controls['start'].value, end: dateRange.controls['end'].value}
+        | color:  colors.value"
         class="registration"
         [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}"
       >

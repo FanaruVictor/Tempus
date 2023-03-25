@@ -4,7 +4,7 @@
   .content {
     display: flex;
     justify-content: space-between;
-    padding: 0 50px;
+    padding: 0 20px 0 50px;
     color: var(--text-color);
     background-color: var(--header-color);
 
@@ -37,9 +37,14 @@
         }
       }
 
-      .dark-theme{
+      .buttons{
         display: flex;
         align-items: center;
+      }
+
+      .logout{
+        margin-left: 15px;
+        color: var(--text-color);
       }
     }
   }
@@ -47,7 +52,7 @@
   .loader-container {
     position: fixed;
     width: 100%;
-    z-index: 99;
+    z-index: 1;
   }
 }
 
