@@ -11,11 +11,11 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {filter} from "rxjs";
 import {FileService} from "../../_services/file.service";
 import {NotificationService} from "../../_services/notification.service";
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import {TDocumentDefinitions} from "pdfmake/interfaces";
-const htmlToPdfmake = require("html-to-pdfmake");
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+// import * as pdfMake from "pdfmake/build/pdfmake";
+// import * as pdfFonts from "pdfmake/build/vfs_fonts";
+// import {TDocumentDefinitions} from "pdfmake/interfaces";
+// const htmlToPdfmake = require("html-to-pdfmake");
+// (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-registrations-overview',
@@ -98,48 +98,48 @@ export class RegistrationsOverviewComponent {
   }
 
   download(registration: RegistrationOverview): void {
-    const documentDefinition = this.prepareDocument(registration);
-    if(documentDefinition == undefined){
-      return;
-    }
-
-    pdfMake.createPdf(documentDefinition).download();
+    // const documentDefinition = this.prepareDocument(registration);
+    // if(documentDefinition == undefined){
+    //   return;
+    // }
+    //
+    // pdfMake.createPdf(documentDefinition).download();
   }
 
   print(registration: RegistrationOverview){
-    const documentDefinition = this.prepareDocument(registration);
-    if(documentDefinition == undefined){
-      return;
-    }
-
-    pdfMake.createPdf(documentDefinition).print();
+    // const documentDefinition = this.prepareDocument(registration);
+    // if(documentDefinition == undefined){
+    //   return;
+    // }
+    //
+    // pdfMake.createPdf(documentDefinition).print();
   }
 
-  private prepareDocument(registration: RegistrationOverview) :TDocumentDefinitions | undefined {
-    if (!registration)
-      return undefined;
-
-    const html = htmlToPdfmake(registration.content);
-    const documentDefinition: TDocumentDefinitions = {
-      content: [
-        {text: `Short description: ${registration.description}`, style: 'header'},
-        html
-      ],
-      styles: {
-        header: {
-          fontSize: 17,
-          marginBottom: 10,
-          bold: true,
-          alignment: 'left'
-        },
-      },
-      defaultStyle:{
-        bold: false
-      }
-    };
-
-    return documentDefinition;
-  }
+  // private prepareDocument(registration: RegistrationOverview) :TDocumentDefinitions | undefined {
+  //   if (!registration)
+  //     return undefined;
+  //
+  //   const html = htmlToPdfmake(registration.content);
+  //   const documentDefinition: TDocumentDefinitions = {
+  //     content: [
+  //       {text: `Short description: ${registration.description}`, style: 'header'},
+  //       html
+  //     ],
+  //     styles: {
+  //       header: {
+  //         fontSize: 17,
+  //         marginBottom: 10,
+  //         bold: true,
+  //         alignment: 'left'
+  //       },
+  //     },
+  //     defaultStyle:{
+  //       bold: false
+  //     }
+  //   };
+  //
+  //   return documentDefinition;
+  // }
 
   modifyContent(values: string[]){
     let element = document.getElementsByClassName('mat-select-value')[0];

@@ -22,7 +22,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   id: string = '';
   isCreateMode: boolean = true;
   @ViewChild('editor') editor: QuillEditorComponent | undefined;
-  content = '';
   format = 'html';
   createOrEditForm = new UntypedFormGroup({
     description: new UntypedFormControl('', [Validators.required]),
