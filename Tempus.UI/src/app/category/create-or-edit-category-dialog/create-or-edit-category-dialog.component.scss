@@ -20,7 +20,7 @@
     border: 2px solid var(--background-color);
 
     &:focus {
-      border: 2px solid var(--button-background-color);
+      border: 2px solid $primary-color;
     }
 
     &.ng-invalid.ng-touched {
