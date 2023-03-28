@@ -1,7 +1,7 @@
 <div class="category-color"></div>
 <form *ngIf="categoryColor" (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
   <div class="cancel">
-    <button (click)="cancel()" class="cancel-button" mat-raised-button>Cancel</button>
+    <button (click)="cancel()" class="cancel-button" type="button" mat-raised-button>Cancel</button>
   </div>
   <div class="form-data">
     <mat-form-field class="title-control">
@@ -27,6 +27,7 @@
   <div class="create">
     <button class="create-registration" mat-raised-button
             type="submit"
+            color="primary"
             [disabled]="!createOrEditForm.valid || !createOrEditForm.dirty">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
   </div>
 </form>

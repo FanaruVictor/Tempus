@@ -3,8 +3,8 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../_services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
-import {CredentialResponse, PromptMomentNotification, } from "google-one-tap";
 import {environment} from "../../../environments/environment";
+import {CredentialResponse} from "google-one-tap";
 
 @Component({
   selector: 'app-login',

@@ -23,7 +23,7 @@
     </div>
     <div class="entry">
       <label>Username</label>
-      <input formControlName="userName" placeholder="E.g.: John" [readOnly]="user.externalId">
+      <input formControlName="userName" placeholder="E.g.: John" [readOnly]="!!user.externalId">
       <mat-error *ngIf="!editForm.get('userName')?.valid">The username is required</mat-error>
     </div>
     <div class="entry">
@@ -33,14 +33,17 @@
         placeholder="E.g.: Jhon@Doe.com"
         type="email"
         pattern="[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+"
-        [readOnly]="user.externalId">
+        [readOnly]="!!user.externalId">
       <mat-error *ngIf="!editForm.get('email')?.valid">The email address is invalid</mat-error>
     </div>
     <div class="entry">
       <label>Phone number</label>
       <input formControlName="phoneNumber" placeholder="Phone number">
     </div>
-    <button class="submit" mat-raised-button type="submit" [disabled]="!editForm.valid">Save Changes</button>
+    <div class="actions">
+      <button  mat-raised-button type="button"  [routerLink]="['/account']">Cancel</button>
+      <button class="submit" mat-raised-button color="primary" type="submit" [disabled]="!editForm.valid || !editForm.dirty">Save Changes</button>
+    </div>
   </form>
   <div class="left"></div>
 </div>

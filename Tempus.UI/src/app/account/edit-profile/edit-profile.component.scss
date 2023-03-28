@@ -66,20 +66,13 @@
     }
 
     .actions{
-      width: 200px;
       display: flex;
       justify-content: space-around;
       margin: 15px 0;
+      width: 250px;
     }
 
-    .submit{
-      color: white;
-      width: fit-content;
-      background-color: $primary-color !important;
-      &.mat-button-disabled{
-        opacity: 50%;
-      }
-    }
+
   }
 
   .left {

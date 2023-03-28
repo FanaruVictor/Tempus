@@ -77,7 +77,7 @@
             justify-content: end;
 
             .edit {
-              color: var(--button-background-color);
+              color: $primary-color;
             }
 
             .delete {
@@ -95,10 +95,5 @@
     text-align: end;
 
     width: 25%;
-
-    button {
-      background-color: var(--button-background-color);
-      color: white;
-    }
   }
 }

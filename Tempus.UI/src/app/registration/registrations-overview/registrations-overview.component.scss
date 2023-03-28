@@ -43,7 +43,7 @@
 
     .by-color {
       padding: 5px 10px;
-      background-color: var(--header-color);
+      background-color: var(--header-color) !important;
       color: var(--text-color);
       border-radius: 5px;
     }

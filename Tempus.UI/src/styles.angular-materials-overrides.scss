@@ -60,9 +60,8 @@
   width: 80px !important;
 }
 
-.mat-raised-button {
-  background-color: var(--button-background-color);
-  color: white;
+.mat-raised-button.mat-button-disabled {
+  color: var(--text-color) !important;
 }
 
 .mat-dialog-container {
@@ -150,7 +149,7 @@ mat-card-actions {
 }
 
 .mat-pseudo-checkbox-checked {
-  background-color: var(--button-background-color);
+  background-color: #3f51b5;
 }
 
 .mat-select-value{
