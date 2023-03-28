@@ -54,6 +54,10 @@ export class EditProfileComponent implements OnInit {
       newPhoto: this.editForm.get('photo')?.value
     }
 
+    if(!this.isValidData(userData)){
+      this.router.navigate(['/account']);
+      return;
+    }
     this.userApiService.update(userData)
       .subscribe(response => {
         this.userApiService.setUser(response.resource);
@@ -61,6 +65,14 @@ export class EditProfileComponent implements OnInit {
       })
   }
 
+  isValidData(user: UpdateUserData): boolean{
+    const result =  this.user.userName !== user.userName ||
+      this.user.email !== user.email ||
+      this.user.phoneNumber !== user.phoneNumber ||
+      user.newPhoto instanceof File;
+
+    return result;
+  }
 
   deletePicture() {
     this.editForm.get('photo')?.setValue(null);
