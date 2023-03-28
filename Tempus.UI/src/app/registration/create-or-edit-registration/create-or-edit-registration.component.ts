@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -11,17 +11,21 @@ import {UpdateRegistrationCommandData} from "../../_commons/models/registrations
 import {CreateRegistrationCommandData} from "../../_commons/models/registrations/createRegistrationCommandData";
 import {NotificationService} from "../../_services/notification.service";
 import {QuillEditorComponent} from "ngx-quill";
+import Quill from 'quill'
+import ImageResize from 'quill-image-resize-module'
+Quill.register('modules/imageResize', ImageResize)
 
 @Component({
   selector: 'app-create-or-edit-registration',
   templateUrl: './create-or-edit-registration.component.html',
   styleUrls: ['./create-or-edit-registration.component.scss']
 })
-export class CreateOrEditRegistrationComponent implements OnInit {
+export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
   categories?: BaseCategory[];
   id: string = '';
   isCreateMode: boolean = true;
   @ViewChild('editor') editor: QuillEditorComponent | undefined;
+  content = '';
   format = 'html';
   createOrEditForm = new UntypedFormGroup({
     description: new UntypedFormControl('', [Validators.required]),
@@ -39,18 +43,17 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
     [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
     [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-    [{'align': []}]
+    [{'align': []}],
+    ['image'],
+    ['formula']
   ];
 
   quillConfig = {
+    imageResize: {},
     toolbar: {
       container: this.toolbarOptions,
-      handlers: {
-        source: () => {
-          this.formatChange();
-        },
-      },
-    }
+    },
+
   };
 
   constructor(
@@ -88,7 +91,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
         return;
       }
 
-
       this.categoryApiService.getById(categoryId)
         .subscribe(response => {
           this.categoryColor = response.resource.color;
@@ -96,18 +98,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     }
   }
 
-  formatChange() {
-    this.format = this.format === 'html' ? 'text' : 'html';
 
-    if (this.format === 'text' && this.editor) {
-      const htmlText = this.createOrEditForm.controls['content'].value;
-      this.editor.quillEditor.setText(htmlText);
-    } else if (this.format === 'html' && this.editor) {
-      const htmlText = this.createOrEditForm.controls['content'].value;
-      this.editor.quillEditor.setText('');
-      this.editor.quillEditor.pasteHTML(0, htmlText);
-    }
-  }
 
   cancel() {
     this.router.navigate(['/registrations/overview']);
@@ -198,5 +189,10 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           });
         }
       });
+  }
+
+  ngAfterViewInit(): void {
+    let element = document.querySelector('.header') as HTMLElement;
+    element.style.boxShadow = `0 4px 2 -2px ${this.categoryColor}`;
   }
 }

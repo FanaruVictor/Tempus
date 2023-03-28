@@ -10,6 +10,7 @@
       </mat-date-range-input>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
+      <app-button [icon]="'search_off'" [tooltip]="'reset dates'" (click)="resetDate()"></app-button>
     </div>
     <div class="by-color filter">
       <mat-label>Category color</mat-label>

@@ -1,6 +1,9 @@
-<div class="registration-wrapper">
-  <form *ngIf="categoryColor" (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form"
-  [ngStyle]="{ 'box-shadow': '9px 3px 10px -10px ' + categoryColor + ', -9px 3px 10px -10px ' +  categoryColor}">
+<div class="category-color"></div>
+<form *ngIf="categoryColor" (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
+  <div class="cancel">
+    <button (click)="cancel()" class="cancel-button" mat-raised-button>Cancel</button>
+  </div>
+  <div class="form-data">
     <mat-form-field class="title-control">
       <mat-label>Short description</mat-label>
       <input type="email" matInput formControlName="description"
@@ -9,21 +12,21 @@
         Please enter a short description for the registration
       </mat-error>
     </mat-form-field>
-    <div class="content-control">
-      <quill-editor
-        #editor
-        [modules]="quillConfig"
-        formControlName="content"
-        format="html"
-        placeholder=""
-      >
-      </quill-editor>
-    </div>
-    <div class="actions">
-      <button (click)="cancel()" class="cancel-button" mat-raised-button>Cancel</button>
-      <button class="create-registration" mat-raised-button
-              type="submit"
-              [disabled]="!createOrEditForm.valid">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
-    </div>
-  </form>
-</div>
+    <quill-editor
+
+      class="content-control"
+      #editor
+      [modules]="quillConfig"
+      formControlName="content"
+      format="html"
+      placeholder=""
+      trackChanges="all"
+    >
+    </quill-editor>
+  </div>
+  <div class="create">
+    <button class="create-registration" mat-raised-button
+            type="submit"
+            [disabled]="!createOrEditForm.valid || !createOrEditForm.dirty">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
+  </div>
+</form>

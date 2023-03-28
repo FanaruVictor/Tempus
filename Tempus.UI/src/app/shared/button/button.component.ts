@@ -7,4 +7,5 @@ import {Component, Input} from '@angular/core';
 })
 export class ButtonComponent {
   @Input() icon: string = '';
+  @Input() tooltip: string | undefined;
 }

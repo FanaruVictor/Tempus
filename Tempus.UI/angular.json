@@ -44,7 +44,9 @@
               "node_modules/quill/dist/quill.snow.css",
               "src/styles.quill-overrides.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/quill/dist/quill.min.js"
+            ]
           },
           "configurations": {
             "production": {

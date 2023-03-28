@@ -4,6 +4,7 @@ import {RegistrationOverview} from "../models/registrations/registrationOverview
 @Pipe({ name: 'search' })
 export class SearchPipe implements PipeTransform {
   transform(items: RegistrationOverview[], searchText: string): any[] {
+    searchText = searchText.trim();
     if (!items) {
       return [];
     }
@@ -14,7 +15,7 @@ export class SearchPipe implements PipeTransform {
     searchText = searchText.toLocaleLowerCase();
 
     return items.filter(it => {
-      return it.description.toLocaleLowerCase().startsWith(searchText);
+      return it.description.toLocaleLowerCase().includes(searchText);
     });
   }
 }

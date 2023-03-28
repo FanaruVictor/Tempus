@@ -3,7 +3,8 @@
 .registration-wrapper {
   left: 0;
   display: flex;
-  height: calc(100% - 50px);
+  height: 100%;
+  padding-top: 50px;
 
   .right {
     width: 25%;
@@ -25,10 +26,6 @@
       font-size: 16px;
       padding: 5px 10px;
       color: var(--text-color);
-
-      &::placeholder {
-        font-size: 14px;
-      }
     }
 
     .by-creation-date {
@@ -37,10 +34,11 @@
       display: flex;
       align-items: center;
       border-radius: 5px;
+    }
 
-      input::placeholder {
-        font-size: 14px;
-      }
+    input::placeholder {
+      font-size: 14px;
+      color: var(--text-color);
     }
 
     .by-color {
@@ -93,9 +91,6 @@
 
             .content {
               padding: 10px 20px;
-              overflow: hidden;
-              display: flex;
-              justify-content: space-between;
               width: 80%;
 
               .title {

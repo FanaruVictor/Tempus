@@ -33,6 +33,8 @@
     "pdfmake": "^0.2.7",
     "quill": "^1.3.7",
     "quill-delta": "^5.0.0",
+    "quill-image-resize": "^3.0.9",
+    "quill-image-resize-module": "^3.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

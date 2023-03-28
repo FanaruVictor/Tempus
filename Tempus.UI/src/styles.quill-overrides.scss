@@ -1,52 +1,23 @@
 ﻿
-quill-editor {
-  display: flex;
-  flex-direction: column;
-
-  min-height: 100%;
-  max-height: 100%;
-  .ql-container {
-    min-height: 90%;
-    max-height: 90%;
-    color: var(--text-color);
-
-    .ql-editor {
-      padding: 15px 0 0;
-
-      .ql-align-justify {
-        padding-top: 15px;
-      }
-
-      li {
-
-        &:before {
-          font-size: 20px;
-        }
-      }
-
-      span {
+.ql-container.ql-snow {
+  min-height: 50vh;
+  color: var(--text-color);
+  .ql-editor {
+    li {
+      &:before {
+        font-size: 20px;
       }
     }
   }
 }
 
 .ql-toolbar.ql-snow {
-  border: none;
   color: var(--text-color);
   background-color: var(--content-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   &::after {
     display: none;
   }
 }
-
-.ql-snow {
-  border: none !important;
-}
-
-
 
 .ql-toolbar .ql-stroke {
   fill: none;
@@ -58,9 +29,9 @@ quill-editor {
   stroke: none;
 }
 
+
 .ql-toolbar .ql-picker {
   color: var(--text-color);
-  border: none;
 
   :hover {
     color: var(--text-color);
@@ -68,29 +39,5 @@ quill-editor {
 
   .ql-picker-options {
     background-color: var(--background-color);
-    border: none;
-
   }
-}
-
-.ql-snow.ql-toolbar button:hover, .ql-snow .ql-toolbar button:hover, .ql-snow.ql-toolbar button:focus, .ql-snow .ql-toolbar button:focus, .ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow .ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow .ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-item:hover, .ql-snow .ql-toolbar .ql-picker-item:hover, .ql-snow.ql-toolbar .ql-picker-item.ql-selected, .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
-  color: var(--text-color);
-}
-
-.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
-  border: none;
-}
-
-.ql-toolbar.ql-snow .ql-formats {
-  margin: 0;
-  display: flex;
-}
-
-.ql-editor ol li:not(.ql-direction-rtl), .ql-editor ul li:not(.ql-direction-rtl) {
-  display: flex;
-  align-items: center;
-}
-
-.ql-snow .ql-picker.ql-expanded .ql-picker-options{
-  position: absolute !important;
 }

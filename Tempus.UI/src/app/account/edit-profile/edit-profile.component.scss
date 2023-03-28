@@ -2,7 +2,8 @@
 
 .edit-profile-wrapper {
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
+  padding-top: 50px;
   display: flex;
 
   .right {
