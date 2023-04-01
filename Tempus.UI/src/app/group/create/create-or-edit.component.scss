@@ -1,0 +1,134 @@
+@import '../../../styles/variables.scss';
+
+.group-form {
+  height: 100%;
+  padding-top: 50px;
+  display: flex;
+
+  .cancel {
+    padding: 15px 0 0 15px;
+    width: 25%;
+  }
+
+  .form-content {
+    width: 50%;
+    box-shadow: 12px 0 15px -8px var(--content-color), -12px 0 8px -8px var(--content-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .group-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 2rem;
+
+
+      .user-icon,
+      img {
+        font-size: 200px;
+        width: 200px;
+        height: 200px;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: space-around;
+        margin: 15px 0;
+        width: 250px;
+      }
+    }
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      margin-bottom: 25px;
+
+      label {
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      input {
+        min-width: 100%;
+        outline: none;
+        font-size: 16px;
+        color: var(--text-color);
+        background-color: var(--header-color);
+        border-radius: 5px;
+        padding: 10px;
+        border: none;
+
+        &:focus {
+          border: 1px solid $primary-color;
+        }
+      }
+    }
+
+    .group-members {
+      background-color: var(--header-color);
+      width: 500px;
+      border-radius: 5px;
+
+      .title {
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--text-color);
+        padding: 5px;
+        text-align: center;
+
+        box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+
+      }
+
+      .add-member {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+          border: none;
+          background: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .show-search-user-btn {
+          height: 50px;
+
+          color: var(--text-color);
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+
+        .user-search-bar {
+          width: 80%;
+          margin: 5px 0;
+        }
+      }
+    }
+  }
+
+  .create {
+    width: 25%;
+    text-align: end;
+    padding: 15px 15px 0 0;
+  }
+}
+
+
+.user-img {
+  width: 25px;
+  height: 25px;
+}

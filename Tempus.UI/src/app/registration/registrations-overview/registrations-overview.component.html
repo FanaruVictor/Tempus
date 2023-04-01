@@ -1,10 +1,9 @@
 <div class="registration-wrapper" *ngIf="registrations">
   <div class="right">
     <input class="by-description filter" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
-           placeholder="Search for registration">
+      placeholder="Search for registration">
     <div class="by-creation-date filter">
-      <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker" [min]="minDate"
-                            [max]="maxDate">
+      <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
         <input matStartDate formControlName="start" placeholder="Creation Start date">
         <input matEndDate formControlName="end" placeholder="Creation End date">
       </mat-date-range-input>
@@ -14,27 +13,24 @@
     </div>
     <div class="by-color filter">
       <mat-label>Category color</mat-label>
-      <mat-select  [formControl]="colors" multiple panelClass="mat-select-content" disableOptionCentering (valueChange)="modifyContent($event)">
-        <mat-option *ngFor="let color of registrationsColor"
-        [value]="color"><div class="option" [ngStyle]="{'background-color': color}">{{color}}</div></mat-option>
+      <mat-select [formControl]="colors" multiple panelClass="mat-select-content" disableOptionCentering
+        (valueChange)="modifyContent($event)">
+        <mat-option *ngFor="let color of registrationsColor" [value]="color">
+          <div class="option" [ngStyle]="{'background-color': color}">{{color}}</div>
+        </mat-option>
       </mat-select>
     </div>
   </div>
   <div class="center">
     <div class="elements" *ngIf="registrations.length != 0; else showNoRegistrations">
-      <div
-        *ngFor="let registration of registrations
+      <div *ngFor="let registration of registrations
         | search: searchText
         | dateRange : {start: dateRange.controls['start'].value, end: dateRange.controls['end'].value}
-        | color:  colors.value"
-        class="registration"
-        [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}"
-      >
+        | color:  colors.value" class="registration"
+        [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}">
 
         <div class="item">
-          <div
-            class="info"
-          >
+          <div class="info">
             <div class="content" [routerLink]="['/registrations/edit', registration.id]">
               <div class="title">{{registration.description}}</div>
             </div>
@@ -63,7 +59,7 @@
       </div>
     </div>
     <ng-template #showNoRegistrations>
-      <h1 class="no-registrations-message">You do not have registrations</h1>
+      <h1>You do not have registrations</h1>
     </ng-template>
   </div>
 
@@ -73,5 +69,3 @@
     </button>
   </div>
 </div>
-
-

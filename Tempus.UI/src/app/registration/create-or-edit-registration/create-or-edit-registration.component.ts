@@ -97,13 +97,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
         })
     }
   }
-
-
-
-  cancel() {
-    this.router.navigate(['/registrations/overview']);
-  }
-
+  
   submit() {
     this.validateForm();
     if (!this.isCreateMode) {

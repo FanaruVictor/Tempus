@@ -1,0 +1,45 @@
+<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="group-form" *ngIf="users.length > 0">
+  <div class="cancel">
+    <button class="cancel-button" type="button" mat-raised-button [routerLink]="['/groups']">Cancel</button>
+  </div>
+  <div class="form-content">
+    <div class="group-photo">
+      <mat-icon *ngIf="!imageURL; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
+        class="user-icon">
+        account_circle
+      </mat-icon>
+      <ng-template #showPhoto>
+        <img [src]="imageURL">
+      </ng-template>
+      <div class="actions">
+        <input #profilePhoto type="file" accept="image/png, image/gif, image/jpeg" hidden="true"
+          (change)="showPreview($event)" />
+        <button type="button" (click)="profilePhoto.click()" color="primary" mat-raised-button>{{imageURL ? 'Change' :
+          'Add'}}</button>
+        <button type="button" *ngIf="imageURL" (click)="deletePicture()" color="warn" mat-raised-button>Delete
+        </button>
+      </div>
+    </div>
+    <div class="entry">
+      <label>Group's Name:</label>
+      <input formControlName="name">
+    </div>
+    <div class="group-members">
+      <div class="title">Group members</div>
+      <div class="add-member">
+
+        <div class="user-search-bar">
+          <ng-select [multiple]="true" [items]="users" bindLabel="email" bindValue="id" formControlName="members"
+            placeholder="Select the users for this group" (click)="addPhotos()">
+          </ng-select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="create">
+    <button class="create-registration" mat-raised-button type="submit" color="primary">{{isCreateMode ? 'Create' :
+      'Save Changes'}}</button>
+  </div>
+</form>

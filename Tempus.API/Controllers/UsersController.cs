@@ -1,15 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Models.Photo;
 using Tempus.Core.Models.User;
-using Tempus.Infrastructure.Commands.ProfilePhoto.AddProfilePhoto;
-using Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 using Tempus.Infrastructure.Commands.Users.ChangeTheme;
 using Tempus.Infrastructure.Commands.Users.Delete;
 using Tempus.Infrastructure.Commands.Users.Update;
 using Tempus.Infrastructure.Queries.Users.GetAll;
 using Tempus.Infrastructure.Queries.Users.GetById;
 using Tempus.Infrastructure.Queries.Users.GetDetails;
+using Tempus.Infrastructure.Queries.Users.GetEmails;
 using Tempus.Infrastructure.Queries.Users.GetTheme;
 
 namespace Tempus.API.Controllers;
@@ -90,4 +88,10 @@ public class UsersController : BaseController
     {
         return HandleResponse(await _mediator.Send(new GetThemeQuery()));
     }
+
+    [HttpGet("emails")]
+    public async Task<ActionResult<List<UserEmail>>> GetEmails()
+    {
+        return HandleResponse(await _mediator.Send(new GetEmailsQuery()));
+    } 
 }
