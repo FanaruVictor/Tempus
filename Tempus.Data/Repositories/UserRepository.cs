@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models.User;
 using Tempus.Data.Context;
 
 namespace Tempus.Data.Repositories;
@@ -23,6 +24,14 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             .FirstOrDefaultAsync(x => x.ExternalId == externalId);
 
         return user;
+    }
+
+    public async Task<List<UserEmail>> GetUsersEmails()
+    {
+        return await _context.Users.AsNoTracking()
+            .Include(x => x.ProfilePhoto)
+            .Select(x => new UserEmail {Email = x.Email, Id = x.Id, PhotoUrl = x.ProfilePhoto.Url})
+            .ToListAsync();
     }
 
     public override async Task<User> GetById(Guid id)
