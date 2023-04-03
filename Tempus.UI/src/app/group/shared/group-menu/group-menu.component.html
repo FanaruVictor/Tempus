@@ -1,0 +1,40 @@
+<div class="menu-header">
+  <div class="menu-title">
+    <strong>Groups</strong>
+    <app-button [icon]="'add'" [routerLink]="['/groups/create']"></app-button>
+  </div>
+  <div class="menu-actions">
+    <input class="by-name" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+      placeholder="Search for group">
+  </div>
+</div>
+<div class="elements">
+  <div [id]="group.id" class="group" *ngFor="let group of groups | search: {searchText: searchText, property: 'name'}"
+    (click)="setActiveItem(group.id)">
+    <div class="info" [routerLink]="['/groups/overview', group.id, 'registrations']">
+      <div class="content">
+        <img class="group-image" [src]="group.image" alt="">
+        <div class="title">
+          <span>{{group.name}}</span>
+          <div class="user-photos">
+            <img [src]="image" *ngFor="let image of group.usersPhotos?.slice(0, 3)" [alt]="group.name + '\'s photo'">
+            <p *ngIf="group.usersPhotos?.length > 3">...</p>
+          </div>
+        </div>
+      </div>
+      <div class=" actions">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="action for registration menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="delete(group.id)">
+            <mat-icon class="delete">delete</mat-icon>
+            <span>Delete</span>
+          </button>
+
+        </mat-menu>
+        <div class="created-date">{{group.createdAt | date }}</div>
+      </div>
+    </div>
+  </div>
+</div>

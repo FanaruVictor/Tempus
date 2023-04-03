@@ -38,14 +38,15 @@
       .category {
         width: 80%;
         margin: 15px 0;
-        background-color: var(--content-color);
         border-radius: 5px;
-
+        display: flex;
+        justify-content: center;
 
         .info {
           background-color: var(--content-color);
           border-radius: 5px;
           display: flex;
+          width: 80%;
           align-items: center;
           justify-content: end;
           height: 100px;

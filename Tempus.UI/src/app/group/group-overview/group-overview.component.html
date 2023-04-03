@@ -1,17 +1,18 @@
 <div class="group-overview">
-  <div class="right"></div>
-  <div class="center">
-    <div *ngIf="groups.length > 0; else noGroups">
-      <div *ngFor="let group of groups"></div>
-    </div>
+  <div class="menu">
+    <app-group-menu></app-group-menu>
   </div>
-  <ng-template #noGroups>
-    <h1>
-      There are no groups yet. Please create one.
-    </h1>
-  </ng-template>
-
   <div class="left">
-    <button mat-raised-button color="primary" [routerLink]="['/groups/create']">Add</button>
+    <app-registrations-overview></app-registrations-overview>
   </div>
 </div>
+
+<ng-template #noGroups>
+  <h1>
+    There are no groups yet. Please create one.
+  </h1>
+</ng-template>
+
+<ng-template>
+  To see group overview, please select a group.
+</ng-template>

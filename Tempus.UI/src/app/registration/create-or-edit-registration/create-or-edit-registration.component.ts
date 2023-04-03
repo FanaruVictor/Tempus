@@ -97,7 +97,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
         })
     }
   }
-  
+
   submit() {
     this.validateForm();
     if (!this.isCreateMode) {

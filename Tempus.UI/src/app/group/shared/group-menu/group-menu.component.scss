@@ -1,0 +1,132 @@
+.menu-header {
+  max-height: 15%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 15px;
+
+  .menu-title {
+    width: 100%;
+    display: flex;
+    font-size: 25px;
+    color: var(--text-color);
+    padding-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
+
+
+  }
+
+  .menu-actions {
+
+
+    .by-name {
+      width: 100%;
+      background-color: var(--background-color);
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      height: 40px;
+      font-size: 16px;
+      padding: 5px 10px;
+      color: var(--text-color);
+
+      &::placeholder {
+        color: var(--text-color);
+      }
+    }
+  }
+}
+
+.elements {
+  max-height: 80%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-color);
+  cursor: pointer;
+
+  .group {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    margin-bottom: 15px;
+
+
+    :last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: var(--background-color);
+      border-radius: 5px;
+    }
+
+    .info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      height: 75px;
+
+      .content {
+        display: flex;
+        font-size: 20px;
+        align-items: center;
+
+        .group-image {
+          width: 75px;
+          height: 75px;
+          border-radius: 50%;
+          margin: 0 25px;
+        }
+
+        .title {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          span {
+            margin-bottom: 25px;
+          }
+
+          .user-photos {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            img {
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: end;
+
+        .created-date {
+          padding: 15px 15px 0 0;
+        }
+      }
+    }
+  }
+
+  .group-active {
+    background-color: var(--background-color);
+    border-radius: 5px;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: var(--content-color);
+  border-radius: 2px;
+}

@@ -1,23 +1,17 @@
 .group-overview {
   height: 100%;
-  padding-top: 50px;
   display: flex;
 
-  .right {
-    width: 25%;
-  }
+  .menu {
+    width: 20%;
+    background-color: var(--content-color);
 
-  .center {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+
   }
 
   .left {
-    width: 25%;
-    text-align: end;
-    padding: 15px 15px 0 0;
+    width: 75%;
+
   }
 }
+

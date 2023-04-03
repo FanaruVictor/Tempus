@@ -1,10 +1,16 @@
 ﻿import { Pipe, PipeTransform } from '@angular/core';
-import {RegistrationOverview} from "../models/registrations/registrationOverview";
+import { RegistrationOverview } from '../models/registrations/registrationOverview';
 
 @Pipe({ name: 'search' })
 export class SearchPipe implements PipeTransform {
-  transform(items: RegistrationOverview[], searchText: string): any[] {
+  transform(
+    items: any,
+    searchData: { searchText: string; property: string }
+  ): any[] {
+    let searchText = searchData.searchText.toLowerCase();
     searchText = searchText.trim();
+    const property = searchData.property;
+
     if (!items) {
       return [];
     }
@@ -12,10 +18,10 @@ export class SearchPipe implements PipeTransform {
       return items;
     }
 
-    searchText = searchText.toLocaleLowerCase();
-
-    return items.filter(it => {
-      return it.description.toLocaleLowerCase().includes(searchText);
+    items = items.filter((it) => {
+      return it[property].toLowerCase().includes(searchText);
     });
+
+    return items;
   }
 }

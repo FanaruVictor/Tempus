@@ -1,20 +1,19 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
+  AfterViewChecked,
   AfterViewInit,
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { log } from 'console';
 import { GroupOverview } from 'src/app/_commons/models/groups/groupOverview';
-import { GroupApiService } from 'src/app/_services/group.api.service';
 
 @Component({
-  selector: 'app-group-overview',
-  templateUrl: './group-overview.component.html',
-  styleUrls: ['./group-overview.component.scss'],
+  selector: 'app-group-menu',
+  templateUrl: './group-menu.component.html',
+  styleUrls: ['./group-menu.component.scss'],
 })
-export class GroupOverviewComponent implements OnInit, AfterViewInit {
+export class GroupMenuComponent implements AfterViewChecked {
   activeGroupId: string = '';
   searchText: string = '';
   groups: GroupOverview[] = [
@@ -48,21 +47,13 @@ export class GroupOverviewComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private groupApiService: GroupApiService
-  ) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     this.activeGroupId = id;
     this.setActiveItem(this.activeGroupId);
-  }
-
-  ngOnInit(): void {
-    // this.groupApiService.getAll().subscribe((response) => {
-    //   this.groups = response.resource;
-    // });
+    console.log(this.activeItem);
   }
 
   delete(id: string) {}
@@ -85,9 +76,4 @@ export class GroupOverviewComponent implements OnInit, AfterViewInit {
 
     this.activeItem.classList.toggle('group-active');
   }
-}
-function fliter(
-  arg0: (x: any) => boolean
-): import('rxjs').OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
 }

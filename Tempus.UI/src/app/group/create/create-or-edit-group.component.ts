@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { log } from 'console';
 import { filter } from 'rxjs';
 import { AddGroupData } from 'src/app/_commons/models/groups/addGroupData';
@@ -8,11 +9,11 @@ import { GroupApiService } from 'src/app/_services/group.api.service';
 import { UserApiService } from 'src/app/_services/user.api.service';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create-or-edit.component.html',
-  styleUrls: ['./create-or-edit.component.scss'],
+  selector: 'app-create-or-edit-group',
+  templateUrl: './create-or-edit-group.component.html',
+  styleUrls: ['./create-or-edit-group.component.scss'],
 })
-export class CreateOrEditComponent implements OnInit {
+export class CreateOrEditGroupComponent implements OnInit {
   createOrEditForm: FormGroup;
   isCreateMode = false;
   id: string = '';
@@ -24,7 +25,8 @@ export class CreateOrEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userApiService: UserApiService,
-    private groupApiService: GroupApiService
+    private groupApiService: GroupApiService,
+    private router: Router
   ) {
     this.createOrEditForm = this.fb.group({
       name: ['', Validators.required],
@@ -51,7 +53,9 @@ export class CreateOrEditComponent implements OnInit {
       image: this.createOrEditForm.get('image')?.value,
     };
 
-    this.groupApiService.add(group).subscribe();
+    this.groupApiService
+      .add(group)
+      .subscribe(() => this.router.navigate['/groups']);
   }
 
   showPreview(event: any) {

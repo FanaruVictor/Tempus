@@ -3,19 +3,17 @@
   </div>
   <div class="center">
     <div class="elements">
-      <div
-        *ngFor="let category of categories"
-        class="category">
-            <mat-card  class="info">
-            <div class="category-data">
-              <mat-card-header class="name">{{category.name.toUpperCase()}}</mat-card-header>
-              <mat-card-content class="color" [ngStyle]="{'background-color': category.color}"></mat-card-content>
-            </div>
-            <mat-card-actions class="actions">
-              <app-button (click)="updateCategory(category)" [icon]="'edit'" class="edit"></app-button>
-              <app-button (click)="delete(category.id)" [icon]="'delete'" class="delete"></app-button>
-            </mat-card-actions>
-          </mat-card>
+      <div *ngFor="let category of categories" class="category">
+        <mat-card class="info">
+          <div class="category-data">
+            <mat-card-header class="name">{{category.name}}</mat-card-header>
+            <mat-card-content class="color" [ngStyle]="{'background-color': category.color}"></mat-card-content>
+          </div>
+          <mat-card-actions class="actions">
+            <app-button (click)="updateCategory(category)" [icon]="'edit'" class="edit"></app-button>
+            <app-button (click)="delete(category.id)" [icon]="'delete'" class="delete"></app-button>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
   </div>

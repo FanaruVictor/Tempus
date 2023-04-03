@@ -25,7 +25,7 @@ body {
   --text-color: #222;
   --background-color: #fff;
   --header-color: #d7d7d7;
-  --content-color: #d6efef;
+  --content-color: #e7e7e7;
   --tooltip-background-color: #2a2a2a;
   --tooltip-text-color: #eee;
 }
@@ -88,7 +88,7 @@ body {
 
 
 
-.cdk-overlay-connected-position-bounding-box {
+/*.cdk-overlay-connected-position-bounding-box {
 
   .cdk-overlay-pane {
     transform: translateY(19px) !important;
@@ -100,6 +100,12 @@ body {
       min-width: 100% !important;
     }
   }
+}*/
+
+.mat-select-panel {
+  transform: translateY(19px) !important;
+  background: var(--header-color);
+  min-width: 100% !important;
 }
 
 .select-category {
@@ -116,4 +122,9 @@ body {
     margin-left: 10px;
 
   }
+}
+.page-wrapper {
+  height: calc(100vh - 50px);
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
 }
