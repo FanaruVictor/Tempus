@@ -17,8 +17,8 @@
         <div class="title">
           <span>{{group.name}}</span>
           <div class="user-photos">
-            <img [src]="image" *ngFor="let image of group.usersPhotos?.slice(0, 3)" [alt]="group.name + '\'s photo'">
-            <p *ngIf="group.usersPhotos?.length > 3">...</p>
+            <img [src]="image" *ngFor="let image of group.userPhotos?.slice(0, 3)" [alt]="group.name + '\'s photo'">
+            <p *ngIf="group.userPhotos?.length > 3">...</p>
           </div>
         </div>
       </div>

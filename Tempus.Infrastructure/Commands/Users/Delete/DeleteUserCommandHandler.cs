@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
-using Tempus.Infrastructure.Commands.ProfilePhoto.DeleteProfilePhoto;
 using Tempus.Infrastructure.Services.Cloudynary;
 
 namespace Tempus.Infrastructure.Commands.Users.Delete;
@@ -37,7 +36,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, BaseR
             
             await _userRepository.Delete(deletedUserId);
 
-            if (user.ProfilePhoto != null && user.ExternalId == null)
+            if (user.UserPhoto != null && user.ExternalId == null)
             {
                 await _cloudinaryService.DestroyUsingUserId(deletedUserId);
             }

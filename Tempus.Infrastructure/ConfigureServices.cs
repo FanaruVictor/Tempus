@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tempus.Core.IServices;
-using Tempus.Infrastructure.Commands.Categories.Create;
+using Tempus.Infrastructure.Commands.UserCategory.Create;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Queries.Users.GetAll;
 using Tempus.Infrastructure.Services.AuthService;

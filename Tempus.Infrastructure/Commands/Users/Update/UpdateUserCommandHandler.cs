@@ -1,15 +1,12 @@
 ﻿using CloudinaryDotNet.Actions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Photo;
 using Tempus.Core.Models.User;
-using Tempus.Infrastructure.Commands.ProfilePhoto.AddProfilePhoto;
-using Tempus.Infrastructure.Commands.ProfilePhoto.DeleteProfilePhoto;
-using Tempus.Infrastructure.Commands.ProfilePhoto.UpdateProfilePhoto;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Services.Cloudynary;
 using StatusCodes = Tempus.Core.Commons.StatusCodes;
@@ -21,15 +18,15 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
     private readonly IUserRepository _userRepository;
     private readonly IMediator _mediator;
     private readonly ICloudinaryService _cloudinaryService;
-    private readonly IProfilePhotoRepository _profilePhotoRepository;
+    private readonly IUserPhotoRepository _userPhotoRepository;
 
     public UpdateUserCommandHandler(IUserRepository userRepository, IMediator mediator,
-        ICloudinaryService cloudinaryService, IProfilePhotoRepository profilePhotoRepository)
+        ICloudinaryService cloudinaryService, IUserPhotoRepository userPhotoRepository)
     {
         _userRepository = userRepository;
         _mediator = mediator;
         _cloudinaryService = cloudinaryService;
-        _profilePhotoRepository = profilePhotoRepository;
+        _userPhotoRepository = userPhotoRepository;
     }
 
     public async Task<BaseResponse<UserDetails>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -61,7 +58,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
             await _userRepository.SaveChanges();
 
             var userDetails = GenericMapper<User, UserDetails>.Map(updateResult.Resource);
-            userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(updateResult.Resource.ProfilePhoto);
+            userDetails.Photo = GenericMapper<Core.Entities.User.UserPhoto, PhotoDetails>.Map(updateResult.Resource.UserPhoto);
 
             result = BaseResponse<UserDetails>.Ok(userDetails);
 
@@ -85,7 +82,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
             PasswordSalt = user.PasswordSalt,
             IsDarkTheme = user.IsDarkTheme,
             ExternalId = user.ExternalId,
-            ProfilePhoto = user.ProfilePhoto
+            UserPhoto = user.UserPhoto
         };
         
         if (request.IsPhotoChanged)
@@ -101,56 +98,56 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
                 };
             }
 
-            user.ProfilePhoto = updatePhotoResult.Resource ?? null;
+            user.UserPhoto = updatePhotoResult.Resource ?? null;
         }
 
         _userRepository.Update(user);
         return BaseResponse<User>.Ok(user);
     }
 
-    private async Task<BaseResponse<Core.Entities.ProfilePhoto>> UpdatePhoto(IFormFile? photo, User user)
+    private async Task<BaseResponse<Core.Entities.User.UserPhoto>> UpdatePhoto(IFormFile? photo, User user)
     {
         if (photo == null)
         {
-            if (user.ProfilePhoto != null)
+            if (user.UserPhoto != null)
             {
                 await _cloudinaryService.DestroyUsingUserId(user.Id);
-                await _profilePhotoRepository.Delete(user.ProfilePhoto.Id);
+                await _userPhotoRepository.Delete(user.UserPhoto.Id);
             }
 
-            return BaseResponse<Core.Entities.ProfilePhoto>.Ok();
+            return BaseResponse<Core.Entities.User.UserPhoto>.Ok();
         }
 
         ImageUploadResult uploadResult;
-        Core.Entities.ProfilePhoto userPhoto;
-        if (user.ProfilePhoto != null)
+        Core.Entities.User.UserPhoto userUserPhoto;
+        if (user.UserPhoto != null)
         {
             await _cloudinaryService.DestroyUsingUserId(user.Id);
             uploadResult = await _cloudinaryService.Upload(photo);
-            userPhoto = new Core.Entities.ProfilePhoto
+            userUserPhoto = new Core.Entities.User.UserPhoto
             {
-                Id = user.ProfilePhoto.Id,
+                Id = user.UserPhoto.Id,
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.Url.ToString(),
                 UserId = user.Id
             };
-            _profilePhotoRepository.Update(userPhoto);
+            _userPhotoRepository.Update(userUserPhoto);
         }
         else
         {
             uploadResult = await _cloudinaryService.Upload(photo);
-            userPhoto = new Core.Entities.ProfilePhoto
+            userUserPhoto = new Core.Entities.User.UserPhoto
             {
                 Id = Guid.NewGuid(),
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.Url.ToString(),
                 UserId = user.Id
             };
-            await _profilePhotoRepository.Add(userPhoto);
+            await _userPhotoRepository.Add(userUserPhoto);
         }
 
-        await _profilePhotoRepository.SaveChanges();
+        await _userPhotoRepository.SaveChanges();
 
-        return BaseResponse<Core.Entities.ProfilePhoto>.Ok(userPhoto);
+        return BaseResponse<Core.Entities.User.UserPhoto>.Ok(userUserPhoto);
     }
 }

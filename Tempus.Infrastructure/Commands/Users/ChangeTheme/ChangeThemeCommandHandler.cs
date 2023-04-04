@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Photo;
 using Tempus.Core.Models.User;
@@ -11,12 +12,12 @@ namespace Tempus.Infrastructure.Commands.Users.ChangeTheme;
 public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, BaseResponse<UserDetails>>
 {
     private readonly IUserRepository _userRepository;
-    private IProfilePhotoRepository _profilePhotoRepository;
+    private IUserPhotoRepository _userPhotoRepository;
 
-    public ChangeThemeCommandHandler(IUserRepository userRepository, IProfilePhotoRepository profilePhotoRepository)
+    public ChangeThemeCommandHandler(IUserRepository userRepository, IUserPhotoRepository userPhotoRepository)
     {
         _userRepository = userRepository;
-        _profilePhotoRepository = profilePhotoRepository;
+        _userPhotoRepository = userPhotoRepository;
     }
 
     public async Task<BaseResponse<UserDetails>> Handle(ChangeThemeCommand request, CancellationToken cancellationToken)
@@ -41,13 +42,13 @@ public class ChangeThemeCommandHandler : IRequestHandler<ChangeThemeCommand, Bas
             _userRepository.Update(user);
             await _userRepository.SaveChanges();
 
-            var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);
+            var profilePhoto = await _userPhotoRepository.GetByUserId(user.Id);
             
             var userDetails = GenericMapper<User, UserDetails>.Map(user);
 
             if(profilePhoto != null)
             {
-                userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+                userDetails.Photo = GenericMapper<Core.Entities.User.UserPhoto, PhotoDetails>.Map(profilePhoto);
             }
 
 

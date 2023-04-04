@@ -9,23 +9,12 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
 {
     public RegistrationRepository(TempusDbContext context) : base(context) { }
 
-    public async Task<List<Registration?>> GetAll(Guid categoryId, Guid userId)
-    {
-        var result = await _context.Registrations
-            .AsNoTracking()
-            .Include(x => x.Category)
-            .Where(x => x.CategoryId == categoryId && x.Category.UserId == userId)
-            .ToListAsync();
-
-        return result;
-    }
-
     public async Task<List<Registration>> GetAll(Guid userId)
     {
         var result = await _context.Registrations
             .AsNoTracking()
             .Include(x => x.Category)
-            .Where(x => x.Category.UserId == userId)
+            .Where(x => x.Category.UserCategories.Any(y => y.UserId == userId))
             .ToListAsync();
         
         return result;
@@ -36,11 +25,22 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
         return _context.Registrations.AsNoTracking().OrderByDescending(x => x.LastUpdatedAt).FirstOrDefaultAsync();
     }
 
+    public Task<List<Registration>> GetAllFromGroup(Guid groupId)
+    {
+        return _context.Registrations
+            .AsNoTracking()
+            .Include(x => x.Category)
+            .ThenInclude(x => x.GroupCategories)
+            .Where(x => x.Category.GroupCategories.Any(y => y.GroupId == groupId))
+            .ToListAsync();
+    }
+
     public override async Task<Registration> GetById(Guid id)
     {
         return await _context.Registrations
             .AsNoTracking()
             .Include(x => x.Category)
+            .ThenInclude(x => x.UserCategories)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

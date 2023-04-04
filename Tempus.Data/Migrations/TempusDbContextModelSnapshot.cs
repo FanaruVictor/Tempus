@@ -22,6 +22,31 @@ namespace Tempus.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GroupPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId")
+                        .IsUnique();
+
+                    b.ToTable("GroupPhotos");
+                });
+
             modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -42,37 +67,60 @@ namespace Tempus.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Tempus.Core.Entities.ProfilePhoto", b =>
+            modelBuilder.Entity("Tempus.Core.Entities.Group.Group", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PublicId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.ToTable("Group");
+                });
 
-                    b.ToTable("ProfilePhotos");
+            modelBuilder.Entity("Tempus.Core.Entities.Group.GroupCategory", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroupId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("GroupCategories");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.Group.GroupUser", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroupId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GroupUsers");
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Registration", b =>
@@ -106,7 +154,7 @@ namespace Tempus.Data.Migrations
                     b.ToTable("Registrations");
                 });
 
-            modelBuilder.Entity("Tempus.Core.Entities.User", b =>
+            modelBuilder.Entity("Tempus.Core.Entities.User.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,24 +192,93 @@ namespace Tempus.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
+            modelBuilder.Entity("Tempus.Core.Entities.User.UserCategory", b =>
                 {
-                    b.HasOne("Tempus.Core.Entities.User", "User")
-                        .WithMany("Categories")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("UserCategories");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.User.UserPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserPhotos");
+                });
+
+            modelBuilder.Entity("GroupPhoto", b =>
+                {
+                    b.HasOne("Tempus.Core.Entities.Group.Group", "Group")
+                        .WithOne("GroupPhoto")
+                        .HasForeignKey("GroupPhoto", "GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.Group.GroupCategory", b =>
+                {
+                    b.HasOne("Tempus.Core.Entities.Category", "Category")
+                        .WithMany("GroupCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tempus.Core.Entities.Group.Group", "Group")
+                        .WithMany("GroupCategories")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.Group.GroupUser", b =>
+                {
+                    b.HasOne("Tempus.Core.Entities.Group.Group", "Group")
+                        .WithMany("GroupUsers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tempus.Core.Entities.User.User", "User")
+                        .WithMany("GroupUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
+                    b.Navigation("Group");
 
-            modelBuilder.Entity("Tempus.Core.Entities.ProfilePhoto", b =>
-                {
-                    b.HasOne("Tempus.Core.Entities.User", null)
-                        .WithOne("ProfilePhoto")
-                        .HasForeignKey("Tempus.Core.Entities.ProfilePhoto", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Registration", b =>
@@ -175,16 +292,61 @@ namespace Tempus.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
+            modelBuilder.Entity("Tempus.Core.Entities.User.UserCategory", b =>
                 {
-                    b.Navigation("Registrations");
+                    b.HasOne("Tempus.Core.Entities.Category", "Category")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tempus.Core.Entities.User.User", "User")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tempus.Core.Entities.User", b =>
+            modelBuilder.Entity("Tempus.Core.Entities.User.UserPhoto", b =>
                 {
-                    b.Navigation("Categories");
+                    b.HasOne("Tempus.Core.Entities.User.User", "User")
+                        .WithOne("UserPhoto")
+                        .HasForeignKey("Tempus.Core.Entities.User.UserPhoto", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ProfilePhoto");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
+                {
+                    b.Navigation("GroupCategories");
+
+                    b.Navigation("Registrations");
+
+                    b.Navigation("UserCategories");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.Group.Group", b =>
+                {
+                    b.Navigation("GroupCategories");
+
+                    b.Navigation("GroupPhoto");
+
+                    b.Navigation("GroupUsers");
+                });
+
+            modelBuilder.Entity("Tempus.Core.Entities.User.User", b =>
+                {
+                    b.Navigation("GroupUsers");
+
+                    b.Navigation("UserCategories");
+
+                    b.Navigation("UserPhoto");
                 });
 #pragma warning restore 612, 618
         }

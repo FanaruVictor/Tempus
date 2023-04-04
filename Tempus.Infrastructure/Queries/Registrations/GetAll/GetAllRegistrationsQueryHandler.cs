@@ -29,14 +29,16 @@ public class
             cancellationToken.ThrowIfCancellationRequested();
 
             List<Registration> registrations;
-            if(request.CategoryId.HasValue)
+
+            if(request.GroupId.HasValue)
             {
-                registrations = await _registrationRepository.GetAll(request.CategoryId.Value, request.UserId);
+                registrations = await _registrationRepository.GetAllFromGroup(request.GroupId.Value);
             }
             else
             {
                 registrations = await _registrationRepository.GetAll(request.UserId);
-            }
+            }   
+
 
             var registrationsOverview = registrations
                 .Select(x =>
@@ -45,11 +47,11 @@ public class
 
                     var currentRegistration = GenericMapper<Registration, RegistrationOverview>.Map(x);
                     currentRegistration.CategoryColor = categoryColor;
-                    
+
                     return currentRegistration;
                 })
                 .ToList();
-            
+
             var response = BaseResponse<List<RegistrationOverview>>.Ok(registrationsOverview);
             return response;
         }

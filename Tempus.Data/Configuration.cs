@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 using Tempus.Data.Repositories;
+using Tempus.Data.Repositories.Group;
 
 namespace Tempus.Data;
 
@@ -24,6 +26,11 @@ public static class Configuration
         services.AddScoped<IRegistrationRepository, RegistrationRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAuthRepository, AuthRepository>();
-        services.AddScoped<IProfilePhotoRepository, ProfilePhotoRepository>();
+        services.AddScoped<IUserPhotoRepository, UserPhotoRepository>();
+        services.AddScoped<IGroupRepository, GroupRepository>();
+        services.AddScoped<IGroupUserRepository, GroupUserRepository>();
+        services.AddScoped<IGroupPhotoRepository, GroupPhotoRepository>();
+        services.AddScoped<IGroupCategoryRepository, GroupCategoryRepository>();
+        services.AddScoped<IUserCategoryRepository, UserCategoryRepository>();
     }
 }

@@ -10,13 +10,13 @@ namespace Tempus.Infrastructure.Services.Cloudynary;
 public class CloudinaryService : ICloudinaryService
 {
     private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
-    private readonly IProfilePhotoRepository _profilePhotoRepository;
+    private readonly IUserPhotoRepository _userPhotoRepository;
     private readonly Cloudinary _cloudinary;
 
-    public CloudinaryService(IOptions<CloudinarySettings> cloudinaryConfig, IProfilePhotoRepository profilePhotoRepository)
+    public CloudinaryService(IOptions<CloudinarySettings> cloudinaryConfig, IUserPhotoRepository userPhotoRepository)
     {
         _cloudinaryConfig = cloudinaryConfig;
-        _profilePhotoRepository = profilePhotoRepository;
+        _userPhotoRepository = userPhotoRepository;
         var account = new Account(
             _cloudinaryConfig.Value.CloudName,
             _cloudinaryConfig.Value.ApiKey,
@@ -46,7 +46,7 @@ public class CloudinaryService : ICloudinaryService
 
     public async Task DestroyUsingUserId(Guid userId)
     {
-        var photo = await _profilePhotoRepository.GetByUserId(userId);
+        var photo = await _userPhotoRepository.GetByUserId(userId);
 
         if(photo == null)
         {

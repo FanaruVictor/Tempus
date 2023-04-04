@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 

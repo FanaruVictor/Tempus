@@ -19,8 +19,8 @@ export class RegistrationApiService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAll() {
-    return this.httpClient.get<GenericResponse<RegistrationOverview[]>>(this.apiUrl);
+  getAll(groupId: string) {
+    return this.httpClient.get<GenericResponse<RegistrationOverview[]>>(this.apiUrl, {params: {groupId: groupId}});
   }
 
   getById(id: string) {

@@ -25,6 +25,7 @@ body {
   --text-color: #222;
   --background-color: #fff;
   --header-color: #d7d7d7;
+  --active-color: #c0c0c0;
   --content-color: #e7e7e7;
   --tooltip-background-color: #2a2a2a;
   --tooltip-text-color: #eee;
@@ -34,7 +35,8 @@ body.dark-theme {
   --text-color: #eee;
   --background-color: #2a2a2a;
   --header-color: #1f1f1f;
-  --content-color: #446969;
+  --active-color: #181818;
+  --content-color: #2c2c2c;
   --tooltip-background-color: #fff;
   --tooltip-text-color: #222;
 }

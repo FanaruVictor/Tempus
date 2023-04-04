@@ -13,8 +13,6 @@
     padding-bottom: 15px;
     justify-content: space-between;
     align-items: center;
-
-
   }
 
   .menu-actions {
@@ -60,7 +58,7 @@
     }
 
     &:hover {
-      background-color: var(--background-color);
+      background-color: var(--header-color);
       border-radius: 5px;
     }
 
@@ -94,7 +92,6 @@
           .user-photos {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
             align-items: center;
 
             img {
@@ -121,8 +118,11 @@
   }
 
   .group-active {
-    background-color: var(--background-color);
+    background-color: var(--active-color);
     border-radius: 5px;
+    &:hover {
+      background-color: var(--active-color);
+    }
   }
 }
 

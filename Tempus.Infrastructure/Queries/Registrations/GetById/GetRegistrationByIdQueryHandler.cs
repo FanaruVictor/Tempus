@@ -29,7 +29,16 @@ public class GetRegistrationByIdQueryHandler : IRequestHandler<GetRegistrationBy
             {
                 return BaseResponse<RegistrationDetails>.NotFound("Registration not found!");
             }
-            if(registration.Category.UserId != request.UserId)
+            
+            var userId = registration.Category.UserCategories.FirstOrDefault(x => x.CategoryId == registration.Category.Id)
+                ?.UserId;
+
+            if(userId == null)
+            {
+                return BaseResponse<RegistrationDetails>.BadRequest(new List<string> {"Internal server error"});
+            }
+            
+            if( userId != request.UserId)
             {
                 return BaseResponse<RegistrationDetails>.Forbbiden();
             }

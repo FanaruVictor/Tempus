@@ -1,4 +1,5 @@
 ﻿using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 
 namespace Tempus.Core.IRepositories;
 

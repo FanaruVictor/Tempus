@@ -1,4 +1,4 @@
-import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -22,6 +22,7 @@ const htmlToPdfmake = require("html-to-pdfmake");
   styleUrls: ['./registrations-overview.component.scss']
 })
 export class RegistrationsOverviewComponent {
+  @Input() groupId: string = '';
   registrations?: RegistrationOverview[];
   categories?: BaseCategory[];
   defaultColor = '#d6efef';
@@ -61,7 +62,7 @@ export class RegistrationsOverviewComponent {
   }
 
   private getAll() {
-    this.registrationApiService.getAll()
+    this.registrationApiService.getAll(this.groupId)
       .subscribe({
         next: response => {
           this.registrations = response.resource;

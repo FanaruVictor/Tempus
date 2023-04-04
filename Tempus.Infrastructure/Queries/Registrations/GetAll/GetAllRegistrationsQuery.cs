@@ -6,5 +6,5 @@ namespace Tempus.Infrastructure.Queries.Registrations.GetAll;
 
 public class GetAllRegistrationsQuery : BaseRequest<BaseResponse<List<RegistrationOverview>>>
 {
-    public Guid? CategoryId { get; init; }
+    public Guid? GroupId { get; init; }
 }

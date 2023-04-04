@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Photo;
 using Tempus.Core.Models.User;
@@ -10,13 +11,13 @@ namespace Tempus.Infrastructure.Queries.Users.GetById;
 
 public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseResponse<UserDetails>>
 {
-    private readonly IProfilePhotoRepository _profilePhotoRepository;
+    private readonly IUserPhotoRepository _userPhotoRepository;
     private readonly IUserRepository _userRepository;
 
-    public GetUserByIdQueryHandler(IUserRepository userRepository, IProfilePhotoRepository profilePhotoRepository)
+    public GetUserByIdQueryHandler(IUserRepository userRepository, IUserPhotoRepository userPhotoRepository)
     {
         _userRepository = userRepository;
-        _profilePhotoRepository = profilePhotoRepository;
+        _userPhotoRepository = userPhotoRepository;
     }
 
     public async Task<BaseResponse<UserDetails>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
@@ -31,13 +32,13 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
                 return BaseResponse<UserDetails>.NotFound("User not found.");
             }
 
-            var profilePhoto = await _profilePhotoRepository.GetByUserId(request.UserId);
+            var profilePhoto = await _userPhotoRepository.GetByUserId(request.UserId);
 
             var userDetails = GenericMapper<User, UserDetails>.Map(user);
 
             if(profilePhoto != null)
             {
-                userDetails.Photo = GenericMapper<Core.Entities.ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+                userDetails.Photo = GenericMapper<Core.Entities.User.UserPhoto, PhotoDetails>.Map(profilePhoto);
             }
 
             var result = BaseResponse<UserDetails>.Ok(userDetails);

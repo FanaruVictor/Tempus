@@ -13,7 +13,10 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
 
     public async Task<List<Category?>> GetAll(Guid userId)
     {
-        return await _context.Categories.AsNoTracking().Where(x => x.UserId == userId).ToListAsync();
+        return await _context.UserCategories.AsNoTracking()
+            .Where(x => x.UserId == userId)
+            .Select(x => x.Category)
+            .ToListAsync();
     }
 
     public string GetCategoryColor(Guid id)

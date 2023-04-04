@@ -27,8 +27,16 @@ public class DeleteRegistrationCommandHandler : IRequestHandler<DeleteRegistrati
             {
                 return BaseResponse<Guid>.NotFound("Registration not found");
             }
+
+            var userId = registration.Category.UserCategories.FirstOrDefault(x => x.CategoryId == registration.Category.Id)
+                ?.UserId;
+
+            if(userId == null)
+            {
+                return BaseResponse<Guid>.BadRequest(new List<string> {"Internal server error"});
+            }
             
-            if(registration.Category.UserId != request.UserId)
+            if( userId != request.UserId)
             {
                 return BaseResponse<Guid>.Forbbiden();
             }

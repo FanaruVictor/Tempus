@@ -2,17 +2,15 @@
   <div class="menu">
     <app-group-menu></app-group-menu>
   </div>
-  <div class="left">
-    <app-registrations-overview></app-registrations-overview>
+  <div class="left" *ngIf="groupId !== ''; else noGroups;">
+    <div class="group-navbar">
+      <div class="registrations tab" (click)="redirectToRegistrations()">Registrations</div>
+      <div class="categories tab">Categories</div>
+    </div>
+    <app-registrations-overview [groupId]="groupId" *ngIf="routePattern == 'overview/:id/registrations'"></app-registrations-overview>
   </div>
 </div>
 
-<ng-template #noGroups>
-  <h1>
-    There are no groups yet. Please create one.
-  </h1>
-</ng-template>
-
-<ng-template>
-  To see group overview, please select a group.
+<ng-template #noGroups >
+  <h1 class="no-group-selected">To see a group's overview, please select a one.</h1>
 </ng-template>

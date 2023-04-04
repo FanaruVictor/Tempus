@@ -3,7 +3,6 @@
 .account-wrapper {
   display: flex;
   height: 100%;
-  padding-top: 50px;
   width: 100%;
 
   .right {
@@ -39,7 +38,7 @@
 
     .content {
       background-color: var(--content-color);
-      border: 5px;
+      border-radius: 5px;
       font-size: 18px;
       height: 100%;
       width: 100%;

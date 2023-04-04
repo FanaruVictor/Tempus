@@ -31,10 +31,6 @@ public class
                 return BaseResponse<RegistrationDetails>.NotFound($"Registration with Id: {request.Id} was not found");
             }
 
-            if(entity.Category.UserId != request.UserId)
-            {
-                return BaseResponse<RegistrationDetails>.Forbbiden();
-            }
 
             entity = new Registration
             {

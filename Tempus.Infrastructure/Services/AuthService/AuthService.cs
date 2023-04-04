@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.IServices;
 using Tempus.Core.Models.Auth;
@@ -19,15 +20,15 @@ public class AuthService : IAuthService
 {
     private readonly IAuthRepository _authRepository;
     private readonly IConfiguration _configuration;
-    private readonly IProfilePhotoRepository _profilePhotoRepository;
+    private readonly IUserPhotoRepository _userPhotoRepository;
     private readonly IUserRepository _userRepository;
 
     public AuthService(IAuthRepository authRepository, IConfiguration configuration,
-        IProfilePhotoRepository profilePhotoRepository, IUserRepository userRepository)
+        IUserPhotoRepository userPhotoRepository, IUserRepository userRepository)
     {
         _authRepository = authRepository;
         _configuration = configuration;
-        _profilePhotoRepository = profilePhotoRepository;
+        _userPhotoRepository = userPhotoRepository;
         _userRepository = userRepository;
     }
 
@@ -38,7 +39,7 @@ public class AuthService : IAuthService
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (!await _authRepository.IsEmailAlreadyRegistered(credentials.Email))
+            if(!await _authRepository.IsEmailAlreadyRegistered(credentials.Email))
             {
                 throw new Exception("User not found");
             }
@@ -53,24 +54,24 @@ public class AuthService : IAuthService
                 AuthorizationToken = tokenHandler.WriteToken(token)
             };
 
-            var profilePhoto = await _profilePhotoRepository.GetByUserId(user.Id);
+            var profilePhoto = await _userPhotoRepository.GetByUserId(user.Id);
 
-            if (profilePhoto != null)
+            if(profilePhoto != null)
             {
-                result.User.Photo = GenericMapper<ProfilePhoto, PhotoDetails>.Map(profilePhoto);
+                result.User.Photo = GenericMapper<UserPhoto, PhotoDetails>.Map(profilePhoto);
             }
 
             var response = BaseResponse<LoginResult>.Ok(result);
 
             return response;
         }
-        catch (TaskCanceledException canceledException)
+        catch(TaskCanceledException canceledException)
         {
-            return BaseResponse<LoginResult>.BadRequest(new List<string> { canceledException.Message });
+            return BaseResponse<LoginResult>.BadRequest(new List<string> {canceledException.Message});
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var response = BaseResponse<LoginResult>.BadRequest(new List<string> { exception.Message });
+            var response = BaseResponse<LoginResult>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }
@@ -85,12 +86,12 @@ public class AuthService : IAuthService
             BaseResponse<UserDetails> result;
 
 
-            if (await _authRepository.IsEmailAlreadyRegistered(userInfo.Email.ToLower()))
+            if(await _authRepository.IsEmailAlreadyRegistered(userInfo.Email.ToLower()))
             {
                 throw new Exception("Email already registered");
             }
-            
-            if (await _authRepository.IsUsernameAlreadyRegistered(userInfo.UserName.ToLower()))
+
+            if(await _authRepository.IsUsernameAlreadyRegistered(userInfo.UserName.ToLower()))
             {
                 throw new Exception("Username already registered");
             }
@@ -102,17 +103,18 @@ public class AuthService : IAuthService
 
             return result;
         }
-        catch (TaskCanceledException canceledException)
+        catch(TaskCanceledException canceledException)
         {
-            return BaseResponse<UserDetails>.BadRequest(new List<string> { canceledException.Message });
+            return BaseResponse<UserDetails>.BadRequest(new List<string> {canceledException.Message});
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            return BaseResponse<UserDetails>.BadRequest(new List<string> { exception.Message });
+            return BaseResponse<UserDetails>.BadRequest(new List<string> {exception.Message});
         }
     }
 
-    public async Task<BaseResponse<LoginResult>> LoginWithGoogle(string googleCredentials, CancellationToken cancellationToken)
+    public async Task<BaseResponse<LoginResult>> LoginWithGoogle(string googleCredentials,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -122,12 +124,12 @@ public class AuthService : IAuthService
 
             var settings = new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new List<string> { _configuration["GoogleSettings:ClientId"] }
+                Audience = new List<string> {_configuration["GoogleSettings:ClientId"]}
             };
 
             var payload = await GoogleJsonWebSignature.ValidateAsync(googleCredentials, settings);
 
-            if (payload == null)
+            if(payload == null)
             {
                 result = BaseResponse<LoginResult>.BadRequest(new List<string>
                 {
@@ -139,11 +141,11 @@ public class AuthService : IAuthService
 
             var user = await _userRepository.GetByExternalId(payload.Subject);
 
-            if (user == null)
+            if(user == null)
             {
                 user = await RegisterExternalUser(payload);
             }
-            
+
             CreateToken(user, out var tokenHandler, out var token);
 
             var loginResult = new LoginResult
@@ -151,18 +153,17 @@ public class AuthService : IAuthService
                 User = GenericMapper<User, UserDetails>.Map(user),
                 AuthorizationToken = tokenHandler.WriteToken(token)
             };
-            
+
 
             return BaseResponse<LoginResult>.Ok(loginResult);
-
         }
-        catch (TaskCanceledException canceledException)
+        catch(TaskCanceledException canceledException)
         {
-            return BaseResponse<LoginResult>.BadRequest(new List<string> { canceledException.Message });
+            return BaseResponse<LoginResult>.BadRequest(new List<string> {canceledException.Message});
         }
-        catch (Exception exception)
+        catch(Exception exception)
         {
-            var response = BaseResponse<LoginResult>.BadRequest(new List<string> { exception.Message });
+            var response = BaseResponse<LoginResult>.BadRequest(new List<string> {exception.Message});
             return response;
         }
     }
@@ -193,15 +194,16 @@ public class AuthService : IAuthService
             UserName = payload.Name
         });
 
-        var photo = new ProfilePhoto
+        var photo = new UserPhoto
         {
             Id = Guid.NewGuid(),
             Url = payload.Picture,
-            UserId = user.Id
+            PublicId = "",
+            UserId = user.Id,
         };
 
-        await _profilePhotoRepository.Add(photo);
-        await _profilePhotoRepository.SaveChanges();
+        await _userPhotoRepository.Add(photo);
+        await _userPhotoRepository.SaveChanges();
 
         return user;
     }

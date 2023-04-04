@@ -12,10 +12,17 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(x => x.CreatedAt).IsRequired();
         builder.Property(x => x.Color).IsRequired();
         builder.Property(x => x.Name).IsRequired();
+        builder.Property(x => x.LastUpdatedAt).IsRequired();
+        builder.HasMany(x => x.Registrations).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId);
 
-        builder
-            .HasOne(x => x.User)
-            .WithMany(x => x.Categories)
-            .HasForeignKey(x => x.UserId);
+        builder.HasMany(x => x.UserCategories)
+            .WithOne(x => x.Category)
+            .HasForeignKey(x => x.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasMany(x => x.GroupCategories)
+            .WithOne(x => x.Category)
+            .HasForeignKey(x => x.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
