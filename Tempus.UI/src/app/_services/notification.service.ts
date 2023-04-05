@@ -16,7 +16,10 @@ export class NotificationService {
   error(messages: string[], title: string) {
     let totalMessage = '';
     messages.forEach(x => totalMessage += x + '\n\n');
-
     this.toastr.error(totalMessage, title);
+  }
+
+  warn(message: string, title: string) {
+    this.toastr.warning(message, title);
   }
 }

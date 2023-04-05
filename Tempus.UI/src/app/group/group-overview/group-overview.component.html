@@ -7,7 +7,7 @@
       <div class="registrations tab" (click)="redirectToRegistrations()">Registrations</div>
       <div class="categories tab">Categories</div>
     </div>
-    <app-registrations-overview [groupId]="groupId" *ngIf="routePattern == 'overview/:id/registrations'"></app-registrations-overview>
+    <app-registrations [groupId]="groupId" *ngIf="routePattern == 'overview/:id/registrations'"></app-registrations>
   </div>
 </div>
 

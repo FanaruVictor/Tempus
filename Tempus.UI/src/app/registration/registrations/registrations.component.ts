@@ -13,15 +13,16 @@ import {FileService} from "../../_services/file.service";
 import {NotificationService} from "../../_services/notification.service";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+
 const htmlToPdfmake = require("html-to-pdfmake");
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-registrations-overview',
-  templateUrl: './registrations-overview.component.html',
-  styleUrls: ['./registrations-overview.component.scss']
+  selector: 'app-registrations',
+  templateUrl: './registrations.component.html',
+  styleUrls: ['./registrations.component.scss']
 })
-export class RegistrationsOverviewComponent {
+export class RegistrationsComponent {
   @Input() groupId: string = '';
   registrations?: RegistrationOverview[];
   categories?: BaseCategory[];
@@ -57,8 +58,16 @@ export class RegistrationsOverviewComponent {
     this.categoryApiService.getAll()
       .subscribe(response => {
         this.categories = response.resource;
-      })
+      });
 
+    this.registrationApiService.registration.subscribe(x => {
+      this.registrations = this.registrations?.map(registration => {
+        if (registration.id === x.id) {
+          registration.description = x.description;
+        }
+        return registration;
+      });
+    })
   }
 
   private getAll() {
@@ -71,7 +80,7 @@ export class RegistrationsOverviewComponent {
           );
 
           this.registrations?.forEach(x => {
-            if(!this.registrationsColor.includes(x.categoryColor)){
+            if (!this.registrationsColor.includes(x.categoryColor)) {
               this.registrationsColor.push(x.categoryColor);
             }
           });
@@ -95,7 +104,7 @@ export class RegistrationsOverviewComponent {
       this.registrations = this.registrations?.filter(x => x.id !== result.resource)
       this.registrationsColor = [];
       this.registrations?.forEach(x => {
-        if(!this.registrationsColor.includes(x.categoryColor)){
+        if (!this.registrationsColor.includes(x.categoryColor)) {
           this.registrationsColor.push(x.categoryColor);
         }
       });
@@ -105,23 +114,23 @@ export class RegistrationsOverviewComponent {
 
   download(registration: RegistrationOverview): void {
     const documentDefinition = this.prepareDocument(registration);
-    if(documentDefinition == undefined){
+    if (documentDefinition == undefined) {
       return;
     }
 
     pdfMake.createPdf(documentDefinition).download();
   }
 
-  print(registration: RegistrationOverview){
+  print(registration: RegistrationOverview) {
     const documentDefinition = this.prepareDocument(registration);
-    if(documentDefinition == undefined){
+    if (documentDefinition == undefined) {
       return;
     }
 
     pdfMake.createPdf(documentDefinition).print();
   }
 
-  private prepareDocument(registration: RegistrationOverview) :any {
+  private prepareDocument(registration: RegistrationOverview): any {
     if (!registration)
       return undefined;
 
@@ -139,7 +148,7 @@ export class RegistrationsOverviewComponent {
           alignment: 'left'
         },
       },
-      defaultStyle:{
+      defaultStyle: {
         bold: false
       }
     };
@@ -147,7 +156,7 @@ export class RegistrationsOverviewComponent {
     return documentDefinition;
   }
 
-  modifyContent(values: string[]){
+  modifyContent(values: string[]) {
     let element = document.getElementsByClassName('mat-select-value')[0];
     element.innerHTML = '';
     values.forEach(x =>
@@ -159,7 +168,33 @@ export class RegistrationsOverviewComponent {
     );
   }
 
-  resetDate(){
+  resetDate() {
     this.dateRange.reset();
+  }
+
+  redirectToEditPage(id: string) {
+    const registration = this.registrations?.find(x => x.id === id);
+    if (!registration) {
+      return;
+    }
+
+    this.registrationApiService.setRegistration(registration);
+
+    if (this.groupId) {
+      this.router.navigate(['/groups', this.groupId, 'registrations', id, 'edit']);
+      return;
+    }
+    this.router.navigate(['/registrations', id, 'edit-full-view'])
+  }
+
+  openEditContainer(id: string) {
+
+    const registration = this.registrations?.find(x => x.id === id);
+    if (!registration) {
+      return;
+    }
+
+    this.registrationApiService.setRegistration(registration);
+    this.router.navigate(['/registrations', id, 'edit-registrations-view'])
   }
 }

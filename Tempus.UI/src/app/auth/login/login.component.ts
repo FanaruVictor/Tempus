@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
     if (localStorage.getItem("authorizationToken")) {
-      this.router.navigate(['/registrations/overview']);
+      this.router.navigate(['/registrations']);
     }
   }
 

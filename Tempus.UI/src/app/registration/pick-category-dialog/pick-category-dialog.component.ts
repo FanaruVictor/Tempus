@@ -21,6 +21,6 @@ export class PickCategoryDialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/registrations/overview']);
+    this.router.navigate(['/registrations']);
   }
 }

@@ -1,5 +1,4 @@
-﻿import {RegistrationsOverviewComponent} from "./registrations-overview.component";
-import {fakeAsync, TestBed, tick} from "@angular/core/testing";
+﻿import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -9,12 +8,13 @@ import {RegistrationApiService} from "../../_services/registration.api.service";
 import {CategoryApiService} from "../../_services/category.api.service";
 import {GenericResponse} from "../../_commons/models/genericResponse";
 import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
+import {RegistrationsComponent} from "./registrations.component";
 
 describe('Component: RegistrationsOverview', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RegistrationsOverviewComponent],
+      declarations: [RegistrationsComponent],
       providers: [
         RegistrationApiService,
         CategoryApiService
@@ -28,13 +28,13 @@ describe('Component: RegistrationsOverview', () => {
   });
 
   it('should create the app', () => {
-    let fixture = TestBed.createComponent(RegistrationsOverviewComponent);
+    let fixture = TestBed.createComponent(RegistrationsComponent);
     let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   })
 
   it('should call getAll and response as empty array', fakeAsync(() => {
-    const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
+    const fixture = TestBed.createComponent(RegistrationsComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
     let response: GenericResponse<RegistrationOverview[]> = {
@@ -51,7 +51,7 @@ describe('Component: RegistrationsOverview', () => {
   }));
 
   it('should call getAll and response as array', fakeAsync(() => {
-    const fixture = TestBed.createComponent(RegistrationsOverviewComponent);
+    const fixture = TestBed.createComponent(RegistrationsComponent);
     const component = fixture.debugElement.componentInstance;
     const service = fixture.debugElement.injector.get(RegistrationApiService);
     let response: GenericResponse<RegistrationOverview[]> = {

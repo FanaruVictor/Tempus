@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
-import { RegistrationModule } from './registration/registration.module';
 import { CategoryModule } from './category/category.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +18,7 @@ import { HeaderComponent } from './_commons/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from './shared/shared.module';
 import { GroupModule } from './group/group.module';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {RegistrationModule} from "./registration/registration.module";
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],

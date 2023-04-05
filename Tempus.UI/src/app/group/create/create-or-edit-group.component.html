@@ -29,8 +29,8 @@
       <div class="add-member">
 
         <div class="user-search-bar">
-          <ng-select [multiple]="true" [items]="users" bindLabel="email" bindValue="id" formControlName="members"
-            placeholder="Select the users for this group" (click)="addPhotos()">
+          <ng-select [multiple]="true" [items]="users" [closeOnSelect]="false" bindLabel="email" bindValue="id" formControlName="members"
+            placeholder="Select the users for this group"  (click)="addPhotos()">
           </ng-select>
         </div>
 

@@ -15,7 +15,7 @@
   <div mat-dialog-actions align="end">
     <button (click)="onNoClick()" class="cancel-button" mat-raised-button>Cancel</button>
     <button [disabled]="categoryControl.hasError('required')" [mat-dialog-close]="categoryControl.value"
-            cdkFocusInitial mat-raised-button>Ok
+            cdkFocusInitial mat-raised-button color="primary">Ok
     </button>
   </div>
 

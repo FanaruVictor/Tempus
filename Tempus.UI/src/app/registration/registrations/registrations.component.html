@@ -34,7 +34,9 @@
         | color:  colors.value" class="registration"
            [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}">
 
-        <div [routerLink]="['/registrations/edit', registration.id]" class="title">{{registration.description}}</div>
+        <div class="content" (click)="openEditContainer(registration.id)">
+          <a (click)="redirectToEditPage(registration.id)" class="title" >{{registration.description}}</a>
+        </div>
         <div class="actions">
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="action for registration menu">
             <mat-icon>more_vert</mat-icon>
@@ -57,6 +59,7 @@
         </div>
       </div>
     </div>
+    <router-outlet></router-outlet>
     <ng-template #showNoRegistrations>
       <h1>You do not have registrations</h1>
     </ng-template>

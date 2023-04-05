@@ -1,13 +1,18 @@
 ﻿import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RegistrationsOverviewComponent} from "./registrations-overview/registrations-overview.component";
 import {CreateOrEditRegistrationComponent} from "./create-or-edit-registration/create-or-edit-registration.component";
+import {RegistrationsComponent} from "./registrations/registrations.component";
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'overview'},
+  {
+    path: '',
+    component: RegistrationsComponent,
+    children: [
+      {path: ':id/edit-registrations-view', component: CreateOrEditRegistrationComponent}
+    ]
+  },
+  {path: ':id/edit-full-view', component: CreateOrEditRegistrationComponent},
   {path: 'create', component: CreateOrEditRegistrationComponent},
-  {path: 'edit/:id', component: CreateOrEditRegistrationComponent},
-  {path: 'overview', component: RegistrationsOverviewComponent},
 ];
 
 @NgModule({

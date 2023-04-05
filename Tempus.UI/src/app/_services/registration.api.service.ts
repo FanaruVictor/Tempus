@@ -2,21 +2,33 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GenericResponse} from "../_commons/models/genericResponse";
 import {RegistrationOverview} from "../_commons/models/registrations/registrationOverview";
-import {BaseRegistration} from "../_commons/models/registrations/baseRegistration";
 import {UpdateRegistrationCommandData} from "../_commons/models/registrations/updateRegistrationCommandData";
 import {CreateRegistrationCommandData} from "../_commons/models/registrations/createRegistrationCommandData";
 import {environment} from "../../environments/environment";
-import {RegistrationDetails} from "../_commons/models/registrations/RegistrationDetails";
 import {BehaviorSubject, Observable} from "rxjs";
-import {UserDetails} from "../_commons/models/user/userDetails";
+import {RegistrationDetails} from "../_commons/models/registrations/registrationDetails";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationApiService {
   apiUrl = `${environment.apiUrl}/v1/registrations`;
+  registrationSubject: BehaviorSubject<RegistrationOverview>;
+  registration: Observable<RegistrationOverview>
 
   constructor(private httpClient: HttpClient) {
+    this.registrationSubject = new BehaviorSubject<RegistrationOverview>({
+      id: '',
+      description: '',
+      content: '',
+      categoryColor: '',
+      createdAt: '',
+    });
+    this.registration = this.registrationSubject.asObservable();
+  }
+
+  setRegistration(registration: RegistrationOverview) {
+    this.registrationSubject.next(registration);
   }
 
   getAll(groupId: string) {

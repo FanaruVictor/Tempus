@@ -4,7 +4,6 @@ import { RegistrationRoutingModule } from './registration-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { RegistrationsOverviewComponent } from './registrations-overview/registrations-overview.component';
 import { SharedModule } from '../shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,10 +25,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateRangePipe } from '../_commons/pipes/dateRange.pipe';
 import { MatMenuModule } from '@angular/material/menu';
 import { ColorPipe } from '../_commons/pipes/color.pipe';
+import {RegistrationsComponent} from "./registrations/registrations.component";
 
 @NgModule({
   declarations: [
-    RegistrationsOverviewComponent,
+    RegistrationsComponent,
     PickCategoryDialogComponent,
     CreateOrEditRegistrationComponent,
     SearchPipe,
@@ -55,7 +55,7 @@ import { ColorPipe } from '../_commons/pipes/color.pipe';
     MatNativeDateModule,
     MatMenuModule,
   ],
-  exports: [RegistrationsOverviewComponent, SearchPipe],
+  exports: [RegistrationsComponent, SearchPipe],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     {

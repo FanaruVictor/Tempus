@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
@@ -13,6 +13,9 @@ import {NotificationService} from "../../_services/notification.service";
 import {QuillEditorComponent} from "ngx-quill";
 import Quill from 'quill'
 import ImageResize from 'quill-image-resize-module'
+import {RegistrationDetails} from "../../_commons/models/registrations/registrationDetails";
+import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
+
 Quill.register('modules/imageResize', ImageResize)
 
 @Component({
@@ -20,19 +23,18 @@ Quill.register('modules/imageResize', ImageResize)
   templateUrl: './create-or-edit-registration.component.html',
   styleUrls: ['./create-or-edit-registration.component.scss']
 })
-export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
+export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit {
   categories?: BaseCategory[];
-  id: string = '';
+  initialRegistration!: RegistrationOverview;
+  id: string | undefined;
   isCreateMode: boolean = true;
   @ViewChild('editor') editor: QuillEditorComponent | undefined;
   content = '';
   format = 'html';
-  createOrEditForm = new UntypedFormGroup({
-    description: new UntypedFormControl('', [Validators.required]),
-    content: new UntypedFormControl('', [Validators.required])
-  });
+  createOrEditForm: FormGroup;
   lastUpdatedAt?: Date;
   categoryColor!: string;
+  page: string | undefined;
 
   toolbarOptions = [
     [{'font': []}],
@@ -62,100 +64,156 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
     private dialog: MatDialog,
     private categoryApiService: CategoryApiService,
     private registrationApiService: RegistrationApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private fb: FormBuilder
   ) {
-
+    this.createOrEditForm = this.fb.group({
+      description: ['', Validators.required],
+      content: ['', Validators.required],
+    });
   }
 
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.params['id'];
-    this.isCreateMode = !this.id;
+    const url = this.activatedRoute.snapshot.url;
+    this.page = url[url.length - 1].path;
+    this.registrationApiService.registration
+      .subscribe(x => {
+          this.id = x.id;
+          this.initialRegistration = x;
 
-    if (!this.isCreateMode) {
-      this.registrationApiService
-        .getById(this.id)
-        .pipe(first())
-        .subscribe({
-          next: response => {
-            this.createOrEditForm.patchValue(response.resource);
-            this.lastUpdatedAt = new Date(response.resource.lastUpdatedAt);
-            this.categoryColor = response.resource.categoryColor;
+          if (this.id === '' || this.id === undefined) {
+            this.id = this.activatedRoute.snapshot.paramMap.get('id') ?? undefined;
           }
-        });
-    }
-    else{
-      const categoryId = this.activatedRoute.snapshot.paramMap.get('categoryId');
-      if(categoryId === null){
-        this.notificationService.error(["There is no category selected for creating a registration"], "Select category color to create registration");
-        this.router.navigate(["/registrations/overview"]);
-        return;
-      }
 
-      this.categoryApiService.getById(categoryId)
-        .subscribe(response => {
-          this.categoryColor = response.resource.color;
-        })
+          this.isCreateMode = !this.id;
+
+          if (!this.isCreateMode) {
+            this.getById();
+            return;
+          }
+
+          const categoryId = this.activatedRoute.snapshot.paramMap.get('categoryId');
+          if (categoryId !== null) {
+            this.getCategory(categoryId);
+          }
+        }
+      );
+  }
+
+  getCategory(categoryId
+                :
+                string | undefined
+  ) {
+    if (categoryId === undefined) {
+      return;
     }
+
+    this.categoryApiService
+      .getById(categoryId)
+      .pipe(first())
+      .subscribe({
+        next: response => {
+          this.categoryColor = response.resource.color;
+        }
+      });
+  }
+
+  getById() {
+    if (this.id === undefined) {
+      return;
+    }
+
+    this.registrationApiService
+      .getById(this.id)
+      .pipe(first())
+      .subscribe(response => {
+        this.initialRegistration.content = response.resource.content;
+        this.initialRegistration.description = response.resource.description;
+        this.createOrEditForm.patchValue(response.resource);
+        this.lastUpdatedAt = new Date(response.resource.lastUpdatedAt);
+        this.categoryColor = response.resource.categoryColor;
+      });
   }
 
   submit() {
-    this.validateForm();
+    if (!this.isFormValid()) {
+      this.notificationService.warn('No changes detected', 'Request completed');
+      return;
+    }
     if (!this.isCreateMode) {
-      this.update();
+      this.updateRegistration();
       return
     }
-    this.create();
+    this.createRegistration();
   }
 
-  validateForm() {
-
+  isFormValid() {
+    if (!this.isCreateMode) {
+      return this.initialRegistration?.content != this.createOrEditForm.get('content')?.value
+        || this.initialRegistration?.description != this.createOrEditForm.get('description')?.value;
+    }
+    return this.createOrEditForm.valid;
   }
 
-  update() {
+  updateRegistration() {
     let updateRegistrationCommandData: UpdateRegistrationCommandData = {
-      id: this.id,
-      description: this.createOrEditForm.controls['description'].value,
-      content: this.createOrEditForm.controls['content'].value
+      id: this.id || '',
+      description: this.createOrEditForm.get('description')?.value,
+      content: this.createOrEditForm.get('content')?.value
     };
 
+    this.update(updateRegistrationCommandData)
+  }
+
+  private
+
+  update(updateRegistrationCommandData
+           :
+           UpdateRegistrationCommandData
+  ) {
     this.registrationApiService
       .update(updateRegistrationCommandData)
       .pipe(filter(x => !!x))
-      .subscribe({
-        next: result => {
-          this.lastUpdatedAt = new Date(result.resource.lastUpdatedAt);
-          this.notificationService.succes('Registration updated successfully', 'Request completed')
-        }
-      })
+      .subscribe(result => {
+        this.lastUpdatedAt = new Date(result.resource.lastUpdatedAt);
+        this.notificationService.succes('Registration updated successfully', 'Request completed');
+        this.initialRegistration = {
+          id: result.resource.id,
+          description: result.resource.description,
+          content: result.resource.content,
+          categoryColor: result.resource.categoryColor,
+          createdAt: this.initialRegistration.createdAt
+        };
+        this.registrationApiService.setRegistration(this.initialRegistration);
+
+      });
   }
 
-  create() {
+  createRegistration() {
     let catId = this.activatedRoute.snapshot.paramMap.get('categoryId') ?? '';
     if (catId !== '') {
       let registration: CreateRegistrationCommandData = {
-        description: this.createOrEditForm.controls['description'].value,
-        content: this.createOrEditForm.controls['content'].value,
+        description: this.createOrEditForm.get('description')?.value,
+        content: this.createOrEditForm.get('content')?.value,
         categoryId: catId
       }
 
-      this.createRegistration(registration);
+      this.create(registration);
       return;
     }
 
     this.openDialog();
   }
 
-  createRegistration(registration
-                       :
-                       CreateRegistrationCommandData
+  create(registration
+           :
+           CreateRegistrationCommandData
   ) {
     this.registrationApiService.create(registration)
       .pipe(filter(x => !!x))
-      .subscribe({
-          next: result => {
-            this.router.navigate(['/registrations/edit', result.resource.id])
-            this.notificationService.succes('Registration created succesfully', 'Request completed')
-          }
+      .subscribe(result => {
+          this.router.navigate(['/registrations'])
+          this.notificationService.succes('Registration created succesfully', 'Request completed')
         }
       );
   }
@@ -173,19 +231,21 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit{
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
               let registration: CreateRegistrationCommandData = {
-                description: this.createOrEditForm.controls['description'].value,
-                content: this.createOrEditForm.controls['content'].value,
+                description: this.createOrEditForm.get('description')?.value,
+                content: this.createOrEditForm.get('content')?.value,
                 categoryId: result.id
               };
 
-              this.createRegistration(registration);
+              this.create(registration);
             }
           });
         }
       });
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit()
+    :
+    void {
     let element = document.querySelector('.header') as HTMLElement;
     element.style.boxShadow = `0 4px 2 -2px ${this.categoryColor}`;
   }
