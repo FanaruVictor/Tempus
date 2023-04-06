@@ -23,7 +23,7 @@ export class GroupOverviewComponent implements OnInit{
   }
 
   redirectToRegistrations() {
-    this.router.navigate([`groups/overview/${this.groupId}/registrations`]);
+    this.router.navigate([`groups/${this.groupId}/registrations`]);
   }
 
 }

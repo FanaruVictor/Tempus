@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, HostBinding, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {PickCategoryDialogComponent} from "../pick-category-dialog/pick-category-dialog.component";
 import {RegistrationApiService} from "../../_services/registration.api.service";
@@ -23,7 +23,7 @@ const htmlToPdfmake = require("html-to-pdfmake");
   styleUrls: ['./registrations.component.scss']
 })
 export class RegistrationsComponent {
-  @Input() groupId: string = '';
+  groupId: string = '';
   registrations?: RegistrationOverview[];
   categories?: BaseCategory[];
   defaultColor = '#d6efef';
@@ -54,6 +54,7 @@ export class RegistrationsComponent {
   }
 
   ngOnInit(): void {
+    this.groupId = this.router.url.split('/')[2] || '';
     this.getAll();
     this.categoryApiService.getAll()
       .subscribe(response => {
@@ -95,7 +96,13 @@ export class RegistrationsComponent {
     dialogRef.afterClosed()
       .pipe(filter(x => !!x))
       .subscribe(result => {
-        this.router.navigate(['/registrations/create', {categoryId: result.id}])
+        console.log(this.groupId)
+        if(!!this.groupId){
+          this.router.navigate([`groups/${this.groupId}/registrations/create`,], {queryParams: {categoryId: result.id}});
+          return;
+        }
+        this.router.navigate(['registrations/create'], {queryParams: {categoryId: result.id}})
+
       });
   }
 
@@ -188,7 +195,6 @@ export class RegistrationsComponent {
   }
 
   openEditContainer(id: string) {
-
     const registration = this.registrations?.find(x => x.id === id);
     if (!registration) {
       return;
@@ -196,5 +202,9 @@ export class RegistrationsComponent {
 
     this.registrationApiService.setRegistration(registration);
     this.router.navigate(['/registrations', id, 'edit-registrations-view'])
+  }
+
+  excludeClick(event: MouseEvent) {
+    event.stopPropagation();
   }
 }

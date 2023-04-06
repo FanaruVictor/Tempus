@@ -3,8 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {CategoriesOverviewComponent} from "./categories-overview/categories-overview.component";
 
 const routes: Routes = [
-  {path: '', pathMatch: 'prefix', redirectTo: 'overview'},
-  {path: 'overview', component: CategoriesOverviewComponent},
+  {path: '', component: CategoriesOverviewComponent },
 ];
 
 @NgModule({

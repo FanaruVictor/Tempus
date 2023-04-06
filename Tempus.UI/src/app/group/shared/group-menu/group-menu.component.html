@@ -11,7 +11,7 @@
 <div class="elements">
   <div [id]="group.id" class="group" *ngFor="let group of groups | search: {searchText: searchText, property: 'name'}"
     (click)="setActiveItem(group.id)">
-    <div class="info" [routerLink]="['/groups/overview', group.id, 'registrations']">
+    <div class="info" [routerLink]="['/groups', group.id, 'registrations']">
       <div class="content">
         <img class="group-image" [src]="group.image" alt="">
         <div class="title">

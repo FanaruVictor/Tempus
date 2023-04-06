@@ -50,7 +50,7 @@ export class CategoriesOverviewComponent {
           let id = response.resource;
           this.categories = this.categories?.filter(x => x.id !== id);
           let last = this.categories?.slice(-1)[0];
-          this.router.navigate([`/categories/overview`]);
+          this.router.navigate([`/categories`]);
           this.notificationService.succes('Category deleted successfully', 'Request completed');
         }
       });

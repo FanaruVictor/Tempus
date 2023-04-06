@@ -59,6 +59,7 @@ describe('Component: RegistrationsOverview', () => {
         {
           id: 'id',
           description: 'title',
+          content: 'content',
           createdAt: '22.12.2022',
           categoryColor: 'color'
         }
@@ -75,8 +76,9 @@ describe('Component: RegistrationsOverview', () => {
       {
         id: 'id',
         description: 'title',
+        content: 'content',
         createdAt: '22.12.2022',
-        categoryColor: 'color'
+        categoryColor: 'color',
       }
     ]);
   }));

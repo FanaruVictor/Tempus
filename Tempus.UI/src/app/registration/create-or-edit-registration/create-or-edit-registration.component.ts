@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -15,6 +15,7 @@ import Quill from 'quill'
 import ImageResize from 'quill-image-resize-module'
 import {RegistrationDetails} from "../../_commons/models/registrations/registrationDetails";
 import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
+import {log} from "console";
 
 Quill.register('modules/imageResize', ImageResize)
 
@@ -24,6 +25,7 @@ Quill.register('modules/imageResize', ImageResize)
   styleUrls: ['./create-or-edit-registration.component.scss']
 })
 export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit {
+  @HostBinding('class.full-view') isActive = false;
   categories?: BaseCategory[];
   initialRegistration!: RegistrationOverview;
   id: string | undefined;
@@ -34,6 +36,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
   createOrEditForm: FormGroup;
   lastUpdatedAt?: Date;
   categoryColor!: string;
+  categoryId: string | null = null;
   page: string | undefined;
 
   toolbarOptions = [
@@ -76,13 +79,17 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
   ngOnInit() {
     const url = this.activatedRoute.snapshot.url;
     this.page = url[url.length - 1].path;
+    if (this.page == 'edit-registrations-view') {
+      this.isActive = true;
+    }
     this.registrationApiService.registration
       .subscribe(x => {
           this.id = x.id;
           this.initialRegistration = x;
-
           if (this.id === '' || this.id === undefined) {
-            this.id = this.activatedRoute.snapshot.paramMap.get('id') ?? undefined;
+            this.activatedRoute.params.subscribe(params => {
+              this.id = params['id'];
+            });
           }
 
           this.isCreateMode = !this.id;
@@ -92,24 +99,23 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
             return;
           }
 
-          const categoryId = this.activatedRoute.snapshot.paramMap.get('categoryId');
-          if (categoryId !== null) {
-            this.getCategory(categoryId);
-          }
+          this.activatedRoute.queryParamMap.subscribe(params => {
+            this.categoryId = params.get('categoryId');
+            if (this.categoryId !== null) {
+              this.getCategory();
+            }
+          });
         }
       );
   }
 
-  getCategory(categoryId
-                :
-                string | undefined
-  ) {
-    if (categoryId === undefined) {
+  getCategory( ) {
+    if (!this.categoryId) {
       return;
     }
 
     this.categoryApiService
-      .getById(categoryId)
+      .getById(this.categoryId)
       .pipe(first())
       .subscribe({
         next: response => {
@@ -190,12 +196,11 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
   }
 
   createRegistration() {
-    let catId = this.activatedRoute.snapshot.paramMap.get('categoryId') ?? '';
-    if (catId !== '') {
+    if (this.categoryId && this.categoryId !== '') {
       let registration: CreateRegistrationCommandData = {
         description: this.createOrEditForm.get('description')?.value,
         content: this.createOrEditForm.get('content')?.value,
-        categoryId: catId
+        categoryId: this.categoryId
       }
 
       this.create(registration);

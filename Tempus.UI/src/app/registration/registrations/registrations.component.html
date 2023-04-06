@@ -26,19 +26,19 @@
       New registration
     </button>
   </div>
-  <div class="center">
-    <div class="elements" *ngIf="registrations.length != 0; else showNoRegistrations">
+  <div class="center" *ngIf="registrations.length != 0; else showNoRegistrations">
+    <div class="elements">
       <div *ngFor="let registration of registrations
         | search: {searchText: searchText, property: 'description'}
         | dateRange : {start: dateRange.controls['start'].value, end: dateRange.controls['end'].value}
         | color:  colors.value" class="registration"
-           [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}">
+           [ngStyle]="{'box-shadow': '0 0 5px 1px ' + registration.categoryColor}" (click)="openEditContainer(registration.id)">
 
-        <div class="content" (click)="openEditContainer(registration.id)">
+        <div class="content">
           <a (click)="redirectToEditPage(registration.id)" class="title" >{{registration.description}}</a>
         </div>
         <div class="actions">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="action for registration menu">
+          <button mat-icon-button (click)="excludeClick($event)" [matMenuTriggerFor]="menu" aria-label="action for registration menu">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
@@ -60,8 +60,8 @@
       </div>
     </div>
     <router-outlet></router-outlet>
-    <ng-template #showNoRegistrations>
-      <h1>You do not have registrations</h1>
-    </ng-template>
   </div>
+  <ng-template #showNoRegistrations>
+    <h1 class="no-registrations">You do not have registrations</h1>
+  </ng-template>
 </div>

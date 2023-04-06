@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
+<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form" >
   <div *ngIf="page !== 'edit-registrations-view'" class="cancel">
     <button class="cancel-button" type="button" mat-raised-button
             [routerLink]="['/registrations']">Cancel
@@ -16,8 +16,8 @@
                   placeholder="" trackChanges="all">
     </quill-editor>
   </div>
-  <div class="create">
-    <button class="create-registration" mat-raised-button type="submit"
+  <div class="create" [ngClass]="page === 'edit-registrations-view' ? 'no-padding-right-button' : ''">
+    <button mat-raised-button type="submit"
             color="primary">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
   </div>
 </form>

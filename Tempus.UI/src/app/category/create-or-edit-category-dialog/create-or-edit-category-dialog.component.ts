@@ -44,7 +44,7 @@ export class CreateOrEditCategoryDialogComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/categories/overview']);
+    this.router.navigate(['/categories']);
   }
 
   submit() {
