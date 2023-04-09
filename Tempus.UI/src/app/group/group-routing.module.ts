@@ -8,14 +8,14 @@ import {
 } from "../registration/create-or-edit-registration/create-or-edit-registration.component";
 
 const routes: Routes = [
-  {path: '', component: GroupOverviewComponent},
-  {path: 'create', component: CreateOrEditGroupComponent},
   {
-    path: ':id', component: GroupOverviewComponent, children: [
-      {path: 'registrations', component: RegistrationsComponent},
-      {path: 'registrations/create', component: CreateOrEditRegistrationComponent},
+    path: '', component: GroupOverviewComponent, children: [
+      {path: ':id/registrations', component: RegistrationsComponent},
+      {path: ':id/registrations/create', component: CreateOrEditRegistrationComponent},
     ]
   },
+  {path: 'create', component: CreateOrEditGroupComponent},
+
 ];
 
 @NgModule({

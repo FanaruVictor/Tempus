@@ -1,10 +1,10 @@
-<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form" >
-  <div *ngIf="page !== 'edit-registrations-view'" class="cancel">
+<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
+  <div *ngIf="mode !== 'edit-registrations-view'" class="cancel">
     <button class="cancel-button" type="button" mat-raised-button
             [routerLink]="['/registrations']">Cancel
     </button>
   </div>
-  <div class="form-data" [ngClass]="page === 'edit-registrations-view' ? 'registrations-view' : ''">
+  <div class="form-data" [ngClass]="mode === 'edit-registrations-view' ? 'registrations-view' : ''">
     <mat-form-field class="title-control">
       <mat-label>Short description</mat-label>
       <input type="email" matInput formControlName="description" placeholder="What is this note about...">
@@ -16,7 +16,7 @@
                   placeholder="" trackChanges="all">
     </quill-editor>
   </div>
-  <div class="create" [ngClass]="page === 'edit-registrations-view' ? 'no-padding-right-button' : ''">
+  <div class="create" [ngClass]="mode === 'edit-registrations-view' ? 'no-padding' : ''">
     <button mat-raised-button type="submit"
             color="primary">{{isCreateMode ? 'Create' : 'Save Changes'}}</button>
   </div>

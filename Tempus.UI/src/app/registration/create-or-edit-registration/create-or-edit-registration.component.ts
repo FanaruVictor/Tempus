@@ -16,8 +16,16 @@ import ImageResize from 'quill-image-resize-module'
 import {RegistrationDetails} from "../../_commons/models/registrations/registrationDetails";
 import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
 import {log} from "console";
+import {D} from "@angular/cdk/keycodes";
 
 Quill.register('modules/imageResize', ImageResize)
+
+
+export interface Page {
+  id: string;
+  registrationId: string;
+  root: string;
+}
 
 @Component({
   selector: 'app-create-or-edit-registration',
@@ -37,8 +45,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
   lastUpdatedAt?: Date;
   categoryColor!: string;
   categoryId: string | null = null;
-  page: string | undefined;
-
+  mode: string | undefined;
   toolbarOptions = [
     [{'font': []}],
     [{size: ['small', false, 'large', 'huge']}],
@@ -74,12 +81,15 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
       description: ['', Validators.required],
       content: ['', Validators.required],
     });
+
   }
 
+
   ngOnInit() {
+   
     const url = this.activatedRoute.snapshot.url;
-    this.page = url[url.length - 1].path;
-    if (this.page == 'edit-registrations-view') {
+    this.mode = url[url.length - 1].path;
+    if (this.mode == 'edit-registrations-view') {
       this.isActive = true;
     }
     this.registrationApiService.registration
@@ -109,7 +119,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
       );
   }
 
-  getCategory( ) {
+  getCategory() {
     if (!this.categoryId) {
       return;
     }

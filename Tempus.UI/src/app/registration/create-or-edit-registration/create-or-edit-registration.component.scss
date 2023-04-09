@@ -1,18 +1,20 @@
 @import "src/styles/variables";
+
 :host(.full-view) {
-  width: 70%;
+  width: 80%;
 }
 
 .registration-form {
   height: 100%;
   width: 100%;
   display: flex;
-  .cancel{
+
+  .cancel {
     width: 20%;
     padding: 15px 0 0 15px;
   }
 
-  .form-data{
+  .form-data {
     min-width: 60%;
     display: flex;
     flex-direction: column;
@@ -21,6 +23,7 @@
     .title-control {
       display: flex;
       flex-direction: column;
+
       div {
         display: flex;
         justify-content: space-between;
@@ -52,19 +55,23 @@
     }
   }
 
-  .registrations-view{
+  .registrations-view {
     width: 80%;
   }
 
 
-  .create{
+  .create {
     width: 20%;
     text-align: right;
     padding: 15px 15px 0 0;
+
+    button {
+      width: 135px;
+    }
   }
 
-  .no-padding-right-button{
-    padding: 15px 0 0;
+  .no-padding {
+    padding: 0;
   }
 }
 

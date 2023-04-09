@@ -54,7 +54,10 @@ export class RegistrationsComponent {
   }
 
   ngOnInit(): void {
-    this.groupId = this.router.url.split('/')[2] || '';
+    const page = this.router.url.split('/')[1];
+    if (page === 'groups') {
+      this.groupId = this.router.url.split('/')[2] || '';
+    }
     this.getAll();
     this.categoryApiService.getAll()
       .subscribe(response => {
@@ -85,6 +88,8 @@ export class RegistrationsComponent {
               this.registrationsColor.push(x.categoryColor);
             }
           });
+
+          this.registrations = [...this.registrations, ...this.registrations, ...this.registrations];
         }
       });
   }
@@ -97,7 +102,7 @@ export class RegistrationsComponent {
       .pipe(filter(x => !!x))
       .subscribe(result => {
         console.log(this.groupId)
-        if(!!this.groupId){
+        if (!!this.groupId) {
           this.router.navigate([`groups/${this.groupId}/registrations/create`,], {queryParams: {categoryId: result.id}});
           return;
         }

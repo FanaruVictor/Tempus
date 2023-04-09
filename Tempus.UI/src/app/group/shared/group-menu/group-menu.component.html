@@ -5,12 +5,12 @@
   </div>
   <div class="menu-actions">
     <input class="by-name" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
-      placeholder="Search for group">
+           placeholder="Search for group">
   </div>
 </div>
 <div class="elements">
-  <div [id]="group.id" class="group" *ngFor="let group of groups | search: {searchText: searchText, property: 'name'}"
-    (click)="setActiveItem(group.id)">
+  <div class="group" *ngFor="let group of groups | search: {searchText: searchText, property: 'name'}"
+       [ngClass]="group.id == activeGroupId ? 'group-active': 'normal'" (click)="setActiveItem(group.id)">
     <div class="info" [routerLink]="['/groups', group.id, 'registrations']">
       <div class="content">
         <img class="group-image" [src]="group.image" alt="">

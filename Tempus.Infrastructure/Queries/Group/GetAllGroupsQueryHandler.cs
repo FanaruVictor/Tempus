@@ -26,7 +26,7 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseR
 
             var groupsOverview = groups.Select(x =>
             {
-                var groupImage = x.GroupPhoto.Url;
+                var groupImage = x.GroupPhoto?.Url;
 
                 return new GroupOverview
                 {
@@ -37,17 +37,17 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseR
                 };
             }).ToList();
 
-            foreach(var group in groupsOverview)
+            foreach (var group in groupsOverview)
             {
                 var currentUserPhotos = await _groupRepository.GetUsersImages(group.Id);
                 group.UserPhotos = currentUserPhotos;
             }
-            
+
             return BaseResponse<List<GroupOverview>>.Ok(groupsOverview);
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
-            return BaseResponse<List<GroupOverview>>.BadRequest(new List<string> {exception.Message});
+            return BaseResponse<List<GroupOverview>>.BadRequest(new List<string> { exception.Message });
         }
     }
 }

@@ -5,7 +5,7 @@
   height: 100%;
   flex-direction: column;
 
-  .search {
+  .top {
     width: 100%;
     height: 65px;
     padding: 15px 15px 0;
@@ -13,37 +13,49 @@
     display: flex;
     justify-content: space-between;
 
-    .filter {
-      min-width: 20%;
-      max-width: 20%;
-      height: 50px;
-      background-color: var(--header-color);
-      color: var(--text-color);
-      border-radius: 5px;
-      padding: 5px 10px;
-    }
-
-    .by-description {
-      border: none;
-      outline: none;
-      font-size: 16px;
-
-    }
-
-    .by-creation-date {
+    .search {
+      width: 90%;
       display: flex;
-      align-items: center;
+
+      .filter {
+        min-width: 180px;
+        width: 20vw;
+        height: 50px;
+        background-color: var(--header-color);
+        color: var(--text-color);
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-right: 15px;
+
+        :last-child {
+          margin-right: 0;
+        }
+      }
+
+      .by-description {
+        border: none;
+        outline: none;
+        font-size: 16px;
+
+      }
+
+      .by-creation-date {
+        display: flex;
+        align-items: center;
+      }
+
+      .by-color {
+        display: flex;
+        align-items: center;
+      }
+
+      input::placeholder {
+        font-size: 14px;
+        color: var(--text-color);
+      }
+
     }
 
-    .by-color {
-      display: flex;
-      align-items: center;
-    }
-
-    input::placeholder {
-      font-size: 14px;
-      color: var(--text-color);
-    }
 
     .add-button {
       height: 50px;
@@ -51,16 +63,16 @@
   }
 
   .center {
-    padding: 0 15px 15px 0;
+    padding: 15px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 65px);
     display: flex;
     align-items: start;
 
     .elements {
-      padding: 15px;
+      padding: 5px;
       overflow-y: scroll;
-      width: 30%;
+      width: 20%;
       min-width: 215px;
       height: 100%;
       display: flex;
@@ -105,13 +117,14 @@
     }
   }
 
-  .no-registrations{
+  .no-registrations {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .left {
     text-align: end;
     padding: 15px 15px 0 0;
