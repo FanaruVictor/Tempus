@@ -36,7 +36,7 @@ body.dark-theme {
   --background-color: #2a2a2a;
   --header-color: #1f1f1f;
   --active-color: #181818;
-  --content-color: #2c2c2c;
+  --content-color: #313131;
   --tooltip-background-color: #fff;
   --tooltip-text-color: #222;
 }
@@ -89,7 +89,6 @@ body {
 }
 
 
-
 /*.cdk-overlay-connected-position-bounding-box {
 
   .cdk-overlay-pane {
@@ -130,6 +129,7 @@ body {
 
   }
 }
+
 .page-wrapper {
   height: calc(100vh - 50px);
   max-height: calc(100vh - 50px);
