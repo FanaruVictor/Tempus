@@ -2,7 +2,7 @@
   <div class="right">
   </div>
   <div class="center">
-    <div class="elements">
+    <div class="elements" *ngIf="categories.length > 0; else noCategories">
       <div *ngFor="let category of categories" class="category">
         <mat-card class="info">
           <div class="category-data">
@@ -18,8 +18,13 @@
     </div>
   </div>
   <div class="left">
-    <button (click)="addCategory()" aria-label="Create registration button" mat-raised-button color="primary">
+    <button (click)="createCategory()" aria-label="Create registration button" mat-raised-button color="primary">
       New category
     </button>
   </div>
 </div>
+
+
+<ng-template #noCategories>
+  <h1 class="no-categories">You do not have categories</h1>
+</ng-template>

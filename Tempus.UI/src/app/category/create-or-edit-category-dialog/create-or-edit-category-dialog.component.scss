@@ -9,24 +9,31 @@
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
+    width: 15vw;
     color: var(--text-color);
-  }
 
-  input {
-    outline: none;
-    height: 25px;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    border: 2px solid var(--background-color);
-
-    &:focus {
-      border: 2px solid $primary-color;
+    .color {
+      width: 100%;
     }
 
-    &.ng-invalid.ng-touched {
-      border: 2px solid $error-color;
+    input {
+      width: 80%;
+      outline: none;
+      height: 40px;
+      border-radius: 5px;
+      color: var(--text-color);
+      background-color: var(--header-color);
+      border: 2px solid var(--header-color);
+
+      &:focus {
+        border: 2px solid $primary-color;
+      }
+
+      &.ng-invalid.ng-touched {
+        border: 2px solid $error-color;
+      }
     }
   }
+
+
 }
-
-

@@ -1,12 +1,10 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../_services/auth/auth.service';
 import { LoaderService } from '../../_services/loader/loader.service';
 import { UserApiService } from '../../_services/user.api.service';
 import { UserDetails } from '../models/user/userDetails';
+import { GroupService } from 'src/app/_services/group/group.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +19,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public loaderService: LoaderService,
-    private userService: UserApiService
+    private userService: UserApiService,
+    private groupService: GroupService,
+    private router: Router
   ) {
     this.tabs = [
       {
@@ -75,5 +75,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     localStorage.clear();
     window.location.reload();
+  }
+
+  redirectTo(link: string) {
+    this.groupService.setGroupId(undefined);
+    this.router.navigate([link]);
   }
 }

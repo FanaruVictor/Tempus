@@ -1,19 +1,16 @@
 <div *ngIf="authorizationToken && user !== authService.defaultUser" class="header">
   <mat-progress-bar *ngIf="loaderService.isLoading | async" class="loader-container"
-                    mode="indeterminate"></mat-progress-bar>
+    mode="indeterminate"></mat-progress-bar>
   <div class="content">
     <div class="logo">Tempus</div>
     <div class="actions">
       <nav mat-tab-nav-bar>
-        <a #rla="routerLinkActive"
-           *ngFor="let tab of tabs"
-           [active]="rla.isActive"
-           [routerLink]="tab.link" mat-tab-link
-           routerLinkActive
-        ><div class="label">{{tab.label}}</div>
+        <a #rla="routerLinkActive" *ngFor="let tab of tabs" [active]="rla.isActive" (click)="redirectTo(tab.link)"
+          mat-tab-link routerLinkActive>
+          <div class="label">{{tab.label}}</div>
           <div class="profile-photo" *ngIf="tab.label == user?.userName">
             <mat-icon *ngIf="!user?.photo; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
-                      class="user-icon">
+              class="user-icon">
               account_circle
             </mat-icon>
             <ng-template #showPhoto>
@@ -23,8 +20,7 @@
         </a>
       </nav>
       <div class="buttons">
-        <mat-slide-toggle (click)="toggleDarkTheme()"
-                          [checked]="user?.isDarkTheme"></mat-slide-toggle>
+        <mat-slide-toggle (click)="toggleDarkTheme()" [checked]="user?.isDarkTheme"></mat-slide-toggle>
       </div>
       <app-button (click)="logout()" [icon]="'logout'"></app-button>
     </div>

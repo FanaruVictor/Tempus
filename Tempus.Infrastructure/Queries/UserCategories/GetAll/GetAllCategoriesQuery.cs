@@ -4,4 +4,7 @@ using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure.Queries.Categories.GetAll;
 
-public class GetAllCategoriesQuery : BaseRequest<BaseResponse<List<BaseCategory>>> { }
+public class GetAllCategoriesQuery : BaseRequest<BaseResponse<List<BaseCategory>>>
+{
+    public Guid? GroupId { get; set; }
+}

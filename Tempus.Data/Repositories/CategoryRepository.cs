@@ -11,7 +11,7 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
 
     public CategoryRepository(TempusDbContext context) : base(context) { }
 
-    public async Task<List<Category?>> GetAll(Guid userId)
+    public async Task<List<Category?>> GetAllForUser(Guid userId)
     {
         return await _context.UserCategories.AsNoTracking()
             .Where(x => x.UserId == userId)
@@ -19,6 +19,15 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
             .ToListAsync();
     }
 
+    public async Task<List<Category?>> GetAllForGroup(Guid groupId)
+    {
+        return await _context.GroupCategories.AsNoTracking()
+            .Where(x => x.GroupId == groupId)
+            .Select(x => x.Category)
+            .ToListAsync();
+    }
+
+    
     public string GetCategoryColor(Guid id)
     {
         return _context.Categories.AsNoTracking().Where(x => x.Id == id).Select(x => x.Color).FirstOrDefault() ??

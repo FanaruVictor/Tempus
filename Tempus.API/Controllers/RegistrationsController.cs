@@ -34,6 +34,12 @@ public class RegistrationsController : BaseController
     {
         return HandleResponse(await _mediator.Send(query));
     }
+    
+    [HttpGet("groups/{groupId}")]
+    public async Task<ActionResult<List<RegistrationOverview>>> GetAll([FromRoute] Guid groupId)
+    {
+        return HandleResponse(await _mediator.Send(new GetAllRegistrationsQuery {GroupId = groupId}));
+    }
 
     /// <summary>
     ///     For a specified Id a registration will be returned if it exists

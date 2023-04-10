@@ -25,7 +25,14 @@ public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuer
 
             List<Category> categories;
 
-            categories = await _categoryRepository.GetAll(request.UserId);
+            if(request.GroupId.HasValue)
+            {
+                categories = await _categoryRepository.GetAllForGroup(request.GroupId.Value);
+            }
+            else
+            {
+                categories = await _categoryRepository.GetAllForUser(request.UserId);
+            }
 
             var response =
                 BaseResponse<List<BaseCategory>>.Ok(categories

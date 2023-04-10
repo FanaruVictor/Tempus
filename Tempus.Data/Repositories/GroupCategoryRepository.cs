@@ -22,9 +22,9 @@ public class GroupCategoryRepository : IGroupCategoryRepository
         throw new NotImplementedException();
     }
 
-    public Task Add(GroupCategory entity)
+    public async Task Add(GroupCategory entity)
     {
-        throw new NotImplementedException();
+        await _context.GroupCategories.AddAsync(entity);
     }
 
     public void Update(GroupCategory entity)

@@ -1,9 +1,6 @@
-import {
-  Component, OnInit,
-} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {GroupApiService} from "../../_services/group.api.service";
-import {take} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { GroupService } from 'src/app/_services/group/group.service';
 
 @Component({
   selector: 'app-group-overview',
@@ -11,18 +8,13 @@ import {take} from "rxjs";
   styleUrls: ['./group-overview.component.scss'],
 })
 export class GroupOverviewComponent implements OnInit {
-  groupId: string = '';
+  groupId: string | undefined;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private groupApiService: GroupApiService) {
-  }
+  constructor(private groupService: GroupService, private router: Router) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.groupId = params['id'];
-    });
-
-    this.groupApiService.getAll().pipe(take(1)).subscribe((response) => {
-      this.router.navigate([`groups/${response.resource[0].id}/registrations`]);
+    this.groupService.currentGroupId.subscribe((x) => {
+      this.groupId = x;
     });
   }
 
@@ -30,4 +22,7 @@ export class GroupOverviewComponent implements OnInit {
     this.router.navigate([`groups/${this.groupId}/registrations`]);
   }
 
+  redirectToCategories() {
+    this.router.navigate([`groups/${this.groupId}/categories`]);
+  }
 }

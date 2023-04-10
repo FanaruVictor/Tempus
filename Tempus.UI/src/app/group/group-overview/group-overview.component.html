@@ -2,13 +2,18 @@
   <div class="menu">
     <app-group-menu></app-group-menu>
   </div>
-  <div class="left">
+  <div class="left" *ngIf="!!groupId; else noGroupSelected">
     <div class="group-navbar">
       <div class="registrations tab" (click)="redirectToRegistrations()">Registrations</div>
-      <div class="categories tab">Categories</div>
+      <div class="categories tab" (click)="redirectToCategories()">Categories</div>
     </div>
     <div class="group-overview-content">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+<ng-template #noGroupSelected>
+  <h1 class="no-group-selected">
+    There is no group selected. To see the group content please select one.
+  </h1>
+</ng-template>

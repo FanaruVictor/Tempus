@@ -1,7 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="registration-form">
   <div *ngIf="mode !== 'edit-registrations-view'" class="cancel">
-    <button class="cancel-button" type="button" mat-raised-button
-            [routerLink]="['/registrations']">Cancel
+    <button class="cancel-button" type="button" mat-raised-button (click)="cancel()">Cancel
     </button>
   </div>
   <div class="form-data" [ngClass]="mode === 'edit-registrations-view' ? 'registrations-view' : ''">

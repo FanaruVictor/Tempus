@@ -32,6 +32,12 @@ public class CategoriesController : BaseController
     {
         return HandleResponse(await _mediator.Send(new GetAllCategoriesQuery()));
     }
+    
+    [HttpGet("groups/{groupId}")]
+    public async Task<ActionResult<List<BaseCategory>>> GetAll([FromRoute] Guid groupId)
+    {
+        return HandleResponse(await _mediator.Send(new GetAllCategoriesQuery {GroupId = groupId}));
+    }
 
     /// <summary>
     ///     For a specified Id a category will be returned if it exists
@@ -52,6 +58,13 @@ public class CategoriesController : BaseController
     [HttpPost]
     public async Task<ActionResult<BaseCategory>> Create([FromBody] CreateCategoryCommand command)
     {
+        return HandleResponse(await _mediator.Send(command));
+    }
+    
+    [HttpPost("groups/{groupId}")]
+    public async Task<ActionResult<BaseCategory>> Create([FromRoute] Guid groupId, [FromBody] CreateCategoryCommand command)
+    {
+        command.GroupId = groupId;
         return HandleResponse(await _mediator.Send(command));
     }
 

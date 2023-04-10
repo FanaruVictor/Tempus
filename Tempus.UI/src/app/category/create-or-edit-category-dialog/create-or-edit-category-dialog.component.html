@@ -12,18 +12,20 @@
       </div>
       <div class="container">
         <label>Color</label>
-        <input [ngxMatColorPicker]="picker" formControlName="color" placeholder="#ffff" readonly>
-        <ngx-mat-color-toggle [for]="picker" matSuffix></ngx-mat-color-toggle>
-        <ngx-mat-color-picker #picker></ngx-mat-color-picker>
-        <mat-error *ngIf="createOrEditForm.controls['color'].invalid && createOrEditForm.controls['color'].touched">
-          Title is required
-        </mat-error>
+        <div class="color">
+          <input [ngxMatColorPicker]="picker" formControlName="color" placeholder="#ffff" readonly>
+          <ngx-mat-color-toggle [for]="picker" matSuffix></ngx-mat-color-toggle>
+          <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+          <mat-error *ngIf="createOrEditForm.controls['color'].invalid && createOrEditForm.controls['color'].touched">
+            Title is required
+          </mat-error>
+        </div>
 
       </div>
       <div mat-dialog-actions align="end">
         <button (click)="onNoClick()" class="cancel-button" mat-raised-button>Cancel</button>
         <button [disabled]="!createOrEditForm.valid" [mat-dialog-close]="result" cdkFocusInitial mat-raised-button
-                type="submit" color="primary">Ok
+          type="submit" color="primary">Ok
         </button>
       </div>
     </form>
