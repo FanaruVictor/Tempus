@@ -26,7 +26,6 @@ export class RegistrationsComponent {
   groupId: string = '';
   registrations?: RegistrationOverview[];
   categories?: BaseCategory[];
-  defaultColor = '#d6efef';
   searchText = '';
   maxDate: Date;
   minDate: Date;
@@ -38,6 +37,7 @@ export class RegistrationsComponent {
   });
 
   colors = new FormControl([]);
+  showNoRegistrationSelectedMessage = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -46,7 +46,8 @@ export class RegistrationsComponent {
     private registrationApiService: RegistrationApiService,
     private categoryApiService: CategoryApiService,
     private fileService: FileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute
   ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 30, 0, 1);
@@ -54,16 +55,27 @@ export class RegistrationsComponent {
   }
 
   ngOnInit(): void {
-    const page = this.router.url.split('/')[1];
+    const urlSections = this.router.url.split('/');
+    const page = urlSections[1];
     if (page === 'groups') {
       this.groupId = this.router.url.split('/')[2] || '';
     }
+    if (urlSections.length == 2) {
+      this.showNoRegistrationSelectedMessage = true;
+    }
+
     this.getAll();
+
     this.categoryApiService.getAll()
       .subscribe(response => {
         this.categories = response.resource;
       });
 
+    this.updateFocusedRegistration();
+
+  }
+
+  updateFocusedRegistration() {
     this.registrationApiService.registration.subscribe(x => {
       this.registrations = this.registrations?.map(registration => {
         if (registration.id === x.id) {
@@ -71,7 +83,7 @@ export class RegistrationsComponent {
         }
         return registration;
       });
-    })
+    });
   }
 
   private getAll() {
@@ -88,8 +100,6 @@ export class RegistrationsComponent {
               this.registrationsColor.push(x.categoryColor);
             }
           });
-
-          this.registrations = [...this.registrations, ...this.registrations, ...this.registrations];
         }
       });
   }
@@ -200,6 +210,7 @@ export class RegistrationsComponent {
   }
 
   openEditContainer(id: string) {
+    this.showNoRegistrationSelectedMessage = false;
     const registration = this.registrations?.find(x => x.id === id);
     if (!registration) {
       return;

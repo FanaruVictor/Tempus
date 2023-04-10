@@ -13,10 +13,7 @@ import {NotificationService} from "../../_services/notification.service";
 import {QuillEditorComponent} from "ngx-quill";
 import Quill from 'quill'
 import ImageResize from 'quill-image-resize-module'
-import {RegistrationDetails} from "../../_commons/models/registrations/registrationDetails";
 import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
-import {log} from "console";
-import {D} from "@angular/cdk/keycodes";
 
 Quill.register('modules/imageResize', ImageResize)
 
@@ -24,7 +21,6 @@ Quill.register('modules/imageResize', ImageResize)
 export interface Page {
   id: string;
   registrationId: string;
-  root: string;
 }
 
 @Component({
@@ -46,6 +42,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
   categoryColor!: string;
   categoryId: string | null = null;
   mode: string | undefined;
+  page!: Page;
   toolbarOptions = [
     [{'font': []}],
     [{size: ['small', false, 'large', 'huge']}],
@@ -86,35 +83,49 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
 
 
   ngOnInit() {
-   
-    const url = this.activatedRoute.snapshot.url;
-    this.mode = url[url.length - 1].path;
-    if (this.mode == 'edit-registrations-view') {
-      this.isActive = true;
-    }
+    this.activatedRoute.params.subscribe(params => {
+      console.log(params);
+      this.page = {
+        id: params['id'],
+        registrationId: params['registrationId']
+      };
+    });
+
+    this.activatedRoute.url.subscribe(x => {
+      this.mode = x[x.length - 1].path;
+      if (this.mode == 'edit-registrations-view') {
+        this.isActive = true;
+      }
+    });
+
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      this.categoryId = params.get('categoryId');
+      if (this.categoryId !== null) {
+        this.getCategory();
+      }
+    });
+
     this.registrationApiService.registration
       .subscribe(x => {
+          if (this.mode == 'create') {
+            return;
+          }
           this.id = x.id;
           this.initialRegistration = x;
+
           if (this.id === '' || this.id === undefined) {
             this.activatedRoute.params.subscribe(params => {
               this.id = params['id'];
+              this.isCreateMode = !this.id;
+
+              if (!this.isCreateMode) {
+                this.getById();
+                return;
+              }
             });
           }
 
-          this.isCreateMode = !this.id;
-
-          if (!this.isCreateMode) {
-            this.getById();
-            return;
-          }
-
-          this.activatedRoute.queryParamMap.subscribe(params => {
-            this.categoryId = params.get('categoryId');
-            if (this.categoryId !== null) {
-              this.getCategory();
-            }
-          });
+          this.createOrEditForm.patchValue(this.initialRegistration);
         }
       );
   }
@@ -181,12 +192,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
     this.update(updateRegistrationCommandData)
   }
 
-  private
-
-  update(updateRegistrationCommandData
-           :
-           UpdateRegistrationCommandData
-  ) {
+  private update(updateRegistrationCommandData: UpdateRegistrationCommandData) {
     this.registrationApiService
       .update(updateRegistrationCommandData)
       .pipe(filter(x => !!x))
@@ -220,13 +226,10 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
     this.openDialog();
   }
 
-  create(registration
-           :
-           CreateRegistrationCommandData
-  ) {
+  create(registration: CreateRegistrationCommandData) {
     this.registrationApiService.create(registration)
       .pipe(filter(x => !!x))
-      .subscribe(result => {
+      .subscribe(_ => {
           this.router.navigate(['/registrations'])
           this.notificationService.succes('Registration created succesfully', 'Request completed')
         }
@@ -258,9 +261,7 @@ export class CreateOrEditRegistrationComponent implements OnInit, AfterViewInit 
       });
   }
 
-  ngAfterViewInit()
-    :
-    void {
+  ngAfterViewInit(): void {
     let element = document.querySelector('.header') as HTMLElement;
     element.style.boxShadow = `0 4px 2 -2px ${this.categoryColor}`;
   }

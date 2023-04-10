@@ -64,6 +64,9 @@
       </div>
     </div>
     <router-outlet></router-outlet>
+    <h1 class="no-registration-selected" *ngIf="showNoRegistrationSelectedMessage">
+      You do not have any registration selected. To be able to edit a registration, please select one.
+    </h1>
   </div>
   <ng-template #showNoRegistrations>
     <h1 class="no-registrations">You do not have registrations</h1>

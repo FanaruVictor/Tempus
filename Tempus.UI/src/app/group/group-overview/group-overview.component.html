@@ -2,7 +2,7 @@
   <div class="menu">
     <app-group-menu></app-group-menu>
   </div>
-  <div class="left" *ngIf="groupId !== ''; else noGroups;">
+  <div class="left">
     <div class="group-navbar">
       <div class="registrations tab" (click)="redirectToRegistrations()">Registrations</div>
       <div class="categories tab">Categories</div>
@@ -11,7 +11,4 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-
-  <ng-template #noGroups>
-    <h1 class="no-group-selected">To see a group's overview, please select one.</h1>
-  </ng-template>
+</div>
