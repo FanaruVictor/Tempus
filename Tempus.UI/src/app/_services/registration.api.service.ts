@@ -42,9 +42,9 @@ export class RegistrationApiService {
     );
   }
 
-  getById(id: string) {
+  getById(id: string, groupId: string | undefined) {
     return this.httpClient.get<GenericResponse<RegistrationDetails>>(
-      `${this.apiUrl}/${id}`
+      `${this.apiUrl}/${id}`, !!groupId ? { params: { groupId: groupId } } : undefined
     );
   }
 
@@ -66,9 +66,9 @@ export class RegistrationApiService {
     );
   }
 
-  delete(id: string) {
+  delete(id: string, groupId: string | undefined) {
     return this.httpClient.delete<GenericResponse<string>>(
-      `${this.apiUrl}/${id}`
+      `${this.apiUrl}/${id}`, !!groupId ? { params: { groupId: groupId } } : undefined
     );
   }
 }

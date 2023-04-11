@@ -79,6 +79,5 @@ export class HeaderComponent implements OnInit {
 
   redirectTo(link: string) {
     this.groupService.setGroupId(undefined);
-    this.router.navigate([link]);
   }
 }

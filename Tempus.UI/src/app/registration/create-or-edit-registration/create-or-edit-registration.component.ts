@@ -42,7 +42,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   categoryColor!: string;
   categoryId: string | null = null;
   mode: string | undefined;
-  page!: Page;
 
   groupId: string | undefined;
   toolbarOptions = [
@@ -83,13 +82,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      console.log(params);
-      this.page = {
-        id: params['id'],
-        registrationId: params['registrationId'],
-      };
-    });
 
     this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
@@ -117,7 +109,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       this.initialRegistration = x;
 
       if (this.id === '' || this.id === undefined) {
-        this.id = this.page.id;
+        this.id = this.activatedRoute.snapshot.params['id'];
         this.isCreateMode = !this.id;
 
         if (!this.isCreateMode) {
@@ -125,7 +117,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           return;
         }
       }
-
+      this.isCreateMode = !this.id;
       this.createOrEditForm.patchValue(this.initialRegistration);
     });
   }
@@ -151,7 +143,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     }
 
     this.registrationApiService
-      .getById(this.id)
+      .getById(this.id, this.groupId)
       .pipe(first())
       .subscribe((response) => {
         this.initialRegistration.content = response.resource.content;
@@ -178,9 +170,9 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     if (!this.isCreateMode) {
       return (
         this.initialRegistration?.content !=
-          this.createOrEditForm.get('content')?.value ||
+        this.createOrEditForm.get('content')?.value ||
         this.initialRegistration?.description !=
-          this.createOrEditForm.get('description')?.value
+        this.createOrEditForm.get('description')?.value
       );
     }
     return this.createOrEditForm.valid;
@@ -214,6 +206,11 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           createdAt: this.initialRegistration.createdAt,
         };
         this.registrationApiService.setRegistration(this.initialRegistration);
+        if (!!this.groupId) {
+          this.router.navigate(['/groups', this.groupId, 'registrations']);
+        } else {
+          this.router.navigate(['/registrations']);
+        }
       });
   }
 

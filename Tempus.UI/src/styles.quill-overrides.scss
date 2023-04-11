@@ -1,6 +1,5 @@
-﻿
-.ql-container.ql-snow {
-  min-height: 50vh;
+﻿.ql-container.ql-snow {
+  min-height: 300px;
   color: var(--text-color);
   .ql-editor {
     li {
@@ -28,7 +27,6 @@
   fill: var(--text-color);
   stroke: none;
 }
-
 
 .ql-toolbar .ql-picker {
   color: var(--text-color);

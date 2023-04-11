@@ -59,8 +59,10 @@ export class RegistrationsComponent {
 
     this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
+      this.getAll();
+
     });
-    this.getAll();
+
     this.categoryApiService.getAll(this.groupId).subscribe((response) => {
       this.categories = response.resource;
     });
@@ -121,7 +123,7 @@ export class RegistrationsComponent {
   }
 
   delete(id: string) {
-    this.registrationApiService.delete(id).subscribe((result) => {
+    this.registrationApiService.delete(id, this.groupId).subscribe((result) => {
       this.registrations = this.registrations?.filter(
         (x) => x.id !== result.resource
       );
@@ -183,7 +185,7 @@ export class RegistrationsComponent {
     element.innerHTML = '';
     values.forEach(
       (x) =>
-        (element.innerHTML = element.innerHTML.concat(`<div style="
+      (element.innerHTML = element.innerHTML.concat(`<div style="
         background-color: ${x};
         height: 15px;
         width: 15px;

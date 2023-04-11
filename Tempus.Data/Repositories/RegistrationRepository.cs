@@ -7,7 +7,9 @@ namespace Tempus.Data.Repositories;
 
 public class RegistrationRepository : BaseRepository<Registration>, IRegistrationRepository
 {
-    public RegistrationRepository(TempusDbContext context) : base(context) { }
+    public RegistrationRepository(TempusDbContext context) : base(context)
+    {
+    }
 
     public async Task<List<Registration>> GetAll(Guid userId)
     {
@@ -16,7 +18,7 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
             .Include(x => x.Category)
             .Where(x => x.Category.UserCategories.Any(y => y.UserId == userId))
             .ToListAsync();
-        
+
         return result;
     }
 
@@ -42,5 +44,14 @@ public class RegistrationRepository : BaseRepository<Registration>, IRegistratio
             .Include(x => x.Category)
             .ThenInclude(x => x.UserCategories)
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<Registration> GetById(Guid id, Guid groupId)
+    {
+        return await _context.Registrations
+            .AsNoTracking()
+            .Include(x => x.Category)
+            .ThenInclude(x => x.GroupCategories)
+            .FirstOrDefaultAsync(x => x.Id == id && x.Category.GroupCategories.Any(y => y.GroupId == groupId));
     }
 }

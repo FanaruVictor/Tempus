@@ -1,4 +1,4 @@
-@import 'src/styles/variables';
+@import "src/styles/variables";
 
 .registration-wrapper {
   display: flex;
@@ -36,7 +36,6 @@
         border: none;
         outline: none;
         font-size: 16px;
-
       }
 
       .by-creation-date {
@@ -53,9 +52,7 @@
         font-size: 14px;
         color: var(--text-color);
       }
-
     }
-
 
     .add-button {
       height: 50px;
@@ -72,8 +69,8 @@
     .elements {
       padding: 5px;
       overflow-y: scroll;
-      width: 20%;
-      min-width: 215px;
+      min-width: 20%;
+      max-width: 25%;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -82,36 +79,46 @@
 
       .registration {
         width: 100%;
-        min-width: 180px;
         margin-bottom: 1.5rem;
         background-color: var(--content-color);
         border-radius: 5px;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        height: 100px;
         cursor: pointer;
+        padding: 0 0 15px 15px;
 
         .content {
-          padding: 15px 0 0 15px;
-          width: 70%;
+          width: 100%;
+          display: flex;
           font-size: 20px;
+          justify-content: space-between;
 
           .title {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding-top: 15px;
+
             &:hover {
-              color: red;
+              text-overflow: clip;
+              white-space: normal;
+              word-break: break-all;
+            }
+
+            &:not(:hover) {
+              color: var(--text-color) !important;
             }
           }
         }
 
-        .actions {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: end;
+        .created-date {
+          text-align: end;
+          padding-right: 15px;
+        }
 
-          .created-date {
-            padding: 0 15px 15px 0;
-          }
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     }
@@ -145,7 +152,3 @@
   height: 15px;
   font-size: 0;
 }
-
-
-
-

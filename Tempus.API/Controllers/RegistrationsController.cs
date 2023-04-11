@@ -20,7 +20,9 @@ public class RegistrationsController : BaseController
     ///     constructor
     /// </summary>
     /// <param name="mediator"></param>
-    public RegistrationsController(IMediator mediator) : base(mediator) { }
+    public RegistrationsController(IMediator mediator) : base(mediator)
+    {
+    }
 
     /// <summary>
     ///     Get all registration. If a CategoryId is specified this action will return all registrations created for the
@@ -34,11 +36,11 @@ public class RegistrationsController : BaseController
     {
         return HandleResponse(await _mediator.Send(query));
     }
-    
+
     [HttpGet("groups/{groupId}")]
     public async Task<ActionResult<List<RegistrationOverview>>> GetAll([FromRoute] Guid groupId)
     {
-        return HandleResponse(await _mediator.Send(new GetAllRegistrationsQuery {GroupId = groupId}));
+        return HandleResponse(await _mediator.Send(new GetAllRegistrationsQuery { GroupId = groupId }));
     }
 
     /// <summary>
@@ -47,9 +49,9 @@ public class RegistrationsController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<RegistrationDetails>> GetById([FromRoute] Guid id)
+    public async Task<ActionResult<RegistrationDetails>> GetById([FromRoute] Guid id, [FromQuery] Guid? groupId)
     {
-        return HandleResponse(await _mediator.Send(new GetRegistrationByIdQuery {Id = id}));
+        return HandleResponse(await _mediator.Send(new GetRegistrationByIdQuery { Id = id, GroupId = groupId }));
     }
 
     /// <summary>
@@ -80,11 +82,13 @@ public class RegistrationsController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Guid>> Delete([FromRoute] Guid id)
+    public async Task<ActionResult<Guid>> Delete([FromRoute] Guid id, [FromQuery] Guid? groupId)
+
     {
         return HandleResponse(await _mediator.Send(new DeleteRegistrationCommand
         {
-            Id = id
+            Id = id,
+            GroupId = groupId
         }));
     }
 

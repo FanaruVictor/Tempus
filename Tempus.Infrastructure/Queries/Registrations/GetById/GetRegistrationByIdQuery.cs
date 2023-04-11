@@ -7,4 +7,5 @@ namespace Tempus.Infrastructure.Queries.Registrations.GetById;
 public class GetRegistrationByIdQuery : BaseRequest<BaseResponse<RegistrationDetails>>
 {
     public Guid Id { get; init; }
+    public Guid? GroupId { get; set; }
 }
