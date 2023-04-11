@@ -4,8 +4,20 @@
   </div>
   <div class="left" *ngIf="!!groupId; else noGroupSelected">
     <div class="group-navbar">
-      <div class="registrations tab" (click)="redirectToRegistrations()">Registrations</div>
-      <div class="categories tab" (click)="redirectToCategories()">Categories</div>
+      <div
+        class="registrations tab"
+        (click)="redirectToRegistrations()"
+        [ngClass]="isActive ? 'active' : ''"
+      >
+        Registrations
+      </div>
+      <div
+        class="categories tab"
+        (click)="redirectToCategories()"
+        [ngClass]="!isActive ? 'active' : ''"
+      >
+        Categories
+      </div>
     </div>
     <div class="group-overview-content">
       <router-outlet></router-outlet>

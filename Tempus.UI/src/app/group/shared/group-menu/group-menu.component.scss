@@ -50,7 +50,6 @@
     padding: 15px 0;
     margin-bottom: 15px;
 
-
     :last-child {
       margin-bottom: 0;
     }
@@ -71,7 +70,9 @@
         font-size: 20px;
         align-items: center;
 
-        .group-image {
+        .group-image,
+        .group-icon {
+          font-size: 80px;
           width: 75px;
           height: 75px;
           border-radius: 50%;

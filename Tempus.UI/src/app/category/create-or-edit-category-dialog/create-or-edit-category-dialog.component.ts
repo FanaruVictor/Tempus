@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Router} from "@angular/router";
-import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {Color} from "@angular-material-components/color-picker";
-import {BaseCategory} from "../../_commons/models/categories/baseCategory";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { Color } from "@angular-material-components/color-picker";
+import { BaseCategory } from "../../_commons/models/categories/baseCategory";
+import { GroupService } from 'src/app/_services/group/group.service';
 
 @Component({
   selector: 'app-create-or-edit-category-dialog',
@@ -23,11 +24,13 @@ export class CreateOrEditCategoryDialogComponent implements OnInit {
     userId: '',
     id: ''
   };
+  groupId: string | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<CreateOrEditCategoryDialogComponent>,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public category: BaseCategory,
+    private groupService: GroupService
   ) {
   }
 
@@ -40,11 +43,17 @@ export class CreateOrEditCategoryDialogComponent implements OnInit {
       if (color)
         this.createOrEditForm.controls['color'].setValue(new Color(color.r, color.g, color.b));
     }
+
+    this.groupService.currentGroupId.subscribe(x => this.groupId = x);
   }
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/categories']);
+    if (!!this.groupId) {
+      this.router.navigate(['/groups', this.groupId, 'categories']);
+    } else {
+      this.router.navigate(['/categories']);
+    }
   }
 
   submit() {

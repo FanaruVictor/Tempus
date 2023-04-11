@@ -9,8 +9,9 @@ import { GroupService } from 'src/app/_services/group/group.service';
 })
 export class GroupOverviewComponent implements OnInit {
   groupId: string | undefined;
+  isActive = true;
 
-  constructor(private groupService: GroupService, private router: Router) {}
+  constructor(private groupService: GroupService, private router: Router) { }
 
   ngOnInit() {
     this.groupService.currentGroupId.subscribe((x) => {
@@ -20,9 +21,11 @@ export class GroupOverviewComponent implements OnInit {
 
   redirectToRegistrations() {
     this.router.navigate([`groups/${this.groupId}/registrations`]);
+    this.isActive = true;
   }
 
   redirectToCategories() {
     this.router.navigate([`groups/${this.groupId}/categories`]);
+    this.isActive = false;
   }
 }

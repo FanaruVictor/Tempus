@@ -18,27 +18,31 @@ export class GroupMenuComponent implements OnInit {
     private router: Router,
     private groupApiService: GroupApiService,
     private groupService: GroupService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.groupApiService.getAll().subscribe((response) => {
       this.groups = response.resource;
+      console.log(this.groups);
+
       this.groups.forEach(
         (x) => (x.userPhotos = x.userPhotos.filter((x) => x != null))
       );
-    });
-
-    this.groupService.currentGroupId.subscribe((x) => {
-      this.activeGroupId = x;
     });
 
     const groupId = this.router.url.split('/')[2];
     if (!!groupId) {
       this.setActiveItem(groupId);
     }
+
+    this.groupService.currentGroupId.subscribe((x) => {
+      this.activeGroupId = x;
+    });
+
+
   }
 
-  delete(id: string) {}
+  delete(id: string) { }
 
   setActiveItem(id: string) {
     this.groupService.setGroupId(id);

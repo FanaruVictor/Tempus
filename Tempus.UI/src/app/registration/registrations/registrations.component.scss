@@ -56,6 +56,7 @@
 
     .add-button {
       height: 50px;
+      min-width: fit-content;
     }
   }
 
@@ -69,7 +70,7 @@
     .elements {
       padding: 5px;
       overflow-y: scroll;
-      min-width: 20%;
+      min-width: 215px;
       max-width: 25%;
       height: 100%;
       display: flex;
@@ -79,6 +80,7 @@
 
       .registration {
         width: 100%;
+        min-width: 200px;
         margin-bottom: 1.5rem;
         background-color: var(--content-color);
         border-radius: 5px;

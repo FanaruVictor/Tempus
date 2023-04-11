@@ -274,7 +274,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    if (!!this.getById) {
+    if (!!this.groupId) {
       this.router.navigate(['/groups', this.groupId, 'registrations']);
     } else {
       this.router.navigate(['/registrations']);
