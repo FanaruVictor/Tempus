@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using System.Text.RegularExpressions;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -33,16 +34,10 @@ public class CloudinaryService : ICloudinaryService
         }
 
         await using var stream = image.OpenReadStream();
-        var uploadParams = new ImageUploadParams
-        {
-            File = new FileDescription(Guid.NewGuid().ToString(), stream),
-            Transformation = new Transformation().Width(200).Height(200).Crop("fill").Gravity("face")
-        };
-
-        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-
-        return uploadResult;
+        return await UploadImage(stream);
     }
+    
+    
 
     public async Task DestroyUsingUserId(Guid userId)
     {
@@ -59,5 +54,37 @@ public class CloudinaryService : ICloudinaryService
         };
 
         await _cloudinary.DestroyAsync(destroyParams);
+    }
+
+    public async Task<Dictionary<string, string>> UploadRegistrationImages(MatchCollection images)
+    {
+        var result = new Dictionary<string, string>();
+        IEnumerable<byte[]> photos = images.Select(x =>
+        {
+            var content = x.Value;
+            return Convert.FromBase64String(content[content.LastIndexOf(',')..]);
+        });
+
+        foreach(var photo in photos)
+        {
+            var steam = new MemoryStream(photo);
+            var uploadResult = await UploadImage(steam);
+            
+        }
+
+        return result;
+    }
+    
+    private async Task<ImageUploadResult> UploadImage(Stream stream)
+    {
+        var uploadParams = new ImageUploadParams
+        {
+            File = new FileDescription(Guid.NewGuid().ToString(), stream),
+            Transformation = new Transformation().Width(200).Height(200).Crop("fill").Gravity("face")
+        };
+
+        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+        return uploadResult;
     }
 }

@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using System.Text.RegularExpressions;
+using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
+using Tempus.Infrastructure.Services.Cloudynary;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
@@ -11,13 +13,15 @@ public class
     CreateRegistrationCommandHandler : IRequestHandler<CreateRegistrationCommand, BaseResponse<RegistrationDetails>>
 {
     private readonly ICategoryRepository _categoryRepository;
+    private readonly ICloudinaryService _cloudinaryService;
     private readonly IRegistrationRepository _registrationRepository;
 
     public CreateRegistrationCommandHandler(IRegistrationRepository registrationRepository,
-        ICategoryRepository categoryRepository)
+        ICategoryRepository categoryRepository, ICloudinaryService cloudinaryService)
     {
         _registrationRepository = registrationRepository;
         _categoryRepository = categoryRepository;
+        _cloudinaryService = cloudinaryService;
     }
 
     public async Task<BaseResponse<RegistrationDetails>> Handle(CreateRegistrationCommand request,
@@ -44,6 +48,10 @@ public class
                 CategoryId = request.CategoryId,
             };
 
+            var images = ExtractImages(request.Content);
+            
+            _cloudinaryService.UploadRegistrationImages(images);
+
             await _registrationRepository.Add(entity);
             await _registrationRepository.SaveChanges();
 
@@ -57,5 +65,11 @@ public class
             var result = BaseResponse<RegistrationDetails>.BadRequest(new List<string> {exception.Message});
             return result;
         }
+    }
+
+    private MatchCollection ExtractImages(string content)
+    {
+        var regex = new Regex(@"<img.*?src=""(.*?)"".*?>");
+        return regex.Matches(content);
     }
 }

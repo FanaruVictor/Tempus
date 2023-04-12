@@ -3,7 +3,13 @@
 :host(.full-view) {
   width: 80%;
   height: 100%;
+
+  .quill-container.ql-snow {
+    height: 100px !important;
+  }
 }
+
+
 
 .registration-form {
   height: 100%;
@@ -75,5 +81,3 @@
     padding: 0;
   }
 }
-
-

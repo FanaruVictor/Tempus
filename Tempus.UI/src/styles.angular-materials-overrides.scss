@@ -4,7 +4,8 @@
   padding: 0 !important;
 }
 
-.mat-tab-label, .mat-tab-link {
+.mat-tab-label,
+.mat-tab-link {
   color: var(--text-color);
   font-weight: bold;
 }
@@ -14,8 +15,7 @@
   resize: none !important;
 }
 
-.mat-form-field-infix {
-}
+.mat-form-field-infix {}
 
 .mat-form-field-wrapper {
   resize: none !important;
@@ -152,20 +152,20 @@ mat-card-actions {
   background-color: #3f51b5;
 }
 
-.mat-select-value{
+.mat-select-value {
   display: flex;
 }
 
-.mat-tab-link{
+.mat-tab-link {
   opacity: 1 !important;
 }
 
-.mat-menu-content{
+.mat-menu-content {
   background-color: var(--header-color);
   padding: 0 !important;
 }
 
-.mat-menu-item{
+.mat-menu-item {
   color: var(--text-color);
   font-weight: bold;
 }
@@ -182,11 +182,16 @@ mat-card-actions {
   color: $primary-color;
 }
 
-.mat-datepicker-toggle-default-icon, .mat-select-arrow, .mat-pseudo-checkbox{
+.mat-datepicker-toggle-default-icon,
+.mat-select-arrow,
+.mat-pseudo-checkbox {
   color: var(--text-color);
 }
 
-.mat-form-field-underline{
+.mat-form-field-underline {
   background-color: var(--text-color) !important;
 }
 
+.mat-menu-panel {
+  min-height: 48px !important;
+}

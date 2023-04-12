@@ -82,7 +82,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
     });
@@ -170,9 +169,9 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     if (!this.isCreateMode) {
       return (
         this.initialRegistration?.content !=
-        this.createOrEditForm.get('content')?.value ||
+          this.createOrEditForm.get('content')?.value ||
         this.initialRegistration?.description !=
-        this.createOrEditForm.get('description')?.value
+          this.createOrEditForm.get('description')?.value
       );
     }
     return this.createOrEditForm.valid;
@@ -184,7 +183,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       description: this.createOrEditForm.get('description')?.value,
       content: this.createOrEditForm.get('content')?.value,
     };
-
+    debugger;
     this.update(updateRegistrationCommandData);
   }
 
@@ -206,11 +205,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           createdAt: this.initialRegistration.createdAt,
         };
         this.registrationApiService.setRegistration(this.initialRegistration);
-        if (!!this.groupId) {
-          this.router.navigate(['/groups', this.groupId, 'registrations']);
-        } else {
-          this.router.navigate(['/registrations']);
-        }
+        this.redirect();
       });
   }
 
@@ -234,16 +229,22 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .create(registration)
       .pipe(filter((x) => !!x))
       .subscribe((_) => {
-        if (!!this.groupId) {
-          this.router.navigate(['/groups', this.groupId, 'registrations']);
-        } else {
-          this.router.navigate(['/registrations']);
-        }
+        this.redirect();
         this.notificationService.succes(
           'Registration created succesfully',
           'Request completed'
         );
       });
+  }
+
+  redirect() {
+    if (this.mode == 'edit-full-view') {
+      if (!!this.groupId) {
+        this.router.navigate(['/groups', this.groupId, 'registrations']);
+      } else {
+        this.router.navigate(['/registrations']);
+      }
+    }
   }
 
   openDialog() {
@@ -274,10 +275,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    if (!!this.groupId) {
-      this.router.navigate(['/groups', this.groupId, 'registrations']);
-    } else {
-      this.router.navigate(['/registrations']);
-    }
+    this.redirect();
   }
 }
