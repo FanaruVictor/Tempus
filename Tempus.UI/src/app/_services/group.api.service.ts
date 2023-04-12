@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { AddGroupData } from '../_commons/models/groups/addGroupData';
 import { GenericResponse } from '../_commons/models/genericResponse';
 import { GroupOverview } from '../_commons/models/groups/groupOverview';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,7 @@ import { Observable } from 'rxjs';
 export class GroupApiService {
   apiUrl = `${environment.apiUrl}/v1/groups`;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getAll() {
     return this.httpClient.get<GenericResponse<GroupOverview[]>>(this.apiUrl);
@@ -24,5 +23,9 @@ export class GroupApiService {
     if (!!group.image) formData.append('image', group.image);
     formData.append('members', JSON.stringify(group.members.join(',')));
     return this.httpClient.post<any>(this.apiUrl, formData);
+  }
+
+  delete(id: string) {
+    return this.httpClient.delete<GenericResponse<string>>(`${this.apiUrl}/${id}`);
   }
 }

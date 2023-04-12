@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GroupOverview } from 'src/app/_commons/models/groups/groupOverview';
 import { GroupApiService } from '../../../_services/group.api.service';
 import { GroupService } from 'src/app/_services/group/group.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-group-menu',
@@ -21,14 +22,7 @@ export class GroupMenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.groupApiService.getAll().subscribe((response) => {
-      this.groups = response.resource;
-      console.log(this.groups);
-
-      this.groups.forEach(
-        (x) => (x.userPhotos = x.userPhotos.filter((x) => x != null))
-      );
-    });
+    this.getAll();
 
     const groupId = this.router.url.split('/')[2];
     if (!!groupId) {
@@ -38,11 +32,28 @@ export class GroupMenuComponent implements OnInit {
     this.groupService.currentGroupId.subscribe((x) => {
       this.activeGroupId = x;
     });
-
-
   }
 
-  delete(id: string) { }
+  getAll() {
+    this.groupApiService.getAll().subscribe((response) => {
+      this.groups = response.resource;
+      console.log(this.groups);
+
+      this.groups.forEach(
+        (x) => (x.userPhotos = x.userPhotos.filter((x) => x != null))
+      );
+    });
+  }
+
+  delete(id: string) {
+    console.log(id);
+    this.groupApiService.delete(id)
+      .pipe(filter(x => !!x))
+      .subscribe(response => {
+        const id = response.resource;
+        this.groups = this.groups.filter(x => x.id != id);
+      });
+  }
 
   setActiveItem(id: string) {
     this.groupService.setGroupId(id);
