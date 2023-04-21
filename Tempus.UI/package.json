@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~14.2.12",
     "@angular/platform-browser-dynamic": "~14.2.12",
     "@angular/router": "~14.2.12",
+    "@angular/service-worker": "~14.2.12",
     "@mobiscroll/angular-lite": "^4.10.9",
     "@ng-select/ng-select": "^9.1.0",
     "@types/google-one-tap": "^1.2.2",

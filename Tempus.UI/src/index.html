@@ -1,24 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Tempus.UI</title>
-  <base href="/">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <link href="favicon.ico" rel="icon" type="image/x-icon">
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
-<body class="mat-typography">
-<app-root></app-root>
-</body>
-<script>
-  let isDarkTheme = localStorage.getItem("isDarkTheme");
-  if (isDarkTheme === 'true') {
-    document.body.classList.toggle('dark-theme');
-  }
-</script>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tempus.UI</title>
+    <base href="/" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <script
+      src="https://accounts.google.com/gsi/client"
+      async=""
+      defer=""
+    ></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#2a2a2a" />
+  </head>
+  <body class="mat-typography">
+    <app-root></app-root>
+    <noscript
+      >Please enable JavaScript to continue using this application.</noscript
+    >
+  </body>
+  <script>
+    let isDarkTheme = localStorage.getItem("isDarkTheme");
+    if (isDarkTheme === "true") {
+      document.body.classList.toggle("dark-theme");
+    }
+  </script>
 </html>

@@ -44,14 +44,14 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
-var allowedCorsHosts = builder.Configuration["AllowedCorsHosts"];
+var allowedCorsHosts = builder.Configuration["AllowedCorsHosts"]?.Split(",");
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
         policyBuilder =>
         {
-            policyBuilder.WithOrigins(allowedCorsHosts ?? "*");
+            policyBuilder.WithOrigins(allowedCorsHosts ?? new string[] {"*"});
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
         });
