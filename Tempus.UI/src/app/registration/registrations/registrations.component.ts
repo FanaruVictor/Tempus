@@ -166,15 +166,11 @@ export class RegistrationsComponent {
     pdfMake.createPdf(documentDefinition).print();
   }
 
-  @ViewChild('pdfTable') downloadButton?: ElementRef;
   private prepareDocument(registration: RegistrationOverview): any {
     if (!registration) return undefined;
 
     registration.content = this.changeToDoList(registration.content);
-    const pdfTable = this.downloadButton?.nativeElement || undefined;
-    const content = htmlToPdfmake(
-      pdfTable ? pdfTable.innerHTML : registration.content
-    );
+    const content = htmlToPdfmake(registration.content);
     debugger;
     const documentDefinition = {
       content: [
