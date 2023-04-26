@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
@@ -60,7 +60,6 @@ export class RegistrationsComponent {
     this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
       this.getAll();
-
     });
 
     this.categoryApiService.getAll(this.groupId).subscribe((response) => {
@@ -75,10 +74,23 @@ export class RegistrationsComponent {
       this.registrations = this.registrations?.map((registration) => {
         if (registration.id === x.id) {
           registration.description = x.description;
+          registration.lastUpdatedAt = x.lastUpdatedAt;
+          registration.content = x.content;
+          registration.categoryColor = x.categoryColor;
         }
         return registration;
       });
+
+      this.sortRegistrationByDate();
     });
+  }
+
+  private sortRegistrationByDate() {
+    this.registrations = this.registrations?.sort(
+      (objA, objB) =>
+        new Date(objB.lastUpdatedAt).getTime() -
+        new Date(objA.lastUpdatedAt).getTime()
+    );
   }
 
   private getAll() {
@@ -87,15 +99,11 @@ export class RegistrationsComponent {
         this.registrations = response.resource;
         this.registrations = this.registrations?.sort(
           (objA, objB) =>
-            new Date(objB.createdAt).getTime() -
-            new Date(objA.createdAt).getTime()
+            new Date(objB.lastUpdatedAt).getTime() -
+            new Date(objA.lastUpdatedAt).getTime()
         );
 
-        this.registrations?.forEach((x) => {
-          if (!this.registrationsColor.includes(x.categoryColor)) {
-            this.registrationsColor.push(x.categoryColor);
-          }
-        });
+        this.sortRegistrationByDate();
       },
     });
   }
@@ -158,18 +166,31 @@ export class RegistrationsComponent {
     pdfMake.createPdf(documentDefinition).print();
   }
 
+  @ViewChild('pdfTable') downloadButton?: ElementRef;
   private prepareDocument(registration: RegistrationOverview): any {
     if (!registration) return undefined;
 
-    const html = htmlToPdfmake(registration.content);
+    registration.content = this.changeToDoList(registration.content);
+    const pdfTable = this.downloadButton?.nativeElement || undefined;
+    const content = htmlToPdfmake(
+      pdfTable ? pdfTable.innerHTML : registration.content
+    );
+    debugger;
     const documentDefinition = {
-      content: [{ text: registration.description, style: 'header' }, html],
+      content: [
+        {
+          text: registration.description,
+          style: 'header',
+        },
+        content,
+      ],
       styles: {
         header: {
           fontSize: 17,
           marginBottom: 10,
           bold: true,
-          alignment: 'left',
+          alignment: 'center',
+          padding: 10,
         },
       },
       defaultStyle: {
@@ -180,12 +201,41 @@ export class RegistrationsComponent {
     return documentDefinition;
   }
 
+  private changeToDoList(content: string): string {
+    const regexToDoChecked = /<ul data-checked="true"><li>(.*?)<\/li><\/ul>/g;
+    const regexToDoUnchecked =
+      /<ul data-checked="false"><li>(.*?)<\/li><\/ul>/g;
+    const checkedItems = content.match(regexToDoChecked);
+    const uncheckedItems = content.match(regexToDoUnchecked);
+    if (!checkedItems && !uncheckedItems) {
+      return content;
+    }
+    checkedItems?.forEach((x) => {
+      var itemText = x.replace('<ul data-checked="true"><li>', '');
+      itemText = itemText.replace('</li></ul>', '');
+      content = content.replace(
+        x,
+        `<input type="checkbox" checked> <label>${itemText}</label><br>`
+      );
+    });
+
+    uncheckedItems?.forEach((x) => {
+      var itemText = x.replace('<ul data-checked="false"><li>', '');
+      itemText = itemText.replace('</li></ul>', '');
+      content = content.replace(
+        x,
+        `<button type="button"> <label>${itemText}</label><br>`
+      );
+    });
+    return content;
+  }
+
   modifyContent(values: string[]) {
     let element = document.getElementsByClassName('mat-select-value')[0];
     element.innerHTML = '';
     values.forEach(
       (x) =>
-      (element.innerHTML = element.innerHTML.concat(`<div style="
+        (element.innerHTML = element.innerHTML.concat(`<div style="
         background-color: ${x};
         height: 15px;
         width: 15px;

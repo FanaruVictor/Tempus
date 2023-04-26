@@ -2,5 +2,5 @@
 
 public class RegistrationOverview : BaseRegistration
 {
-    public DateTime CreatedAt { get; set; }
+    public DateTime LastUpdatedAt { get; set; }
 }

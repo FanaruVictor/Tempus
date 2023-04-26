@@ -15,7 +15,8 @@
   resize: none !important;
 }
 
-.mat-form-field-infix {}
+.mat-form-field-infix {
+}
 
 .mat-form-field-wrapper {
   resize: none !important;
@@ -56,7 +57,9 @@
   }
 }
 
-.ngx-mat-color-canvas .color-canvas-row:nth-of-type(2) .mat-form-field:last-of-type {
+.ngx-mat-color-canvas
+  .color-canvas-row:nth-of-type(2)
+  .mat-form-field:last-of-type {
   width: 80px !important;
 }
 
@@ -97,18 +100,18 @@ mat-card-actions {
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #4B4B4B60;
+  background-color: #4b4b4b60;
 }
 
 .mat-slide-toggle-thumb {
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('~src/assets/images/sun.svg');
+  background-image: url("~src/assets/images/sun.svg");
   background-size: 15px 15px;
 }
 
 .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-image: url('~src/assets/images/moon.svg');
+  background-image: url("~src/assets/images/moon.svg");
   background-size: 12px 12px;
 }
 
@@ -194,4 +197,27 @@ mat-card-actions {
 
 .mat-menu-panel {
   min-height: 48px !important;
+}
+
+.ng-placeholder {
+  color: var(--text-color) !important;
+}
+
+.ng-arrow-wrapper {
+}
+
+.ng-dropdown-panel-items {
+  background-color: var(--header-color);
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled,
+.ng-input > input,
+.ng-clear-wrapper,
+.ng-arrow,
+.ng-option-label {
+  color: var(--text-color) !important;
+}
+
+.ng-select .ng-select-container:after {
+  border-color: var(--text-color) !important;
 }

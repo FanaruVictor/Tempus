@@ -5,7 +5,6 @@ using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.Core.Commons;
-using Tempus.Core.Entities;
 using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.IServices;

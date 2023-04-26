@@ -74,7 +74,6 @@ body {
   box-sizing: border-box;
 }
 
-
 .mat-select-content {
   background-color: var(--header-color);
   color: var(--text-color);
@@ -88,26 +87,6 @@ body {
   }
 }
 
-
-/*.cdk-overlay-connected-position-bounding-box {
-
-  .cdk-overlay-pane {
-    transform: translateY(19px) !important;
-    box-sizing: border-box;
-    padding: 4px 4px 10px 5px;
-
-    .mat-select-panel {
-      background: var(--header-color);
-      min-width: 100% !important;
-    }
-  }
-}*/
-//
-//.mat-select-panel-wrap {
-//  flex-basis: 100%;
-//  transform: translateX(40px);
-//}
-
 .mat-select-panel {
   transform: translateY(19px) !important;
   background: var(--header-color);
@@ -118,7 +97,6 @@ body {
   background-color: var(--background-color) !important;
 }
 
-
 .ng-option {
   display: flex !important;
   align-items: center !important;
@@ -126,7 +104,6 @@ body {
 
   span {
     margin-left: 10px;
-
   }
 }
 

@@ -3,28 +3,55 @@
   <form class="center" (ngSubmit)="submit()" [formGroup]="editForm">
     <div class="profile-photo">
       <div class="profile-photo">
-        <mat-icon *ngIf="!imageURL; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
-                  class="user-icon">
+        <mat-icon
+          *ngIf="!imageURL; else showPhoto"
+          aria-hidden="false"
+          aria-label="User placeholder for photo"
+          class="user-icon"
+        >
           account_circle
         </mat-icon>
         <ng-template #showPhoto>
-          <img [src]="imageURL">
+          <img [src]="imageURL" width="200" height="200" />
         </ng-template>
         <div *ngIf="!user.externalId" class="actions">
-          <input #profilePhoto type="file" accept="image/png, image/gif, image/jpeg" hidden="true"
-                 (change)="showPreview($event)"/>
-          <button type="button" (click)="profilePhoto.click()" color="primary"
-                  mat-raised-button>{{imageURL ? 'Change' : 'Add'}}</button>
-          <button type="button" *ngIf="imageURL" (click)="deletePicture()" color="warn"
-                  mat-raised-button>Delete
+          <input
+            #profilePhoto
+            type="file"
+            accept="image/png, image/gif, image/jpeg"
+            hidden="true"
+            (change)="showPreview($event)"
+          />
+          <button
+            type="button"
+            (click)="profilePhoto.click()"
+            color="primary"
+            mat-raised-button
+          >
+            {{ imageURL ? "Change" : "Add" }}
+          </button>
+          <button
+            type="button"
+            *ngIf="imageURL"
+            (click)="deletePicture()"
+            color="warn"
+            mat-raised-button
+          >
+            Delete
           </button>
         </div>
       </div>
     </div>
     <div class="entry">
       <label>Username</label>
-      <input formControlName="userName" placeholder="E.g.: John" [readOnly]="!!user.externalId">
-      <mat-error *ngIf="!editForm.get('userName')?.valid">The username is required</mat-error>
+      <input
+        formControlName="userName"
+        placeholder="E.g.: John"
+        [readOnly]="!!user.externalId"
+      />
+      <mat-error *ngIf="!editForm.get('userName')?.valid"
+        >The username is required</mat-error
+      >
     </div>
     <div class="entry">
       <label>Email</label>
@@ -33,16 +60,27 @@
         placeholder="E.g.: Jhon@Doe.com"
         type="email"
         pattern="[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+"
-        [readOnly]="!!user.externalId">
-      <mat-error *ngIf="!editForm.get('email')?.valid">The email address is invalid</mat-error>
+        [readOnly]="!!user.externalId"
+      />
+      <mat-error *ngIf="editForm.get('email')?.errors?.['required']"
+        >The email address is required</mat-error
+      >
+      <mat-error
+        *ngIf="!editForm.get('email')?.valid && !editForm.get('email')?.errors?.['required']"
+        >The email address is invalid</mat-error
+      >
     </div>
     <div class="entry">
       <label>Phone number</label>
-      <input formControlName="phoneNumber" placeholder="Phone number">
+      <input formControlName="phoneNumber" placeholder="Phone number" />
     </div>
     <div class="actions">
-      <button  mat-raised-button type="button"  [routerLink]="['/account']">Cancel</button>
-      <button class="submit" mat-raised-button color="primary" type="submit" [disabled]="!editForm.valid || !editForm.dirty">Save Changes</button>
+      <button mat-raised-button type="button" [routerLink]="['/account']">
+        Cancel
+      </button>
+      <button class="submit" mat-raised-button color="primary" type="submit">
+        Save Changes
+      </button>
     </div>
   </form>
   <div class="left"></div>

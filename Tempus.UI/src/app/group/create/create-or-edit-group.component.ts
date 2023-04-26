@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { log } from 'console';
+import { debug, log } from 'console';
 import { filter } from 'rxjs';
 import { AddGroupData } from 'src/app/_commons/models/groups/addGroupData';
 import { UserEmail } from 'src/app/_commons/models/user/userEmail';
@@ -53,9 +53,9 @@ export class CreateOrEditGroupComponent implements OnInit {
       image: this.createOrEditForm.get('image')?.value,
     };
 
-    this.groupApiService
-      .add(group)
-      .subscribe(() => this.router.navigate['/groups']);
+    this.groupApiService.add(group).subscribe(() => {
+      this.router.navigate(['/groups']);
+    });
   }
 
   showPreview(event: any) {

@@ -14,7 +14,9 @@
 .ql-toolbar.ql-snow {
   color: var(--text-color);
   background-color: var(--content-color);
-
+  height: 50px;
+  display: flex;
+  align-items: center;
   &::after {
     display: none;
   }

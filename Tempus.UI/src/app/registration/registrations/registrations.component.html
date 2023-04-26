@@ -65,6 +65,7 @@
     class="center"
     *ngIf="registrations.length != 0; else showNoRegistrations"
   >
+    <div id="download" #pdfTable><input type="checkbox" checked />salut</div>
     <div class="elements">
       <div
         *ngFor="
@@ -79,7 +80,7 @@
         "
         class="registration"
         [ngStyle]="{
-          'box-shadow': '0 0 5px 1px ' + registration.categoryColor
+          'border-left': '10px solid ' + registration.categoryColor
         }"
         (click)="openEditContainer(registration.id)"
       >
@@ -116,7 +117,7 @@
           </mat-menu>
         </div>
         <div class="created-date">
-          Created at: {{ registration.createdAt | date }}
+          {{ registration.lastUpdatedAt | date }}
         </div>
       </div>
     </div>

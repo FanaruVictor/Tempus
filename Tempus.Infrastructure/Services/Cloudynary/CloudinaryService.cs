@@ -34,7 +34,7 @@ public class CloudinaryService : ICloudinaryService
         }
 
         await using var stream = image.OpenReadStream();
-        return await UploadImage(stream);
+        return await UploadImage(stream, new Transformation().Width(200).Height(200).Crop("fill").Gravity("face"));
     }
     
     
@@ -56,32 +56,37 @@ public class CloudinaryService : ICloudinaryService
         await _cloudinary.DestroyAsync(destroyParams);
     }
 
-    public async Task<Dictionary<string, string>> UploadRegistrationImages(MatchCollection images)
+    public async Task<string[]> UploadRegistrationImages(MatchCollection images)
     {
-        var result = new Dictionary<string, string>();
+        var result = new string[]{};
         IEnumerable<byte[]> photos = images.Select(x =>
         {
-            var content = x.Value;
-            return Convert.FromBase64String(content[content.LastIndexOf(',')..]);
+            var startIndex = x.Value.LastIndexOf(',') + 1;
+            var length = x.Value.Length - startIndex - 2;
+            var content = x.Value.Substring(startIndex, length);
+            return Convert.FromBase64String(content);
         });
 
         foreach(var photo in photos)
         {
             var steam = new MemoryStream(photo);
-            var uploadResult = await UploadImage(steam);
-            
+            var uploadResult = await UploadImage(steam, null);
+            result = result.Append(uploadResult.Url.ToString()).ToArray();
         }
 
         return result;
     }
-    
-    private async Task<ImageUploadResult> UploadImage(Stream stream)
+    private async Task<ImageUploadResult> UploadImage(Stream stream, Transformation? transformation)
     {
         var uploadParams = new ImageUploadParams
         {
             File = new FileDescription(Guid.NewGuid().ToString(), stream),
-            Transformation = new Transformation().Width(200).Height(200).Crop("fill").Gravity("face")
         };
+
+        if(transformation != null)
+        {
+            uploadParams.Transformation = transformation;
+        }
 
         var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 

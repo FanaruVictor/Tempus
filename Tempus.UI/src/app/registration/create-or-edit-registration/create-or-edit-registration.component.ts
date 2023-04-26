@@ -38,7 +38,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   content = '';
   format = 'html';
   createOrEditForm: FormGroup;
-  lastUpdatedAt?: Date;
+  createdAt?: Date;
   categoryColor!: string;
   categoryId: string | null = null;
   mode: string | undefined;
@@ -55,7 +55,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
     [{ align: [] }],
     ['image'],
-    ['formula'],
   ];
 
   quillConfig = {
@@ -148,16 +147,21 @@ export class CreateOrEditRegistrationComponent implements OnInit {
         this.initialRegistration.content = response.resource.content;
         this.initialRegistration.description = response.resource.description;
         this.createOrEditForm.patchValue(response.resource);
-        this.lastUpdatedAt = new Date(response.resource.lastUpdatedAt);
+        this.createdAt = new Date(response.resource.createdAt);
         this.categoryColor = response.resource.categoryColor;
       });
   }
 
   submit() {
-    if (!this.isFormValid()) {
+    if (!this.isFormChanged() && !this.isCreateMode) {
       this.notificationService.warn('No changes detected', 'Request completed');
       return;
     }
+
+    if (!this.isFormValid()) {
+      return;
+    }
+
     if (!this.isCreateMode) {
       this.updateRegistration();
       return;
@@ -166,6 +170,24 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   isFormValid() {
+    if (!this.createOrEditForm.valid) {
+      let messages: string[] = [];
+      if (this.createOrEditForm.get('description')?.errors?.['required']) {
+        messages.push('Description is required.');
+      }
+      if (this.createOrEditForm.get('content')?.errors?.['required']) {
+        messages.push('Content is required.');
+      }
+      this.notificationService.error(
+        messages,
+        'Please complete all the fields before submitting.'
+      );
+      return false;
+    }
+    return true;
+  }
+
+  isFormChanged() {
     if (!this.isCreateMode) {
       return (
         this.initialRegistration?.content !=
@@ -183,7 +205,6 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       description: this.createOrEditForm.get('description')?.value,
       content: this.createOrEditForm.get('content')?.value,
     };
-    debugger;
     this.update(updateRegistrationCommandData);
   }
 
@@ -192,7 +213,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .update(updateRegistrationCommandData)
       .pipe(filter((x) => !!x))
       .subscribe((result) => {
-        this.lastUpdatedAt = new Date(result.resource.lastUpdatedAt);
+        this.createdAt = new Date(result.resource.createdAt);
         this.notificationService.succes(
           'Registration updated successfully',
           'Request completed'
@@ -202,7 +223,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
           description: result.resource.description,
           content: result.resource.content,
           categoryColor: result.resource.categoryColor,
-          createdAt: this.initialRegistration.createdAt,
+          lastUpdatedAt: new Date().toString(),
         };
         this.registrationApiService.setRegistration(this.initialRegistration);
         this.redirect();
@@ -229,7 +250,11 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .create(registration)
       .pipe(filter((x) => !!x))
       .subscribe((_) => {
-        this.redirect();
+        if (!!this.groupId) {
+        this.router.navigate(['/groups', this.groupId, 'registrations']);
+      } else {
+        this.router.navigate(['/registrations']);
+      }
         this.notificationService.succes(
           'Registration created succesfully',
           'Request completed'
@@ -275,6 +300,10 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    this.redirect();
+    if (!!this.groupId) {
+      this.router.navigate(['/groups', this.groupId, 'registrations']);
+    } else {
+      this.router.navigate(['/registrations']);
+    }
   }
 }

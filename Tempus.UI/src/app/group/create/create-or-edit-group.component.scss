@@ -1,17 +1,14 @@
-@import '../../../styles/variables.scss';
+@import "../../../styles/variables.scss";
 
 .group-form {
   height: 100%;
   display: flex;
-
-  .cancel {
-    padding: 15px 0 0 15px;
-    width: 25%;
-  }
+  flex-direction: column;
 
   .form-content {
     width: 50%;
-    box-shadow: 12px 0 15px -8px var(--content-color), -12px 0 8px -8px var(--content-color);
+    box-shadow: 12px 0 15px -8px var(--content-color),
+      -12px 0 8px -8px var(--content-color);
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -21,7 +18,6 @@
       flex-direction: column;
       align-items: center;
       padding-bottom: 2rem;
-
 
       .user-icon,
       img {
@@ -85,7 +81,6 @@
         text-align: center;
 
         box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
-
       }
 
       .add-member {
@@ -114,9 +109,17 @@
         .user-search-bar {
           width: 80%;
           margin: 5px 0;
+          input {
+            color: var(--text-color) !important;
+          }
         }
       }
     }
+  }
+
+  .cancel {
+    padding: 15px 0 0 15px;
+    width: 25%;
   }
 
   .create {
@@ -125,7 +128,6 @@
     padding: 15px 15px 0 0;
   }
 }
-
 
 .user-img {
   width: 25px;

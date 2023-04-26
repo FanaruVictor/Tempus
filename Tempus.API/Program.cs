@@ -3,9 +3,11 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.API;
+using Tempus.API.SignalR;
 using Tempus.Data;
 using Tempus.Infrastructure;
 
@@ -51,11 +53,14 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policyBuilder =>
         {
-            policyBuilder.WithOrigins(allowedCorsHosts ?? new string[] {"*"});
+            policyBuilder.WithOrigins(allowedCorsHosts ?? new[] {"*"});
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
         });
 });
+
+builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -84,6 +89,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ClientEventHub>("/chat");
 
 app.Run();
 

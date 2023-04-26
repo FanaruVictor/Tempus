@@ -22,7 +22,7 @@ export class RegistrationApiService {
       description: '',
       content: '',
       categoryColor: '',
-      createdAt: '',
+      lastUpdatedAt: '',
     });
     this.registration = this.registrationSubject.asObservable();
   }
@@ -44,22 +44,19 @@ export class RegistrationApiService {
 
   getById(id: string, groupId: string | undefined) {
     return this.httpClient.get<GenericResponse<RegistrationDetails>>(
-      `${this.apiUrl}/${id}`, !!groupId ? { params: { groupId: groupId } } : undefined
+      `${this.apiUrl}/${id}`,
+      !!groupId ? { params: { groupId: groupId } } : undefined
     );
   }
 
-  update(
-    registration: UpdateRegistrationCommandData,
-  ) {
+  update(registration: UpdateRegistrationCommandData) {
     return this.httpClient.put<GenericResponse<RegistrationDetails>>(
       this.apiUrl,
       registration
     );
   }
 
-  create(
-    registration: CreateRegistrationCommandData,
-  ) {
+  create(registration: CreateRegistrationCommandData) {
     return this.httpClient.post<GenericResponse<RegistrationDetails>>(
       this.apiUrl,
       registration
@@ -68,7 +65,8 @@ export class RegistrationApiService {
 
   delete(id: string, groupId: string | undefined) {
     return this.httpClient.delete<GenericResponse<string>>(
-      `${this.apiUrl}/${id}`, !!groupId ? { params: { groupId: groupId } } : undefined
+      `${this.apiUrl}/${id}`,
+      !!groupId ? { params: { groupId: groupId } } : undefined
     );
   }
 }

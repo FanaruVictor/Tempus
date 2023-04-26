@@ -18,7 +18,7 @@ import { HeaderComponent } from './_commons/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from './shared/shared.module';
 import { GroupModule } from './group/group.module';
-import {RegistrationModule} from "./registration/registration.module";
+import { RegistrationModule } from './registration/registration.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -40,7 +40,7 @@ import { environment } from '../environments/environment';
     MatProgressBarModule,
     ToastrModule.forRoot({
       progressBar: true,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-left',
       preventDuplicates: true,
       countDuplicates: true,
     }),
@@ -48,7 +48,7 @@ import { environment } from '../environments/environment';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [

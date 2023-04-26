@@ -50,7 +50,13 @@ public class
 
             var images = ExtractImages(request.Content);
             
-            _cloudinaryService.UploadRegistrationImages(images);
+            var cloudinaryImages = await _cloudinaryService.UploadRegistrationImages(images);
+
+            for(var i = 0; i < images.Count; i++)
+            {
+                var image = images[i].Value;
+                entity.Content = entity.Content?.Replace(image, CreateImage(cloudinaryImages[i]));
+            }
 
             await _registrationRepository.Add(entity);
             await _registrationRepository.SaveChanges();
@@ -71,5 +77,10 @@ public class
     {
         var regex = new Regex(@"<img.*?src=""(.*?)"".*?>");
         return regex.Matches(content);
+    }
+    
+    private string CreateImage(string image)
+    {
+        return $"<img src=\"{image}\" />";
     }
 }
