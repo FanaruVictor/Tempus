@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       google.accounts.id.renderButton(
         //@ts-ignore
         document.getElementById('google-login'),
-        { theme: 'outline', size: 'large', width: '100%' }
+        { theme: 'outline', width: '400' }
       );
 
       //@ts-ignore
