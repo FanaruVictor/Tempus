@@ -21,6 +21,7 @@ import { GroupModule } from './group/group.module';
 import { RegistrationModule } from './registration/registration.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { FacebookLoginProvider, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -66,6 +67,22 @@ import { environment } from '../environments/environment';
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
       multi: true,
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true, //keeps the user signed in
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.googleClientId), // your client id
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(environment.facebookAppId),
+          },
+        ],
+      },
     },
   ],
   bootstrap: [AppComponent],

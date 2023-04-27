@@ -9,6 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CredentialResponse } from 'google-one-tap';
+import {
+  FacebookLoginProvider,
+  SocialAuthService,
+} from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +30,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private socialAuthService: SocialAuthService
   ) {
     if (localStorage.getItem('authorizationToken')) {
       this.router.navigate(['/registrations']);
@@ -36,6 +41,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.createGoogleButton();
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log(user);
+    });
   }
 
   createGoogleButton() {
@@ -52,11 +60,11 @@ export class LoginComponent implements OnInit {
       google.accounts.id.renderButton(
         //@ts-ignore
         document.getElementById('google-login'),
-        { theme: 'outline', width: '400' }
+        { theme: 'outline', size: 'large', type: 'standard', width: '300' }
       );
 
       //@ts-ignore
-      google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+      google.accounts.id.prompt(() => {});
     };
   }
 
@@ -82,5 +90,9 @@ export class LoginComponent implements OnInit {
         },
         error: () => (this.submitted = false),
       });
+  }
+
+  loginWithFacebook() {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 }

@@ -26,16 +26,16 @@
     >
       Login
     </button>
-    <div id="google-login"></div>
-
     <button [routerLink]="['/auth/register']" mat-raised-button>
       Register
     </button>
     <button mat-raised-button color="warn">Forgot password</button>
-    <div
-      class="g-signin2"
-      data-onsuccess="onSignIn"
-      data-ux_mode="redirect"
-    ></div>
+    <div id="google-login"></div>
+
+    <cool-facebook-button class="facebook-login" (click)="loginWithFacebook()"
+      >Signin with Facebook</cool-facebook-button
+    >
+
+    <cool-apple-button class="apple-login">Signin with Apple</cool-apple-button>
   </form>
 </div>

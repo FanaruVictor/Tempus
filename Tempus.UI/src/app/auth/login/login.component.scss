@@ -76,3 +76,25 @@
     }
   }
 }
+
+.facebook-login {
+  width: 100%;
+  margin: 15px;
+  .facebook-button.dark {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+cool-apple-login {
+  width: 100%;
+  margin: 15px;
+  .apple-button.dark {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+}
