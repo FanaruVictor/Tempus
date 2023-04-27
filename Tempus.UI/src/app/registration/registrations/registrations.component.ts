@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
@@ -14,6 +14,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { GroupService } from 'src/app/_services/group/group.service';
 
 const htmlToPdfmake = require('html-to-pdfmake');
+import { jsPDF } from 'jspdf';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -149,12 +150,12 @@ export class RegistrationsComponent {
   }
 
   download(registration: RegistrationOverview): void {
-    const documentDefinition = this.prepareDocument(registration);
-    if (documentDefinition == undefined) {
-      return;
-    }
+    this.prepareDocument(registration);
+    // if (documentDefinition == undefined) {
+    //   return;
+    // }
 
-    pdfMake.createPdf(documentDefinition).download();
+    // pdfMake.createPdf(documentDefinition).download();
   }
 
   print(registration: RegistrationOverview) {
@@ -170,58 +171,80 @@ export class RegistrationsComponent {
     if (!registration) return undefined;
 
     registration.content = this.changeToDoList(registration.content);
-    const content = htmlToPdfmake(registration.content);
-    debugger;
-    const documentDefinition = {
-      content: [
-        {
-          text: registration.description,
-          style: 'header',
-        },
-        content,
-      ],
-      styles: {
-        header: {
-          fontSize: 17,
-          marginBottom: 10,
-          bold: true,
-          alignment: 'center',
-          padding: 10,
-        },
-      },
-      defaultStyle: {
-        bold: false,
-      },
-    };
+    const doc = new jsPDF();
 
-    return documentDefinition;
+    const elementHtml = document.createElement('div');
+    elementHtml.innerHTML = registration.content;
+    debugger;
+    doc.text(registration.description, 100, 10, {
+      align: 'center',
+      maxWidth: 100,
+    });
+
+    doc.html(elementHtml.innerHTML, {
+      callback: function (doc) {
+        doc.canvas.height = 72 * 11;
+        doc.save('file.pdf');
+      },
+      margin: [10, 10, 10, 10],
+      autoPaging: 'text',
+      x: 10,
+      y: 15,
+      width: 190, //target width in the PDF document
+      windowWidth: 675,
+      //window width in CSS pixels
+    });
   }
 
   private changeToDoList(content: string): string {
-    const regexToDoChecked = /<ul data-checked="true"><li>(.*?)<\/li><\/ul>/g;
-    const regexToDoUnchecked =
-      /<ul data-checked="false"><li>(.*?)<\/li><\/ul>/g;
+    const regexToDoChecked = /<ul data-checked="true">(.*?)<\/ul>/g;
+    const regexToDoUnchecked = /<ul data-checked="false">(.*?)<\/ul>/g;
+    debugger;
     const checkedItems = content.match(regexToDoChecked);
     const uncheckedItems = content.match(regexToDoUnchecked);
     if (!checkedItems && !uncheckedItems) {
       return content;
     }
     checkedItems?.forEach((x) => {
-      var itemText = x.replace('<ul data-checked="true"><li>', '');
-      itemText = itemText.replace('</li></ul>', '');
-      content = content.replace(
-        x,
-        `<input type="checkbox" checked> <label>${itemText}</label><br>`
-      );
+      var itemText = x.replace('<ul data-checked="true">', '');
+      itemText = itemText.replace('</ul>', '');
+      let checks = itemText.split('</li><li>');
+
+      checks = checks.map((x) => {
+        x = x.replace('<li>', '');
+        x = x.replace('</li>', '');
+        return x;
+      });
+
+      let replace = '';
+      checks.forEach((x) => {
+        replace = replace.concat(
+          `<input type="checkbox" checked> <label>${x}</label><br>`
+        );
+      });
+
+      content = content.replace(x, replace);
     });
 
     uncheckedItems?.forEach((x) => {
-      var itemText = x.replace('<ul data-checked="false"><li>', '');
-      itemText = itemText.replace('</li></ul>', '');
-      content = content.replace(
-        x,
-        `<button type="button"> <label>${itemText}</label><br>`
-      );
+      var itemText = x.replace('<ul data-checked="false">', '');
+      itemText = itemText.replace('</ul>', '');
+      let checks = itemText.split('</li><li>');
+
+      checks = checks.map((x) => {
+        x = x.replace('<li>', '');
+        x = x.replace('</li>', '');
+        return x;
+      });
+
+      let replace = '';
+      checks.forEach((x) => {
+        replace = replace.concat(
+          `<input type="checkbox"> <label>${x}</label><br>`
+        );
+      });
+
+      content = content.replace(x, replace);
     });
     return content;
   }

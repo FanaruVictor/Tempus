@@ -1,4 +1,4 @@
-@import '~src/styles/variables';
+@import "~src/styles/variables";
 
 ::-webkit-scrollbar {
   width: 0;
@@ -8,7 +8,8 @@
 .category-wrapper {
   left: 0;
   display: flex;
-  height: calc(100% - 50px);
+  height: 100%;
+  background-color: var(--background-color);
 
   .right {
     width: 25%;
@@ -49,7 +50,6 @@
           justify-content: end;
           height: 100px;
 
-
           .category-data {
             width: 70%;
 
@@ -59,7 +59,6 @@
               font-size: 22px;
               padding-bottom: 10px;
               color: var(--text-color);
-
             }
 
             .color {
@@ -83,7 +82,6 @@
               color: $error-color;
             }
           }
-
         }
       }
     }

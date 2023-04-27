@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { LogoutComponent } from './logout/logout.component';
 import { MatCardModule } from '@angular/material/card';
-import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, LogoutComponent],
@@ -21,7 +21,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     MatInputModule,
     MatIconModule,
     MatCardModule,
-    CoolSocialLoginButtonsModule
+    FontAwesomeModule,
   ],
 })
 export class AuthModule {}

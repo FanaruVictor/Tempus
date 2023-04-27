@@ -20,7 +20,12 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<User?> GetByExternalId(string externalId)
     {
+        if(externalId == null)
+        {
+            return null;
+        }
         var user = await _context.Users
+            .Include(x => x.UserPhoto)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ExternalId == externalId);
 

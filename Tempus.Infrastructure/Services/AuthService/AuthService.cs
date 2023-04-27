@@ -142,7 +142,15 @@ public class AuthService : IAuthService
 
             if(user == null)
             {
-                user = await RegisterExternalUser(payload);
+                var registrationData = new ExternalRegistration
+                {
+                    ExternalId = payload.Subject,
+                    Email = payload.Email,
+                    Username = payload.Name,
+                    PhotoUrl = payload.Picture
+                };
+                
+                user = await RegisterExternalUser(registrationData);
             }
 
             CreateToken(user, out var tokenHandler, out var token);
@@ -167,6 +175,37 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<BaseResponse<LoginResult>> LoginWithFacebook(FacebookResponse facebookResponse, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetByExternalId(facebookResponse.ExternalId);
+
+        if(user == null)
+        {
+            var registrationData = new ExternalRegistration
+            {
+                ExternalId = facebookResponse.ExternalId,
+                Email = facebookResponse.Email,
+                Username = facebookResponse.Username,
+                PhotoUrl = facebookResponse.PhotoUrl
+            };
+            
+            user = await RegisterExternalUser(registrationData);
+        }
+        
+        CreateToken(user, out var tokenHandler, out var token);
+
+        var loginResult = new LoginResult
+        {
+            User = GenericMapper<User, UserDetails>.Map(user),
+            AuthorizationToken = tokenHandler.WriteToken(token)
+        };
+        
+        loginResult.User.Photo = GenericMapper<UserPhoto, PhotoDetails>.Map(user.UserPhoto);
+
+
+        return BaseResponse<LoginResult>.Ok(loginResult);
+    }
+
     private async Task<User> RegisterUser(RegistrationData userInfo)
     {
         var user = new User
@@ -184,19 +223,19 @@ public class AuthService : IAuthService
     }
 
 
-    private async Task<User> RegisterExternalUser(GoogleJsonWebSignature.Payload payload)
+    private async Task<User> RegisterExternalUser(ExternalRegistration data)
     {
         var user = await RegisterUser(new RegistrationData
         {
-            Email = payload.Email,
-            ExternalId = payload.Subject,
-            UserName = payload.Name
+            Email = data.Email,
+            ExternalId = data.ExternalId,
+            UserName = data.Username
         });
 
         var photo = new UserPhoto
         {
             Id = Guid.NewGuid(),
-            Url = payload.Picture,
+            Url = data.PhotoUrl,
             PublicId = "",
             UserId = user.Id,
         };

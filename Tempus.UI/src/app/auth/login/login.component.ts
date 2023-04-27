@@ -13,6 +13,8 @@ import {
   FacebookLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { FacebookLoginInfo } from 'src/app/_commons/models/auth/facebookLoginInfo';
 
 @Component({
   selector: 'app-login',
@@ -41,9 +43,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.createGoogleButton();
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log(user);
-    });
   }
 
   createGoogleButton() {
@@ -93,6 +92,33 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithFacebook() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.socialAuthService
+      .signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then((x) => {
+        const facebookLoginInfo: FacebookLoginInfo = {
+          email: x.email,
+          externalId: x.id,
+          username: x.name,
+          photoUrl: x.response.picture.data.url,
+        };
+        debugger;
+        this.authService
+          .loginWithFacebook(facebookLoginInfo)
+          .pipe(first())
+          .subscribe({
+            next: () => {
+              debugger;
+              this.router
+                .navigate([this.returnUrl])
+                .then(() => location.reload());
+            },
+            error: () => {
+              this.submitted = false;
+              debugger;
+            },
+          });
+      });
   }
+
+  faFacebookF = faFacebookF;
 }

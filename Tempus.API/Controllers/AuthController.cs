@@ -18,12 +18,10 @@ namespace Tempus.API.Controllers;
 public class AuthController : BaseController
 {
     private readonly IAuthService _authService;
-    private readonly IConfiguration _configuration;
 
-    public AuthController(IMediator mediator, IAuthService authService, IConfiguration configuration) : base(mediator)
+    public AuthController(IMediator mediator, IAuthService authService) : base(mediator)
     {
         _authService = authService;
-        _configuration = configuration;
     }
 
     [HttpPost("register")]
@@ -43,9 +41,11 @@ public class AuthController : BaseController
     {
         return HandleResponse(await _authService.LoginWithGoogle(googleResponse.googleToken, new CancellationToken()));
     }
+
+    [HttpPost("loginWithFacebook")]
+    public async Task<ActionResult<LoginResult>> LoginWithFacebook([FromBody] FacebookResponse facebookResponse)
+    {
+        return HandleResponse(await _authService.LoginWithFacebook(facebookResponse, new CancellationToken()));
+    }
 }
 
-public class GoogleResponse
-{
-    public string googleToken { get; set; }
-}

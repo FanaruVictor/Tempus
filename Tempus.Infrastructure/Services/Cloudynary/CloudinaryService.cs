@@ -59,19 +59,29 @@ public class CloudinaryService : ICloudinaryService
     public async Task<string[]> UploadRegistrationImages(MatchCollection images)
     {
         var result = new string[]{};
-        IEnumerable<byte[]> photos = images.Select(x =>
+        IEnumerable<byte[]?> photos = images.Select(x =>
         {
-            var startIndex = x.Value.LastIndexOf(',') + 1;
-            var length = x.Value.Length - startIndex - 2;
-            var content = x.Value.Substring(startIndex, length);
-            return Convert.FromBase64String(content);
-        });
+            if(x.Value.Contains("data:image/jpeg;base64") || x.Value.Contains("data:image/png;base64"))
+            {
+                var startIndex = x.Value.LastIndexOf(',') + 1;
+                var length = x.Value.Length - startIndex - 2;
+                var content = x.Value.Substring(startIndex, length);
+                var index = content.IndexOf("\"");
+                content = content.Substring(0, index);
+                return Convert.FromBase64String(content);
+            }
 
+            return null;
+        });
+        
         foreach(var photo in photos)
         {
-            var steam = new MemoryStream(photo);
-            var uploadResult = await UploadImage(steam, null);
-            result = result.Append(uploadResult.Url.ToString()).ToArray();
+            if(photo != null)
+            {
+                var steam = new MemoryStream(photo);
+                var uploadResult = await UploadImage(steam, null);
+                result = result.Append(uploadResult.Url.ToString()).ToArray();
+            }
         }
 
         return result;

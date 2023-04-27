@@ -41,8 +41,8 @@
           (click)="toggleDarkTheme()"
           [checked]="user?.isDarkTheme"
         ></mat-slide-toggle>
+        <app-button (click)="logout()" [icon]="'logout'"></app-button>
       </div>
-      <app-button (click)="logout()" [icon]="'logout'"></app-button>
     </div>
   </div>
 </div>

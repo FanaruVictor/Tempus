@@ -21,7 +21,11 @@ import { GroupModule } from './group/group.module';
 import { RegistrationModule } from './registration/registration.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { FacebookLoginProvider, GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  MicrosoftLoginProvider,
+} from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -80,7 +84,7 @@ import { FacebookLoginProvider, GoogleLoginProvider } from '@abacritt/angularx-s
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(environment.facebookAppId),
-          },
+          }
         ],
       },
     },

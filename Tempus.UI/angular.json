@@ -43,10 +43,13 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/quill/dist/quill.bubble.css",
               "node_modules/quill/dist/quill.snow.css",
-              "src/styles.quill-overrides.scss"
+              "src/styles.quill-overrides.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/bootstrap-social/bootstrap-social.css"
             ],
             "scripts": [
-              "node_modules/quill/dist/quill.min.js"
+              "node_modules/quill/dist/quill.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"

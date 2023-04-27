@@ -29,7 +29,7 @@ export interface Page {
   styleUrls: ['./create-or-edit-registration.component.scss'],
 })
 export class CreateOrEditRegistrationComponent implements OnInit {
-  @HostBinding('class.full-view') isActive = false;
+  @HostBinding('class.full-view') isActive = true;
   categories?: BaseCategory[];
   initialRegistration!: RegistrationOverview;
   id: string | undefined;
@@ -88,7 +88,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     this.activatedRoute.url.subscribe((x) => {
       this.mode = x[x.length - 1].path;
       if (this.mode == 'edit-registrations-view') {
-        this.isActive = true;
+        this.isActive = false;
       }
     });
 
@@ -251,10 +251,10 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .pipe(filter((x) => !!x))
       .subscribe((_) => {
         if (!!this.groupId) {
-        this.router.navigate(['/groups', this.groupId, 'registrations']);
-      } else {
-        this.router.navigate(['/registrations']);
-      }
+          this.router.navigate(['/groups', this.groupId, 'registrations']);
+        } else {
+          this.router.navigate(['/registrations']);
+        }
         this.notificationService.succes(
           'Registration created succesfully',
           'Request completed'

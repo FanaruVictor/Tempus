@@ -1,5 +1,4 @@
 ﻿.ql-container.ql-snow {
-  min-height: 50vh;
   color: var(--text-color);
 
   .ql-editor {
@@ -14,7 +13,6 @@
 .ql-toolbar.ql-snow {
   color: var(--text-color);
   background-color: var(--content-color);
-  height: 50px;
   display: flex;
   align-items: center;
   &::after {

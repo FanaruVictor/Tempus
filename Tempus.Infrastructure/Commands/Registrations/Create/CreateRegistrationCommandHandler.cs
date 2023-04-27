@@ -52,10 +52,14 @@ public class
             
             var cloudinaryImages = await _cloudinaryService.UploadRegistrationImages(images);
 
-            for(var i = 0; i < images.Count; i++)
+            if(cloudinaryImages.Length > 0)
             {
-                var image = images[i].Value;
-                entity.Content = entity.Content?.Replace(image, CreateImage(cloudinaryImages[i]));
+                for(var i = 0; i < images.Count; i++)
+                {
+                    var image = images[i].Value;
+                    var style = ExtractStyle(images[i].Value);
+                    entity.Content = entity.Content?.Replace(image, CreateImage(cloudinaryImages[i], style));
+                }
             }
 
             await _registrationRepository.Add(entity);
@@ -79,8 +83,29 @@ public class
         return regex.Matches(content);
     }
     
-    private string CreateImage(string image)
+    private string CreateImage(string image, string style)
     {
-        return $"<img src=\"{image}\" />";
+        return $"<img src=\"{image}\" {style}/>";
+    }
+    
+    private string ExtractStyle(string image)
+    {
+
+        string pattern = @"<img\s+[^>]*?style\s*=\s*""(?<style>[^""]*)""\s*[^>]*?width\s*=\s*""(?<width>[^""]*)""[^>]*?>";
+
+        Regex regex = new Regex(pattern);
+
+        Match match = regex.Match(image);
+
+        if (match.Success)
+        {
+            // Extract the style and width attributes
+            string style = match.Groups["style"].Value;
+            string width = match.Groups["width"].Value;
+
+            return $"style=\"{style}\" width=\"{width}\"";
+        }
+
+        return"";
     }
 }

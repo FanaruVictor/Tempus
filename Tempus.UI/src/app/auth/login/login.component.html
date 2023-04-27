@@ -32,10 +32,10 @@
     <button mat-raised-button color="warn">Forgot password</button>
     <div id="google-login"></div>
 
-    <cool-facebook-button class="facebook-login" (click)="loginWithFacebook()"
-      >Signin with Facebook</cool-facebook-button
-    >
+    <a class="btn btn-block btn-social btn-facebook login-btn" (click)="loginWithFacebook()"
+      ><fa-icon [icon]="faFacebookF"></fa-icon>
+      Sign in with Facebook
+    </a>
 
-    <cool-apple-button class="apple-login">Signin with Apple</cool-apple-button>
   </form>
 </div>
