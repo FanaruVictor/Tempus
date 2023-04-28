@@ -10,6 +10,7 @@ import { BaseCategory } from '../../_commons/models/categories/baseCategory';
 import { CreateCategoryCommandData } from '../../_commons/models/categories/createCategoryCommandData';
 import { UpdateCategoryCommandData } from '../../_commons/models/categories/updateCategoryCommandData';
 import { NotificationService } from '../../_services/notification.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-categories-overview',
@@ -19,13 +20,25 @@ import { NotificationService } from '../../_services/notification.service';
 export class CategoriesOverviewComponent {
   categories: BaseCategory[] = [];
   groupId: string | undefined;
+  searchText = '';
+  maxDate: Date;
+  minDate: Date;
+
+  dateRange = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   constructor(
     private dialog: MatDialog,
     private categoryApiService: CategoryApiService,
     private notificationService: NotificationService,
     private router: Router
-  ) {}
+  ) {
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 30, 0, 1);
+    this.maxDate = new Date();
+  }
 
   ngOnInit(): void {
     const urlSections = this.router.url.split('/');
@@ -142,6 +155,23 @@ export class CategoriesOverviewComponent {
       (objA, objB) =>
         new Date(objB.lastUpdatedAt).getTime() -
         new Date(objA.lastUpdatedAt).getTime()
+    );
+  }
+
+  resetDate() {
+    this.dateRange.reset();
+  }
+
+  modifyContent(values: string[]) {
+    let element = document.getElementsByClassName('mat-select-value')[0];
+    element.innerHTML = '';
+    values.forEach(
+      (x) =>
+        (element.innerHTML = element.innerHTML.concat(`<div style="
+        background-color: ${x};
+        height: 15px;
+        width: 15px;
+        margin-right: 5px;"></div>`))
     );
   }
 }

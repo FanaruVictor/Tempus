@@ -101,20 +101,17 @@ export class LoginComponent implements OnInit {
           username: x.name,
           photoUrl: x.response.picture.data.url,
         };
-        debugger;
         this.authService
           .loginWithFacebook(facebookLoginInfo)
           .pipe(first())
           .subscribe({
             next: () => {
-              debugger;
               this.router
                 .navigate([this.returnUrl])
                 .then(() => location.reload());
             },
             error: () => {
               this.submitted = false;
-              debugger;
             },
           });
       });

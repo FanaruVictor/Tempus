@@ -1,23 +1,23 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {CategoriesOverviewComponent} from './categories-overview/categories-overview.component';
-import {RouterModule} from "@angular/router";
-import {SharedModule} from "../shared/shared.module";
-import {CategoryRoutingModule} from "./category-routing.module";
-import {ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
-import {
-  CreateOrEditCategoryDialogComponent
-} from './create-or-edit-category-dialog/create-or-edit-category-dialog.component';
-import {MatInputModule} from "@angular/material/input";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CategoriesOverviewComponent } from './categories-overview/categories-overview.component';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
+import { CategoryRoutingModule } from './category-routing.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateOrEditCategoryDialogComponent } from './create-or-edit-category-dialog/create-or-edit-category-dialog.component';
+import { MatInputModule } from '@angular/material/input';
 import {
   MAT_COLOR_FORMATS,
   NGX_MAT_COLOR_FORMATS,
-  NgxMatColorPickerModule
-} from "@angular-material-components/color-picker";
-import {MatCardModule} from "@angular/material/card";
-
+  NgxMatColorPickerModule,
+} from '@angular-material-components/color-picker';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -34,11 +34,12 @@ import {MatCardModule} from "@angular/material/card";
     MatDialogModule,
     MatInputModule,
     NgxMatColorPickerModule,
-    MatCardModule
+    MatCardModule,
+    MatOptionModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    FormsModule
   ],
-  providers: [
-    {provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS}
-  ]
+  providers: [{ provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }],
 })
-export class CategoryModule {
-}
+export class CategoryModule {}

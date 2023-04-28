@@ -1,10 +1,10 @@
 ﻿import { Pipe, PipeTransform } from '@angular/core';
-import { RegistrationOverview } from '../models/registrations/registrationOverview';
+import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 
 @Pipe({ name: 'dateRange' })
 export class DateRangePipe implements PipeTransform {
-  transform(
-    items: RegistrationOverview[],
+  transform<T extends { lastUpdatedAt: string }>(
+    items: T[],
     dateRange: { start: Date | null; end: Date | null }
   ): any[] {
     if (dateRange.start === null || dateRange.end === null) {
@@ -14,10 +14,11 @@ export class DateRangePipe implements PipeTransform {
     const start = new Date(dateRange.start).getTime();
     const end = dateRange.end?.getTime() ?? new Date();
 
-    return items.filter((it) => {
-      let show = true;
+    items = items.filter((it) => {
       const date = new Date(it.lastUpdatedAt).getTime();
       return date >= start && date <= end;
     });
+
+    return items;
   }
 }

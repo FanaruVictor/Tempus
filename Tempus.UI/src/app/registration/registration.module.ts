@@ -20,11 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { JwtInterceptor } from '../_commons/interceptors/JwtInterceptor';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
-import { SearchPipe } from '../_commons/pipes/search.pipe';
+import { SearchPipe } from '../shared/pipes/search.pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateRangePipe } from '../_commons/pipes/dateRange.pipe';
 import { MatMenuModule } from '@angular/material/menu';
-import { ColorPipe } from '../_commons/pipes/color.pipe';
 import {RegistrationsComponent} from "./registrations/registrations.component";
 
 @NgModule({
@@ -32,9 +30,6 @@ import {RegistrationsComponent} from "./registrations/registrations.component";
     RegistrationsComponent,
     PickCategoryDialogComponent,
     CreateOrEditRegistrationComponent,
-    SearchPipe,
-    DateRangePipe,
-    ColorPipe,
   ],
   imports: [
     RegistrationRoutingModule,
@@ -55,7 +50,7 @@ import {RegistrationsComponent} from "./registrations/registrations.component";
     MatNativeDateModule,
     MatMenuModule,
   ],
-  exports: [RegistrationsComponent, SearchPipe],
+  exports: [RegistrationsComponent],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     {

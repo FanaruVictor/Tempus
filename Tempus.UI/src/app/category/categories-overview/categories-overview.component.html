@@ -1,29 +1,90 @@
 <div class="category-wrapper">
-  <div class="right">
+  <div class="top">
+    <div class="search">
+      <input
+        class="by-description filter"
+        type="text"
+        name="search"
+        [(ngModel)]="searchText"
+        autocomplete="off"
+        placeholder="Search for category"
+      />
+      <div class="by-creation-date filter">
+        <mat-date-range-input
+          [formGroup]="dateRange"
+          [rangePicker]="picker"
+          [min]="minDate"
+          [max]="maxDate"
+        >
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="end" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <app-button
+          [icon]="'search_off'"
+          [tooltip]="'reset dates'"
+          (click)="resetDate()"
+        ></app-button>
+      </div>
+    </div>
+
+    <button
+      (click)="createCategory()"
+      aria-label="Create registration button"
+      mat-raised-button
+      color="primary"
+      class="add-button"
+    >
+      New category
+    </button>
   </div>
   <div class="center">
     <div class="elements" *ngIf="categories.length > 0; else noCategories">
-      <div *ngFor="let category of categories" class="category">
+      <div
+        *ngFor="
+          let category of categories
+            | search : { searchText: searchText, property: 'name' }
+            | dateRange
+              : {
+                  start: dateRange.controls['start'].value,
+                  end: dateRange.controls['end'].value
+                }
+        "
+        class="category"
+      >
         <mat-card class="info">
           <div class="category-data">
-            <mat-card-header class="name">{{category.name}}</mat-card-header>
-            <mat-card-content class="color" [ngStyle]="{'background-color': category.color}"></mat-card-content>
+            <mat-card-header class="name">{{ category.name }}</mat-card-header>
+            <mat-card-content
+              class="color"
+              [ngStyle]="{ 'background-color': category.color }"
+            ></mat-card-content>
           </div>
           <mat-card-actions class="actions">
-            <app-button (click)="updateCategory(category)" [icon]="'edit'" class="edit"></app-button>
-            <app-button (click)="delete(category.id)" [icon]="'delete'" class="delete"></app-button>
+            <app-button
+              (click)="updateCategory(category)"
+              [icon]="'edit'"
+              class="edit"
+            ></app-button>
+            <app-button
+              (click)="delete(category.id)"
+              [icon]="'delete'"
+              class="delete"
+            ></app-button>
           </mat-card-actions>
         </mat-card>
       </div>
     </div>
   </div>
-  <div class="left">
-    <button (click)="createCategory()" aria-label="Create registration button" mat-raised-button color="primary">
-      New category
-    </button>
-  </div>
 </div>
-
 
 <ng-template #noCategories>
   <h1 class="no-categories">You do not have categories</h1>

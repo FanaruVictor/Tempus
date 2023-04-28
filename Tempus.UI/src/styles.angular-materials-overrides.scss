@@ -15,9 +15,6 @@
   resize: none !important;
 }
 
-.mat-form-field-infix {
-}
-
 .mat-form-field-wrapper {
   resize: none !important;
 
@@ -220,4 +217,8 @@ mat-card-actions {
 
 .ng-select .ng-select-container:after {
   border-color: var(--text-color) !important;
+}
+
+.mat-option-text {
+  color: var(--text-color) !important;
 }

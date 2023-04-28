@@ -9,13 +9,9 @@ import { BaseCategory } from '../../_commons/models/categories/baseCategory';
 import { FormControl, FormGroup } from '@angular/forms';
 import { filter } from 'rxjs';
 import { NotificationService } from '../../_services/notification.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { GroupService } from 'src/app/_services/group/group.service';
 
-const htmlToPdfmake = require('html-to-pdfmake');
 import { jsPDF } from 'jspdf';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-registrations',
@@ -104,6 +100,13 @@ export class RegistrationsComponent {
             new Date(objA.lastUpdatedAt).getTime()
         );
 
+        this.registrationsColor = [];
+        this.registrations?.forEach((x) => {
+          if (!this.registrationsColor.includes(x.categoryColor)) {
+            this.registrationsColor.push(x.categoryColor);
+          }
+        });
+
         this.sortRegistrationByDate();
       },
     });
@@ -151,20 +154,6 @@ export class RegistrationsComponent {
 
   download(registration: RegistrationOverview): void {
     this.prepareDocument(registration);
-    // if (documentDefinition == undefined) {
-    //   return;
-    // }
-
-    // pdfMake.createPdf(documentDefinition).download();
-  }
-
-  print(registration: RegistrationOverview) {
-    const documentDefinition = this.prepareDocument(registration);
-    if (documentDefinition == undefined) {
-      return;
-    }
-
-    pdfMake.createPdf(documentDefinition).print();
   }
 
   private prepareDocument(registration: RegistrationOverview): any {
@@ -175,7 +164,6 @@ export class RegistrationsComponent {
 
     const elementHtml = document.createElement('div');
     elementHtml.innerHTML = registration.content;
-    debugger;
     doc.text(registration.description, 100, 10, {
       align: 'center',
       maxWidth: 100,
@@ -199,7 +187,6 @@ export class RegistrationsComponent {
   private changeToDoList(content: string): string {
     const regexToDoChecked = /<ul data-checked="true">(.*?)<\/ul>/g;
     const regexToDoUnchecked = /<ul data-checked="false">(.*?)<\/ul>/g;
-    debugger;
     const checkedItems = content.match(regexToDoChecked);
     const uncheckedItems = content.match(regexToDoUnchecked);
     if (!checkedItems && !uncheckedItems) {

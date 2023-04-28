@@ -110,7 +110,6 @@ export class AuthService {
       )
       .pipe(
         map((result) => {
-          debugger;
           localStorage.setItem(
             'authorizationToken',
             JSON.stringify(result.resource.authorizationToken)

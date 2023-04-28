@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {RegistrationOverview} from "../models/registrations/registrationOverview";
+import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
 
 @Pipe({
   name: 'color'

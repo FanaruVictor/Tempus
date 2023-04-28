@@ -11,7 +11,6 @@ import {CreateOrEditGroupComponent} from './create/create-or-edit-group.componen
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
 import {RegistrationModule} from '../registration/registration.module';
-import {SearchPipe} from '../_commons/pipes/search.pipe';
 import {GroupMenuComponent} from './shared/group-menu/group-menu.component';
 
 @NgModule({
