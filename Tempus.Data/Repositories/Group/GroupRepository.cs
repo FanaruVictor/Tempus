@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 
@@ -25,5 +26,26 @@ public class GroupRepository : BaseRepository<Core.Entities.Group.Group>, IGroup
             .Where(x => x.GroupId == groupId)
             .Select(x => x.User.UserPhoto.Url)
             .ToListAsync();
+    }
+
+    public int GetUserCount(Guid groupId)
+    {
+        return _context.GroupUsers.AsNoTracking().Where(x => x.Group.Id == groupId)?.Count( )?? 0;
+    }
+
+    public async Task<User> GetGroupUser(Guid userId, Guid groupId)
+    {
+        return await _context.GroupUsers.AsNoTracking()
+            .Include(x => x.User)
+            .Where(x => x.GroupId == groupId && x.UserId == userId)
+            .Select(x => x.User)
+            .FirstOrDefaultAsync();
+    }
+   
+    public async Task<Guid> DeleteGroupMember(Guid userId, Guid groupId)
+    {
+        var groupUser = await _context.GroupUsers.AsNoTracking().FirstOrDefaultAsync(x => x.GroupId == groupId && x.UserId == userId);
+        _context.GroupUsers.Remove(groupUser);
+        return groupUser.UserId;
     }
 }

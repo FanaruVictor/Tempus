@@ -1,10 +1,11 @@
 ﻿using System.Collections.Concurrent;
+using Tempus.Infrastructure.SignalR.Abstractization;
 
-namespace Tempus.API.SignalR;
+namespace Tempus.Infrastructure.SignalR;
 
-public class ConnectionManager
+public class ConnectionManager : IConnectionManager
 {
-    private readonly ConcurrentDictionary<string, HashSet<string>> _connections = new();
+    private static readonly ConcurrentDictionary<string, HashSet<string>> _connections = new();
 
     public void RegisterConnection(string userId, string connectionId)
     {
@@ -22,6 +23,8 @@ public class ConnectionManager
                 connections.Add(connectionId);
             }
         }
+
+        Console.WriteLine("Registered connection: " + connectionId);
     }
 
     public void RemoveConnection(string userId, string connectionId)

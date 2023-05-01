@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
@@ -34,6 +34,7 @@ export class RegistrationsComponent {
 
   colors = new FormControl([]);
   showNoRegistrationSelectedMessage = false;
+  @HostBinding('class.full-view') isActive = true;
 
   constructor(
     private router: Router,
@@ -62,6 +63,10 @@ export class RegistrationsComponent {
     this.categoryApiService.getAll(this.groupId).subscribe((response) => {
       this.categories = response.resource;
     });
+
+    if (this.router.url.includes('groups')) {
+      this.isActive = false;
+    }
 
     this.updateFocusedRegistration();
   }
@@ -120,7 +125,6 @@ export class RegistrationsComponent {
       .afterClosed()
       .pipe(filter((x) => !!x))
       .subscribe((result) => {
-        console.log(this.groupId);
         if (!!this.groupId) {
           this.router.navigate(
             [`groups/${this.groupId}/registrations/create`],

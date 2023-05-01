@@ -35,7 +35,7 @@
           account_circle
         </mat-icon>
         <ng-template #showPhoto>
-          <img class="group-image" [src]="group.image" />
+          <img class="group-image" [src]="group.image | async" />
         </ng-template>
         <div class="title">
           <span>{{ group.name }}</span>
@@ -45,7 +45,12 @@
               *ngFor="let image of group.userPhotos?.slice(0, 3)"
               [alt]="group.name + '\'s photo'"
             />
-            <p *ngIf="group.userPhotos?.length > 3">...</p>
+            <p *ngIf="group.userPhotos?.length != 3 && group.userCount > 3">
+              ...
+            </p>
+            <p *ngIf="group.userPhotos?.length == 0">
+              {{ group.userCount }} users
+            </p>
           </div>
         </div>
       </div>

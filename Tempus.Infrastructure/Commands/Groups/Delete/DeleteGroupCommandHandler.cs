@@ -26,7 +26,22 @@ public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, Bas
                 return BaseResponse<Guid>.NotFound($"Group with id: {request.Id} not found");
             }
 
-            await _groupRepository.Delete(group.Id);
+            if(group.OwnerId == request.UserId)
+            {
+                await _groupRepository.Delete(group.Id);
+            }
+            else
+            {
+                var groupUser = await _groupRepository.GetGroupUser(request.UserId, group.Id);
+
+                if (groupUser == null)
+                {
+                    return BaseResponse<Guid>.NotFound($"User with id: {request.UserId} not found");
+                }
+
+                await _groupRepository.DeleteGroupMember(request.UserId, group.Id);
+            }
+
             await _groupRepository.SaveChanges();
 
             return BaseResponse<Guid>.Ok(group.Id);

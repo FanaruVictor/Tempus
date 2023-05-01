@@ -6,6 +6,7 @@ using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Services.Cloudynary;
+using Tempus.Infrastructure.SignalR.Abstractization;
 
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
@@ -15,13 +16,15 @@ public class
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICloudinaryService _cloudinaryService;
     private readonly IRegistrationRepository _registrationRepository;
+    private readonly IClientEventSender _clientEventSender;
 
     public CreateRegistrationCommandHandler(IRegistrationRepository registrationRepository,
-        ICategoryRepository categoryRepository, ICloudinaryService cloudinaryService)
+        ICategoryRepository categoryRepository, ICloudinaryService cloudinaryService, IClientEventSender clientEventSender)
     {
         _registrationRepository = registrationRepository;
         _categoryRepository = categoryRepository;
         _cloudinaryService = cloudinaryService;
+        _clientEventSender = clientEventSender;
     }
 
     public async Task<BaseResponse<RegistrationDetails>> Handle(CreateRegistrationCommand request,
@@ -65,6 +68,8 @@ public class
             await _registrationRepository.Add(entity);
             await _registrationRepository.SaveChanges();
 
+            await SendEvent(entity, category);
+
             var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);
             var result = BaseResponse<RegistrationDetails>.Ok(detailedRegistration);
 
@@ -107,5 +112,26 @@ public class
         }
 
         return"";
+    }
+    
+    private async Task SendEvent(Registration registration, Category category)
+    {
+        if(category.GroupCategories == null)
+        {
+            return;
+        }
+        
+        foreach(var groupCategory in category.GroupCategories)
+        {
+            var groupUsers = groupCategory.Group?.GroupUsers;
+
+            if(groupUsers == null || groupUsers.Count == 0)
+                continue;
+
+            foreach(var groupUser in groupUsers)
+            {
+                await _clientEventSender.SendToUserAsync(registration, groupUser.UserId.ToString());
+            }
+        }
     }
 }

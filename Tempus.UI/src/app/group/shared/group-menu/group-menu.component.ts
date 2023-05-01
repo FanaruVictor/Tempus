@@ -19,7 +19,7 @@ export class GroupMenuComponent implements OnInit {
     private router: Router,
     private groupApiService: GroupApiService,
     private groupService: GroupService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAll();
@@ -37,8 +37,6 @@ export class GroupMenuComponent implements OnInit {
   getAll() {
     this.groupApiService.getAll().subscribe((response) => {
       this.groups = response.resource;
-      console.log(this.groups);
-
       this.groups.forEach(
         (x) => (x.userPhotos = x.userPhotos.filter((x) => x != null))
       );
@@ -46,12 +44,13 @@ export class GroupMenuComponent implements OnInit {
   }
 
   delete(id: string) {
-    console.log(id);
-    this.groupApiService.delete(id)
-      .pipe(filter(x => !!x))
-      .subscribe(response => {
+    this.groupApiService
+      .delete(id)
+      .pipe(filter((x) => !!x))
+      .subscribe((response) => {
         const id = response.resource;
-        this.groups = this.groups.filter(x => x.id != id);
+        this.groups = this.groups.filter((x) => x.id != id);
+        this.router.navigate(['/groups']);
       });
   }
 

@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debug, log } from 'console';
 import { filter } from 'rxjs';
-import { AddGroupData } from 'src/app/_commons/models/groups/addGroupData';
-import { UserEmail } from 'src/app/_commons/models/user/userEmail';
-import { GroupApiService } from 'src/app/_services/group.api.service';
-import { UserApiService } from 'src/app/_services/user.api.service';
+import { UserEmail } from '../../_commons/models/user/userEmail';
+import { UserApiService } from '../../_services/user.api.service';
+import { GroupApiService } from '../../_services/group.api.service';
+import { AddGroupData } from '../../_commons/models/groups/addGroupData';
 
 @Component({
   selector: 'app-create-or-edit-group',
@@ -45,8 +45,6 @@ export class CreateOrEditGroupComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.createOrEditForm);
-
     const group: AddGroupData = {
       name: this.createOrEditForm.get('name')?.value,
       members: this.createOrEditForm.get('members')?.value,

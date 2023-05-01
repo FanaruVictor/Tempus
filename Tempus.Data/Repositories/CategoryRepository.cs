@@ -33,4 +33,15 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
         return _context.Categories.AsNoTracking().Where(x => x.Id == id).Select(x => x.Color).FirstOrDefault() ??
                DefaultColor;
     }
+
+    public override async Task<Category> GetById(Guid id)
+    {
+        return await _context.Categories
+            .AsNoTracking()
+            .Include(x => x.GroupCategories)
+            .ThenInclude(x => x.Group)
+            .ThenInclude(x => x.GroupUsers)
+            .ThenInclude(x => x.User)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
 }

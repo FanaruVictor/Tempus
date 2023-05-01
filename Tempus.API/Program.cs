@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.API;
-using Tempus.API.SignalR;
+using Tempus.API.ASP;
+using Tempus.Core.Models.User;
 using Tempus.Data;
 using Tempus.Infrastructure;
+using Tempus.Infrastructure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +42,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.TryAddEnumerable(
+    ServiceDescriptor.Singleton<IPostConfigureOptions<JwtBearerOptions>,
+        ConfigureJwtBearerOptions>());
+
 builder.Services.AddSwaggerGen(options =>
 {
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -56,11 +64,11 @@ builder.Services.AddCors(options =>
             policyBuilder.WithOrigins(allowedCorsHosts ?? new[] {"*"});
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
+            policyBuilder.AllowCredentials();
         });
 });
 
-builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
-builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
@@ -90,7 +98,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<ClientEventHub>("/chat");
+app.MapHub<ClientEventHub>("/hub");
 
 app.Run();
 

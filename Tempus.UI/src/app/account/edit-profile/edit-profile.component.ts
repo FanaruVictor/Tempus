@@ -40,7 +40,6 @@ export class EditProfileComponent implements OnInit {
       .subscribe((response) => {
         this.user = response.resource;
         this.editForm.patchValue(this.user);
-        console.log(this.editForm);
         this.imageURL = this.user.photo?.url;
       });
   }

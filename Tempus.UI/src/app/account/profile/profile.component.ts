@@ -32,7 +32,6 @@ export class ProfileComponent implements OnInit {
           document.body.classList.remove('dark-theme');
         }
       });
-    console.log(this.user.photo);
   }
 
   delete() {

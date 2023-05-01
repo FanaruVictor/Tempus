@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Tempus.Core.Models.User;
+using Tempus.Infrastructure.SignalR;
+using Tempus.Infrastructure.SignalR.Abstractization;
 
 namespace Tempus.API;
 
@@ -23,6 +26,10 @@ public static class ConfigureServices
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+        services.AddScoped<IUserInfo, AspUserInfo>();
+        services.AddScoped<IClientEventSender, ClientEventSender>();
+        services.AddSignalR();
+
 
         return services;
     }

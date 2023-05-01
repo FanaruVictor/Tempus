@@ -67,7 +67,11 @@ public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Bas
             }
         };
 
-        var members = request.Members.Split(',').Select(x => x.Replace("\"", ""));
+        var members = request.Members
+            .Replace("\"", "")
+            .Split(',')
+            .Select(x => x.Replace("\"", ""));
+        
         foreach(var member in members)
         {
             groupUsers.Add(new GroupUser

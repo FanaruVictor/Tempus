@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserApiService } from './_services/user.api.service';
-import { SignalRService } from './_services/signal-r.service';
+import { ClientEventsService } from './_services/client-events.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserApiService,
-    private signalRService: SignalRService
+    private clientEventsService: ClientEventsService
   ) {}
 
   ngOnInit() {
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     if (authToken != null) {
       authToken = authToken.substring(1, authToken.length - 1);
 
-      this.signalRService.initializeSignalRConnection(authToken);
+      this.clientEventsService.startConnection(authToken);
       let isDarkTheme = localStorage.getItem('isDarkTheme');
 
       this.userService.getDetails().subscribe((response) => {
@@ -31,5 +31,9 @@ export class AppComponent implements OnInit {
         this.userService.setUser(user);
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.clientEventsService.stopConnection();
   }
 }

@@ -33,9 +33,11 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseR
                     Id = x.Id,
                     Name = x.Name,
                     Image = groupImage,
+                    UserCount = _groupRepository.GetUserCount(x.Id),
                     CreatedAt = x.CreatedAt
                 };
             }).ToList();
+            
 
             foreach (var group in groupsOverview)
             {
