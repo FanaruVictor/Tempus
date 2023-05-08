@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupOverview } from 'src/app/_commons/models/groups/groupOverview';
-import { GroupApiService } from '../../../_services/group.api.service';
 import { GroupService } from 'src/app/_services/group/group.service';
 import { filter } from 'rxjs';
+import { GroupApiService } from 'src/app/_services/group/group.api.service';
 
 @Component({
   selector: 'app-group-menu',

@@ -22,7 +22,7 @@
     justify-content: space-between;
 
     .search {
-      width: 90%;
+      width: 60%;
       display: flex;
 
       .filter {
@@ -65,6 +65,7 @@
     .add-button {
       height: 50px;
       min-width: fit-content;
+      max-width: 20%;
     }
   }
 

@@ -31,12 +31,7 @@ export class RegistrationApiService {
     this.registrationSubject.next(registration);
   }
 
-  getAll(groupId: string | undefined) {
-    if (!!groupId) {
-      return this.httpClient.get<GenericResponse<RegistrationOverview[]>>(
-        `${this.apiUrl}/groups/${groupId}`
-      );
-    }
+  getAll() {
     return this.httpClient.get<GenericResponse<RegistrationOverview[]>>(
       this.apiUrl
     );
@@ -57,7 +52,7 @@ export class RegistrationApiService {
   }
 
   create(registration: CreateRegistrationCommandData) {
-    return this.httpClient.post<GenericResponse<RegistrationDetails>>(
+    return this.httpClient.post<GenericResponse<RegistrationOverview>>(
       this.apiUrl,
       registration
     );

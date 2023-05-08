@@ -15,6 +15,7 @@ import Quill from 'quill';
 import ImageResize from 'quill-image-resize-module';
 import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 import { GroupService } from 'src/app/_services/group/group.service';
+import { RegistrationService } from 'src/app/_services/registration/registration.service';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -72,7 +73,8 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     private registrationApiService: RegistrationApiService,
     private notificationService: NotificationService,
     private fb: FormBuilder,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private registrationService: RegistrationService
   ) {
     this.createOrEditForm = this.fb.group({
       description: ['', Validators.required],
@@ -249,10 +251,11 @@ export class CreateOrEditRegistrationComponent implements OnInit {
     this.registrationApiService
       .create(registration)
       .pipe(filter((x) => !!x))
-      .subscribe((_) => {
+      .subscribe((x) => {
         if (!!this.groupId) {
           this.router.navigate(['/groups', this.groupId, 'registrations']);
         } else {
+          this.registrationService.addRegistration(x.resource);
           this.router.navigate(['/registrations']);
         }
         this.notificationService.succes(

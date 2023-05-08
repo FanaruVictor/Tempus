@@ -37,12 +37,6 @@ public class RegistrationsController : BaseController
         return HandleResponse(await _mediator.Send(query));
     }
 
-    [HttpGet("groups/{groupId}")]
-    public async Task<ActionResult<List<RegistrationOverview>>> GetAll([FromRoute] Guid groupId)
-    {
-        return HandleResponse(await _mediator.Send(new GetAllRegistrationsQuery { GroupId = groupId }));
-    }
-
     /// <summary>
     ///     For a specified Id a registration will be returned if it exists
     /// </summary>
@@ -60,7 +54,7 @@ public class RegistrationsController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<RegistrationDetails>> Create([FromBody] CreateRegistrationCommand command)
+    public async Task<ActionResult<RegistrationOverview>> Create([FromBody] CreateRegistrationCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }

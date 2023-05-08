@@ -48,7 +48,7 @@
         background-color: var(--background-color);
         border: none;
         &:focus {
-          border: 2px solid $primary-color;
+          outline: 2px solid $primary-color;
         }
       }
     }

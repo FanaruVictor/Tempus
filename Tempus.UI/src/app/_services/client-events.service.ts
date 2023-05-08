@@ -7,6 +7,10 @@ import {
 } from '@microsoft/signalr';
 import { environment } from '../../environments/environment';
 import { NotificationService } from './notification.service';
+import { GroupService } from './group/group.service';
+import { ClientEvent, ResponseType } from '../_commons/models/client-event';
+import { RegistrationOverview } from '../_commons/models/registrations/registrationOverview';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +22,11 @@ export class ClientEventsService {
   private retryIntervalMs: number = -1;
   private eventHubConnection!: HubConnection;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(
+    private notificationService: NotificationService,
+    private groupService: GroupService,
+    private router: Router
+  ) {
     if (!environment.production) {
       this.reconnectIntervals = new Array(720);
       this.reconnectIntervals.fill(5000, 0, 720);
@@ -65,9 +73,57 @@ export class ClientEventsService {
   }
 
   private initializeListener(): void {
-    this.eventHubConnection.on('client-events', (data) => {
-      console.log(data);
+    this.eventHubConnection.on('client-events', (data: ClientEvent) => {
+      debugger;
+      var response = JSON.parse(data.innerEventJson);
+      switch (data.responseType) {
+        case ResponseType.AddRegistration:
+          this.addRegistration(response);
+          break;
+        case ResponseType.DeleteRegistration:
+          this.deleteRegistration(response);
+          break;
+        case ResponseType.UpdateRegistration:
+          this.showUpdatedRegistrationMessage(response);
+      }
     });
+  }
+
+  private addRegistration(response) {
+    var registration: RegistrationOverview = {
+      id: response.Id,
+      categoryColor: response.CategoryColor,
+      content: response.Content,
+      description: response.Description,
+      lastUpdatedAt: response.LastUpdatedAt,
+    };
+
+    this.groupService.addRegistration(registration);
+  }
+
+  private deleteRegistration(response) {
+    this.groupService.deleteRegistration(response.RegistrationId);
+
+    if (
+      this.router.url.includes(
+        `/groups/${response.GroupId}/registrations/${response.RegistrationId}`
+      )
+    ) {
+      this.router.navigate([`/groups/${response.GroupId}/registrations`]);
+    }
+  }
+
+  private showUpdatedRegistrationMessage(response: any) {
+    if (
+      this.router.url.includes(
+        `/groups/${response.GroupId}/registrations/${response.RegistrationId}`
+      )
+    ) {
+      this.notificationService.showRegistrationUpdatedMessage(
+        response.Message,
+        'Registration already updated'
+      );
+    }
   }
 
   private establishConnection() {

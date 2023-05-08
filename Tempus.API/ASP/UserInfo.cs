@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using Tempus.Core.Entities;
 
 namespace Tempus.Core.Models.User;
 

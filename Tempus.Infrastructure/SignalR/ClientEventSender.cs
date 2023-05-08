@@ -1,6 +1,8 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
+using Tempus.Core.Models.Registrations;
+using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.SignalR.Abstractization;
+using Tempus.Infrastructure.SignalR.ClientResponse;
 
 namespace Tempus.Infrastructure.SignalR;
 
@@ -14,23 +16,52 @@ public class ClientEventSender : IClientEventSender
         _hubContext = hubContext;
         _signalRConnection = signalRConnection;
     }
-    
-    public async Task SendToUserAsync<T>(T message, string userId)
+
+    public async Task SendRegistrationCreatedEventAsync(RegistrationOverview registration, string userId)
     {
         var connections = _signalRConnection.GetConnections(userId);
-        await SendToConnectionsAsync(message, connections);
+
+        var response = GenericMapper<RegistrationOverview, AddRegistrationResponse>.Map(registration);
+        await SendToConnectionsAsync(response, connections,
+            ClientResponseType.AddRegistration);
     }
 
-    private async Task SendToConnectionsAsync<T>(T message, IEnumerable<string> connections)
+    public async Task SendRegistrationDeleted(Guid registrationId, Guid groupId, string userId)
     {
-        if(connections == null)
+        var connections = _signalRConnection.GetConnections(userId);
+        var response = new DeleteRegistrationResponse
+        {
+            RegistrationId = registrationId,
+            GroupId = groupId,
+        };
+
+        await SendToConnectionsAsync(response, connections, ClientResponseType.DeleteRegistration);
+    }
+
+    public async Task SendRegistrationUpdated(Guid registrationId, Guid groupId, string userId)
+    {
+        var connections = _signalRConnection.GetConnections(userId);
+        var response = new UpdateRegistrationResponse
+        {
+            RegistrationId = registrationId,
+            GroupId = groupId,
+            Message = "One member of your group has already updated this registration please refresh the page."
+        };
+        await SendToConnectionsAsync(response, connections, ClientResponseType.UpdateRegistration);
+    }
+
+    private async Task SendToConnectionsAsync(IClientResponse message, IEnumerable<string> connections,
+        ClientResponseType responseType)
+    {
+        if (connections == null)
         {
             return;
         }
 
-        foreach(var connection in connections)
+        foreach (var connection in connections)
         {
-            await _hubContext.Clients.Client(connection).SendAsync("client-events", message);
+            var appEvent = new ClientEvent(message, responseType);
+            await _hubContext.Clients.Client(connection).SendAsync("client-events", appEvent);
         }
     }
 }

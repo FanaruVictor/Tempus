@@ -11,7 +11,7 @@ using Tempus.Infrastructure.SignalR.Abstractization;
 namespace Tempus.Infrastructure.Commands.Registrations.Create;
 
 public class
-    CreateRegistrationCommandHandler : IRequestHandler<CreateRegistrationCommand, BaseResponse<RegistrationDetails>>
+    CreateRegistrationCommandHandler : IRequestHandler<CreateRegistrationCommand, BaseResponse<RegistrationOverview>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICloudinaryService _cloudinaryService;
@@ -19,7 +19,8 @@ public class
     private readonly IClientEventSender _clientEventSender;
 
     public CreateRegistrationCommandHandler(IRegistrationRepository registrationRepository,
-        ICategoryRepository categoryRepository, ICloudinaryService cloudinaryService, IClientEventSender clientEventSender)
+        ICategoryRepository categoryRepository, ICloudinaryService cloudinaryService,
+        IClientEventSender clientEventSender)
     {
         _registrationRepository = registrationRepository;
         _categoryRepository = categoryRepository;
@@ -27,7 +28,7 @@ public class
         _clientEventSender = clientEventSender;
     }
 
-    public async Task<BaseResponse<RegistrationDetails>> Handle(CreateRegistrationCommand request,
+    public async Task<BaseResponse<RegistrationOverview>> Handle(CreateRegistrationCommand request,
         CancellationToken cancellationToken)
     {
         try
@@ -35,10 +36,10 @@ public class
             cancellationToken.ThrowIfCancellationRequested();
 
             var category = await _categoryRepository.GetById(request.CategoryId);
-            if(category == null)
+            if (category == null)
             {
-                return BaseResponse<RegistrationDetails>.BadRequest(new List<string>
-                    {$"Category with Id: {request.CategoryId} not found"});
+                return BaseResponse<RegistrationOverview>.BadRequest(new List<string>
+                    { $"Category with Id: {request.CategoryId} not found" });
             }
 
             var entity = new Registration
@@ -52,12 +53,12 @@ public class
             };
 
             var images = ExtractImages(request.Content);
-            
+
             var cloudinaryImages = await _cloudinaryService.UploadRegistrationImages(images);
 
-            if(cloudinaryImages.Length > 0)
+            if (cloudinaryImages.Length > 0)
             {
-                for(var i = 0; i < images.Count; i++)
+                for (var i = 0; i < images.Count; i++)
                 {
                     var image = images[i].Value;
                     var style = ExtractStyle(images[i].Value);
@@ -68,16 +69,20 @@ public class
             await _registrationRepository.Add(entity);
             await _registrationRepository.SaveChanges();
 
-            await SendEvent(entity, category);
 
-            var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);
-            var result = BaseResponse<RegistrationDetails>.Ok(detailedRegistration);
+            var registrationOverview = GenericMapper<Registration, RegistrationOverview>.Map(entity);
+            registrationOverview.CategoryColor = _categoryRepository.GetCategoryColor(entity.CategoryId);
+
+            await SendEvent(registrationOverview, category);
+
+
+            var result = BaseResponse<RegistrationOverview>.Ok(registrationOverview);
 
             return result;
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
-            var result = BaseResponse<RegistrationDetails>.BadRequest(new List<string> {exception.Message});
+            var result = BaseResponse<RegistrationOverview>.BadRequest(new List<string> { exception.Message });
             return result;
         }
     }
@@ -87,16 +92,16 @@ public class
         var regex = new Regex(@"<img.*?src=""(.*?)"".*?>");
         return regex.Matches(content);
     }
-    
+
     private string CreateImage(string image, string style)
     {
         return $"<img src=\"{image}\" {style}/>";
     }
-    
+
     private string ExtractStyle(string image)
     {
-
-        string pattern = @"<img\s+[^>]*?style\s*=\s*""(?<style>[^""]*)""\s*[^>]*?width\s*=\s*""(?<width>[^""]*)""[^>]*?>";
+        string pattern =
+            @"<img\s+[^>]*?style\s*=\s*""(?<style>[^""]*)""\s*[^>]*?width\s*=\s*""(?<width>[^""]*)""[^>]*?>";
 
         Regex regex = new Regex(pattern);
 
@@ -111,26 +116,23 @@ public class
             return $"style=\"{style}\" width=\"{width}\"";
         }
 
-        return"";
+        return "";
     }
-    
-    private async Task SendEvent(Registration registration, Category category)
+
+    private async Task SendEvent(RegistrationOverview registration, Category category)
     {
-        if(category.GroupCategories == null)
-        {
-            return;
-        }
-        
-        foreach(var groupCategory in category.GroupCategories)
+        var groupCategories = category.GroupCategories;
+
+        foreach (var groupCategory in groupCategories)
         {
             var groupUsers = groupCategory.Group?.GroupUsers;
 
-            if(groupUsers == null || groupUsers.Count == 0)
+            if (groupUsers == null || groupUsers.Count == 0)
                 continue;
 
-            foreach(var groupUser in groupUsers)
+            foreach (var groupUser in groupUsers)
             {
-                await _clientEventSender.SendToUserAsync(registration, groupUser.UserId.ToString());
+                await _clientEventSender.SendRegistrationCreatedEventAsync(registration, groupUser.UserId.ToString());
             }
         }
     }

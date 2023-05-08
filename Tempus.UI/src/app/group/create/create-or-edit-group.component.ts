@@ -5,8 +5,8 @@ import { debug, log } from 'console';
 import { filter } from 'rxjs';
 import { UserEmail } from '../../_commons/models/user/userEmail';
 import { UserApiService } from '../../_services/user.api.service';
-import { GroupApiService } from '../../_services/group.api.service';
 import { AddGroupData } from '../../_commons/models/groups/addGroupData';
+import { GroupApiService } from 'src/app/_services/group/group.api.service';
 
 @Component({
   selector: 'app-create-or-edit-group',

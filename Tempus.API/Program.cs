@@ -61,7 +61,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policyBuilder =>
         {
-            policyBuilder.WithOrigins(allowedCorsHosts ?? new[] {"*"});
+            policyBuilder.WithOrigins(allowedCorsHosts ?? new[] { "*" });
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
             policyBuilder.AllowCredentials();
@@ -69,17 +69,16 @@ builder.Services.AddCors(options =>
 });
 
 
-
 var app = builder.Build();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        foreach(var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                 description.GroupName.ToUpperInvariant());
@@ -104,5 +103,7 @@ app.Run();
 
 public partial class Program
 {
-    protected Program() { }
+    protected Program()
+    {
+    }
 }

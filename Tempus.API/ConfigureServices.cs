@@ -28,6 +28,7 @@ public static class ConfigureServices
             });
         services.AddScoped<IUserInfo, AspUserInfo>();
         services.AddScoped<IClientEventSender, ClientEventSender>();
+        services.AddSingleton<IConnectionManager, ConnectionManager>();
         services.AddSignalR();
 
 

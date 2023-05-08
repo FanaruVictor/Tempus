@@ -9,16 +9,16 @@ public class ConnectionManager : IConnectionManager
 
     public void RegisterConnection(string userId, string connectionId)
     {
-        lock(_connections)
+        lock (_connections)
         {
             HashSet<string> connections;
-            if(!_connections.TryGetValue(userId, out connections))
+            if (!_connections.TryGetValue(userId, out connections))
             {
                 connections = new HashSet<string>();
                 _connections.TryAdd(userId, connections);
             }
 
-            lock(connections)
+            lock (connections)
             {
                 connections.Add(connectionId);
             }
@@ -29,18 +29,18 @@ public class ConnectionManager : IConnectionManager
 
     public void RemoveConnection(string userId, string connectionId)
     {
-        lock(_connections)
+        lock (_connections)
         {
             HashSet<string> connections;
-            if(!_connections.TryGetValue(userId, out connections))
+            if (!_connections.TryGetValue(userId, out connections))
             {
                 return;
             }
 
-            lock(connections)
+            lock (connections)
             {
                 connections.Remove(connectionId);
-                if(connections.Count == 0)
+                if (connections.Count == 0)
                 {
                     _connections.Remove(userId, out _);
                 }
@@ -51,7 +51,7 @@ public class ConnectionManager : IConnectionManager
     public IEnumerable<string> GetConnections(string userId)
     {
         HashSet<string> connections;
-        if(_connections.TryGetValue(userId, out connections))
+        if (_connections.TryGetValue(userId, out connections))
         {
             return connections;
         }

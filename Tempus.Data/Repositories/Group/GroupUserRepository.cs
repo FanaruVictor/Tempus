@@ -1,4 +1,6 @@
-﻿using Tempus.Core.Entities.Group;
+﻿using Microsoft.EntityFrameworkCore;
+using Tempus.Core.Entities.Group;
+using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Data.Context;
 
@@ -7,6 +9,7 @@ namespace Tempus.Data.Repositories.Group;
 public class GroupUserRepository : IGroupUserRepository
 {
     private readonly TempusDbContext _context;
+
     public GroupUserRepository(TempusDbContext context)
     {
         _context = context;
@@ -45,5 +48,10 @@ public class GroupUserRepository : IGroupUserRepository
     public async Task AddRange(List<GroupUser> entities)
     {
         await _context.GroupUsers.AddRangeAsync(entities);
+    }
+
+    public async Task<List<Guid>> GetAllUsersFromGroup(Guid groupId)
+    {
+        return await _context.GroupUsers.Where(x => x.GroupId == groupId).Select(x => x.UserId).ToListAsync();
     }
 }

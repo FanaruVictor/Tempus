@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Tempus.Core.Models.User;
 using Tempus.Infrastructure.SignalR.Abstractization;
 
 namespace Tempus.Infrastructure.SignalR;
@@ -8,27 +7,24 @@ namespace Tempus.Infrastructure.SignalR;
 [Authorize]
 public class ClientEventHub : Hub
 {
-
     private readonly IConnectionManager _connections;
-    private readonly IUserInfo _user;
-    
-    public ClientEventHub(IUserInfo user)
+
+    public ClientEventHub()
     {
-        _user = user;
         _connections = new ConnectionManager();
     }
 
     public override Task OnConnectedAsync()
     {
-        var name = _user.Id;
-    
-        _connections.RegisterConnection(name, Context.ConnectionId);
+        var userId = Context.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value;
+
+        _connections.RegisterConnection(userId, Context.ConnectionId);
         return base.OnConnectedAsync();
     }
-    
+
     public override Task OnDisconnectedAsync(Exception exception)
     {
-        var name = Context.User.Identity.Name;
+        var name = Context.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value;
 
         _connections.RemoveConnection(name, Context.ConnectionId);
 

@@ -26,4 +26,11 @@ export class NotificationService {
       enableHtml: true,
     });
   }
+
+  showRegistrationUpdatedMessage(message: string, title: string) {
+    this.toastr.warning(message, title, {
+      closeButton: true,
+      disableTimeOut: true,
+    });
+  }
 }

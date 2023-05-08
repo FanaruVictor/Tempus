@@ -15,20 +15,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let authToken = localStorage.getItem('authorizationToken');
+
     if (authToken != null) {
       authToken = authToken.substring(1, authToken.length - 1);
 
-      this.clientEventsService.startConnection(authToken);
       let isDarkTheme = localStorage.getItem('isDarkTheme');
 
       this.userService.getDetails().subscribe((response) => {
         let user = response.resource;
+
         localStorage.setItem('isDarkTheme', user.isDarkTheme.toString());
+
         if (!isDarkTheme && user.isDarkTheme) {
           document.body.classList.toggle('dark-theme');
           localStorage.setItem('isDarkTheme', user.isDarkTheme.toString());
         }
+
         this.userService.setUser(user);
+
+        this.clientEventsService.startConnection(authToken);
+
       });
     }
   }

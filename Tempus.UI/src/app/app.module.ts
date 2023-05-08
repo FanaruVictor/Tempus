@@ -24,7 +24,6 @@ import { environment } from '../environments/environment';
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
-  MicrosoftLoginProvider,
 } from '@abacritt/angularx-social-login';
 
 @NgModule({
@@ -84,7 +83,7 @@ import {
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(environment.facebookAppId),
-          }
+          },
         ],
       },
     },
