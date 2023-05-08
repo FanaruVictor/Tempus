@@ -34,7 +34,8 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseR
                     Name = x.Name,
                     Image = groupImage,
                     UserCount = _groupRepository.GetUserCount(x.Id),
-                    CreatedAt = x.CreatedAt
+                    CreatedAt = x.CreatedAt,
+                    OwnerId = x.OwnerId
                 };
             }).ToList();
             

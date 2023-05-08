@@ -74,7 +74,6 @@ export class ClientEventsService {
 
   private initializeListener(): void {
     this.eventHubConnection.on('client-events', (data: ClientEvent) => {
-      debugger;
       var response = JSON.parse(data.innerEventJson);
       switch (data.responseType) {
         case ResponseType.AddRegistration:
@@ -139,19 +138,13 @@ export class ClientEventsService {
   private onConnected(connectionId: string | null): void {
     if (!connectionId) {
       console.error('ConnectionId is null');
-      this.showError();
       return;
     }
-    this.notificationService.succes(
-      'The connection to our API was re-established',
-      'Connection established'
-    );
     this.retryConnectionIntervalIndex = 0;
   }
 
   private onConnectionFailure(error): void {
     if (!this.retryConnectionInterval) {
-      this.showError();
     }
     console.error('Error while starting connection with events hub: ', error);
 
@@ -168,13 +161,6 @@ export class ClientEventsService {
     this.retryConnectionInterval = setInterval(
       () => this.establishConnection(),
       this.retryIntervalMs
-    );
-  }
-
-  private showError() {
-    this.notificationService.error(
-      ['The application is unable to connect to our API. Re-trying...'],
-      'Unable to connect'
     );
   }
 }

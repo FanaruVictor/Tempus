@@ -6,7 +6,7 @@ import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-catego
 import { filter, first } from 'rxjs';
 import { BaseCategory } from '../../_commons/models/categories/baseCategory';
 import { CategoryApiService } from '../../_services/category.api.service';
-import { RegistrationApiService } from '../../_services/registration.api.service';
+import { RegistrationApiService } from '../../_services/registration/registration.api.service';
 import { UpdateRegistrationCommandData } from '../../_commons/models/registrations/updateRegistrationCommandData';
 import { CreateRegistrationCommandData } from '../../_commons/models/registrations/createRegistrationCommandData';
 import { NotificationService } from '../../_services/notification.service';

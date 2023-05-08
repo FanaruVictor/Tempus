@@ -8,4 +8,5 @@ public class GroupOverview
     public List<string> UserPhotos { get; set; }
     public int UserCount { get; set; }
     public DateTime CreatedAt { get; set; }
+    public Guid OwnerId { get; set; }
 }

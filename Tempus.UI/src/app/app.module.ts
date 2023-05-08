@@ -26,6 +26,8 @@ import {
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
 
+import { HttpCacheInterceptorModule } from '@ngneat/cashew';
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [

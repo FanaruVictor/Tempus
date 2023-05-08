@@ -2,12 +2,12 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
-import { RegistrationApiService } from '../../_services/registration.api.service';
+import { RegistrationApiService } from '../../_services/registration/registration.api.service';
 import { CategoryApiService } from '../../_services/category.api.service';
 import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 import { BaseCategory } from '../../_commons/models/categories/baseCategory';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subscription, filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { NotificationService } from '../../_services/notification.service';
 import { GroupService } from 'src/app/_services/group/group.service';
 
@@ -38,11 +38,6 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
   showNoRegistrationSelectedMessage = false;
   @HostBinding('class.full-view') isActive = true;
 
-  router$!: Subscription;
-  currentGroupId$!: Subscription;
-  groupRegistrations$!: Subscription;
-  registrations$!: Subscription;
-
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -58,52 +53,55 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     this.maxDate = new Date();
   }
 
+  router$?: Subscription;
+  currentGroupId$?: Subscription;
+  groupsRegistrations$?: Subscription;
+
   ngOnInit(): void {
     this.currentGroupId$ = this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
-      if (!!this.groupId) {
-        if (!this.registrations) {
-          this.getAllForGroup();
-        }
 
-        this.groupRegistrations$ =
+      if (!!this.groupId) {
+        this.getAllForGroup();
+        this.groupsRegistrations$ =
           this.groupService.groupRegistrations.subscribe((x) => {
             this.registrations = x;
-            return;
+            this.setRegistrationsColors();
           });
         return;
       }
 
-      if (!this.registrations) {
-        this.getAllForUser();
-      }
-
-      this.registrations$ = this.regisrationService.registrations.subscribe(
-        (x) => {
-          this.registrations = x;
+      this.regisrationService.registrations.subscribe((x) => {
+        this.registrations = x;
+        if (!this.registrations) {
+          this.getAllForUser();
         }
-      );
+      });
     });
-
-    this.categoryApiService.getAll(this.groupId).subscribe((response) => {
-      this.categories = response.resource;
-    });
-
-    if (this.router.url.includes('groups')) {
-      this.isActive = false;
-    }
 
     this.updateFocusedRegistration();
 
     this.router$ = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        if (event.url.includes('groups')) {
+          this.isActive = false;
+        }
         // handle NavigationEnd event here
         if (event.url.endsWith('registrations')) {
           this.showNoRegistrationSelectedMessage = true;
         } else {
           this.showNoRegistrationSelectedMessage = false;
         }
+        if (event.url.startsWith(`/groups/${this.groupId}/registrations`)) {
+          this.categoryApiService.getAll(this.groupId).subscribe((response) => {
+            this.categories = response.resource;
+          });
+        }
       }
+    });
+
+    this.categoryApiService.getAll(this.groupId).subscribe((response) => {
+      this.categories = response.resource;
     });
   }
 
@@ -141,7 +139,6 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     if (!this.groupId) {
       return;
     }
-
     this.groupApiService
       .getAllRegistrations(this.groupId)
       .subscribe((response) => {
@@ -157,16 +154,20 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
         new Date(objA.lastUpdatedAt).getTime()
     );
 
+    this.setRegistrationsColors();
+
+    this.sortRegistrationByDate();
+
+    this.modifyRegistrations();
+  }
+
+  setRegistrationsColors() {
     this.registrationsColor = [];
     this.registrations?.forEach((x) => {
       if (!this.registrationsColor.includes(x.categoryColor)) {
         this.registrationsColor.push(x.categoryColor);
       }
     });
-
-    this.sortRegistrationByDate();
-
-    this.modifyRegistrations();
   }
 
   modifyRegistrations() {
@@ -372,9 +373,8 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.router$.unsubscribe();
-    this.currentGroupId$.unsubscribe();
-    this.groupRegistrations$.unsubscribe();
-    this.registrations$.unsubscribe();
+    this.router$?.unsubscribe();
+    this.currentGroupId$?.unsubscribe();
+    this.groupsRegistrations$?.unsubscribe();
   }
 }

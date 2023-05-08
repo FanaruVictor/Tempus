@@ -79,8 +79,8 @@ export class CreateOrEditGroupComponent implements OnInit {
   }
 
   addPhotos() {
-    let element = document.querySelectorAll('.ng-option');
-    element.forEach((x) => {
+    let elements = document.querySelectorAll('.ng-option');
+    elements.forEach((x) => {
       if (x.innerHTML.includes('img') || x.innerHTML.includes('div')) {
         return;
       }
@@ -88,6 +88,15 @@ export class CreateOrEditGroupComponent implements OnInit {
       const email = emailElement?.textContent ?? '';
       if (email !== '') {
         const user = this.users.filter((y) => {
+          const elementsWithPhoto: Element[] = [];
+          elements.forEach((element) => {
+            if (element.innerHTML.includes(y.photoUrl)) {
+              elementsWithPhoto.push(element);
+            }
+          });
+          if (elementsWithPhoto.length > 0) {
+            return false;
+          }
           return y.email == email;
         })[0];
         const innerHtml = x.innerHTML;

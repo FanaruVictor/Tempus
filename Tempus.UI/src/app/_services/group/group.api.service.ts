@@ -5,6 +5,7 @@ import { AddGroupData } from '../../_commons/models/groups/addGroupData';
 import { GenericResponse } from '../../_commons/models/genericResponse';
 import { GroupOverview } from '../../_commons/models/groups/groupOverview';
 import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
+import { withCache } from '@ngneat/cashew';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,9 @@ export class GroupApiService {
   constructor(private httpClient: HttpClient) {}
 
   getAll() {
-    return this.httpClient.get<GenericResponse<GroupOverview[]>>(this.apiUrl);
+    return this.httpClient.get<GenericResponse<GroupOverview[]>>(this.apiUrl, {
+      context: withCache(),
+    });
   }
 
   add(group: AddGroupData) {

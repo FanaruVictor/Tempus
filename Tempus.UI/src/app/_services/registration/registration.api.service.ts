@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GenericResponse } from '../_commons/models/genericResponse';
-import { RegistrationOverview } from '../_commons/models/registrations/registrationOverview';
-import { UpdateRegistrationCommandData } from '../_commons/models/registrations/updateRegistrationCommandData';
-import { CreateRegistrationCommandData } from '../_commons/models/registrations/createRegistrationCommandData';
-import { environment } from '../../environments/environment';
+import { GenericResponse } from '../../_commons/models/genericResponse';
+import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
+import { UpdateRegistrationCommandData } from '../../_commons/models/registrations/updateRegistrationCommandData';
+import { CreateRegistrationCommandData } from '../../_commons/models/registrations/createRegistrationCommandData';
+import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { RegistrationDetails } from '../_commons/models/registrations/registrationDetails';
+import { RegistrationDetails } from '../../_commons/models/registrations/registrationDetails';
 
 @Injectable({
   providedIn: 'root',

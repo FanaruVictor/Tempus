@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { RegistrationOverview } from 'src/app/_commons/models/registrations/registrationOverview';
+import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +8,17 @@ import { RegistrationOverview } from 'src/app/_commons/models/registrations/regi
 export class GroupService {
   groupId: BehaviorSubject<string | undefined>;
   currentGroupId: Observable<string | undefined>;
-  groupRegistrationsSubject: BehaviorSubject<RegistrationOverview[]>;
-  groupRegistrations: Observable<RegistrationOverview[]>;
+  groupRegistrationsSubject: BehaviorSubject<
+    RegistrationOverview[] | undefined
+  >;
+  groupRegistrations: Observable<RegistrationOverview[] | undefined>;
 
   constructor() {
     this.groupId = new BehaviorSubject<string | undefined>(undefined);
     this.currentGroupId = this.groupId.asObservable();
     this.groupRegistrationsSubject = new BehaviorSubject<
-      RegistrationOverview[]
-    >([]);
+      RegistrationOverview[] | undefined
+    >(undefined);
     this.groupRegistrations = this.groupRegistrationsSubject.asObservable();
   }
 
@@ -24,22 +26,29 @@ export class GroupService {
     this.groupId.next(groupId);
   }
 
-  setRegistrations(registrations: RegistrationOverview[]) {
+  setRegistrations(registrations: RegistrationOverview[] | undefined) {
     this.groupRegistrationsSubject.next(registrations);
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
     const currentRegistrations = this.groupRegistrationsSubject.getValue();
-    currentRegistrations.push(newRegistration);
-    this.setRegistrations(currentRegistrations);
+    if (!!currentRegistrations) {
+      currentRegistrations.push(newRegistration);
+      this.setRegistrations(currentRegistrations);
+    }
   }
 
   deleteRegistration(registrationId: string) {
     let currentRegistrations = this.groupRegistrationsSubject.getValue();
-    currentRegistrations = currentRegistrations.filter(
-      (x) => x.id !== registrationId
-    );
+    if (!!currentRegistrations) {
+      currentRegistrations = currentRegistrations.filter(
+        (x) => x.id !== registrationId
+      );
+      this.setRegistrations(currentRegistrations);
+    }
+  }
 
-    this.setRegistrations(currentRegistrations);
+  removeAll() {
+    this.setRegistrations(undefined);
   }
 }

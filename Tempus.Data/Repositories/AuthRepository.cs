@@ -36,7 +36,8 @@ public class AuthRepository : IAuthRepository
     public async Task<User> Login(string email, string password)
     {
         email = email.ToLower();
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email);
+        var user = await _context.Users.FirstOrDefaultAsync(x =>
+            x.Email.ToLower() == email && string.IsNullOrEmpty(x.ExternalId));
         
         if(!VerifyPasswordHash(password, user.Password, user.PasswordSalt))
         {

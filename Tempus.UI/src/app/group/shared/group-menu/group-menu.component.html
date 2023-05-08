@@ -24,7 +24,7 @@
     [ngClass]="group.id === activeGroupId ? 'group-active' : 'normal'"
     (click)="setActiveItem(group.id)"
   >
-    <div class="info" [routerLink]="['/groups', group.id, 'registrations']">
+    <div class="info">
       <div class="content">
         <mat-icon
           *ngIf="!group.image; else showPhoto"
@@ -65,7 +65,17 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="delete(group.id)">
             <mat-icon class="delete">delete</mat-icon>
-            <span>Exit</span>
+            <span>{{
+              group.ownerId == currentUser?.id ? "Delete" : "Exit"
+            }}</span>
+          </button>
+          <button
+            mat-menu-item
+            *ngIf="group.ownerId == currentUser?.id"
+            (click)="edit(group.id)"
+          >
+            <mat-icon class="edit">edit</mat-icon>
+            <span>Edit</span>
           </button>
         </mat-menu>
         <div class="created-date">{{ group.createdAt | date }}</div>
