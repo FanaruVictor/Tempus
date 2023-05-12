@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {SharedModule} from '../shared/shared.module';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {CreateOrEditGroupComponent} from './create/create-or-edit-group.component';
+import {CreateOrEditGroupComponent} from './create-or-edit/create-or-edit-group.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
 import {RegistrationModule} from '../registration/registration.module';

@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
@@ -14,6 +20,7 @@ import { GroupService } from 'src/app/_services/group/group.service';
 import { jsPDF } from 'jspdf';
 import { GroupApiService } from 'src/app/_services/group/group.api.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-registrations',
@@ -36,7 +43,6 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
   colors = new FormControl([]);
   showNoRegistrationSelectedMessage = false;
-  @HostBinding('class.full-view') isActive = true;
 
   constructor(
     private router: Router,
@@ -46,7 +52,8 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private groupService: GroupService,
     private groupApiService: GroupApiService,
-    private regisrationService: RegistrationService
+    private regisrationService: RegistrationService,
+    private viewPortScroller: ViewportScroller
   ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 30, 0, 1);
@@ -83,10 +90,6 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
     this.router$ = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (event.url.includes('groups')) {
-          this.isActive = false;
-        }
-        // handle NavigationEnd event here
         if (event.url.endsWith('registrations')) {
           this.showNoRegistrationSelectedMessage = true;
         } else {

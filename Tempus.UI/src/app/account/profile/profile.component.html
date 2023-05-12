@@ -1,35 +1,40 @@
 <div class="account-wrapper">
   <div class="right"></div>
-  <div class="center">
-    <div class="title">
-      <h1>User profile</h1>
-      <div class="actions">
-        <app-button [routerLink]="['/account/edit']" [icon]="'edit'" class="edit-icon">edit</app-button>
-        <app-button (click)="delete()" [icon]="'delete'" class="delete-icon">delete</app-button>
-      </div>
+  <div class="center" *ngIf="user">
+    <div class="container profile-photo">
+      <mat-icon
+        *ngIf="!user.photo; else showPhoto"
+        aria-hidden="false"
+        aria-label="User placeholder for photo"
+        class="user-icon"
+      >
+        account_circle
+      </mat-icon>
+      <ng-template #showPhoto>
+        <img [src]="user.photo?.url" />
+      </ng-template>
     </div>
-    <div *ngIf="user" class="content">
-      <div class="container profile-photo">
-        <mat-icon *ngIf="!user.photo; else showPhoto" aria-hidden="false" aria-label="User placeholder for photo"
-                  class="user-icon">
-          account_circle
-        </mat-icon>
-        <ng-template #showPhoto>
-          <img [src]="user.photo?.url">
-        </ng-template>
-      </div>
-      <div class="container">
-        <h2>Username</h2>
-        <p>{{user.userName}}</p>
-      </div>
-      <div class="container">
-        <h2>Email</h2>
-        <p>{{user.email}}</p>
-      </div>
-      <div class="container">
-        <h2>Phone number</h2>
-        <p>{{user.phoneNumber || '-'}}</p>
-      </div>
+    <div class="container">
+      <h2>Username</h2>
+      <p>{{ user.userName }}</p>
+    </div>
+    <div class="container">
+      <h2>Email</h2>
+      <p>{{ user.email }}</p>
+    </div>
+    <div class="container">
+      <h2>Phone number</h2>
+      <p>{{ user.phoneNumber || "-" }}</p>
+    </div>
+    <div class="actions">
+      <button
+        mat-raised-button
+        [routerLink]="['/account/edit']"
+        color="primary"
+      >
+        Edit
+      </button>
+      <button (click)="delete()" mat-raised-button color="warn">Delete</button>
     </div>
   </div>
   <div class="left"></div>

@@ -48,7 +48,18 @@ export class GroupMenuComponent implements OnInit {
       this.groups.forEach(
         (x) => (x.userPhotos = x.userPhotos.filter((x) => x != null))
       );
+      this.groups = this.groups.sort(this.compare);
     });
+  }
+
+  private compare(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
   }
 
   delete(id: string) {
@@ -63,7 +74,7 @@ export class GroupMenuComponent implements OnInit {
   }
 
   edit(id: string) {
-    //to be implemented
+    this.router.navigate(['/groups', id, 'edit']);
   }
 
   setActiveItem(id: string) {

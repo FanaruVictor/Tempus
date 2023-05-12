@@ -1,0 +1,86 @@
+<form (ngSubmit)="submit()" [formGroup]="createOrEditForm" class="group-form">
+  <div class="form-content">
+    <div class="group-photo">
+      <mat-icon
+        *ngIf="!imageURL; else showPhoto"
+        aria-hidden="false"
+        aria-label="User placeholder for photo"
+        class="user-icon"
+      >
+        account_circle
+      </mat-icon>
+      <ng-template #showPhoto>
+        <img [src]="imageURL" />
+      </ng-template>
+      <div class="actions">
+        <input
+          #profilePhoto
+          type="file"
+          accept="image/png, image/gif, image/jpeg"
+          hidden="true"
+          (change)="showPreview($event)"
+        />
+        <button
+          type="button"
+          (click)="profilePhoto.click()"
+          color="primary"
+          mat-raised-button
+        >
+          {{ imageURL ? "Change" : "Add" }}
+        </button>
+        <button
+          type="button"
+          *ngIf="imageURL"
+          (click)="deletePicture()"
+          color="warn"
+          mat-raised-button
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+    <div class="entry">
+      <label>Group's Name:</label>
+      <input formControlName="name" />
+    </div>
+    <div class="group-members">
+      <div class="title">Group members</div>
+      <div class="add-member">
+        <div class="user-search-bar">
+          <ng-select
+            [multiple]="true"
+            [closeOnSelect]="false"
+            [clearable]="true"
+            [searchable]="true"
+            bindLabel="id"
+            formControlName="members"
+            placeholder="Select the users for this group"
+          >
+            <ng-option [value]="item.id" *ngFor="let item of users">
+              <img
+                [src]="item.photoUrl"
+                width="50px"
+                height="50px"
+                [ngStyle]="{ 'border-radius': '50%' }"
+              />
+              {{ item.email }}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button
+        class="cancel-button"
+        type="button"
+        mat-raised-button
+        [routerLink]="['/groups']"
+      >
+        Cancel
+      </button>
+      <button mat-raised-button type="submit" color="primary">
+        {{ mode === "create" ? "Create" : "Save Changes" }}
+      </button>
+    </div>
+  </div>
+</form>

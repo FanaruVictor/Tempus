@@ -18,7 +18,7 @@ public class GroupRepository : BaseRepository<Core.Entities.Group.Group>, IGroup
             .ToListAsync();
     }
 
-    public async Task<List<string>> GetUsersImages(Guid groupId)
+    public async Task<List<string>> GetUsersPhoto(Guid groupId)
     {
         return await _context.GroupUsers.AsNoTracking()
             .Include(x => x.User)
@@ -47,5 +47,20 @@ public class GroupRepository : BaseRepository<Core.Entities.Group.Group>, IGroup
         var groupUser = await _context.GroupUsers.AsNoTracking().FirstOrDefaultAsync(x => x.GroupId == groupId && x.UserId == userId);
         _context.GroupUsers.Remove(groupUser);
         return groupUser.UserId;
+    }
+
+    public Task<List<Guid>> GetUsers(Guid id)
+    {
+        return _context.GroupUsers.AsNoTracking()
+            .Where(x => x.GroupId == id)
+            .Select(x => x.UserId)
+            .ToListAsync();
+    }
+
+    public override Task<Core.Entities.Group.Group> GetById(Guid id)
+    {
+        return _context.Groups.AsNoTracking()
+            .Include(x => x.GroupPhoto)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

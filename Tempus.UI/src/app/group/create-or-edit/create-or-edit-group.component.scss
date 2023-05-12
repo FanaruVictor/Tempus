@@ -1,39 +1,40 @@
 @import "../../../styles/variables.scss";
-
-.group-form {
-  height: 100%;
+:host {
+  min-height: 100%;
   display: flex;
+  justify-content: center;
+}
+.group-form {
+  display: flex;
+  align-items: center;
 
   .form-content {
-    width: 50%;
-    box-shadow: 12px 0 15px -8px var(--content-color),
-      -12px 0 8px -8px var(--content-color);
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    align-items: center;
 
     .group-photo {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 2rem;
+      padding-bottom: 25px;
 
       .user-icon,
       img {
         font-size: 200px;
         width: 200px;
         height: 200px;
+        color: var(--text-color);
       }
 
       img {
+        margin: 15px 0;
         border-radius: 50%;
       }
 
       .actions {
-        display: flex;
-        justify-content: space-around;
-        margin: 15px 0;
-        width: 250px;
+        padding: 0;
       }
     }
 
@@ -41,7 +42,8 @@
       display: flex;
       flex-direction: column;
       width: 300px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
+      align-items: center;
 
       label {
         text-transform: uppercase;
@@ -70,6 +72,7 @@
       background-color: var(--header-color);
       width: 500px;
       border-radius: 5px;
+      margin-bottom: 30px;
 
       .title {
         text-transform: uppercase;
@@ -78,7 +81,6 @@
         color: var(--text-color);
         padding: 5px;
         text-align: center;
-
         box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
       }
 
@@ -114,17 +116,11 @@
         }
       }
     }
-  }
 
-  .cancel {
-    padding: 15px 0 0 15px;
-    width: 25%;
-  }
-
-  .create {
-    width: 25%;
-    text-align: end;
-    padding: 15px 15px 0 0;
+    .actions {
+      display: flex;
+      gap: 15px;
+    }
   }
 }
 
