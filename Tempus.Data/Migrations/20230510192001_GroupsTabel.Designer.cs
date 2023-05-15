@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tempus.Data.Context;
 
@@ -11,9 +12,11 @@ using Tempus.Data.Context;
 namespace Tempus.Data.Migrations
 {
     [DbContext(typeof(TempusDbContext))]
-    partial class TempusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510192001_GroupsTabel")]
+    partial class GroupsTabel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

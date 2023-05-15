@@ -18,6 +18,7 @@ public class TempusDbContext : DbContext
     public DbSet<GroupCategory> GroupCategories => Set<GroupCategory>();
     public DbSet<UserCategory> UserCategories => Set<UserCategory>();
     public DbSet<GroupPhoto> GroupPhotos => Set<GroupPhoto>();
+    public DbSet<Group> Groups => Set<Group>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -13,41 +13,48 @@
   .center {
     width: 50%;
     max-height: 100%;
-    box-shadow: 12px 0 15px -8px var(--content-color), -12px 0 8px -8px var(--content-color);
-    padding: 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    .profile-photo{
+    .profile-photo {
       margin-bottom: 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
 
-      .user-icon, img {
+      .actions {
+        gap: 15px;
+      }
+
+      .user-icon,
+      img {
         font-size: 200px;
         width: 200px;
         height: 200px;
       }
 
-      img{
+      img {
         border-radius: 50%;
+        margin: 15px;
       }
     }
 
-    .entry{
+    .entry {
       display: flex;
       flex-direction: column;
       width: 250px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
+      align-items: center;
 
-      label{
+      label {
         text-transform: uppercase;
         font-size: 16px;
         font-weight: bold;
         color: var(--text-color);
       }
-      input{
+      input {
         min-width: 100%;
         outline: none;
         font-size: 16px;
@@ -56,20 +63,18 @@
         border-radius: 5px;
         padding: 10px;
         border: none;
-        &:focus{
+        &:focus {
           border: 1px solid $primary-color;
         }
-        &.ng-invalid{
+        &.ng-invalid {
           border: 1px solid $error-color;
         }
       }
     }
 
-    .actions{
+    .actions {
       display: flex;
-      justify-content: space-around;
-      margin: 15px 0;
-      width: 250px;
+      gap: 15px;
     }
   }
 
@@ -77,4 +82,3 @@
     width: 25%;
   }
 }
-

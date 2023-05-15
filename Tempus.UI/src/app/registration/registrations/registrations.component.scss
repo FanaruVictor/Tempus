@@ -1,15 +1,7 @@
 @import "src/styles/variables";
 
-:host:not(.full-view) {
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
-
 .registration-wrapper {
   display: flex;
-  height: 100%;
-  width: 100%;
   flex-direction: column;
   background-color: var(--background-color);
 

@@ -2,9 +2,8 @@
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Group;
-using Tempus.Infrastructure.Commons;
 
-namespace Tempus.Infrastructure.Queries.Group;
+namespace Tempus.Infrastructure.Queries.Group.GetAllGroupsQuery;
 
 public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseResponse<List<GroupOverview>>>
 {
@@ -42,7 +41,7 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, BaseR
 
             foreach (var group in groupsOverview)
             {
-                var currentUserPhotos = await _groupRepository.GetUsersImages(group.Id);
+                var currentUserPhotos = await _groupRepository.GetUsersPhoto(group.Id);
                 group.UserPhotos = currentUserPhotos;
             }
 
