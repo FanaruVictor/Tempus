@@ -1,13 +1,13 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BaseUser } from '../../_commons/models/user/baseUser';
 import { map } from 'rxjs/operators';
 import { GenericResponse } from '../../_commons/models/genericResponse';
 import { UserDetails } from '../../_commons/models/user/userDetails';
 import { LoginResult } from '../../_commons/models/auth/loginResult';
 import { UserRegistration } from '../../_commons/models/user/userRegistration';
 import { FacebookLoginInfo } from 'src/app/_commons/models/auth/facebookLoginInfo';
+import {environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,8 @@ export class AuthService {
     phoneNumber: '',
     externalId: '',
   };
+
+  apiUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {
     this.authorizationTokenSubject = new BehaviorSubject<string>(
@@ -47,7 +49,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.httpClient
       .post<GenericResponse<LoginResult>>(
-        'https://localhost:7077/api/v1.0/auth/login',
+        `${this.apiUrl}/v1.0/auth/login`,
         {
           email,
           password,
@@ -74,7 +76,7 @@ export class AuthService {
   loginWithGoogle(googleToken: string) {
     return this.httpClient
       .post<GenericResponse<LoginResult>>(
-        'https://localhost:7077/api/v1.0/auth/loginWithGoogle',
+        `${this.apiUrl}/v1.0/auth/loginWithGoogle`,
         {
           googleToken,
         }
@@ -100,7 +102,7 @@ export class AuthService {
   loginWithFacebook(facebookLoginInfo: FacebookLoginInfo) {
     return this.httpClient
       .post<GenericResponse<LoginResult>>(
-        'https://localhost:7077/api/v1.0/auth/loginWithFacebook',
+        `${this.apiUrl}/v1.0/auth/loginWithFacebook`,
         {
           email: facebookLoginInfo.email,
           externalId: facebookLoginInfo.externalId,
@@ -128,7 +130,7 @@ export class AuthService {
 
   register(user: UserRegistration) {
     return this.httpClient.post<GenericResponse<LoginResult>>(
-      'https://localhost:7077/api/v1.0/auth/register',
+      `${this.apiUrl}/v1.0/auth/register`,
       user
     );
   }

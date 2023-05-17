@@ -46,3 +46,10 @@ module "tempus_database" {
   random_integer         = random_integer.randomizer.result
   tempus_kv_ap_principal = module.tempus_key_vault.kv_policy_pricipal
 }
+
+
+resource "azurerm_static_site" "tempus_ss" {
+  name                = "tempus-ss"
+  resource_group_name = azurerm_resource_group.tempus_rg.name
+  location            = azurerm_resource_group.tempus_rg.location
+}

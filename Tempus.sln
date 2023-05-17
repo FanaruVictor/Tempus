@@ -9,11 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Data", "Tempus.Data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Infrastructure", "Tempus.Infrastructure\Tempus.Infrastructure.csproj", "{405E8F11-995F-4873-B5A8-21664DB94807}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.API", "Tempus.API\Tempus.API.csproj", "{C0BD9CA5-C900-44A5-8DA0-BDF1A337BB05}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.IntegrationTests", "Tempus.IntegrationTests\Tempus.IntegrationTests.csproj", "{71A59D62-8920-45E4-A911-103B8BAB3105}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.Tests", "Tempus.Tests\Tempus.Tests.csproj", "{A34C47D4-D647-450F-90CD-1B27F0038FF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.API", "Tempus.API\Tempus.API.csproj", "{C0BD9CA5-C900-44A5-8DA0-BDF1A337BB05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +33,6 @@ Global
 		{C0BD9CA5-C900-44A5-8DA0-BDF1A337BB05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0BD9CA5-C900-44A5-8DA0-BDF1A337BB05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0BD9CA5-C900-44A5-8DA0-BDF1A337BB05}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71A59D62-8920-45E4-A911-103B8BAB3105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71A59D62-8920-45E4-A911-103B8BAB3105}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71A59D62-8920-45E4-A911-103B8BAB3105}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71A59D62-8920-45E4-A911-103B8BAB3105}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A34C47D4-D647-450F-90CD-1B27F0038FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A34C47D4-D647-450F-90CD-1B27F0038FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A34C47D4-D647-450F-90CD-1B27F0038FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A34C47D4-D647-450F-90CD-1B27F0038FF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

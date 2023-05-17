@@ -31,7 +31,6 @@ public static class ConfigureServices
         services.AddSingleton<IConnectionManager, ConnectionManager>();
         services.AddSignalR();
 
-
         return services;
     }
 }

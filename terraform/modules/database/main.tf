@@ -1,10 +1,11 @@
 resource "random_string" "random_password" {
   length           = 22
-  override_special = "@#$%^&*-_+=[]{}|\\:‘,.?/`~“();"
+  override_special = "#$%^&*-_+[]{}|:‘,.?/`~“();"
 }
 
 resource "random_string" "random_login" {
   length = 12
+  special = false
 }
 
 
@@ -36,6 +37,14 @@ resource "azurerm_mssql_database" "tempus_db" {
 }
 
 resource "azurerm_mssql_firewall_rule" "firewall_rule" {
+  name             = "tempus-sql_firewall-rule"
+  server_id        = azurerm_mssql_server.sql_server.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "0.0.0.0"
+}
+
+
+resource "azurerm_mssql_firewall_rule" "local_access" {
   name             = "tempus-sql_firewall-rule"
   server_id        = azurerm_mssql_server.sql_server.id
   start_ip_address = "0.0.0.0"
