@@ -43,6 +43,8 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
+        run: |
+          cd Tempus.UI
         with:
           name: node-app
 
@@ -50,7 +52,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tempus-app-dev-UI'
+          app-name: 'tempus'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CF76D9D5CEEC4DA8896DE35F2F71F4D4 }}
           package: .
