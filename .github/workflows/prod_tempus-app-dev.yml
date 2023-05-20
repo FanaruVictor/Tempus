@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Tempus.API
 
+name: Tempus.API
 on:
   push:
     branches:
-      - prod
+      - main
   workflow_dispatch:
 
 jobs:
@@ -26,13 +26,13 @@ jobs:
         run: dotnet build Tempus.API --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish Tempus.API -c Release -o ${{env.DOTNET_ROOT}}/tempus
+        run: dotnet publish Tempus.API -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/tempus
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tempus-api'
+          app-name: 'tempus-app-dev'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DD041E6674574B969EA83A127399ED16 }}
           package: .
