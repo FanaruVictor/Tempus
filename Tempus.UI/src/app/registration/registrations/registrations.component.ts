@@ -1,7 +1,5 @@
 import {
   Component,
-  HostBinding,
-  HostListener,
   OnDestroy,
   OnInit,
 } from '@angular/core';

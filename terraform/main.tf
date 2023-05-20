@@ -17,7 +17,7 @@ module "tempus_key_vault" {
   location        = azurerm_resource_group.tempus_rg.location
   rg_name         = azurerm_resource_group.tempus_rg.name
   tenant_id       = data.azurerm_client_config.current.tenant_id
-  principal_id    = module.tempus-app.principal_Id
+  principal_id    = module.tempus_app_NET.principal_Id
   object_id       = data.azurerm_client_config.current.object_id
   random_integer  = random_integer.randomizer.result
   db_name         = module.tempus_database.db_name
@@ -26,8 +26,7 @@ module "tempus_key_vault" {
   admin_password  = module.tempus_database.admin_password
 }
 
-
-module "tempus-app" {
+module "tempus_app_NET" {
   source = "./modules/app-service"
 
   environment = var.environment
@@ -35,7 +34,6 @@ module "tempus-app" {
   rg_name     = azurerm_resource_group.tempus_rg.name
   kv_name     = module.tempus_key_vault.kv_name
 }
-
 
 module "tempus_database" {
   source = "./modules/database"
@@ -45,11 +43,4 @@ module "tempus_database" {
   rg_name                = azurerm_resource_group.tempus_rg.name
   random_integer         = random_integer.randomizer.result
   tempus_kv_ap_principal = module.tempus_key_vault.kv_policy_pricipal
-}
-
-
-resource "azurerm_static_site" "tempus_ss" {
-  name                = "tempus-ss"
-  resource_group_name = azurerm_resource_group.tempus_rg.name
-  location            = azurerm_resource_group.tempus_rg.location
 }

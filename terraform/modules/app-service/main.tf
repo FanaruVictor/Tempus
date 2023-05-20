@@ -1,4 +1,4 @@
-resource "azurerm_service_plan" "tempus-asp" {
+resource "azurerm_service_plan" "tempus_asp" {
   name                = "tempus-asp"
   location            = var.location
   resource_group_name = var.rg_name
@@ -11,11 +11,24 @@ resource "azurerm_service_plan" "tempus-asp" {
   }
 }
 
-resource "azurerm_linux_web_app" "tempus-app" {
+resource "azurerm_service_plan" "tempus_asp_UI" {
+  name                = "tempus-asp-UI"
+  location            = var.location
+  resource_group_name = var.rg_name
+  os_type             = "Windows"
+
+  sku_name = var.app_plan_tier
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "azurerm_linux_web_app" "tempus_app" {
   name                = "${var.app_name}-app-dev"
   resource_group_name = var.rg_name
-  location            = azurerm_service_plan.tempus-asp.location
-  service_plan_id     = azurerm_service_plan.tempus-asp.id
+  location            = azurerm_service_plan.tempus_asp.location
+  service_plan_id     = azurerm_service_plan.tempus_asp.id
 
   app_settings = {
     "KeyVaultName"                        = var.kv_name
@@ -23,7 +36,39 @@ resource "azurerm_linux_web_app" "tempus-app" {
     APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.tempus_app_insights.instrumentation_key
   }
 
-  site_config {}
+  site_config {
+    application_stack {
+      dotnet_version = "7.0"
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+
+resource "azurerm_windows_web_app" "tempus_app_UI" {
+  name                = "${var.app_name}-app-dev-UI"
+  resource_group_name = var.rg_name
+  location            = azurerm_service_plan.tempus_asp_UI.location
+  service_plan_id     = azurerm_service_plan.tempus_asp_UI.id
+
+  app_settings = {
+    "KeyVaultName"                        = var.kv_name
+    APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.tempus_app_insights.connection_string
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.tempus_app_insights.instrumentation_key
+  }
+
+  site_config {
+    application_stack {
+      node_version = "~18"
+    }
+  }
 
   identity {
     type = "SystemAssigned"
