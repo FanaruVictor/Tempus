@@ -4,7 +4,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialogModule} from "@angular/material/dialog";
 import * as Rx from 'rxjs';
 import {delay} from "rxjs/operators";
-import {RegistrationApiService} from "../../_services/registration.api.service";
+import {RegistrationApiService} from "../../_services/registrations/registration.api.service";
 import {CategoryApiService} from "../../_services/category.api.service";
 import {GenericResponse} from "../../_commons/models/genericResponse";
 import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";

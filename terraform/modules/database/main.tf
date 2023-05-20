@@ -1,6 +1,6 @@
 resource "random_string" "random_password" {
   length           = 22
-  override_special = "#$%^&*-_+[]{}|:‘,.?/`~“();"
+  override_special = "#$%^&*-_+[]{}|:‘,.?/`~“()"
 }
 
 resource "random_string" "random_login" {
