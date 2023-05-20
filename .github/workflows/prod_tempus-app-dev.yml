@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'tempus-app-dev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_218EE38AB6474A8B82C8D6AFCF09A6A1 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DD041E6674574B969EA83A127399ED16 }}
           package: .
