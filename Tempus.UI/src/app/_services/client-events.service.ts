@@ -21,6 +21,7 @@ export class ClientEventsService {
   private retryConnectionIntervalIndex = 0;
   private retryIntervalMs: number = -1;
   private eventHubConnection!: HubConnection;
+  private apiURL = environment.apiUrl;
 
   constructor(
     private notificationService: NotificationService,
@@ -45,7 +46,7 @@ export class ClientEventsService {
       return;
     }
     this.eventHubConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:7077/hub', {
+      .withUrl(`${this.apiURL}/hub`, {
         accessTokenFactory: () => `${accessToken}`,
       })
       .withAutomaticReconnect(this.reconnectIntervals)
