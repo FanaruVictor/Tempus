@@ -16,10 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let authorizationToken = '';
-    this.authService.authorizationToken.subscribe(
-      (x) => (authorizationToken = x)
-    );
+    let authorizationToken = localStorage.getItem('authorizationToken') || '';
 
     if (!!authorizationToken) {
       req = req.clone({

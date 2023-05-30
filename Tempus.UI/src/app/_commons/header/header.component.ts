@@ -44,13 +44,11 @@ export class HeaderComponent implements OnInit {
         index: 3,
       },
     ];
-
-    this.authService.authorizationToken.subscribe((x) => {
-      this.authorizationToken = x;
-    });
   }
 
   ngOnInit() {
+    this.authorizationToken = localStorage.getItem('authorizationToken') || '';
+
     if (localStorage.getItem('authorizationToken')) {
       this.authService.user.subscribe((user) => {
         this.user = user;
