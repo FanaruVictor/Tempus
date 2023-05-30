@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteDialogComponent } from './delete-user-dialog/delete-dialog.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { ColorPipe } from './pipes/color.pipe';
 import { SearchPipe } from './pipes/search.pipe';
 import { DateRangePipe } from './pipes/dateRange.pipe';
@@ -14,6 +15,7 @@ import { DateRangePipe } from './pipes/dateRange.pipe';
   declarations: [
     ButtonComponent,
     DeleteDialogComponent,
+    NotFoundComponent,
     ColorPipe,
     SearchPipe,
     DateRangePipe,
@@ -28,6 +30,7 @@ import { DateRangePipe } from './pipes/dateRange.pipe';
   exports: [
     ButtonComponent,
     DeleteDialogComponent,
+    NotFoundComponent,
     ColorPipe,
     SearchPipe,
     DateRangePipe,

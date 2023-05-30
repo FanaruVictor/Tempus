@@ -5,7 +5,8 @@ import { GroupService } from 'src/app/_services/group/group.service';
 import { filter } from 'rxjs';
 import { GroupApiService } from 'src/app/_services/group/group.api.service';
 import { AuthService } from '../../../_services/auth/auth.service';
-import { User } from 'src/app/_commons/models/user/user';
+import { UserApiService } from '../../../_services/user.api.service';
+import { UserDetails } from '../../../_commons/models/user/userDetails';
 
 @Component({
   selector: 'app-group-menu',
@@ -16,18 +17,18 @@ export class GroupMenuComponent implements OnInit {
   activeGroupId: string | undefined;
   searchText: string = '';
   groups: GroupOverview[] = [];
-  user: User | undefined;
+  currentUser: UserDetails | undefined;
 
   constructor(
     private router: Router,
     private groupApiService: GroupApiService,
     private groupService: GroupService,
-    private authService: AuthService
+    private userService: UserApiService
   ) {}
 
   ngOnInit(): void {
-    this.authService.user.subscribe((x) => {
-      this.user = x;
+    this.userService.user.subscribe((x) => {
+      this.currentUser = x;
     });
     this.getAll();
 

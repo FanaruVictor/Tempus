@@ -1,0 +1,95 @@
+@import "src/styles/variables";
+
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--background-color);
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--content-color);
+    color: var(--text-color);
+
+    .title {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+      width: 100%;
+      margin: 15px;
+
+      label {
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      input {
+        outline: none;
+        width: 100%;
+        padding: 5px;
+        font-size: 18px;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        border: none;
+        &:focus {
+          outline: 2px solid $primary-color;
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+      margin: 15px;
+    }
+
+    #google-login {
+      margin: 15px 0;
+    }
+  }
+
+  .actions {
+    display: flex;
+    width: 250px;
+    justify-content: space-between;
+
+    a {
+      text-decoration: none;
+      padding: 15px;
+      background-color: $primary-color;
+      color: var(--text-color);
+    }
+  }
+}
+
+.login-btn {
+  width: 100%;
+  margin: 15px;
+  text-align: center;
+}
+
+cool-apple-login {
+  width: 100%;
+  margin: 15px;
+  .apple-button.dark {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+}

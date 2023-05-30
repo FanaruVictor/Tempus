@@ -75,7 +75,11 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
         user = new User
         {
             Id = user.Id,
+            Username = request.UserName,
             Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
+            Password = user.Password,
+            PasswordSalt = user.PasswordSalt,
             IsDarkTheme = user.IsDarkTheme,
             ExternalId = user.ExternalId,
             UserPhoto = user.UserPhoto

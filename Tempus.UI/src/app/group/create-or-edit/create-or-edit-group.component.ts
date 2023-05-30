@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute,  Router } from '@angular/router';
-import {  filter } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { UserEmail } from '../../_commons/models/user/userEmail';
 import { UserApiService } from '../../_services/user.api.service';
 import { AddGroupData } from '../../_commons/models/groups/addGroupData';

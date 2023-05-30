@@ -66,12 +66,12 @@
           <button mat-menu-item (click)="delete(group.id)">
             <mat-icon class="delete">delete</mat-icon>
             <span>{{
-              group.ownerId == user?.id ? "Delete" : "Exit"
+              group.ownerId == currentUser?.id ? "Delete" : "Exit"
             }}</span>
           </button>
           <button
             mat-menu-item
-            *ngIf="group.ownerId == user?.id"
+            *ngIf="group.ownerId == currentUser?.id"
             (click)="edit(group.id)"
           >
             <mat-icon class="edit">edit</mat-icon>

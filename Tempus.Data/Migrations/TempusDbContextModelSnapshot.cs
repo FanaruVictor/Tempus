@@ -44,7 +44,7 @@ namespace Tempus.Data.Migrations
                     b.HasIndex("GroupId")
                         .IsUnique();
 
-                    b.ToTable("GroupPhotos");
+                    b.ToTable("GroupPhotos", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Category", b =>
@@ -69,7 +69,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Group.Group", b =>
@@ -90,7 +90,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Group.GroupCategory", b =>
@@ -105,7 +105,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("GroupCategories");
+                    b.ToTable("GroupCategories", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Group.GroupUser", b =>
@@ -120,7 +120,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupUsers");
+                    b.ToTable("GroupUsers", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.Registration", b =>
@@ -151,7 +151,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Registrations");
+                    b.ToTable("Registrations", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.User.User", b =>
@@ -173,9 +173,23 @@ namespace Tempus.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<byte[]>("Password")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.User.UserCategory", b =>
@@ -190,7 +204,7 @@ namespace Tempus.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("UserCategories");
+                    b.ToTable("UserCategories", (string)null);
                 });
 
             modelBuilder.Entity("Tempus.Core.Entities.User.UserPhoto", b =>
@@ -215,7 +229,7 @@ namespace Tempus.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserPhotos");
+                    b.ToTable("UserPhotos", (string)null);
                 });
 
             modelBuilder.Entity("GroupPhoto", b =>

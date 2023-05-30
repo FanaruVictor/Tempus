@@ -1,286 +1,142 @@
-﻿import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-import { NotificationService } from '../notification.service';
-import * as auth from 'firebase/auth';
-import { User } from 'src/app/_commons/models/user/user';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GenericResponse } from 'src/app/_commons/models/genericResponse';
-import { environment } from 'src/environments/environment';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { GenericResponse } from '../../_commons/models/genericResponse';
+import { UserDetails } from '../../_commons/models/user/userDetails';
+import { LoginResult } from '../../_commons/models/auth/loginResult';
+import { UserRegistration } from '../../_commons/models/user/userRegistration';
+import { FacebookLoginInfo } from 'src/app/_commons/models/auth/facebookLoginInfo';
+import {environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  apiUrl = `${environment.apiUrl}/v1/auth`;
-
-  userSubject: BehaviorSubject<User>;
   authorizationToken: Observable<string>;
   private authorizationTokenSubject: BehaviorSubject<string>;
-
-  userData: any;
-
-  user: Observable<User>;
-  defaultUser: User = {
+  userSubject: BehaviorSubject<UserDetails>;
+  user: Observable<UserDetails>;
+  defaultUser = {
     id: '',
-    displayName: '',
-    photoURL: '',
+    userName: '',
+    photo: undefined,
     isDarkTheme: false,
     email: '',
+    phoneNumber: '',
     externalId: '',
-    emailVerified: false,
   };
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private router: Router,
-    private notificationService: NotificationService,
-    private httpClient: HttpClient,
-    private afs: AngularFirestore
-  ) {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.userSubject = new BehaviorSubject<User>(user as User);
-    this.user = this.userSubject.asObservable();
+  apiUrl = environment.apiUrl;
 
-    const authorizationToken = localStorage.getItem('authorizationToken') || '';
+  constructor(private httpClient: HttpClient) {
     this.authorizationTokenSubject = new BehaviorSubject<string>(
-      authorizationToken
+      JSON.parse(localStorage.getItem('authorizationToken')!)
     );
-
+    let user = localStorage.getItem('currentUser');
+    if (user) {
+      this.userSubject = new BehaviorSubject<UserDetails>(JSON.parse(user));
+    } else {
+      this.userSubject = new BehaviorSubject<UserDetails>(this.defaultUser);
+    }
     this.authorizationToken = this.authorizationTokenSubject.asObservable();
-
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-      }
-    });
+    this.user = this.userSubject.asObservable();
   }
-
-  setUser(user: User) {
-    localStorage.setItem('user', JSON.stringify(user as User));
+  setUser(user: UserDetails) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
     this.userSubject.next(user);
   }
-
-  setAuthorizationToken(authorizationToken: string) {
-    localStorage.setItem('authorizationToken', authorizationToken);
-    this.authorizationTokenSubject.next(authorizationToken);
-  }
-
-  // Sign in with email/password
-  signIn(email: any, password: any) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.setUserData(result.user);
-        this.login({
-          email: result.user?.email || '',
-          externalId: undefined,
-        }).subscribe((response) => {
-          if (result.user?.emailVerified === false) {
-            this.sendVerificationMail();
-            this.notificationService.warn(
-              'Please verify your email address',
-              'Sign in failed'
-            );
-            return;
-          }
-
-          this.setUser({
-            id: response.resource.userId,
-            displayName: result.user?.displayName || '',
-            photoURL: response.resource.photoURL,
-            isDarkTheme: response.resource.isDarkTheme,
-            email: result.user?.email || '',
-            externalId: undefined,
-            emailVerified: result.user?.emailVerified || false,
-          });
-          localStorage.setItem('isDarkTheme', response.resource.isDarkTheme);
-
-          this.setAuthorizationToken(response.resource.authorizationToken);
-
-          this.router.navigate(['/registrations']);
-        });
-      })
-      .catch((error) => {
-        this.notificationService.error(error.message, 'Sign in failed');
-      });
-  }
-
-  // Sign up with email/password
-  signUp(email: any, password: any, displayName: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.setUserData(result.user);
-        const user = result.user;
-        this.register({
-          email: result.user?.email || '',
-          externalId: '',
-          photoURL: result.user?.photoURL || '',
-        }).subscribe(() => {
-          user?.updateProfile({
-            displayName: displayName,
-          });
-          this.sendVerificationMail();
-        });
-      })
-      .catch((error) => {
-        this.notificationService.error(error.message, 'Sign up failed');
-      });
-  }
-
-  // Send email verfificaiton when new user sign up
-  sendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u) => u?.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['/auth/verifyEmail']);
-      });
-  }
-
-  // Reset Forggot password
-  forgotPassword(passwordResetEmail: any) {
-    return this.afAuth
-      .sendPasswordResetEmail(passwordResetEmail)
-      .then(() => {
-        this.notificationService.warn(
-          'Password reset email sent, check your inbox.',
-          'Request completed'
-        );
-      })
-      .catch((error) => {
-        this.notificationService.error(error.message, 'Reset password failed');
-      });
-  }
-
-  // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user !== null && user.emailVerified !== false ? true : false;
-  }
-
-  // Sign in with Google
-  googleAuth() {
-    return this.authLogin(new auth.GoogleAuthProvider());
-  }
-
-  // Auth logic to run auth providers
-  authLogin(provider: any) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.setUserData(result.user);
-        if (result.additionalUserInfo?.isNewUser) {
-          this.register({
-            email: result.user?.email || '',
-            externalId: result.user?.uid,
-            photoURL: result.user?.photoURL || '',
-          }).subscribe(() => {
-            this.login({
-              email: result.user?.email || '',
-              externalId: result.user?.uid,
-            }).subscribe((response) => {
-              debugger;
-              this.setUser({
-                id: response.resource.userId,
-                displayName: result.user?.displayName || '',
-                photoURL: response.resource.photoURL,
-                isDarkTheme: response.resource.isDarkTheme,
-                email: result.user?.email || '',
-                externalId: result.user?.uid,
-                emailVerified: result.user?.emailVerified || false,
-              });
-              localStorage.setItem(
-                'isDarkTheme',
-                response.resource.isDarkTheme
-              );
-
-              this.setAuthorizationToken(response.resource.authorizationToken);
-
-              this.router.navigate(['/registrations']);
-            });
-          });
-        } else {
-          this.login({
-            email: result.user?.email || '',
-            externalId: result.user?.uid,
-          }).subscribe((response) => {
-            debugger;
-            this.setUser({
-              id: response.resource.userId,
-              displayName: result.user?.displayName || '',
-              photoURL: response.resource.photoURL,
-              isDarkTheme: response.resource.isDarkTheme,
-              email: result.user?.email || '',
-              externalId: result.user?.uid,
-              emailVerified: result.user?.emailVerified || false,
-            });
-            localStorage.setItem('isDarkTheme', response.resource.isDarkTheme);
-            this.setAuthorizationToken(response.resource.authorizationToken);
-            this.router.navigate(['/registrations']);
-          });
+  login(email: string, password: string) {
+    return this.httpClient
+      .post<GenericResponse<LoginResult>>(
+        `${this.apiUrl}/v1.0/auth/login`,
+        {
+          email,
+          password,
         }
-      })
-      .catch((error) => {
-        this.notificationService.error(error.message, 'Sign in failed');
-      });
+      )
+      .pipe(
+        map((result) => {
+          localStorage.setItem(
+            'authorizationToken',
+            JSON.stringify(result.resource.authorizationToken)
+          );
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(result.resource.user)
+          );
+          this.authorizationTokenSubject.next(
+            result.resource.authorizationToken
+          );
+          return result.resource;
+        })
+      );
   }
 
-  // Sign out
-  signOut() {
-    return this.afAuth
-      .signOut()
-      .then(() => {
-        localStorage.removeItem('user');
-        this.router.navigate(['/auth/signIn']);
-      })
-      .catch((error) => {
-        this.notificationService.error(error.message, 'Logout failed');
-      });
+  loginWithGoogle(googleToken: string) {
+    return this.httpClient
+      .post<GenericResponse<LoginResult>>(
+        `${this.apiUrl}/v1.0/auth/loginWithGoogle`,
+        {
+          googleToken,
+        }
+      )
+      .pipe(
+        map((result) => {
+          localStorage.setItem(
+            'authorizationToken',
+            JSON.stringify(result.resource.authorizationToken)
+          );
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(result.resource.user)
+          );
+          this.authorizationTokenSubject.next(
+            result.resource.authorizationToken
+          );
+          return result.resource;
+        })
+      );
   }
 
-  private login(user: LoginInfo) {
-    return this.httpClient.post<GenericResponse<any>>(
-      `${this.apiUrl}/login`,
+  loginWithFacebook(facebookLoginInfo: FacebookLoginInfo) {
+    return this.httpClient
+      .post<GenericResponse<LoginResult>>(
+        `${this.apiUrl}/v1.0/auth/loginWithFacebook`,
+        {
+          email: facebookLoginInfo.email,
+          externalId: facebookLoginInfo.externalId,
+          photoUrl: facebookLoginInfo.photoUrl,
+          username: facebookLoginInfo.username,
+        }
+      )
+      .pipe(
+        map((result) => {
+          localStorage.setItem(
+            'authorizationToken',
+            JSON.stringify(result.resource.authorizationToken)
+          );
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(result.resource.user)
+          );
+          this.authorizationTokenSubject.next(
+            result.resource.authorizationToken
+          );
+          return result.resource;
+        })
+      );
+  }
+
+  register(user: UserRegistration) {
+    return this.httpClient.post<GenericResponse<LoginResult>>(
+      `${this.apiUrl}/v1.0/auth/register`,
       user
     );
   }
 
-  private register(user: RegisterInfo) {
-    return this.httpClient.post(`${this.apiUrl}/register`, user);
+  logout() {
+    localStorage.clear();
+    this.authorizationTokenSubject.next('');
   }
-
-  setUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      id: '',
-      externalId: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      isDarkTheme: false,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-}
-
-export interface LoginInfo {
-  externalId?: string;
-  email: string;
-}
-
-export interface RegisterInfo {
-  externalId?: string;
-  email: string;
-  photoURL?: string;
 }

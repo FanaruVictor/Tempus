@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './_commons/guards/AuthGuard';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/registrations' },
@@ -35,6 +36,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./group/group.module').then((m) => m.GroupModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

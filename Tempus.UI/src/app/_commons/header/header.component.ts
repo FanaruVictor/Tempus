@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../_services/auth/auth.service';
 import { LoaderService } from '../../_services/loader/loader.service';
 import { UserApiService } from '../../_services/user.api.service';
+import { UserDetails } from '../models/user/userDetails';
 import { GroupService } from 'src/app/_services/group/group.service';
-import { User } from '../models/user/user';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +14,14 @@ import { User } from '../models/user/user';
 export class HeaderComponent implements OnInit {
   tabs: { link: string; label: string; index: number }[];
   authorizationToken?: string;
-  user?: User;
+  user?: UserDetails;
 
   constructor(
     public authService: AuthService,
     public loaderService: LoaderService,
     private userService: UserApiService,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private router: Router
   ) {
     this.tabs = [
       {
@@ -45,16 +46,16 @@ export class HeaderComponent implements OnInit {
       },
     ];
 
-    this.authService.authorizationToken.subscribe((x) => {
-      this.authorizationToken = x;
-    });
+    this.authService.authorizationToken.subscribe(
+      (x) => (this.authorizationToken = x)
+    );
   }
 
   ngOnInit() {
     if (localStorage.getItem('authorizationToken')) {
-      this.authService.user.subscribe((user) => {
+      this.userService.user.subscribe((user) => {
         this.user = user;
-        this.tabs[3].label = this.user?.displayName || 'Account';
+        this.tabs[3].label = this.user?.userName || 'Account';
       });
     }
   }
@@ -66,11 +67,8 @@ export class HeaderComponent implements OnInit {
       .changeTheme(!this.user?.isDarkTheme)
       .subscribe((response) => {
         this.user = response.resource;
-        localStorage.setItem(
-          'isDarkTheme',
-          this.user?.isDarkTheme.toString() || ''
-        );
-        this.authService.setUser(this.user as User);
+        localStorage.setItem('isDarkTheme', this.user.isDarkTheme.toString());
+        this.userService.setUser(this.user);
       });
   }
 
@@ -79,7 +77,7 @@ export class HeaderComponent implements OnInit {
     window.location.reload();
   }
 
-  redirectTo() {
+  redirectTo(link: string) {
     this.groupService.setGroupId(undefined);
   }
 }
