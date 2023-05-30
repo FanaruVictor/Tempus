@@ -21,12 +21,11 @@ import { GroupModule } from './group/group.module';
 import { RegistrationModule } from './registration/registration.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
-
-import { HttpCacheInterceptorModule } from '@ngneat/cashew';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -56,6 +55,11 @@ import { HttpCacheInterceptorModule } from '@ngneat/cashew';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
   ],
   providers: [
     {
@@ -72,22 +76,6 @@ import { HttpCacheInterceptorModule } from '@ngneat/cashew';
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
       multi: true,
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true, //keeps the user signed in
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.googleClientId), // your client id
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(environment.facebookAppId),
-          },
-        ],
-      },
     },
   ],
   bootstrap: [AppComponent],

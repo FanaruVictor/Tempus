@@ -1,5 +1,7 @@
-﻿export interface BaseUser {
-  userName: string;
+export interface BaseUser {
+  externalId?: string;
   email: string;
-  phoneNumber: string;
+  displayName: string;
+  photoURL?: string;
+  emailVerified: boolean;
 }

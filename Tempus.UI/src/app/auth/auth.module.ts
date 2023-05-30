@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { LogoutComponent } from './logout/logout.component';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -10,9 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { VerifyEmailAddressComponent } from './verify-email-address/verify-email-address.component';
+import { AuthService } from '../_services/auth/auth.service';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, LogoutComponent],
+  declarations: [ForgotPasswordComponent, VerifyEmailAddressComponent, SignInComponent, SignUpComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -23,5 +25,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCardModule,
     FontAwesomeModule,
   ],
+  providers: [AuthService],
 })
 export class AuthModule {}

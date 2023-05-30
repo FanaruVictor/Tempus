@@ -16,14 +16,14 @@
           *ngFor="let tab of tabs"
           [active]="rla.isActive"
           [routerLink]="[tab.link]"
-          (click)="redirectTo(tab.link)"
+          (click)="redirectTo()"
           mat-tab-link
           routerLinkActive
         >
           <div class="label">{{ tab.label }}</div>
-          <div class="profile-photo" *ngIf="tab.label == user?.userName">
+          <div class="profile-photo" *ngIf="tab.label == user?.displayName">
             <mat-icon
-              *ngIf="!user?.photo; else showPhoto"
+              *ngIf="!user?.photoURL; else showPhoto"
               aria-hidden="false"
               aria-label="User placeholder for photo"
               class="user-icon"
@@ -31,7 +31,7 @@
               account_circle
             </mat-icon>
             <ng-template #showPhoto>
-              <img class="user-photo" [src]="user?.photo?.url" />
+              <img class="user-photo" [src]="user?.photoURL" />
             </ng-template>
           </div>
         </a>

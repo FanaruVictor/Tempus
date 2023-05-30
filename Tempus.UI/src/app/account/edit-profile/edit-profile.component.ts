@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDetails } from '../../_commons/models/user/userDetails';
 import { UserApiService } from '../../_services/user.api.service';
 import { filter } from 'rxjs';
-import { UpdateUserData } from '../../_commons/models/user/updateUserData';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/_services/notification.service';
+import { AuthService } from 'src/app/_services/auth/auth.service';
+import { User } from 'src/app/_commons/models/user/user';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,7 +13,7 @@ import { NotificationService } from 'src/app/_services/notification.service';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
-  user!: UserDetails;
+  user!: User;
   file?: File;
   editForm: FormGroup;
   imageURL?: string;
@@ -23,25 +23,24 @@ export class EditProfileComponent implements OnInit {
     private router: Router,
     private userApiService: UserApiService,
     private fb: FormBuilder,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) {
     this.editForm = this.fb.group({
       photo: [null],
-      userName: ['', Validators.required],
-      phoneNumber: [''],
+      displayName: ['', Validators.required],
       email: ['', [Validators.email, Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    this.userApiService
-      .getDetails()
-      .pipe(filter((x) => !!x))
-      .subscribe((response) => {
-        this.user = response.resource;
-        this.editForm.patchValue(this.user);
-        this.imageURL = this.user.photo?.url;
-      });
+    this.authService.user.subscribe((x) => {
+      this.user = x;
+    });
+    this.authService.user.subscribe((response) => {
+      this.editForm.patchValue(response);
+      this.imageURL = this.user.photoURL;
+    });
   }
 
   submit() {
@@ -49,9 +48,8 @@ export class EditProfileComponent implements OnInit {
       return;
     }
 
-    let userData: UpdateUserData = {
-      userName: this.editForm.get('userName')?.value,
-      phoneNumber: this.editForm.get('phoneNumber')?.value,
+    let userData = {
+      username: this.editForm.get('username')?.value,
       email: this.editForm.get('email')?.value,
       isCurrentPhotoChanged: this.isCurrentPhotoChanged,
       newPhoto: this.editForm.get('photo')?.value,
@@ -65,16 +63,15 @@ export class EditProfileComponent implements OnInit {
       return;
     }
     this.userApiService.update(userData).subscribe((response) => {
-      this.userApiService.setUser(response.resource);
+      this.authService.setUser(response.resource);
       this.router.navigate(['/account']);
     });
   }
 
-  isValidData(user: UpdateUserData): boolean {
+  isValidData(user): boolean {
     const result =
-      this.user.userName !== user.userName ||
+      this.user.displayName !== user.displayName ||
       this.user.email !== user.email ||
-      this.user.phoneNumber !== user.phoneNumber ||
       user.newPhoto instanceof File ||
       this.isCurrentPhotoChanged;
 
@@ -84,7 +81,7 @@ export class EditProfileComponent implements OnInit {
   isValidForm() {
     let messages: string[] = [];
     if (!this.editForm.valid) {
-      if (this.editForm.get('userName')?.errors?.['required']) {
+      if (this.editForm.get('displayName')?.errors?.['required']) {
         messages.push('User name is required.');
       }
       if (this.editForm.get('email')?.errors?.['required']) {

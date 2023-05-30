@@ -1,6 +1,5 @@
-﻿import {UserDetails} from "../user/userDetails";
+﻿import { UserDetails } from '../user/userDetails';
 
-export interface LoginResult{
-  user: UserDetails,
-  authorizationToken: string
+export interface LoginResult {
+  authorizationToken: string;
 }

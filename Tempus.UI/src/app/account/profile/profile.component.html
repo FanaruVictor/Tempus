@@ -3,7 +3,7 @@
   <div class="center" *ngIf="user">
     <div class="container profile-photo">
       <mat-icon
-        *ngIf="!user.photo; else showPhoto"
+        *ngIf="!user.photoURL; else showPhoto"
         aria-hidden="false"
         aria-label="User placeholder for photo"
         class="user-icon"
@@ -11,20 +11,16 @@
         account_circle
       </mat-icon>
       <ng-template #showPhoto>
-        <img [src]="user.photo?.url" />
+        <img [src]="user.photoURL" />
       </ng-template>
     </div>
     <div class="container">
-      <h2>Username</h2>
-      <p>{{ user.userName }}</p>
+      <h2>username</h2>
+      <p>{{ user.displayName }}</p>
     </div>
     <div class="container">
       <h2>Email</h2>
       <p>{{ user.email }}</p>
-    </div>
-    <div class="container">
-      <h2>Phone number</h2>
-      <p>{{ user.phoneNumber || "-" }}</p>
     </div>
     <div class="actions">
       <button

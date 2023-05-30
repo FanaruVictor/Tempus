@@ -3,5 +3,6 @@
 public class LoginCredentials
 {
     public string Email { get; init; }
-    public string Password { get; init; }
+    public string? ExternalId { get; init; }
+    public string? PhotoURL { get; init; }
 }

@@ -1,17 +1,20 @@
-﻿import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {RegisterComponent} from "./register/register.component";
+﻿import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { VerifyEmailAddressComponent } from './verify-email-address/verify-email-address.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'prefix', redirectTo: 'login'},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  { path: '', pathMatch: 'prefix', redirectTo: 'signIn' },
+  { path: 'signIn', component: SignInComponent },
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'verifyEmail', component: VerifyEmailAddressComponent },
+  { path: 'forgotPassword', component: ForgotPasswordComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthRoutingModule {
-}
+export class AuthRoutingModule {}
