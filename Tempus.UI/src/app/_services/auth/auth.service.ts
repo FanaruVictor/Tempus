@@ -236,7 +236,7 @@ export class AuthService {
     return this.afAuth
       .signOut()
       .then(() => {
-        localStorage.clear();
+        localStorage.removeItem('user');
         this.router.navigate(['/auth/signIn']);
       })
       .catch((error) => {
