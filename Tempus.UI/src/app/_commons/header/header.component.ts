@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../_services/auth/auth.service';
 import { LoaderService } from '../../_services/loader/loader.service';
 import { UserApiService } from '../../_services/user.api.service';
 import { UserDetails } from '../models/user/userDetails';
 import { GroupService } from 'src/app/_services/group/group.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,11 +18,11 @@ export class HeaderComponent implements OnInit {
   user?: UserDetails;
 
   constructor(
-    public authService: AuthService,
     public loaderService: LoaderService,
     private userService: UserApiService,
     private groupService: GroupService,
-    private router: Router
+    public fbAuth: AngularFireAuth,
+    private authSerice: AuthService
   ) {
     this.tabs = [
       {
@@ -45,19 +46,13 @@ export class HeaderComponent implements OnInit {
         index: 3,
       },
     ];
-
-    this.authService.authorizationToken.subscribe(
-      (x) => (this.authorizationToken = x)
-    );
   }
 
   ngOnInit() {
-    if (localStorage.getItem('authorizationToken')) {
-      this.userService.user.subscribe((user) => {
-        this.user = user;
-        this.tabs[3].label = this.user?.userName || 'Account';
-      });
-    }
+    this.userService.user.subscribe((user) => {
+      this.user = user;
+      this.tabs[3].label = this.user?.userName || 'Account';
+    });
   }
 
   async toggleDarkTheme() {
@@ -73,8 +68,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    window.location.reload();
+    this.authSerice.logout();
   }
 
   redirectTo(link: string) {

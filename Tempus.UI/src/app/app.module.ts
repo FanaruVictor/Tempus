@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_commons/interceptors/JwtInterceptor';
-import { AuthModule } from './auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_commons/interceptors/errorInterceptor';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -21,12 +20,40 @@ import { GroupModule } from './group/group.module';
 import { RegistrationModule } from './registration/registration.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
 
-import { HttpCacheInterceptorModule } from '@ngneat/cashew';
+import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+  signInFlow: 'popup',
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    {
+      scopes: ['public_profile', 'email', 'user_likes', 'user_friends'],
+      customParameters: {
+        auth_type: 'reauthenticate',
+      },
+      provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    },
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+
+    new firebase.auth.OAuthProvider('yahoo.com').providerId,
+    {
+      requireDisplayName: true,
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    },
+  ],
+  //term of service
+  tosUrl: '<your-tos-link>',
+  //privacy url
+  privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+  //credentialHelper:             firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
+  credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+  callbacks: {
+    signInSuccessWithAuthResult: () => false,
+  },
+};
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -42,7 +69,6 @@ import { HttpCacheInterceptorModule } from '@ngneat/cashew';
     SharedModule,
     MatButtonModule,
     MatSlideToggleModule,
-    AuthModule,
     MatProgressBarModule,
     ToastrModule.forRoot({
       progressBar: true,
@@ -56,6 +82,9 @@ import { HttpCacheInterceptorModule } from '@ngneat/cashew';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
   ],
   providers: [
     {
@@ -72,22 +101,6 @@ import { HttpCacheInterceptorModule } from '@ngneat/cashew';
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
       multi: true,
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true, //keeps the user signed in
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.googleClientId), // your client id
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(environment.facebookAppId),
-          },
-        ],
-      },
     },
   ],
   bootstrap: [AppComponent],

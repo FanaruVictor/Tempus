@@ -4,14 +4,13 @@ using Tempus.Core.Models.Auth;
 
 namespace Tempus.Infrastructure.Services.AuthService;
 
-public class RegisterUserValidation : AbstractValidator<RegistrationData>
+public class RegisterUserValidation : AbstractValidator<LoginCredentials>
 {
     public RegisterUserValidation()
     {
         RuleFor(x => x.UserName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty().Must(ValidEmail);
-        RuleFor(x => x.Password).NotEmpty();
-        RuleFor(x => x.PhoneNumber).NotEmpty();
+        RuleFor(x => x.ExternalId).NotEmpty();
     }
 
     private bool ValidEmail(string email)

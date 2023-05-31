@@ -58,7 +58,7 @@ export class UserApiService {
       'isPhotoChanged',
       data.isCurrentPhotoChanged ? 'true' : 'false'
     );
-    formData.append('phoneNumber', data.phoneNumber);
+    formData.append('phoneNumber', data.phoneNumber ?? '');
     formData.append('email', data.email);
 
     return this.httpClient.put<GenericResponse<UserDetails>>(

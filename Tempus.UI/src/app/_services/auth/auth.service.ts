@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GenericResponse } from '../../_commons/models/genericResponse';
-import { UserDetails } from '../../_commons/models/user/userDetails';
 import { LoginResult } from '../../_commons/models/auth/loginResult';
-import { UserRegistration } from '../../_commons/models/user/userRegistration';
-import { FacebookLoginInfo } from 'src/app/_commons/models/auth/facebookLoginInfo';
-import {environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,45 +14,25 @@ import {environment } from 'src/environments/environment'
 export class AuthService {
   authorizationToken: Observable<string>;
   private authorizationTokenSubject: BehaviorSubject<string>;
-  userSubject: BehaviorSubject<UserDetails>;
-  user: Observable<UserDetails>;
-  defaultUser = {
-    id: '',
-    userName: '',
-    photo: undefined,
-    isDarkTheme: false,
-    email: '',
-    phoneNumber: '',
-    externalId: '',
-  };
 
   apiUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {
-    this.authorizationTokenSubject = new BehaviorSubject<string>(
-      JSON.parse(localStorage.getItem('authorizationToken')!)
-    );
-    let user = localStorage.getItem('currentUser');
-    if (user) {
-      this.userSubject = new BehaviorSubject<UserDetails>(JSON.parse(user));
-    } else {
-      this.userSubject = new BehaviorSubject<UserDetails>(this.defaultUser);
-    }
+  constructor(
+    private httpClient: HttpClient,
+    private fbAtuth: AngularFireAuth,
+    private router: Router
+  ) {
+    const token = localStorage.getItem('authorizationToken');
+    this.authorizationTokenSubject = new BehaviorSubject<string>(token ?? '');
+
     this.authorizationToken = this.authorizationTokenSubject.asObservable();
-    this.user = this.userSubject.asObservable();
   }
-  setUser(user: UserDetails) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.userSubject.next(user);
-  }
-  login(email: string, password: string) {
+
+  login(loginData: LoginData) {
     return this.httpClient
       .post<GenericResponse<LoginResult>>(
         `${this.apiUrl}/v1.0/auth/login`,
-        {
-          email,
-          password,
-        }
+        loginData
       )
       .pipe(
         map((result) => {
@@ -61,82 +40,27 @@ export class AuthService {
             'authorizationToken',
             JSON.stringify(result.resource.authorizationToken)
           );
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(result.resource.user)
-          );
           this.authorizationTokenSubject.next(
             result.resource.authorizationToken
           );
           return result.resource;
         })
       );
-  }
-
-  loginWithGoogle(googleToken: string) {
-    return this.httpClient
-      .post<GenericResponse<LoginResult>>(
-        `${this.apiUrl}/v1.0/auth/loginWithGoogle`,
-        {
-          googleToken,
-        }
-      )
-      .pipe(
-        map((result) => {
-          localStorage.setItem(
-            'authorizationToken',
-            JSON.stringify(result.resource.authorizationToken)
-          );
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(result.resource.user)
-          );
-          this.authorizationTokenSubject.next(
-            result.resource.authorizationToken
-          );
-          return result.resource;
-        })
-      );
-  }
-
-  loginWithFacebook(facebookLoginInfo: FacebookLoginInfo) {
-    return this.httpClient
-      .post<GenericResponse<LoginResult>>(
-        `${this.apiUrl}/v1.0/auth/loginWithFacebook`,
-        {
-          email: facebookLoginInfo.email,
-          externalId: facebookLoginInfo.externalId,
-          photoUrl: facebookLoginInfo.photoUrl,
-          username: facebookLoginInfo.username,
-        }
-      )
-      .pipe(
-        map((result) => {
-          localStorage.setItem(
-            'authorizationToken',
-            JSON.stringify(result.resource.authorizationToken)
-          );
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(result.resource.user)
-          );
-          this.authorizationTokenSubject.next(
-            result.resource.authorizationToken
-          );
-          return result.resource;
-        })
-      );
-  }
-
-  register(user: UserRegistration) {
-    return this.httpClient.post<GenericResponse<LoginResult>>(
-      `${this.apiUrl}/v1.0/auth/register`,
-      user
-    );
   }
 
   logout() {
     localStorage.clear();
+    this.fbAtuth.signOut();
     this.authorizationTokenSubject.next('');
+    
+    this.router.navigate(['/login']);
   }
+}
+
+export interface LoginData {
+  email: string;
+  externalId: string;
+  userName: string;
+  photoURL: string;
+  phoneNumber: string;
 }

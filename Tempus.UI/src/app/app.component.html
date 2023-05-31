@@ -1,5 +1,10 @@
 <app-header></app-header>
-<div class="page-wrapper">
+<div class="page-wrapper"  *ngIf="fbAuth.user | async as user; else showLogin">
   <router-outlet></router-outlet>
-
 </div>
+<ng-template #showLogin>
+  <firebase-ui
+    (signInSuccessWithAuthResult)="successLoginCallback($event)"
+    (signInFailure)="errorLoginCallback($event)"
+  ></firebase-ui>
+</ng-template>

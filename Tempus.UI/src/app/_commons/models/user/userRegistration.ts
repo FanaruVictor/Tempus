@@ -1,6 +1,6 @@
-﻿import {BaseUser} from "./baseUser";
+﻿import { BaseUser } from './baseUser';
 
-export interface UserRegistration extends BaseUser{
-  password: string;
-  isExternal: boolean;
+export interface UserRegistration extends BaseUser {
+  externalId?: string;
+  photoURL?: string;
 }

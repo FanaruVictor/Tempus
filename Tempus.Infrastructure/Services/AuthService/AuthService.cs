@@ -38,12 +38,19 @@ public class AuthService : IAuthService
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if(!await _authRepository.IsEmailAlreadyRegistered(credentials.Email))
+            if(!await _authRepository.IsEmailAlreadyRegistered(credentials.Email) && !await _authRepository.IsExternalIdAlreadyRegistered(credentials.ExternalId))
             {
-                throw new Exception("User not found");
+                await Register(new RegistrationData
+                {
+                    Email = credentials.Email,
+                    UserName = credentials.UserName,
+                    ExternalId = credentials.ExternalId,
+                    PhoneNumber = credentials.PhoneNumber,
+                    PhotoURL = credentials.PhotoURL
+                }, cancellationToken);
             }
 
-            var user = await _authRepository.Login(credentials.Email, credentials.Password);
+            var user = await _authRepository.Login(credentials.Email, credentials.ExternalId);
 
             CreateToken(user, out var tokenHandler, out var token);
 
@@ -75,30 +82,35 @@ public class AuthService : IAuthService
         }
     }
 
-    public async Task<BaseResponse<UserDetails>> Register(RegistrationData userInfo,
+    private async Task<BaseResponse<UserDetails>> Register(RegistrationData userInfo,
         CancellationToken cancellationToken)
     {
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            BaseResponse<UserDetails> result;
-
-
             if(await _authRepository.IsEmailAlreadyRegistered(userInfo.Email.ToLower()))
             {
                 throw new Exception("Email already registered");
             }
 
-            if(await _authRepository.IsUsernameAlreadyRegistered(userInfo.UserName.ToLower()))
-            {
-                throw new Exception("Username already registered");
-            }
-
             var entity = await RegisterUser(userInfo);
 
+            if(userInfo.PhotoURL != "")
+            {
+                await _userPhotoRepository.Add(new UserPhoto
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = entity.Id,
+                    PublicId = "",
+                    Url = userInfo.PhotoURL,
+                });
+            }
+
+            await _authRepository.SaveChanges();
+
             var baseUser = GenericMapper<User, UserDetails>.Map(entity);
-            result = BaseResponse<UserDetails>.Ok(baseUser);
+            var result = BaseResponse<UserDetails>.Ok(baseUser);
 
             return result;
         }
@@ -112,99 +124,7 @@ public class AuthService : IAuthService
         }
     }
 
-    public async Task<BaseResponse<LoginResult>> LoginWithGoogle(string googleCredentials,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            BaseResponse<LoginResult> result;
-
-            var settings = new GoogleJsonWebSignature.ValidationSettings
-            {
-                Audience = new List<string> {_configuration["GoogleSettings:ClientId"]}
-            };
-
-            var payload = await GoogleJsonWebSignature.ValidateAsync(googleCredentials, settings);
-
-            if(payload == null)
-            {
-                result = BaseResponse<LoginResult>.BadRequest(new List<string>
-                {
-                    "User credentials not right"
-                });
-
-                return result;
-            }
-
-            var user = await _userRepository.GetByExternalId(payload.Subject);
-
-            if(user == null)
-            {
-                var registrationData = new ExternalRegistration
-                {
-                    ExternalId = payload.Subject,
-                    Email = payload.Email,
-                    Username = payload.Name,
-                    PhotoUrl = payload.Picture
-                };
-                
-                user = await RegisterExternalUser(registrationData);
-            }
-
-            CreateToken(user, out var tokenHandler, out var token);
-
-            var loginResult = new LoginResult
-            {
-                User = GenericMapper<User, UserDetails>.Map(user),
-                AuthorizationToken = tokenHandler.WriteToken(token)
-            };
-
-
-            return BaseResponse<LoginResult>.Ok(loginResult);
-        }
-        catch(TaskCanceledException canceledException)
-        {
-            return BaseResponse<LoginResult>.BadRequest(new List<string> {canceledException.Message});
-        }
-        catch(Exception exception)
-        {
-            var response = BaseResponse<LoginResult>.BadRequest(new List<string> {exception.Message});
-            return response;
-        }
-    }
-
-    public async Task<BaseResponse<LoginResult>> LoginWithFacebook(FacebookResponse facebookResponse, CancellationToken cancellationToken)
-    {
-        var user = await _userRepository.GetByExternalId(facebookResponse.ExternalId);
-
-        if(user == null)
-        {
-            var registrationData = new ExternalRegistration
-            {
-                ExternalId = facebookResponse.ExternalId,
-                Email = facebookResponse.Email,
-                Username = facebookResponse.Username,
-                PhotoUrl = facebookResponse.PhotoUrl
-            };
-            
-            user = await RegisterExternalUser(registrationData);
-        }
-        
-        CreateToken(user, out var tokenHandler, out var token);
-
-        var loginResult = new LoginResult
-        {
-            User = GenericMapper<User, UserDetails>.Map(user),
-            AuthorizationToken = tokenHandler.WriteToken(token)
-        };
-        
-        loginResult.User.Photo = GenericMapper<UserPhoto, PhotoDetails>.Map(user.UserPhoto);
-
-
-        return BaseResponse<LoginResult>.Ok(loginResult);
-    }
+   
 
     private async Task<User> RegisterUser(RegistrationData userInfo)
     {
@@ -217,35 +137,12 @@ public class AuthService : IAuthService
             ExternalId = userInfo.ExternalId
         };
 
-        await _authRepository.Register(user, userInfo.Password);
-        await _authRepository.SaveChanges();
+        await _authRepository.Register(user);
         return user;
     }
 
 
-    private async Task<User> RegisterExternalUser(ExternalRegistration data)
-    {
-        var user = await RegisterUser(new RegistrationData
-        {
-            Email = data.Email,
-            ExternalId = data.ExternalId,
-            UserName = data.Username
-        });
-
-        var photo = new UserPhoto
-        {
-            Id = Guid.NewGuid(),
-            Url = data.PhotoUrl,
-            PublicId = "",
-            UserId = user.Id,
-        };
-
-        await _userPhotoRepository.Add(photo);
-        await _userPhotoRepository.SaveChanges();
-
-        return user;
-    }
-
+ 
     private void CreateToken(User user, out JwtSecurityTokenHandler tokenHandler, out SecurityToken token)
     {
         var claims = new[]

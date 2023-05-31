@@ -5,15 +5,15 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '../../_services/auth/auth.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { NotificationService } from '../../_services/notification.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
-    private authService: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private fbAuth: AngularFireAuth
   ) {}
 
   intercept(
@@ -23,7 +23,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err) => {
         if (err.status === 401) {
-          this.authService.logout();
+          debugger;
+          localStorage.clear();
+          this.fbAuth.signOut();
           location.reload();
         }
         console.log(err);

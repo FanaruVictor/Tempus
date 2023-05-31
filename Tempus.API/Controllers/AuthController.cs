@@ -23,29 +23,11 @@ public class AuthController : BaseController
     {
         _authService = authService;
     }
-
-    [HttpPost("register")]
-    public async Task<ActionResult<UserDetails>> Register([FromBody] RegistrationData userInfo)
-    {
-        return HandleResponse(await _authService.Register(userInfo, new CancellationToken()));
-    }
-
+    
     [HttpPost("login")]
     public async Task<ActionResult<LoginResult>> Login([FromBody] LoginCredentials credentials)
     {
         return HandleResponse(await _authService.Login(credentials, new CancellationToken()));
-    }
-
-    [HttpPost("loginWithGoogle")]
-    public async Task<ActionResult<LoginResult>> LoginWithGoogle([FromBody] GoogleResponse googleResponse)
-    {
-        return HandleResponse(await _authService.LoginWithGoogle(googleResponse.googleToken, new CancellationToken()));
-    }
-
-    [HttpPost("loginWithFacebook")]
-    public async Task<ActionResult<LoginResult>> LoginWithFacebook([FromBody] FacebookResponse facebookResponse)
-    {
-        return HandleResponse(await _authService.LoginWithFacebook(facebookResponse, new CancellationToken()));
     }
 }
 

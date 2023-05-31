@@ -217,6 +217,9 @@ mat-card-actions {
 .ng-arrow,
 .ng-option-label {
   color: var(--text-color) !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .ng-select .ng-select-container:after {
@@ -225,4 +228,10 @@ mat-card-actions {
 
 .mat-option-text {
   color: var(--text-color) !important;
+}
+
+.ng-value,
+.ng-value-label {
+  display: flex;
+  align-items: center;
 }

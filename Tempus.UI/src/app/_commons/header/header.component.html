@@ -1,7 +1,4 @@
-<div
-  *ngIf="authorizationToken && user !== authService.defaultUser"
-  class="header"
->
+<div *ngIf="fbAuth.user | async" class="header">
   <mat-progress-bar
     *ngIf="loaderService.isLoading | async"
     class="loader-container"

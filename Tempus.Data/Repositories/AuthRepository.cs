@@ -16,31 +16,17 @@ public class AuthRepository : IAuthRepository
 		_context = context;
 	}
 
-	public async Task Register(User user, string password)
+	public async Task Register(User user)
 	{
-		if (string.IsNullOrEmpty(user.ExternalId))
-		{
-			CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
-
-			user.Password = passwordHash;
-			user.PasswordSalt = passwordSalt;
-
-		}
-
 		await _context.Users.AddAsync(user);
 	}
 
 
-	public async Task<User> Login(string email, string password)
+	public async Task<User> Login(string email, string externalId)
 	{
 		email = email.ToLower();
 		var user = await _context.Users.FirstOrDefaultAsync(x =>
-			x.Email.ToLower() == email && string.IsNullOrEmpty(x.ExternalId));
-
-		if (!VerifyPasswordHash(password, user.Password, user.PasswordSalt))
-		{
-			throw new Exception("Wrong username or password");
-		}
+			x.Email.ToLower() == email && x.ExternalId == externalId);
 
 		return user;
 	}
@@ -50,28 +36,13 @@ public class AuthRepository : IAuthRepository
 		return await _context.Users.AnyAsync(x => x.Email.ToLower() == email);
 	}
 
-	public async Task<bool> IsUsernameAlreadyRegistered(string username)
+	public async Task<bool> IsExternalIdAlreadyRegistered(string externalId)
 	{
-		return await _context.Users.AnyAsync(x => x.Username.ToLower() == username);
+		return await _context.Users.AnyAsync(x => x.ExternalId == externalId);
 	}
 
 	public async Task<int> SaveChanges()
 	{
 		return await _context.SaveChangesAsync();
-	}
-
-	private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-	{
-		using var hmac = new HMACSHA512();
-		passwordSalt = hmac.Key;
-		passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-	}
-
-	private bool VerifyPasswordHash(string password, byte[] userPassword, byte[] userPasswordSalt)
-	{
-		using var hmac = new HMACSHA512(userPasswordSalt);
-		var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-		return !computedHash.Where((t, i) => t != userPassword[i]).Any();
 	}
 }

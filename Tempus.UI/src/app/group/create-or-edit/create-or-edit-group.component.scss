@@ -20,7 +20,7 @@
       align-items: center;
       padding-bottom: 25px;
 
-      .user-icon,
+      .group-icon,
       img {
         font-size: 200px;
         width: 200px;
@@ -113,6 +113,16 @@
           input {
             color: var(--text-color) !important;
           }
+
+          mat-icon {
+            text-align: start;
+          }
+          .user-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 60px;
+            margin-left: -5px;
+          }
         }
       }
     }
@@ -122,9 +132,4 @@
       gap: 15px;
     }
   }
-}
-
-.user-img {
-  width: 25px;
-  height: 25px;
 }
