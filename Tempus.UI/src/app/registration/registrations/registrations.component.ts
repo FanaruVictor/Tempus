@@ -36,7 +36,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
   });
 
   colors = new FormControl([]);
-  showNoRegistrationSelectedMessage = false;
+  showNoRegistrationSelectedMessage = true;
 
   constructor(
     private router: Router,

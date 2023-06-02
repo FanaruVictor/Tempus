@@ -11,6 +11,7 @@ import { CreateCategoryCommandData } from 'src/app/_commons/models/categories/cr
 import { filter } from 'rxjs';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { CategoryApiService } from 'src/app/_services/category.api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pick-category-dialog',
@@ -29,7 +30,8 @@ export class PickCategoryDialogComponent {
     public categories: { data: BaseCategory[]; groupId: string },
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    private categoryApiService: CategoryApiService
+    private categoryApiService: CategoryApiService,
+    private router: Router
   ) {}
 
   onNoClick(): void {
@@ -66,7 +68,17 @@ export class PickCategoryDialogComponent {
           'Category added successfully',
           'Request completed'
         );
-        this.categories.data.push(result.resource);
+        this.dialogRef.close();
+        if (!!this.categories.groupId) {
+          this.router.navigate(
+            [`groups/${this.categories.groupId}/registrations/create`],
+            { queryParams: { categoryId: result.resource.id } }
+          );
+          return;
+        }
+        this.router.navigate(['registrations/create'], {
+          queryParams: { categoryId: result.resource.id },
+        });
       });
   }
 }
