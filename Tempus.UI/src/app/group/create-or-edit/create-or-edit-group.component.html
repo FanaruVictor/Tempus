@@ -60,13 +60,15 @@
               <img
                 *ngIf="item.photoUrl; else showIcon"
                 [src]="item.photoUrl"
-                width="50px"
-                height="50px"
-                [ngStyle]="{ 'border-radius': '50%', 'margin-right': '5px' }"
+                [ngStyle]="{
+                  'border-radius': '50%',
+                  'margin-right': '5px',
+                  width: '50px',
+                  height: '50px'
+                }"
               />
               <ng-template #showIcon>
                 <mat-icon
-                  *ngIf="!imageURL; else showPhoto"
                   aria-hidden="false"
                   aria-label="User placeholder for photo"
                   class="user-icon"

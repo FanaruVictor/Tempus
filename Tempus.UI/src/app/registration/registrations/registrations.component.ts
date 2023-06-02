@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PickCategoryDialogComponent } from '../pick-category-dialog/pick-category-dialog.component';
@@ -50,8 +46,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private groupService: GroupService,
     private groupApiService: GroupApiService,
-    private regisrationService: RegistrationService,
-    private viewPortScroller: ViewportScroller
+    private regisrationService: RegistrationService
   ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 30, 0, 1);
@@ -80,6 +75,8 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
         this.registrations = x;
         if (!this.registrations) {
           this.getAllForUser();
+        } else {
+          this.setRegistrationsColors();
         }
       });
     });
@@ -149,11 +146,6 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
   private handleGetRegistrationResponse(registrations: RegistrationOverview[]) {
     this.registrations = registrations;
-    this.registrations = this.registrations?.sort(
-      (objA, objB) =>
-        new Date(objB.lastUpdatedAt).getTime() -
-        new Date(objA.lastUpdatedAt).getTime()
-    );
 
     this.setRegistrationsColors();
 
@@ -181,7 +173,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
   addRegistration(): void {
     const dialogRef = this.dialog.open(PickCategoryDialogComponent, {
-      data: this.categories,
+      data: { data: this.categories, groupId: this.groupId },
     });
     dialogRef
       .afterClosed()
@@ -203,6 +195,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
   delete(id: string) {
     this.registrationApiService.delete(id, this.groupId).subscribe((result) => {
       this.registrationsColor = [];
+      this.colors.setValue([]);
       this.registrations?.forEach((x) => {
         if (!this.registrationsColor.includes(x.categoryColor)) {
           this.registrationsColor.push(x.categoryColor);

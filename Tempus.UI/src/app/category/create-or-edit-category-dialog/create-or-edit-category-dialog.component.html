@@ -25,10 +25,17 @@
             [ngxMatColorPicker]="picker"
             formControlName="color"
             placeholder="#ffff"
-            readonly
+            [disabled]="true"
           />
-          <ngx-mat-color-toggle [for]="picker" matSuffix></ngx-mat-color-toggle>
-          <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+          <ngx-mat-color-toggle
+            [for]="picker"
+            matSuffix
+            [disabled]="false"
+          ></ngx-mat-color-toggle>
+          <ngx-mat-color-picker
+            #picker
+            [disabled]="false"
+          ></ngx-mat-color-picker>
           <mat-error
             *ngIf="
               createOrEditForm.controls['color'].invalid &&

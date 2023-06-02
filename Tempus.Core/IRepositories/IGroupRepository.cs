@@ -13,4 +13,5 @@ public interface IGroupRepository : IBaseRepository<Group>
     Task<User?> GetGroupUser(Guid userId, Guid groupId);
     Task<Guid> DeleteGroupMember(Guid userId, Guid groupId);
     Task<List<Guid>> GetUsers(Guid id);
+    Task<List<User>> GetGroupMembers(Guid groupId);
 }

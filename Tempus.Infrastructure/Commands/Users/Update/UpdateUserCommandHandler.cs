@@ -117,35 +117,35 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
         }
 
         ImageUploadResult uploadResult;
-        Core.Entities.User.UserPhoto userUserPhoto;
+        Core.Entities.User.UserPhoto userPhoto;
         if (user.UserPhoto != null)
         {
             await _cloudinaryService.DestroyUsingUserId(user.Id);
             uploadResult = await _cloudinaryService.Upload(photo);
-            userUserPhoto = new Core.Entities.User.UserPhoto
+            userPhoto = new Core.Entities.User.UserPhoto
             {
                 Id = user.UserPhoto.Id,
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.Url.ToString(),
                 UserId = user.Id
             };
-            _userPhotoRepository.Update(userUserPhoto);
+            _userPhotoRepository.Update(userPhoto);
         }
         else
         {
             uploadResult = await _cloudinaryService.Upload(photo);
-            userUserPhoto = new Core.Entities.User.UserPhoto
+            userPhoto = new Core.Entities.User.UserPhoto
             {
                 Id = Guid.NewGuid(),
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.Url.ToString(),
                 UserId = user.Id
             };
-            await _userPhotoRepository.Add(userUserPhoto);
+            await _userPhotoRepository.Add(userPhoto);
         }
 
         await _userPhotoRepository.SaveChanges();
 
-        return BaseResponse<Core.Entities.User.UserPhoto>.Ok(userUserPhoto);
+        return BaseResponse<Core.Entities.User.UserPhoto>.Ok(userPhoto);
     }
 }

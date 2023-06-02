@@ -127,7 +127,8 @@ public class
 
             if (groupUsers == null || groupUsers.Count == 0)
                 continue;
-
+            
+            groupUsers = groupUsers.Where(x => x.UserId != request.UserId).ToList();
             foreach (var groupUser in groupUsers)
             {
                 if (groupUser.UserId != request.UserId)

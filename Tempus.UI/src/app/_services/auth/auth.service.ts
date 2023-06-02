@@ -7,6 +7,7 @@ import { LoginResult } from '../../_commons/models/auth/loginResult';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { ClientEventsService } from '../client-events.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private fbAtuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private clientEventsService: ClientEventsService
   ) {
     const token = localStorage.getItem('authorizationToken');
     this.authorizationTokenSubject = new BehaviorSubject<string>(token ?? '');
@@ -51,8 +53,9 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.fbAtuth.signOut();
+    this.clientEventsService.stopConnection();
     this.authorizationTokenSubject.next('');
-    
+
     this.router.navigate(['/login']);
   }
 }

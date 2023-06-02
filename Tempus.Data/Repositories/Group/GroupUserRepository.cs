@@ -54,4 +54,9 @@ public class GroupUserRepository : IGroupUserRepository
     {
         return await _context.GroupUsers.Where(x => x.GroupId == groupId).Select(x => x.UserId).ToListAsync();
     }
+    
+    public async Task RemoveRange(List<GroupUser> entities)
+    {
+        await Task.Run(() => _context.GroupUsers.RemoveRange(entities));
+    }
 }

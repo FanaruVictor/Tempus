@@ -3,9 +3,9 @@ using Tempus.Core.Commons;
 using Tempus.Core.Models.Group;
 using Tempus.Infrastructure.Commons;
 
-namespace Tempus.Infrastructure.Commands.Groups.Edit;
+namespace Tempus.Infrastructure.Commands.Groups.Update;
 
-public class EditGroupCommand : BaseRequest<BaseResponse<GroupOverview>>
+public class UpdateGroupCommand : BaseRequest<BaseResponse<GroupOverview>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

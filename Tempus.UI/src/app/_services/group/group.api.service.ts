@@ -36,6 +36,10 @@ export class GroupApiService {
     formData.append('id', id);
     formData.append('name', group.name);
     if (!!group.image) formData.append('image', group.image);
+    formData.append(
+      'isCurrentImageChanged',
+      group.isCurrentImageChanged.toString()
+    );
     formData.append('members', JSON.stringify(group.members.join(',')));
     return this.httpClient.put<any>(this.apiUrl, formData);
   }

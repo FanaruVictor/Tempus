@@ -44,11 +44,7 @@
     </div>
     <div class="entry">
       <label>Username</label>
-      <input
-        formControlName="userName"
-        placeholder="E.g.: John"
-        [readOnly]="!!user.externalId"
-      />
+      <input formControlName="userName" placeholder="E.g.: John" />
       <mat-error *ngIf="!editForm.get('userName')?.valid"
         >The username is required</mat-error
       >

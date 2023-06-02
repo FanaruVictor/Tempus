@@ -3,6 +3,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Tempus.Core.Entities;
 using Tempus.Core.IRepositories;
 using Tempus.Infrastructure.Commons;
 
@@ -12,12 +13,14 @@ public class CloudinaryService : ICloudinaryService
 {
     private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
     private readonly IUserPhotoRepository _userPhotoRepository;
+    private readonly IGroupPhotoRepository _groupPhotoRepository;
     private readonly Cloudinary _cloudinary;
 
-    public CloudinaryService(IOptions<CloudinarySettings> cloudinaryConfig, IUserPhotoRepository userPhotoRepository)
+    public CloudinaryService(IOptions<CloudinarySettings> cloudinaryConfig, IUserPhotoRepository userPhotoRepository, IGroupPhotoRepository groupPhotoRepository)
     {
         _cloudinaryConfig = cloudinaryConfig;
         _userPhotoRepository = userPhotoRepository;
+        _groupPhotoRepository = groupPhotoRepository;
         var account = new Account(
             _cloudinaryConfig.Value.CloudName,
             _cloudinaryConfig.Value.ApiKey,
@@ -47,7 +50,24 @@ public class CloudinaryService : ICloudinaryService
         {
             throw new Exception("Photo not found");
         }
-        
+
+        await Destroy(photo);
+    }
+
+    public async Task DestroyUsingGroupId(Guid groupId)
+    {
+        var photo = await _groupPhotoRepository.GetByGroupId(groupId);
+
+        if(photo == null)
+        {
+            throw new Exception("Photo not found");
+        }
+
+        await Destroy(photo);
+    }
+
+    public async Task Destroy(Photo photo)
+    {
         var destroyParams = new DeletionParams(photo.PublicId)
         {
             ResourceType = ResourceType.Image,

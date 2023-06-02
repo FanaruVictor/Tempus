@@ -8,5 +8,6 @@ public interface ICloudinaryService
 {
     Task<ImageUploadResult> Upload(IFormFile image);
     Task DestroyUsingUserId(Guid userId);
+    Task DestroyUsingGroupId(Guid groupId);
     Task<string[]> UploadRegistrationImages(MatchCollection images);
 }

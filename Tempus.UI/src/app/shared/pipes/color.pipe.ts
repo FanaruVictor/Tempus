@@ -1,17 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {RegistrationOverview} from "../../_commons/models/registrations/registrationOverview";
+import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 
 @Pipe({
-  name: 'color'
+  name: 'color',
 })
 export class ColorPipe implements PipeTransform {
-
   transform(items: RegistrationOverview[], colors: any): any[] {
-    if(colors.length === 0){
-        return items;
+    if (colors.length === 0) {
+      return items;
     }
 
-    items = items.filter(x => colors.includes(x.categoryColor));
+    items = items.filter((x) => colors.includes(x.categoryColor));
     return items;
   }
 }

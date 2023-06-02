@@ -23,7 +23,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err) => {
         if (err.status === 401) {
-          debugger;
           localStorage.clear();
           this.fbAuth.signOut();
           location.reload();

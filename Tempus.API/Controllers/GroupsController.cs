@@ -4,7 +4,7 @@ using Tempus.Core.Models.Group;
 using Tempus.Core.Models.Registrations;
 using Tempus.Infrastructure.Commands.Groups.Create;
 using Tempus.Infrastructure.Commands.Groups.Delete;
-using Tempus.Infrastructure.Commands.Groups.Edit;
+using Tempus.Infrastructure.Commands.Groups.Update;
 using Tempus.Infrastructure.Queries.Group.GetAllGroupsQuery;
 using Tempus.Infrastructure.Queries.Group.GetGroupByIdQuery;
 using Tempus.Infrastructure.Queries.Registrations.GetAll;
@@ -49,7 +49,7 @@ public class GroupsController : BaseController
     }
     
     [HttpPut]
-    public async Task<ActionResult<GroupOverview>> Update([FromForm] EditGroupCommand command)
+    public async Task<ActionResult<GroupOverview>> Update([FromForm] UpdateGroupCommand command)
     {
         return HandleResponse(await _mediator.Send(command));
     }

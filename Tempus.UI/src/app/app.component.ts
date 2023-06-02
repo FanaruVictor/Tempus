@@ -21,13 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private clientEventsService: ClientEventsService,
     public fbAuth: AngularFireAuth,
     public authService: AuthService,
-    public router: Router
+    public router: Router,
   ) {}
 
   ngOnInit() {
     this.fbAuth.user.subscribe((user) => {
       if (user) {
-        debugger
         let authToken = localStorage.getItem('authorizationToken');
 
         if (authToken == null) {
@@ -52,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 );
 
                 if (response.user.isDarkTheme) {
-                  document.body.classList.toggle('dark-theme');
+                  if(!document.body.classList.contains('dark-theme'))
+                    document.body.classList.toggle('dark-theme');
                   localStorage.setItem('isDarkTheme', true.toString());
                 }
 

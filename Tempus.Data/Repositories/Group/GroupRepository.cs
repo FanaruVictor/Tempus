@@ -63,4 +63,11 @@ public class GroupRepository : BaseRepository<Core.Entities.Group.Group>, IGroup
             .Include(x => x.GroupPhoto)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public async Task<List<User>> GetGroupMembers(Guid groupId)
+    {
+        return await _context.GroupUsers.AsNoTracking()
+            .Where(x => x.GroupId == groupId)
+            .Select(x => x.User).ToListAsync();
+    }
 }

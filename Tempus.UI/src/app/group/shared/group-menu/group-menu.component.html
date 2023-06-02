@@ -63,12 +63,6 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="delete(group.id)">
-            <mat-icon class="delete">delete</mat-icon>
-            <span>{{
-              group.ownerId == currentUser?.id ? "Delete" : "Exit"
-            }}</span>
-          </button>
           <button
             mat-menu-item
             *ngIf="group.ownerId == currentUser?.id"
@@ -76,6 +70,12 @@
           >
             <mat-icon class="edit">edit</mat-icon>
             <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="delete(group.id)">
+            <mat-icon class="delete">delete</mat-icon>
+            <span>{{
+              group.ownerId == currentUser?.id ? "Delete" : "Exit"
+            }}</span>
           </button>
         </mat-menu>
         <div class="created-date">{{ group.createdAt | date }}</div>
