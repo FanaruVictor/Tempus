@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService } from '../../_services/loader/loader.service';
-import { UserApiService } from '../../_services/user.api.service';
-import { UserDetails } from '../models/user/userDetails';
 import { GroupService } from 'src/app/_services/group/group.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth/auth.service';
+import { LoaderService } from '../_services/loader/loader.service';
+import { UserDetails } from '../_commons/models/user/userDetails';
+import { UserApiService } from '../_services/user.api.service';
 
 @Component({
   selector: 'app-header',
