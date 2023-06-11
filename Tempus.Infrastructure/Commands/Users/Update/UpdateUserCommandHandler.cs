@@ -1,11 +1,12 @@
 ﻿using CloudinaryDotNet.Actions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Tempus.Core;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
-using Tempus.Core.Models.Photo;
+using Tempus.Core.Models;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Services.Cloudynary;

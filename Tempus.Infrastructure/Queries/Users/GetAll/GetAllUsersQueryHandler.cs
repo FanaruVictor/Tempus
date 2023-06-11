@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using Tempus.Core;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities;
 using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
+using Tempus.Core.Models;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
 

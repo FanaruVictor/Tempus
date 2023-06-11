@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 
-namespace Tempus.API.ASP;
+namespace Tempus.API;
 
 public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
 {

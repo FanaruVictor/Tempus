@@ -1,4 +1,4 @@
-﻿namespace Tempus.Core.Models.Auth;
+﻿namespace Tempus.Core.IServices.Auth;
 
 public class LoginCredentials
 {

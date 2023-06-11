@@ -1,7 +1,6 @@
 ﻿using Tempus.Core.Entities;
-using Tempus.Core.Models.Photo;
 
-namespace Tempus.Core.Models.User;
+namespace Tempus.Core.Commons;
 
 public class UserDetails : BaseEntity
 {

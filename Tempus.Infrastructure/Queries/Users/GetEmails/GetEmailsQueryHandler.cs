@@ -20,7 +20,16 @@ public class GetEmailsQueryHandler : IRequestHandler<GetEmailsQuery,BaseResponse
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var userEmails = (await _userRepository.GetUsersEmails()).Where(x => x.Id != request.UserId).ToList();
+            var userEmails = (await _userRepository.GetAll())
+                .Where(x => x.Id != request.UserId)
+                .Select(x => new UserEmail
+                    {
+                        Email = x.Email,
+                        Id = x.Id,
+                        PhotoUrl = x.UserPhoto.Url
+                    }
+                )
+                .ToList();
 
             return BaseResponse<List<UserEmail>>.Ok(userEmails);
         }

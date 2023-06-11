@@ -1,4 +1,4 @@
-﻿namespace Tempus.Core.Models.Photo;
+﻿namespace Tempus.Core.Commons;
 
 public class PhotoDetails
 {

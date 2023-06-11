@@ -19,7 +19,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
 
-    public async Task<List<TEntity>> GetAll()
+    public virtual async Task<List<TEntity>> GetAll()
     {
         return await _context
             .Set<TEntity>()

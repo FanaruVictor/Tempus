@@ -1,6 +1,5 @@
 ﻿using Tempus.Core.Commons;
-using Tempus.Core.Models.Auth;
-using Tempus.Core.Models.User;
+using Tempus.Core.IServices.Auth;
 
 namespace Tempus.Core.IServices;
 

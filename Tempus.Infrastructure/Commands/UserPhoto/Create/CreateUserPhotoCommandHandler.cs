@@ -2,7 +2,7 @@
 using MediatR;
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
-using Tempus.Core.Models.Photo;
+using Tempus.Core.Models;
 using Tempus.Infrastructure.Commons;
 using Tempus.Infrastructure.Services.Cloudynary;
 

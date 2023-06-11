@@ -58,7 +58,7 @@ public class ConfigureSwaggerOptions
     {
         var info = new OpenApiInfo
         {
-            Title = ".NET Core (.NET 6) Web API",
+            Title = "Tempus API",
             Version = desc.ApiVersion.ToString()
         };
 

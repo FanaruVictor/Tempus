@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Tempus.Core;
 using Tempus.Core.Commons;
+using Tempus.Core.Models;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
 

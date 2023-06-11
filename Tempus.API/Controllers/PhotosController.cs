@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tempus.Core.Models.Photo;
+using Tempus.Core.Commons;
+using Tempus.Core.Models;
 using Tempus.Infrastructure.Commands.UserPhoto.Create;
 using Tempus.Infrastructure.Commands.UserPhoto.Delete;
 using Tempus.Infrastructure.Commands.UserPhoto.Update;

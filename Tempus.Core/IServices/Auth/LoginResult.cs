@@ -1,6 +1,6 @@
-﻿using Tempus.Core.Models.User;
+﻿using Tempus.Core.Commons;
 
-namespace Tempus.Core.Models.Auth;
+namespace Tempus.Core.IServices.Auth;
 
 public class LoginResult
 {

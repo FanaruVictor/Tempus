@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FluentValidation;
-using Tempus.Core.Models.Auth;
+using Tempus.Core.IServices.Auth;
 
 namespace Tempus.Infrastructure.Services.AuthService;
 

@@ -4,12 +4,13 @@ using System.Text;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Tempus.Core;
 using Tempus.Core.Commons;
 using Tempus.Core.Entities.User;
 using Tempus.Core.IRepositories;
 using Tempus.Core.IServices;
-using Tempus.Core.Models.Auth;
-using Tempus.Core.Models.Photo;
+using Tempus.Core.IServices.Auth;
+using Tempus.Core.Models;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
 

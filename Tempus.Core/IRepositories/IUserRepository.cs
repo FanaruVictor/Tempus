@@ -1,12 +1,8 @@
-﻿using Tempus.Core.Entities;
-using Tempus.Core.Entities.User;
-using Tempus.Core.Models.User;
+﻿using Tempus.Core.Entities.User;
 
 namespace Tempus.Core.IRepositories;
 
 public interface IUserRepository : IBaseRepository<User>
 {
     Task<bool?> GetTheme(Guid id);
-    Task<User?> GetByExternalId(string externalId);
-    Task<List<UserEmail>> GetUsersEmails();
 }

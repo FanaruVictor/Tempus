@@ -26,10 +26,6 @@ public static class ConfigureServices
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
-        services.AddScoped<IUserInfo, AspUserInfo>();
-        services.AddScoped<IClientEventSender, ClientEventSender>();
-        services.AddSingleton<IConnectionManager, ConnectionManager>();
-        services.AddSignalR();
 
         return services;
     }

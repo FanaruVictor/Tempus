@@ -1,5 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Tempus.Core;
+using Tempus.Core.Commons;
+using Tempus.Core.Models;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commands.Users.ChangeTheme;
 using Tempus.Infrastructure.Commands.Users.Delete;

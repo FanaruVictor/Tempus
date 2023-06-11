@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Tempus.Core.Commons;
-using Tempus.Core.Models.Photo;
+using Tempus.Core.Models;
 using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure.Commands.UserPhoto.Create;

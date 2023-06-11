@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Tempus.Core.Entities;
 using Tempus.Core.IServices;
-using Tempus.Core.Models.Auth;
+using Tempus.Core.IServices.Auth;
 using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Services.AuthService;
 

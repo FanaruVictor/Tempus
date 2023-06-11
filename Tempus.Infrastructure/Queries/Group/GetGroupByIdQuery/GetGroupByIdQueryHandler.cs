@@ -2,6 +2,7 @@
 using Tempus.Core.Commons;
 using Tempus.Core.IRepositories;
 using Tempus.Core.Models.Group;
+using Tempus.Core.Models.User;
 using Tempus.Infrastructure.Commons;
 
 namespace Tempus.Infrastructure.Queries.Group.GetGroupByIdQuery;
@@ -40,7 +41,15 @@ public class GetGroupByIdQueryHandler : IRequestHandler<GetGroupByIdQuery, BaseR
         
         var usersId = await _groupRepository.GetUsers(group.Id);
         
-        var userEmails = (await _userRepository.GetUsersEmails()).Where(x => usersId.Contains(x.Id) && x.Id != request.UserId).ToList();
+        var userEmails = (await _userRepository.GetAll())
+            .Where(x => usersId.Contains(x.Id) && x.Id != request.UserId)
+            .Select(x => new UserEmail
+                {
+                    Email = x.Email,
+                    Id = x.Id,
+                    PhotoUrl = x.UserPhoto.Url
+                })
+            .ToList();
 
         groupDetails.Members = userEmails;
         
