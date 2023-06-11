@@ -11,7 +11,7 @@ import { CreateOrEditGroupComponent } from './create-or-edit/create-or-edit-grou
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { NoteModule } from '../note/note.module';
-import { GroupMenuComponent } from './shared/group-menu/group-menu.component';
+import { GroupMenuComponent } from './group-menu/group-menu.component';
 
 @NgModule({
   declarations: [

@@ -3,14 +3,14 @@ import { UserDetails } from '../../_commons/models/user/userDetails';
 import { UserApiService } from '../../_services/user.api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
-import { DeleteDialogComponent } from '../../shared/delete-user-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from './delete-user-dialog/delete-dialog.component';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class AccountComponent implements OnInit {
   user!: UserDetails;
 
   constructor(private userService: UserApiService, private dialog: MatDialog) {}

@@ -45,13 +45,16 @@ public class CloudinaryService : ICloudinaryService
     public async Task DestroyUsingUserId(Guid userId)
     {
         var photo = await _userPhotoRepository.GetByUserId(userId);
-
+        
         if(photo == null)
         {
             throw new Exception("Photo not found");
         }
-
-        await Destroy(photo);
+        
+        if(photo.PublicId != "")
+        {
+            await Destroy(photo);
+        }
     }
 
     public async Task DestroyUsingGroupId(Guid groupId)

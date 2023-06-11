@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserDetails } from '../_commons/models/user/userDetails';
 import { GenericResponse } from '../_commons/models/genericResponse';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Photo } from '../_commons/models/photo/photo';
 import { UpdateUserData } from '../_commons/models/user/updateUserData';
 import { UserEmail } from '../_commons/models/user/userEmail';
 
@@ -51,6 +50,7 @@ export class UserApiService {
   }
 
   update(data: UpdateUserData) {
+ 
     let formData = new FormData();
     formData.append('userName', data.userName);
     if (!!data.newPhoto) formData.append('newPhoto', data.newPhoto);

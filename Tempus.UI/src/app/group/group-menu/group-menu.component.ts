@@ -4,8 +4,8 @@ import { GroupOverview } from 'src/app/_commons/models/groups/groupOverview';
 import { GroupService } from 'src/app/_services/group/group.service';
 import { filter } from 'rxjs';
 import { GroupApiService } from 'src/app/_services/group/group.api.service';
-import { UserApiService } from '../../../_services/user.api.service';
-import { UserDetails } from '../../../_commons/models/user/userDetails';
+import { UserApiService } from '../../_services/user.api.service';
+import { UserDetails } from '../../_commons/models/user/userDetails';
 
 @Component({
   selector: 'app-group-menu',

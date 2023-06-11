@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateOrEditRegistrationComponent } from './create-or-edit-registration/create-or-edit-registration.component';
+import { CreateOrEditNoteComponent } from './create-or-edit-note/create-or-edit-note.component';
 import { NotesComponent } from './notes/notes.component';
 
 const routes: Routes = [
@@ -10,12 +10,12 @@ const routes: Routes = [
     children: [
       {
         path: ':id/edit-notes-view',
-        component: CreateOrEditRegistrationComponent,
+        component: CreateOrEditNoteComponent,
       },
     ],
   },
-  { path: ':id/edit-full-view', component: CreateOrEditRegistrationComponent },
-  { path: 'create', component: CreateOrEditRegistrationComponent },
+  { path: ':id/edit-full-view', component: CreateOrEditNoteComponent },
+  { path: 'create', component: CreateOrEditNoteComponent },
 ];
 
 @NgModule({

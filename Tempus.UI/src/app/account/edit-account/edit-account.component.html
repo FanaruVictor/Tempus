@@ -56,7 +56,6 @@
         placeholder="E.g.: Jhon@Doe.com"
         type="email"
         pattern="[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+"
-        [readOnly]="!!user.externalId"
       />
       <mat-error *ngIf="editForm.get('email')?.errors?.['required']"
         >The email address is required</mat-error

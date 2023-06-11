@@ -6,13 +6,14 @@ import { UpdateUserData } from '../../_commons/models/user/updateUserData';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/_services/notification.service';
+import { getAuth, updateEmail, updateProfile } from 'firebase/auth';
 
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss'],
+  selector: 'app-edit-account',
+  templateUrl: './edit-account.component.html',
+  styleUrls: ['./edit-account.component.scss'],
 })
-export class EditProfileComponent implements OnInit {
+export class EditAccountProfile implements OnInit {
   user!: UserDetails;
   file?: File;
   editForm: FormGroup;
@@ -66,6 +67,20 @@ export class EditProfileComponent implements OnInit {
     }
     this.userApiService.update(userData).subscribe((response) => {
       this.userApiService.setUser(response.resource);
+      const auth = getAuth();
+      if (auth.currentUser) {
+        if (response.resource.email !== auth.currentUser.email) {
+          updateEmail(auth.currentUser, response.resource.email).then(() => {
+            console.log('email updated!');
+          });
+        }
+        debugger
+        updateProfile(auth.currentUser, {
+          displayName: response.resource.userName,
+          photoURL: response.resource.photo?.url ?? null,
+        });
+      }
+
       this.router.navigate(['/account']);
     });
   }
