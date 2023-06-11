@@ -71,15 +71,14 @@ export class PickCategoryDialogComponent {
         this.dialogRef.close();
         if (!!this.categories.groupId) {
           this.router.navigate(
-            [`groups/${this.categories.groupId}/registrations/create`],
+            [`groups/${this.categories.groupId}/notes/create`],
             { queryParams: { categoryId: result.resource.id } }
           );
           return;
         }
-        this.router.navigate(['registrations/create'], {
+        this.router.navigate(['notes/create'], {
           queryParams: { categoryId: result.resource.id },
-
-        })
+        });
       });
   }
 }

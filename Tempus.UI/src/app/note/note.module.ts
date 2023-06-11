@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { CreateOrEditRegistrationComponent } from './create-or-edit-registration/create-or-edit-registration.component';
+import { CreateOrEditNoteComponent } from './create-or-edit-note/create-or-edit-note.component';
 import { PickCategoryDialogComponent } from './pick-category-dialog/pick-category-dialog.component';
 import {
   ErrorStateMatcher,
@@ -28,7 +28,7 @@ import { NotesComponent } from './notes/notes.component';
   declarations: [
     NotesComponent,
     PickCategoryDialogComponent,
-    CreateOrEditRegistrationComponent,
+    CreateOrEditNoteComponent,
   ],
   imports: [
     NotesRoutingModule,

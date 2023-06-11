@@ -25,11 +25,11 @@ export interface Page {
 }
 
 @Component({
-  selector: 'app-create-or-edit-registration',
-  templateUrl: './create-or-edit-registration.component.html',
-  styleUrls: ['./create-or-edit-registration.component.scss'],
+  selector: 'app-create-or-edit-note',
+  templateUrl: './create-or-edit-note.component.html',
+  styleUrls: ['./create-or-edit-note.component.scss'],
 })
-export class CreateOrEditRegistrationComponent implements OnInit {
+export class CreateOrEditNoteComponent implements OnInit {
   @HostBinding('class.full-view') isActive = true;
   categories?: BaseCategory[];
   initialRegistration!: RegistrationOverview;

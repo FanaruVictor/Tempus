@@ -17,7 +17,7 @@ import { RegistrationService } from 'src/app/_services/registration/registration
 import { ViewportScroller } from '@angular/common';
 
 @Component({
-  selector: 'app-ntoes',
+  selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss'],
 })
