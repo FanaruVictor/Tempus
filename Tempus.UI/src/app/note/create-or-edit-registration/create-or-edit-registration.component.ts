@@ -89,7 +89,7 @@ export class CreateOrEditRegistrationComponent implements OnInit {
 
     this.activatedRoute.url.subscribe((x) => {
       this.mode = x[x.length - 1].path;
-      if (this.mode == 'edit-registrations-view') {
+      if (this.mode == 'edit-notes-view') {
         this.isActive = false;
       }
     });
@@ -253,10 +253,10 @@ export class CreateOrEditRegistrationComponent implements OnInit {
       .pipe(filter((x) => !!x))
       .subscribe((x) => {
         if (!!this.groupId) {
-          this.router.navigate(['/groups', this.groupId, 'registrations']);
+          this.router.navigate(['/groups', this.groupId, 'notes']);
         } else {
           this.registrationService.addRegistration(x.resource);
-          this.router.navigate(['/registrations']);
+          this.router.navigate(['/notes']);
         }
         this.notificationService.succes(
           'Registration created succesfully',
@@ -268,9 +268,9 @@ export class CreateOrEditRegistrationComponent implements OnInit {
   redirect() {
     if (this.mode == 'edit-full-view') {
       if (!!this.groupId) {
-        this.router.navigate(['/groups', this.groupId, 'registrations']);
+        this.router.navigate(['/groups', this.groupId, 'notes']);
       } else {
-        this.router.navigate(['/registrations']);
+        this.router.navigate(['/notes']);
       }
     }
   }
@@ -304,9 +304,9 @@ export class CreateOrEditRegistrationComponent implements OnInit {
 
   cancel() {
     if (!!this.groupId) {
-      this.router.navigate(['/groups', this.groupId, 'registrations']);
+      this.router.navigate(['/groups', this.groupId, 'notes']);
     } else {
-      this.router.navigate(['/registrations']);
+      this.router.navigate(['/notes']);
     }
   }
 }

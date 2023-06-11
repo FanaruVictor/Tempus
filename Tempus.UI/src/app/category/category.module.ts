@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoriesOverviewComponent } from './categories-overview/categories-overview.component';
+import { CategoriesComponent } from './categories/categories.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { CategoryRoutingModule } from './category-routing.module';
@@ -20,10 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [
-    CategoriesOverviewComponent,
-    CreateOrEditCategoryDialogComponent,
-  ],
+  declarations: [CategoriesComponent, CreateOrEditCategoryDialogComponent],
   imports: [
     CategoryRoutingModule,
     CommonModule,
@@ -38,7 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatOptionModule,
     MatDatepickerModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [{ provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }],
 })

@@ -4,13 +4,10 @@ import { AuthGuard } from './_commons/guards/AuthGuard';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/registrations' },
+  { path: '', pathMatch: 'full', redirectTo: '/notes' },
   {
-    path: 'registrations',
-    loadChildren: () =>
-      import('./registration/registration.module').then(
-        (m) => m.RegistrationModule
-      ),
+    path: 'notes',
+    loadChildren: () => import('./note/note.module').then((m) => m.NoteModule),
     canActivate: [AuthGuard],
   },
   {
@@ -35,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    redirectTo: '',
   },
 ];
 

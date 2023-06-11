@@ -9,11 +9,9 @@ const routes: Routes = [
     component: GroupOverviewComponent,
     children: [
       {
-        path: ':id/registrations',
+        path: ':id/notes',
         loadChildren: () =>
-          import('../registration/registration.module').then(
-            (m) => m.RegistrationModule
-          ),
+          import('../note/note.module').then((m) => m.NoteModule),
       },
       {
         path: ':id/categories',

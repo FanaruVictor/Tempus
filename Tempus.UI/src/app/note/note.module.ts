@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistrationRoutingModule } from './registration-routing.module';
+import { NotesRoutingModule } from './note-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -20,19 +20,18 @@ import { MatInputModule } from '@angular/material/input';
 import { JwtInterceptor } from '../_commons/interceptors/JwtInterceptor';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
-import { SearchPipe } from '../shared/pipes/search.pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMenuModule } from '@angular/material/menu';
-import {RegistrationsComponent} from "./registrations/registrations.component";
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
-    RegistrationsComponent,
+    NotesComponent,
     PickCategoryDialogComponent,
     CreateOrEditRegistrationComponent,
   ],
   imports: [
-    RegistrationRoutingModule,
+    NotesRoutingModule,
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -50,7 +49,7 @@ import {RegistrationsComponent} from "./registrations/registrations.component";
     MatNativeDateModule,
     MatMenuModule,
   ],
-  exports: [RegistrationsComponent],
+  exports: [NotesComponent],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     {
@@ -60,4 +59,4 @@ import {RegistrationsComponent} from "./registrations/registrations.component";
     },
   ],
 })
-export class RegistrationModule {}
+export class NoteModule {}

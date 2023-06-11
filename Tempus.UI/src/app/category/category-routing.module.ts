@@ -1,10 +1,8 @@
 ﻿import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CategoriesOverviewComponent} from "./categories-overview/categories-overview.component";
+import { CategoriesComponent } from './categories/categories.component';
 
-const routes: Routes = [
-  {path: '', component: CategoriesOverviewComponent },
-];
+const routes: Routes = [{ path: '', component: CategoriesComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -13,11 +13,11 @@ import { NotificationService } from '../../_services/notification.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-categories-overview',
-  templateUrl: './categories-overview.component.html',
-  styleUrls: ['./categories-overview.component.scss'],
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesOverviewComponent {
+export class CategoriesComponent {
   categories: BaseCategory[] = [];
   groupId: string | undefined;
   searchText = '';

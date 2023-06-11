@@ -17,7 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from './shared/shared.module';
 import { GroupModule } from './group/group.module';
-import { RegistrationModule } from './registration/registration.module';
+import { NoteModule } from './note/note.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -62,7 +62,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    RegistrationModule,
+    NoteModule,
     CategoryModule,
     GroupModule,
     MatIconModule,

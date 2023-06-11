@@ -11,7 +11,7 @@ export class GroupOverviewComponent implements OnInit {
   groupId: string | undefined;
   isActive = true;
 
-  constructor(private groupService: GroupService, private router: Router) { }
+  constructor(private groupService: GroupService, private router: Router) {}
 
   ngOnInit() {
     this.groupService.currentGroupId.subscribe((x) => {
@@ -20,7 +20,7 @@ export class GroupOverviewComponent implements OnInit {
   }
 
   redirectToRegistrations() {
-    this.router.navigate([`groups/${this.groupId}/registrations`]);
+    this.router.navigate([`groups/${this.groupId}/notes`]);
     this.isActive = true;
   }
 

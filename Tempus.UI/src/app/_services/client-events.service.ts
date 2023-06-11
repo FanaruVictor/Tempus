@@ -22,7 +22,7 @@ export class ClientEventsService {
   private retryIntervalMs: number = -1;
   private eventHubConnection!: HubConnection;
   private connectionUrl = environment.apiUrl.replace('/api', '');
-  
+
   constructor(
     private notificationService: NotificationService,
     private groupService: GroupService,
@@ -106,17 +106,17 @@ export class ClientEventsService {
 
     if (
       this.router.url.includes(
-        `/groups/${response.GroupId}/registrations/${response.RegistrationId}`
+        `/groups/${response.GroupId}/notes/${response.RegistrationId}`
       )
     ) {
-      this.router.navigate([`/groups/${response.GroupId}/registrations`]);
+      this.router.navigate([`/groups/${response.GroupId}/notes`]);
     }
   }
 
   private showUpdatedRegistrationMessage(response: any) {
     if (
       this.router.url.includes(
-        `/groups/${response.GroupId}/registrations/${response.RegistrationId}`
+        `/groups/${response.GroupId}/notes/${response.RegistrationId}`
       )
     ) {
       this.notificationService.showRegistrationUpdatedMessage(

@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
   ) {
     this.tabs = [
       {
-        label: 'Registrations',
-        link: '/registrations',
+        label: 'Notes',
+        link: '/notes',
         index: 0,
       },
       {

@@ -78,7 +78,8 @@ export class PickCategoryDialogComponent {
         }
         this.router.navigate(['registrations/create'], {
           queryParams: { categoryId: result.resource.id },
-        });
+
+        })
       });
   }
 }

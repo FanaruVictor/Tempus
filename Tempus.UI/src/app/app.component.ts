@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private clientEventsService: ClientEventsService,
     public fbAuth: AngularFireAuth,
     public authService: AuthService,
-    public router: Router,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
               photoURL: user.photoURL || '',
             })
             .subscribe({
-              next:(response) => {
+              next: (response) => {
                 localStorage.setItem(
                   'authorizationToken',
                   response.authorizationToken
@@ -51,18 +51,18 @@ export class AppComponent implements OnInit, OnDestroy {
                 );
 
                 if (response.user.isDarkTheme) {
-                  if(!document.body.classList.contains('dark-theme'))
+                  if (!document.body.classList.contains('dark-theme'))
                     document.body.classList.toggle('dark-theme');
                   localStorage.setItem('isDarkTheme', true.toString());
                 }
 
                 this.userService.setUser(response.user);
-                this.router.navigate(['/registrations']);
+                this.router.navigate(['/notes']);
               },
               error: (error) => {
                 this.authService.logout();
                 this.router.navigate(['/login']);
-              }
+              },
             });
         }
 

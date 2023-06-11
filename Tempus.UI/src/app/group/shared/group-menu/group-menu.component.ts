@@ -82,7 +82,7 @@ export class GroupMenuComponent implements OnInit {
 
     this.groupService.removeAll();
 
-    this.router.navigate(['/groups', id, 'registrations']);
+    this.router.navigate(['/groups', id, 'notes']);
     return;
   }
 }

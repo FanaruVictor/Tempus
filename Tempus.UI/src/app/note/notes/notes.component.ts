@@ -17,11 +17,11 @@ import { RegistrationService } from 'src/app/_services/registration/registration
 import { ViewportScroller } from '@angular/common';
 
 @Component({
-  selector: 'app-registrations',
-  templateUrl: './registrations.component.html',
-  styleUrls: ['./registrations.component.scss'],
+  selector: 'app-ntoes',
+  templateUrl: './notes.component.html',
+  styleUrls: ['./notes.component.scss'],
 })
-export class RegistrationsComponent implements OnInit, OnDestroy {
+export class NotesComponent implements OnInit, OnDestroy {
   groupId: string | undefined;
   registrations?: RegistrationOverview[];
   categories?: BaseCategory[];
@@ -85,12 +85,12 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
     this.router$ = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (event.url.endsWith('registrations')) {
+        if (event.url.endsWith('notes')) {
           this.showNoRegistrationSelectedMessage = true;
         } else {
           this.showNoRegistrationSelectedMessage = false;
         }
-        if (event.url.startsWith(`/groups/${this.groupId}/registrations`)) {
+        if (event.url.startsWith(`/groups/${this.groupId}/notes`)) {
           this.categoryApiService.getAll(this.groupId).subscribe((response) => {
             this.categories = response.resource;
           });
@@ -180,13 +180,12 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
       .pipe(filter((x) => !!x))
       .subscribe((result) => {
         if (!!this.groupId) {
-          this.router.navigate(
-            [`groups/${this.groupId}/registrations/create`],
-            { queryParams: { categoryId: result.id } }
-          );
+          this.router.navigate([`groups/${this.groupId}/notes/create`], {
+            queryParams: { categoryId: result.id },
+          });
           return;
         }
-        this.router.navigate(['registrations/create'], {
+        this.router.navigate(['notes/create'], {
           queryParams: { categoryId: result.id },
         });
       });
@@ -213,10 +212,10 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
       this.showNoRegistrationSelectedMessage = true;
       if (!!this.groupId) {
-        this.router.navigate([`groups/${this.groupId}/registrations`]);
+        this.router.navigate([`groups/${this.groupId}/notes`]);
         return;
       }
-      this.router.navigate(['/registrations']);
+      this.router.navigate(['/notes']);
     });
   }
 
@@ -332,13 +331,13 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
       this.router.navigate([
         '/groups',
         this.groupId,
-        'registrations',
+        'notes',
         id,
         'edit-full-view',
       ]);
       return;
     }
-    this.router.navigate(['/registrations', id, 'edit-full-view']);
+    this.router.navigate(['/notes', id, 'edit-full-view']);
   }
 
   openEditContainer(id: string) {
@@ -353,13 +352,13 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
       this.router.navigate([
         '/groups',
         this.groupId,
-        'registrations',
+        'notes',
         id,
-        'edit-registrations-view',
+        'edit-notes-view',
       ]);
       return;
     }
-    this.router.navigate(['/registrations', id, 'edit-registrations-view']);
+    this.router.navigate(['/notes', id, 'edit-notes-view']);
   }
 
   excludeClick(event: MouseEvent) {
