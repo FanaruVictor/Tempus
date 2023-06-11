@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { GroupService } from 'src/app/_services/group/group.service';
 
 @Component({
-  selector: 'app-group-overview',
-  templateUrl: './group-overview.component.html',
-  styleUrls: ['./group-overview.component.scss'],
+  selector: 'app-group',
+  templateUrl: './groups.component.html',
+  styleUrls: ['./groups.component.scss'],
 })
-export class GroupOverviewComponent implements OnInit {
+export class GroupsComponent implements OnInit {
   groupId: string | undefined;
   isActive = true;
 
