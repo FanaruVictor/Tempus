@@ -13,7 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_commons/interceptors/errorInterceptor';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoaderInterceptor } from './_services/loader/loader-interceptor';
-import { HeaderComponent } from './_commons/header/header.component';
+import { HeaderComponent } from './header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SharedModule } from './shared/shared.module';
 import { GroupModule } from './group/group.module';
