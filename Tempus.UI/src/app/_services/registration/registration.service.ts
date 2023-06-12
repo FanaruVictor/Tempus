@@ -15,16 +15,18 @@ export class RegistrationService {
     this.registrations = this.registrationsSubject.asObservable();
   }
 
-  setRegistrations(registrations: RegistrationOverview[]) {
+  setRegistrations(registrations: RegistrationOverview[] | undefined) {
     this.registrationsSubject.next(registrations);
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
+    debugger
+    const registrations = [newRegistration];
     const currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {
-      currentRegistrations.push(newRegistration);
-      this.setRegistrations(currentRegistrations);
+      registrations.concat([...currentRegistrations]);
     }
+    this.setRegistrations(registrations);
   }
 
   removeRegistration(registrationId: string) {

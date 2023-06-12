@@ -56,7 +56,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   router$?: Subscription;
   currentGroupId$?: Subscription;
   groupsRegistrations$?: Subscription;
-
+  registrations$?: Subscription;
   ngOnInit(): void {
     this.currentGroupId$ = this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
@@ -71,14 +71,17 @@ export class NotesComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.regisrationService.registrations.subscribe((x) => {
-        this.registrations = x;
-        if (!this.registrations) {
-          this.getAllForUser();
-        } else {
-          this.setRegistrationsColors();
+      this.registrations$ = this.regisrationService.registrations.subscribe(
+        (x) => {
+          debugger;
+          this.registrations = x;
+          if (!this.registrations) {
+            this.getAllForUser();
+          } else {
+            this.setRegistrationsColors();
+          }
         }
-      });
+      );
     });
 
     this.updateFocusedRegistration();
@@ -373,5 +376,6 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.router$?.unsubscribe();
     this.currentGroupId$?.unsubscribe();
     this.groupsRegistrations$?.unsubscribe();
+    this.registrations$?.unsubscribe();
   }
 }

@@ -31,11 +31,13 @@ export class GroupService {
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
+    debugger;
+    let registrations = [newRegistration];
     const currentRegistrations = this.groupRegistrationsSubject.getValue();
     if (!!currentRegistrations) {
-      currentRegistrations.push(newRegistration);
-      this.setRegistrations(currentRegistrations);
+      registrations = registrations.concat([...currentRegistrations]);
     }
+    this.setRegistrations(registrations);
   }
 
   deleteRegistration(registrationId: string) {
