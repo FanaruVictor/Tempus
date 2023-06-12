@@ -52,11 +52,11 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
+    this.router.navigate(['/login']);
+
     this.fbAtuth.signOut();
     this.clientEventsService.stopConnection();
     this.authorizationTokenSubject.next('');
-
-    this.router.navigate(['/login']);
   }
 }
 

@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fbAuth.user.subscribe((user) => {
       if (user) {
-        debugger;
         let authToken = localStorage.getItem('authorizationToken');
 
         if (authToken == null) {
@@ -87,14 +86,6 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-
-  successLoginCallback(event: FirebaseUISignInSuccessWithAuthResult) {
-    console.log('login success');
-  }
-
-  errorLoginCallback(event: FirebaseUISignInFailure) {
-    console.log('login failed');
   }
 
   ngOnDestroy(): void {

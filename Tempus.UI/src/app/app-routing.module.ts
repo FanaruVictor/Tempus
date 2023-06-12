@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './_commons/guards/AuthGuard';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { RegisterOrLoginComponent } from './register-or-login/register-or-login.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/notes' },
@@ -31,8 +31,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'login',
+    component: RegisterOrLoginComponent,
+  },
+  {
     path: '**',
-    redirectTo: '',
+    redirectTo: '/notes',
   },
 ];
 

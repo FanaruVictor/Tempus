@@ -83,6 +83,10 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     this.updateFocusedRegistration();
 
+    if (!this.router.url.endsWith('notes')) {
+      this.showNoRegistrationSelectedMessage = false;
+    }
+
     this.router$ = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.endsWith('notes')) {
@@ -354,11 +358,11 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.groupId,
         'notes',
         id,
-        'edit-notes-view',
+        'edit-partial-view',
       ]);
       return;
     }
-    this.router.navigate(['/notes', id, 'edit-notes-view']);
+    this.router.navigate(['/notes', id, 'edit-partial-view']);
   }
 
   excludeClick(event: MouseEvent) {

@@ -89,7 +89,7 @@ export class CreateOrEditNoteComponent implements OnInit {
 
     this.activatedRoute.url.subscribe((x) => {
       this.mode = x[x.length - 1].path;
-      if (this.mode == 'edit-notes-view') {
+      if (this.mode == 'edit-partial-view') {
         this.isActive = false;
       }
     });
