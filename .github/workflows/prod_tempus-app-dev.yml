@@ -23,7 +23,10 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build Tempus.API --configuration Release
-        
+    
+      - name: dotnet publish
+        run: dotnet publish Tempus.API -c Release -o ${{env.DOTNET_ROOT}}/tempus.api
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
