@@ -11,6 +11,7 @@ import { CreateCategoryCommandData } from '../../_commons/models/categories/crea
 import { UpdateCategoryCommandData } from '../../_commons/models/categories/updateCategoryCommandData';
 import { NotificationService } from '../../_services/notification.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { RegistrationService } from 'src/app/_services/registration/registration.service';
 
 @Component({
   selector: 'app-categories',
@@ -33,7 +34,8 @@ export class CategoriesComponent {
     private dialog: MatDialog,
     private categoryApiService: CategoryApiService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private registrationsService: RegistrationService
   ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 30, 0, 1);
@@ -70,6 +72,11 @@ export class CategoriesComponent {
       .subscribe({
         next: (response) => {
           let id = response.resource;
+          const category = this.categories?.find((x) => x.id === id);
+          if (category?.color) {
+            this.registrationsService.removeAllWithColor(category.color);
+          }
+
           this.categories = this.categories?.filter((x) => x.id !== id);
           this.notificationService.succes(
             'Category deleted successfully',
@@ -133,9 +140,17 @@ export class CategoriesComponent {
       .update(category, this.groupId)
       .pipe(filter((x) => !!x))
       .subscribe((result) => {
+        const oldColor = this.categories?.find(
+          (x) => x.id === result.resource.id
+        )?.color;
+        const newColor = result.resource.color;
+        if (oldColor && newColor && oldColor !== newColor) {
+          this.registrationsService.updateAllWithOldColor(oldColor, newColor);
+        }
         this.categories = this.categories?.filter((x) => {
           return x.id !== result.resource.id;
         });
+
         this.addToCategories(result.resource);
       });
   }

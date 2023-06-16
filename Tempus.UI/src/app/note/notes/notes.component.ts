@@ -14,7 +14,6 @@ import { GroupService } from 'src/app/_services/group/group.service';
 import { jsPDF } from 'jspdf';
 import { GroupApiService } from 'src/app/_services/group/group.api.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
-import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-notes',

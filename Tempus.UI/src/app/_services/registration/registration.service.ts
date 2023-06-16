@@ -20,7 +20,7 @@ export class RegistrationService {
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
-    debugger
+    debugger;
     const registrations = [newRegistration];
     const currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {
@@ -35,6 +35,29 @@ export class RegistrationService {
       currentRegistrations = currentRegistrations.filter(
         (x) => x.id !== registrationId
       );
+      this.setRegistrations(currentRegistrations);
+    }
+  }
+
+  removeAllWithColor(color: string) {
+    let currentRegistrations = this.registrationsSubject.getValue();
+    if (!!currentRegistrations) {
+      currentRegistrations = currentRegistrations.filter(
+        (x) => x.categoryColor !== color
+      );
+      this.setRegistrations(currentRegistrations);
+    }
+  }
+
+  updateAllWithOldColor(oldColor: string, newColor: string) {
+    let currentRegistrations = this.registrationsSubject.getValue();
+    if (!!currentRegistrations) {
+      currentRegistrations = currentRegistrations.map((x) => {
+        if (x.categoryColor === oldColor) {
+          x.categoryColor = newColor;
+        }
+        return x;
+      });
       this.setRegistrations(currentRegistrations);
     }
   }
