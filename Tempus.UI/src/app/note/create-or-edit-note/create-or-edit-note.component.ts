@@ -17,6 +17,7 @@ import { RegistrationOverview } from '../../_commons/models/registrations/regist
 import { GroupService } from 'src/app/_services/group/group.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
 import { debug } from 'console';
+import { DatePipe } from '@angular/common';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -147,7 +148,6 @@ export class CreateOrEditNoteComponent implements OnInit {
       .getById(this.id, this.groupId)
       .pipe(first())
       .subscribe((response) => {
-        debugger;
         this.initialRegistration.content = response.resource.content;
         this.initialRegistration.description = response.resource.description;
         this.createOrEditForm.patchValue(response.resource);
@@ -222,12 +222,22 @@ export class CreateOrEditNoteComponent implements OnInit {
           'Registration updated successfully',
           'Request completed'
         );
+        const date = new Date();
+        const datepipe: DatePipe = new DatePipe('en-US');
+        let formattedDate = datepipe.transform(
+          new Date(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate()
+          ),
+          'YYYY-MM-ddTHH:mm:ss'
+        );
         this.initialRegistration = {
           id: result.resource.id,
           description: result.resource.description,
           content: result.resource.content,
           categoryColor: result.resource.categoryColor,
-          lastUpdatedAt: new Date().toString(),
+          lastUpdatedAt: formattedDate?.toString() || '',
         };
         this.registrationApiService.setRegistration(this.initialRegistration);
         this.redirect();
@@ -254,7 +264,6 @@ export class CreateOrEditNoteComponent implements OnInit {
       .create(registration)
       .pipe(filter((x) => !!x))
       .subscribe((x) => {
-        debugger;
         if (!!this.groupId) {
           this.groupService.addRegistration(x.resource);
           this.router.navigate(['/groups', this.groupId, 'notes']);

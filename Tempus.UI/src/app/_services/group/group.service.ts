@@ -31,7 +31,7 @@ export class GroupService {
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
-    debugger;
+    ;
     let registrations = [newRegistration];
     const currentRegistrations = this.groupRegistrationsSubject.getValue();
     if (!!currentRegistrations) {

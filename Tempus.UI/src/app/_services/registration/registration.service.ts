@@ -20,7 +20,7 @@ export class RegistrationService {
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
-    debugger;
+    ;
     let registrations = [newRegistration];
     const currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {

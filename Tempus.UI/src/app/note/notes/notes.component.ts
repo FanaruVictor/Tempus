@@ -65,6 +65,7 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.groupsRegistrations$ =
           this.groupService.groupRegistrations.subscribe((x) => {
             this.registrations = x;
+            this.sortRegistrations();
             this.setRegistrationsColors();
           });
         return;
@@ -72,7 +73,6 @@ export class NotesComponent implements OnInit, OnDestroy {
 
       this.registrations$ = this.regisrationService.registrations.subscribe(
         (x) => {
-          debugger;
           this.registrations = x;
           if (!this.registrations) {
             this.getAllForUser();
@@ -121,16 +121,45 @@ export class NotesComponent implements OnInit, OnDestroy {
         return registration;
       });
 
-      this.sortRegistrationByDate();
+      this.sortRegistrations();
     });
   }
 
-  private sortRegistrationByDate() {
-    this.registrations = this.registrations?.sort(
-      (objA, objB) =>
-        new Date(objB.lastUpdatedAt).getTime() -
-        new Date(objA.lastUpdatedAt).getTime()
-    );
+  private sortRegistrations() {
+    debugger;
+    this.registrations = this.registrations?.sort((objA, objB) => {
+      const firstDate = new Date(objA.lastUpdatedAt).getTime();
+      const secondDate = new Date(objB.lastUpdatedAt).getTime();
+
+      if (firstDate < secondDate) {
+        return -1;
+      }
+      if (firstDate > secondDate) {
+        return 1;
+      }
+
+      const firstColor = objA.categoryColor;
+      const secondColor = objB.categoryColor;
+
+      if (firstColor < secondColor) {
+        return -1;
+      }
+      if (firstColor > secondColor) {
+        return 1;
+      }
+
+      const firstDesc = objA.description;
+      const secondDesc = objB.description;
+
+      if (firstDesc < secondDesc) {
+        return -1;
+      }
+      if (firstDesc > secondDesc) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
   private getAllForUser() {
@@ -155,7 +184,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     this.setRegistrationsColors();
 
-    this.sortRegistrationByDate();
+    this.sortRegistrations();
 
     this.modifyRegistrations();
   }
