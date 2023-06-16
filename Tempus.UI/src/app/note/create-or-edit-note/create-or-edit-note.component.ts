@@ -16,6 +16,7 @@ import ImageResize from 'quill-image-resize-module';
 import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 import { GroupService } from 'src/app/_services/group/group.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
+import { debug } from 'console';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -146,6 +147,7 @@ export class CreateOrEditNoteComponent implements OnInit {
       .getById(this.id, this.groupId)
       .pipe(first())
       .subscribe((response) => {
+        debugger;
         this.initialRegistration.content = response.resource.content;
         this.initialRegistration.description = response.resource.description;
         this.createOrEditForm.patchValue(response.resource);
@@ -252,7 +254,9 @@ export class CreateOrEditNoteComponent implements OnInit {
       .create(registration)
       .pipe(filter((x) => !!x))
       .subscribe((x) => {
+        debugger;
         if (!!this.groupId) {
+          this.groupService.addRegistration(x.resource);
           this.router.navigate(['/groups', this.groupId, 'notes']);
         } else {
           this.registrationService.addRegistration(x.resource);

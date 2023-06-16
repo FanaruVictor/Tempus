@@ -97,7 +97,7 @@ public class
     private string ExtractStyle(string image)
     {
         string pattern =
-            @"<img\s+[^>]*?style\s*=\s*""(?<style>[^""]*)""\s*[^>]*?width\s*=\s*""(?<width>[^""]*)""[^>]*?>";
+            @"(?=.*style\s*=\s*""(?<style>[^""]*)"")(?=.*width\s*=\s*""(?<width>[^""]*)"")";
 
         Regex regex = new Regex(pattern);
 

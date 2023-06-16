@@ -21,10 +21,10 @@ export class RegistrationService {
 
   addRegistration(newRegistration: RegistrationOverview) {
     debugger;
-    const registrations = [newRegistration];
+    let registrations = [newRegistration];
     const currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {
-      registrations.concat([...currentRegistrations]);
+      registrations = registrations.concat([...currentRegistrations]);
     }
     this.setRegistrations(registrations);
   }
