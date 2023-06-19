@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GroupOverviewComponent } from './group-overview/group-overview.component';
+import { GroupsComponent } from './groups/groups.component';
 import { CreateOrEditGroupComponent } from './create-or-edit/create-or-edit-group.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: GroupOverviewComponent,
+    component: GroupsComponent,
     children: [
       {
         path: ':id/notes',
@@ -16,8 +16,8 @@ const routes: Routes = [
       {
         path: ':id/categories',
         loadChildren: () =>
-          import('../category/category-routing.module').then(
-            (m) => m.CategoryRoutingModule
+          import('../category/category.module').then(
+            (m) => m.CategoryModule
           ),
       },
     ],

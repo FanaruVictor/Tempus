@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ClientEventsService } from '../client-events.service';
+import { RegistrationService } from '../registration/registration.service';
+import { GroupService } from '../group/group.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +24,9 @@ export class AuthService {
     private httpClient: HttpClient,
     private fbAtuth: AngularFireAuth,
     private router: Router,
-    private clientEventsService: ClientEventsService
+    private clientEventsService: ClientEventsService,
+    private registrationService: RegistrationService,
+    private groupService: GroupService
   ) {
     const token = localStorage.getItem('authorizationToken');
     this.authorizationTokenSubject = new BehaviorSubject<string>(token ?? '');
@@ -55,8 +59,11 @@ export class AuthService {
     this.fbAtuth.signOut();
     this.clientEventsService.stopConnection();
     this.authorizationTokenSubject.next('');
+    this.router.navigate(['/login']).then(() => {
+      this.registrationService.setRegistrations(undefined);
+      this.groupService.setRegistrations(undefined);  
+    });
 
-    this.router.navigate(['/login']);
   }
 }
 

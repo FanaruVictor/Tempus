@@ -47,7 +47,7 @@ public class GetGroupByIdQueryHandler : IRequestHandler<GetGroupByIdQuery, BaseR
                 {
                     Email = x.Email,
                     Id = x.Id,
-                    PhotoUrl = x.UserPhoto.Url
+                    PhotoUrl = x.UserPhoto?.Url
                 })
             .ToList();
 

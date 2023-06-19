@@ -74,7 +74,7 @@ export class EditAccountProfile implements OnInit {
             console.log('email updated!');
           });
         }
-        debugger
+
         updateProfile(auth.currentUser, {
           displayName: response.resource.userName,
           photoURL: response.resource.photo?.url ?? null,

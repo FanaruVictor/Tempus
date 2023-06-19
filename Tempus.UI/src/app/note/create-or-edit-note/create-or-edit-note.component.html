@@ -18,7 +18,8 @@
       <mat-error
         *ngIf="createOrEditForm.get('description')?.hasError('required')"
       >
-        Please enter a short description for the registration
+        Please enter a short description for the note you are about to
+        {{ isCreateMode ? "create" : "edit" }}
       </mat-error>
     </mat-form-field>
     <quill-editor

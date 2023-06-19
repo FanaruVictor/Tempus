@@ -16,6 +16,8 @@ import ImageResize from 'quill-image-resize-module';
 import { RegistrationOverview } from '../../_commons/models/registrations/registrationOverview';
 import { GroupService } from 'src/app/_services/group/group.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
+import { debug } from 'console';
+import { DatePipe } from '@angular/common';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -89,7 +91,7 @@ export class CreateOrEditNoteComponent implements OnInit {
 
     this.activatedRoute.url.subscribe((x) => {
       this.mode = x[x.length - 1].path;
-      if (this.mode == 'edit-notes-view') {
+      if (this.mode == 'edit-partial-view') {
         this.isActive = false;
       }
     });
@@ -220,12 +222,22 @@ export class CreateOrEditNoteComponent implements OnInit {
           'Registration updated successfully',
           'Request completed'
         );
+        const date = new Date();
+        const datepipe: DatePipe = new DatePipe('en-US');
+        let formattedDate = datepipe.transform(
+          new Date(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate()
+          ),
+          'YYYY-MM-ddTHH:mm:ss'
+        );
         this.initialRegistration = {
           id: result.resource.id,
           description: result.resource.description,
           content: result.resource.content,
           categoryColor: result.resource.categoryColor,
-          lastUpdatedAt: new Date().toString(),
+          lastUpdatedAt: formattedDate?.toString() || '',
         };
         this.registrationApiService.setRegistration(this.initialRegistration);
         this.redirect();
@@ -253,6 +265,7 @@ export class CreateOrEditNoteComponent implements OnInit {
       .pipe(filter((x) => !!x))
       .subscribe((x) => {
         if (!!this.groupId) {
+          this.groupService.addRegistration(x.resource);
           this.router.navigate(['/groups', this.groupId, 'notes']);
         } else {
           this.registrationService.addRegistration(x.resource);

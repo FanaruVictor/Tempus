@@ -9,7 +9,7 @@ const routes: Routes = [
     component: NotesComponent,
     children: [
       {
-        path: ':id/edit-notes-view',
+        path: ':id/edit-partial-view',
         component: CreateOrEditNoteComponent,
       },
     ],

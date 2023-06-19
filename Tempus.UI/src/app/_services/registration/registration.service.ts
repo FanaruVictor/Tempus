@@ -15,16 +15,18 @@ export class RegistrationService {
     this.registrations = this.registrationsSubject.asObservable();
   }
 
-  setRegistrations(registrations: RegistrationOverview[]) {
+  setRegistrations(registrations: RegistrationOverview[] | undefined) {
     this.registrationsSubject.next(registrations);
   }
 
   addRegistration(newRegistration: RegistrationOverview) {
+    ;
+    let registrations = [newRegistration];
     const currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {
-      currentRegistrations.push(newRegistration);
-      this.setRegistrations(currentRegistrations);
+      registrations = registrations.concat([...currentRegistrations]);
     }
+    this.setRegistrations(registrations);
   }
 
   removeRegistration(registrationId: string) {
@@ -33,6 +35,29 @@ export class RegistrationService {
       currentRegistrations = currentRegistrations.filter(
         (x) => x.id !== registrationId
       );
+      this.setRegistrations(currentRegistrations);
+    }
+  }
+
+  removeAllWithColor(color: string) {
+    let currentRegistrations = this.registrationsSubject.getValue();
+    if (!!currentRegistrations) {
+      currentRegistrations = currentRegistrations.filter(
+        (x) => x.categoryColor !== color
+      );
+      this.setRegistrations(currentRegistrations);
+    }
+  }
+
+  updateAllWithOldColor(oldColor: string, newColor: string) {
+    let currentRegistrations = this.registrationsSubject.getValue();
+    if (!!currentRegistrations) {
+      currentRegistrations = currentRegistrations.map((x) => {
+        if (x.categoryColor === oldColor) {
+          x.categoryColor = newColor;
+        }
+        return x;
+      });
       this.setRegistrations(currentRegistrations);
     }
   }

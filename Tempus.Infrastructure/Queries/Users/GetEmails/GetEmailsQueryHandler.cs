@@ -26,7 +26,7 @@ public class GetEmailsQueryHandler : IRequestHandler<GetEmailsQuery,BaseResponse
                     {
                         Email = x.Email,
                         Id = x.Id,
-                        PhotoUrl = x.UserPhoto.Url
+                        PhotoUrl = x.UserPhoto?.Url
                     }
                 )
                 .ToList();

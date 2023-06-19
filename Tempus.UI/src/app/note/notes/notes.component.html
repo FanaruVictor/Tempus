@@ -7,7 +7,7 @@
         name="search"
         [(ngModel)]="searchText"
         autocomplete="off"
-        placeholder="Search for registration"
+        placeholder="Search for note"
       />
       <div class="by-creation-date filter">
         <mat-date-range-input
@@ -117,13 +117,13 @@
       </div>
     </div>
     <router-outlet></router-outlet>
-    <h1
+    <div
       class="no-registration-selected"
       *ngIf="showNoRegistrationSelectedMessage"
     >
-      You do not have any note selected. To be able to edit a
-      note, please select one.
-    </h1>
+      <h1>You do not have any note selected.</h1>
+      <h1>To be able to edit a note, please select one.</h1>
+    </div>
   </div>
   <ng-template #showNoRegistrations>
     <h1 class="no-registrations">You do not have notes</h1>

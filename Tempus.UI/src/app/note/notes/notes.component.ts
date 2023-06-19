@@ -14,7 +14,6 @@ import { GroupService } from 'src/app/_services/group/group.service';
 import { jsPDF } from 'jspdf';
 import { GroupApiService } from 'src/app/_services/group/group.api.service';
 import { RegistrationService } from 'src/app/_services/registration/registration.service';
-import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-notes',
@@ -56,7 +55,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   router$?: Subscription;
   currentGroupId$?: Subscription;
   groupsRegistrations$?: Subscription;
-
+  registrations$?: Subscription;
   ngOnInit(): void {
     this.currentGroupId$ = this.groupService.currentGroupId.subscribe((x) => {
       this.groupId = x;
@@ -66,22 +65,29 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.groupsRegistrations$ =
           this.groupService.groupRegistrations.subscribe((x) => {
             this.registrations = x;
+            this.sortRegistrations();
             this.setRegistrationsColors();
           });
         return;
       }
 
-      this.regisrationService.registrations.subscribe((x) => {
-        this.registrations = x;
-        if (!this.registrations) {
-          this.getAllForUser();
-        } else {
-          this.setRegistrationsColors();
+      this.registrations$ = this.regisrationService.registrations.subscribe(
+        (x) => {
+          this.registrations = x;
+          if (!this.registrations) {
+            this.getAllForUser();
+          } else {
+            this.setRegistrationsColors();
+          }
         }
-      });
+      );
     });
 
     this.updateFocusedRegistration();
+
+    if (!this.router.url.endsWith('notes')) {
+      this.showNoRegistrationSelectedMessage = false;
+    }
 
     this.router$ = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -115,16 +121,45 @@ export class NotesComponent implements OnInit, OnDestroy {
         return registration;
       });
 
-      this.sortRegistrationByDate();
+      this.sortRegistrations();
     });
   }
 
-  private sortRegistrationByDate() {
-    this.registrations = this.registrations?.sort(
-      (objA, objB) =>
-        new Date(objB.lastUpdatedAt).getTime() -
-        new Date(objA.lastUpdatedAt).getTime()
-    );
+  private sortRegistrations() {
+    debugger;
+    this.registrations = this.registrations?.sort((objA, objB) => {
+      const firstDate = new Date(objA.lastUpdatedAt).getTime();
+      const secondDate = new Date(objB.lastUpdatedAt).getTime();
+
+      if (firstDate < secondDate) {
+        return -1;
+      }
+      if (firstDate > secondDate) {
+        return 1;
+      }
+
+      const firstColor = objA.categoryColor;
+      const secondColor = objB.categoryColor;
+
+      if (firstColor < secondColor) {
+        return -1;
+      }
+      if (firstColor > secondColor) {
+        return 1;
+      }
+
+      const firstDesc = objA.description;
+      const secondDesc = objB.description;
+
+      if (firstDesc < secondDesc) {
+        return -1;
+      }
+      if (firstDesc > secondDesc) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
   private getAllForUser() {
@@ -149,7 +184,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     this.setRegistrationsColors();
 
-    this.sortRegistrationByDate();
+    this.sortRegistrations();
 
     this.modifyRegistrations();
   }
@@ -354,11 +389,11 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.groupId,
         'notes',
         id,
-        'edit-notes-view',
+        'edit-partial-view',
       ]);
       return;
     }
-    this.router.navigate(['/notes', id, 'edit-notes-view']);
+    this.router.navigate(['/notes', id, 'edit-partial-view']);
   }
 
   excludeClick(event: MouseEvent) {
@@ -369,5 +404,6 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.router$?.unsubscribe();
     this.currentGroupId$?.unsubscribe();
     this.groupsRegistrations$?.unsubscribe();
+    this.registrations$?.unsubscribe();
   }
 }

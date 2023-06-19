@@ -24,6 +24,7 @@ import { environment } from '../environments/environment';
 import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { RegisterOrLoginComponent } from './register-or-login/register-or-login.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -56,7 +57,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 };
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, RegisterOrLoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
