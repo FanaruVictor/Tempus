@@ -38,12 +38,12 @@ public class ClientEventSender : IClientEventSender
         await SendToConnectionsAsync(response, connections, ClientResponseType.DeleteRegistration);
     }
 
-    public async Task SendRegistrationUpdated(Guid registrationId, Guid groupId, string userId)
+    public async Task SendRegistrationUpdated(RegistrationOverview registration, Guid groupId, string userId)
     {
         var connections = _signalRConnection.GetConnections(userId);
         var response = new UpdateRegistrationResponse
         {
-            RegistrationId = registrationId,
+            Registration = registration,
             GroupId = groupId,
             Message = "One member of your group has already updated this registration please refresh the page."
         };
