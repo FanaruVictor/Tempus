@@ -1,4 +1,7 @@
-<firebase-ui
-  (signInSuccessWithAuthResult)="successLoginCallback($event)"
-  (signInFailure)="errorLoginCallback($event)"
-></firebase-ui>
+<div class="login">
+  <h1>Welcome to Tempus, to use this app please login</h1>
+  <firebase-ui
+    (signInSuccessWithAuthResult)="successLoginCallback($event)"
+    (signInFailure)="errorLoginCallback($event)"
+  ></firebase-ui>
+</div>
