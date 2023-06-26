@@ -232,6 +232,7 @@ export class CreateOrEditNoteComponent implements OnInit {
           ),
           'YYYY-MM-ddTHH:mm:ss'
         );
+
         this.initialRegistration = {
           id: result.resource.id,
           description: result.resource.description,
@@ -239,6 +240,7 @@ export class CreateOrEditNoteComponent implements OnInit {
           categoryColor: result.resource.categoryColor,
           lastUpdatedAt: formattedDate?.toString() || '',
         };
+        debugger
         this.registrationApiService.setRegistration(this.initialRegistration);
         this.redirect();
       });
