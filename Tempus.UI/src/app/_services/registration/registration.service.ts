@@ -50,6 +50,7 @@ export class RegistrationService {
   }
 
   updateAllWithOldColor(oldColor: string, newColor: string) {
+    debugger;
     let currentRegistrations = this.registrationsSubject.getValue();
     if (!!currentRegistrations) {
       currentRegistrations = currentRegistrations.map((x) => {

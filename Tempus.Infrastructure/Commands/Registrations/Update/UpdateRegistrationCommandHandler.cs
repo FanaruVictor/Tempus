@@ -73,6 +73,7 @@ public class
             await SendClientEvent(entity, request);
 
             var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);
+            detailedRegistration.CategoryColor = (await _categoryRepository.GetById(entity.CategoryId)).Color;
             var result = BaseResponse<RegistrationDetails>.Ok(detailedRegistration);
             return result;
         }

@@ -126,7 +126,6 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   private sortRegistrations() {
-    debugger;
     this.registrations = this.registrations?.sort((objA, objB) => {
       const firstDate = new Date(objA.lastUpdatedAt).getTime();
       const secondDate = new Date(objB.lastUpdatedAt).getTime();
@@ -137,28 +136,28 @@ export class NotesComponent implements OnInit, OnDestroy {
       if (firstDate > secondDate) {
         return 1;
       }
-
-      const firstColor = objA.categoryColor;
-      const secondColor = objB.categoryColor;
-
-      if (firstColor < secondColor) {
-        return -1;
-      }
-      if (firstColor > secondColor) {
-        return 1;
-      }
-
-      const firstDesc = objA.description;
-      const secondDesc = objB.description;
-
-      if (firstDesc < secondDesc) {
-        return -1;
-      }
-      if (firstDesc > secondDesc) {
-        return 1;
-      }
-
       return 0;
+      // const firstColor = objA.categoryColor;
+      // const secondColor = objB.categoryColor;
+
+      // if (firstColor < secondColor) {
+      //   return -1;
+      // }
+      // if (firstColor > secondColor) {
+      //   return 1;
+      // }
+
+      // const firstDesc = objA.description;
+      // const secondDesc = objB.description;
+
+      // if (firstDesc < secondDesc) {
+      //   return -1;
+      // }
+      // if (firstDesc > secondDesc) {
+      //   return 1;
+      // }
+
+      // return 0;
     });
   }
 

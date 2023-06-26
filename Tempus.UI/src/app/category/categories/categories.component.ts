@@ -145,6 +145,7 @@ export class CategoriesComponent {
         )?.color;
         const newColor = result.resource.color;
         if (oldColor && newColor && oldColor !== newColor) {
+          debugger
           this.registrationsService.updateAllWithOldColor(oldColor, newColor);
         }
         this.categories = this.categories?.filter((x) => {
