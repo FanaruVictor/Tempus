@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private clientEventsService: ClientEventsService,
     public fbAuth: AngularFireAuth,
     public authService: AuthService,
-    public router: Router,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -58,6 +58,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.userService.setUser(response.user);
                 this.router.navigate(['/notes']);
+                this.clientEventsService.startConnection(
+                  response.authorizationToken
+                );
               },
               error: (error) => {
                 this.authService.logout();

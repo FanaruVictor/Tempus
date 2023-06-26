@@ -148,6 +148,7 @@ export class CategoriesComponent {
           debugger
           this.registrationsService.updateAllWithOldColor(oldColor, newColor);
         }
+        debugger
         this.categories = this.categories?.filter((x) => {
           return x.id !== result.resource.id;
         });
