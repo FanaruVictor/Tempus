@@ -76,7 +76,7 @@ export class ClientEventsService {
   private initializeListener(): void {
     this.eventHubConnection.on('client-events', (data: ClientEvent) => {
       var response = JSON.parse(data.innerEventJson);
-      debugger
+      debugger;
       switch (data.responseType) {
         case ResponseType.AddRegistration:
           this.addRegistration(response);
@@ -115,15 +115,26 @@ export class ClientEventsService {
   }
 
   private showUpdatedRegistrationMessage(response: any) {
+    debugger
+    const registration: RegistrationOverview = {
+      id: response.Registration.Id,
+      categoryColor: response.Registration.CategoryColor,
+      content: response.Registration.Content,
+      description: response.Registration.Description,
+      lastUpdatedAt: response.Registration.LastUpdatedAt,
+    };
     if (
       this.router.url.includes(
-        `/groups/${response.GroupId}/notes/${response.RegistrationId}`
+        `/groups/${response.GroupId}/notes/${registration.id}`
       )
     ) {
       this.notificationService.showRegistrationUpdatedMessage(
         response.Message,
         'Registration already updated'
       );
+    } else {
+      this.groupService.deleteRegistration(registration.id);
+      this.groupService.addRegistration(registration);
     }
   }
 

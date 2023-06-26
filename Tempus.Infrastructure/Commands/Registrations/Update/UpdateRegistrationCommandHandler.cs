@@ -73,7 +73,9 @@ public class
             await SendClientEvent(entity, request);
 
             var detailedRegistration = GenericMapper<Registration, RegistrationDetails>.Map(entity);
-            detailedRegistration.CategoryColor = (await _categoryRepository.GetById(entity.CategoryId)).Color;
+            var category = await _categoryRepository.GetById(entity.CategoryId);
+            detailedRegistration.CategoryColor = category.Color;
+
             var result = BaseResponse<RegistrationDetails>.Ok(detailedRegistration);
             return result;
         }
@@ -132,8 +134,10 @@ public class
             groupUsers = groupUsers.Where(x => x.UserId != request.UserId).ToList();
             foreach (var groupUser in groupUsers)
             {
+                var registrationOverview = GenericMapper<Registration, RegistrationOverview>.Map(registration);
+                registrationOverview.CategoryColor = category.Color;
                 if (groupUser.UserId != request.UserId)
-                    await _clientEventSender.SendRegistrationUpdated(registration.Id, groupUser.GroupId,
+                    await _clientEventSender.SendRegistrationUpdated(registrationOverview, groupUser.GroupId,
                         groupUser.UserId.ToString());
             }
         }
