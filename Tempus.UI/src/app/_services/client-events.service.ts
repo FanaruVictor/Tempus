@@ -76,6 +76,7 @@ export class ClientEventsService {
   private initializeListener(): void {
     this.eventHubConnection.on('client-events', (data: ClientEvent) => {
       var response = JSON.parse(data.innerEventJson);
+      debugger
       switch (data.responseType) {
         case ResponseType.AddRegistration:
           this.addRegistration(response);
