@@ -375,6 +375,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   openEditContainer(id: string) {
+    debugger
     this.showNoRegistrationSelectedMessage = false;
     const registration = this.registrations?.find((x) => x.id === id);
     if (!registration) {
