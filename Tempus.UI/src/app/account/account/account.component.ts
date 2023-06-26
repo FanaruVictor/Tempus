@@ -4,6 +4,7 @@ import { UserApiService } from '../../_services/user.api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
 import { DeleteDialogComponent } from './delete-user-dialog/delete-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -13,7 +14,11 @@ import { DeleteDialogComponent } from './delete-user-dialog/delete-dialog.compon
 export class AccountComponent implements OnInit {
   user!: UserDetails;
 
-  constructor(private userService: UserApiService, private dialog: MatDialog) {}
+  constructor(
+    private userService: UserApiService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userService.user.subscribe((user) => {
@@ -47,7 +52,7 @@ export class AccountComponent implements OnInit {
             localStorage.removeItem('authorizationToken');
             localStorage.removeItem('currentUser');
             localStorage.removeItem('isDarkTheme');
-            window.location.reload();
+            this.router.navigate(['/login']);
           });
       });
   }
