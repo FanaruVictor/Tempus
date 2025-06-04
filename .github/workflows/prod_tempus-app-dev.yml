@@ -28,7 +28,7 @@ jobs:
         run: dotnet publish Tempus.API -c Release -o ${{env.DOTNET_ROOT}}/tempus.api
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/tempus.api
