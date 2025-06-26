@@ -16,6 +16,7 @@ using Tempus.Infrastructure.SignalR;
 var builder = WebApplication.CreateBuilder(args);
 
 bool.TryParse(builder.Configuration["isDev"], out bool isDev);
+
 if (!isDev)
 {
 	builder.Configuration.AddAzureKeyVault(
@@ -117,7 +118,7 @@ app.Run();
 
 public partial class Program
 {
-	protected Program()
+	protected Program ()
 	{
 	}
 }

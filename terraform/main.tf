@@ -7,7 +7,7 @@ resource "random_integer" "randomizer" {
 
 resource "azurerm_resource_group" "tempus_rg" {
   name     = var.resource-group_name
-  location = "West Europe"
+  location = "North Europe"
 }
 
 module "tempus_key_vault" {
