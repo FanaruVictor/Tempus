@@ -24,16 +24,16 @@ jobs:
           dotnet-version: '7.0'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build Tempus.API --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish Tempus.API -c Release -o ${{env.DOTNET_ROOT}}/tempus.api
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}/tempus.api
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DCBDF9F38159431A992FE21738F4C607 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6955DEC3C3E44E86ADBFFF0B1BB53566 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DCDB7E4ACF304B7786990D0D8AD5C89A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CDCE667779784D4BA45A37E1AA35648F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5BC1020BE4984F81940B349C5E6C4B29 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D933BADD0B48414493C987B043C76E55 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -61,5 +61,6 @@ jobs:
         with:
           app-name: 'tempus-monolith'
           slot-name: 'Production'
+          publish-profile: ${{secrets.AZURE_API_PUBLISH_PROFILE}}
           package: .
           
